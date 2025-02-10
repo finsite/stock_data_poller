@@ -1,0 +1,25 @@
+replicaCount: 2
+
+image:
+  repository: registry.example.com/my-kubernetes-app
+  tag: latest
+  pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  port: 80
+
+ingress:
+  enabled: false
+  hosts:
+    - host: my-app.local
+      paths:
+        - /
+
+resources: {}
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}

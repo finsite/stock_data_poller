@@ -1,0 +1,24 @@
+# General
+.DS_Store
+Thumbs.db
+
+# Kubernetes
+.kubeconfig
+*.secrets.yaml
+*.sealed-secrets.yaml
+
+# Helm Charts
+charts/*/charts/
+charts/*/tmpcharts/
+charts/*/*.lock
+charts/*/templates/NOTES.txt
+
+# Docker
+.dockerignore
+docker-compose.override.yml
+
+# Logs
+*.log
+
+# CI/CD
+.github/workflows/cache/
