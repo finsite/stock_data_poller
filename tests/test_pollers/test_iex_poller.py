@@ -1,6 +1,6 @@
-from unittest.mock import patch, MagicMock
-from src.pollers.iex_poller import IEXPoller
+from unittest.mock import patch
 from requests.exceptions import Timeout
+from src.pollers.iex_poller import IEXPoller
 
 
 @patch("src.utils.request_with_timeout")
@@ -66,6 +66,42 @@ def test_iex_poller_empty_response(mock_request_with_timeout, mock_queue_sender)
 def test_iex_poller_timeout(mock_request_with_timeout, mock_queue_sender):
     """Test IEXPoller handles API timeouts."""
     mock_request_with_timeout.side_effect = Timeout("API request timed out.")
+
+    poller = IEXPoller(api_key="fake_api_key")
+    poller.send_to_queue = mock_queue_sender.send_message
+
+    poller.poll(["AAPL"])
+
+    mock_queue_sender.send_message.assert_not_called()
+
+
+@patch("src.utils.request_with_timeout")
+def test_iex_poller_missing_field(mock_request_with_timeout, mock_queue_sender):
+    """Test IEXPoller handles missing fields in the response."""
+    # Simulating missing 'latestPrice' field
+    mock_request_with_timeout.return_value = {
+        "symbol": "AAPL",
+        "latestUpdate": 1682468986000,
+        "open": 149.00,
+        "high": 151.50,
+        "low": 148.00,
+        "volume": 2000000,
+    }
+
+    poller = IEXPoller(api_key="fake_api_key")
+    poller.send_to_queue = mock_queue_sender.send_message
+
+    poller.poll(["AAPL"])
+
+    # Assert that send_message is not called because of the missing 'latestPrice'
+    mock_queue_sender.send_message.assert_not_called()
+
+
+@patch("src.utils.request_with_timeout")
+def test_iex_poller_invalid_data_format(mock_request_with_timeout, mock_queue_sender):
+    """Test IEXPoller handles unexpected data formats."""
+    # Simulating an invalid response format (e.g., string instead of dict)
+    mock_request_with_timeout.return_value = "Invalid data format"
 
     poller = IEXPoller(api_key="fake_api_key")
     poller.send_to_queue = mock_queue_sender.send_message

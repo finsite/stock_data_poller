@@ -1,6 +1,6 @@
 from unittest.mock import patch
-from src.pollers.polygon_poller import PolygonPoller
 from requests.exceptions import Timeout
+from src.pollers.polygon_poller import PolygonPoller
 
 
 @patch("src.utils.request_with_timeout")
@@ -39,6 +39,7 @@ def test_polygon_poller_invalid_symbol(mock_request_with_timeout, mock_queue_sen
 
     poller.poll(["INVALID"])
 
+    # Assert that send_message is not called for invalid symbol
     mock_queue_sender.send_message.assert_not_called()
 
 
@@ -52,6 +53,7 @@ def test_polygon_poller_empty_response(mock_request_with_timeout, mock_queue_sen
 
     poller.poll(["AAPL"])
 
+    # Assert that send_message is not called when API response is empty
     mock_queue_sender.send_message.assert_not_called()
 
 
@@ -65,4 +67,38 @@ def test_polygon_poller_timeout(mock_request_with_timeout, mock_queue_sender):
 
     poller.poll(["AAPL"])
 
+    # Assert that send_message is not called in case of timeout
+    mock_queue_sender.send_message.assert_not_called()
+
+
+@patch("src.utils.request_with_timeout")
+def test_polygon_poller_missing_field(mock_request_with_timeout, mock_queue_sender):
+    """Test PolygonPoller handles missing fields in the response."""
+    # Simulating a missing 'last' field
+    mock_request_with_timeout.return_value = {
+        "symbol": "AAPL",
+        "status": "success",
+    }
+
+    poller = PolygonPoller(api_key="fake_api_key")
+    poller.send_to_queue = mock_queue_sender.send_message
+
+    poller.poll(["AAPL"])
+
+    # Assert that send_message is not called because 'last' field is missing
+    mock_queue_sender.send_message.assert_not_called()
+
+
+@patch("src.utils.request_with_timeout")
+def test_polygon_poller_invalid_data_format(mock_request_with_timeout, mock_queue_sender):
+    """Test PolygonPoller handles unexpected data formats."""
+    # Simulating an invalid data format (string instead of dict)
+    mock_request_with_timeout.return_value = "Invalid data format"
+
+    poller = PolygonPoller(api_key="fake_api_key")
+    poller.send_to_queue = mock_queue_sender.send_message
+
+    poller.poll(["AAPL"])
+
+    # Assert that send_message is not called because of invalid format
     mock_queue_sender.send_message.assert_not_called()

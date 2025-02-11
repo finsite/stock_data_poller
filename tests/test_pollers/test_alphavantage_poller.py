@@ -1,6 +1,6 @@
 from unittest.mock import patch
-from src.pollers.alphavantage_poller import AlphaVantagePoller
 from requests.exceptions import Timeout
+from src.pollers.alphavantage_poller import AlphaVantagePoller
 
 
 @patch("src.utils.request_with_timeout")
@@ -48,6 +48,7 @@ def test_alphavantage_poller_invalid_symbol(mock_request_with_timeout, mock_queu
 
     poller.poll(["INVALID"])
 
+    # Assert that send_message is not called for an invalid symbol
     mock_queue_sender.send_message.assert_not_called()
 
 
@@ -61,4 +62,33 @@ def test_alphavantage_poller_timeout(mock_request_with_timeout, mock_queue_sende
 
     poller.poll(["AAPL"])
 
+    # Assert that send_message is not called in case of timeout
+    mock_queue_sender.send_message.assert_not_called()
+
+
+@patch("src.utils.request_with_timeout")
+def test_alphavantage_poller_network_error(mock_request_with_timeout, mock_queue_sender):
+    """Test AlphaVantagePoller handles network errors."""
+    mock_request_with_timeout.side_effect = Exception("Network error")
+
+    poller = AlphaVantagePoller(api_key="fake_api_key")
+    poller.send_to_queue = mock_queue_sender.send_message
+
+    poller.poll(["AAPL"])
+
+    # Assert that send_message is not called in case of network error
+    mock_queue_sender.send_message.assert_not_called()
+
+
+@patch("src.utils.request_with_timeout")
+def test_alphavantage_poller_empty_data(mock_request_with_timeout, mock_queue_sender):
+    """Test AlphaVantagePoller handles empty data response."""
+    mock_request_with_timeout.return_value = {"Time Series (5min)": {}}
+
+    poller = AlphaVantagePoller(api_key="fake_api_key")
+    poller.send_to_queue = mock_queue_sender.send_message
+
+    poller.poll(["AAPL"])
+
+    # Assert that send_message is not called for empty data
     mock_queue_sender.send_message.assert_not_called()
