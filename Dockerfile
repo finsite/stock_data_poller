@@ -2,10 +2,10 @@
 FROM python:3.9-slim
 
 # Set the working directory in the container
-WORKDIR /app
+WORKDIR /src
 
 # Copy the local files into the container
-COPY . /app
+COPY . /src
 
 # Install any dependencies
 RUN pip install --no-cache-dir -r requirements.txt
@@ -54,7 +54,4 @@ ENV QUEUE_TYPE=${QUEUE_TYPE}
 ENV SQS_QUEUE_URL=${SQS_QUEUE_URL}
 
 # Command to run the poller when the container starts
-CMD ["python", "main.py"]   
-
-
-helm create my-kubernetes-project
+CMD ["python", "main.py"] 
