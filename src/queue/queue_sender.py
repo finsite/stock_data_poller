@@ -2,7 +2,8 @@ import os
 import pika  # For RabbitMQ
 import boto3  # For SQS
 import json
-from utils.setup_logger import setup_logger
+#from utils.setup_logger import setup_logger
+from src.utils.setup_logger import setup_logger
 
 # Set up logger
 logger = setup_logger()

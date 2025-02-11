@@ -25,7 +25,8 @@ from .pollers import (
 )
 
 # Import queue logic
-from .queue import QueueSender
+#from .queue import QueueSender
+from .queue.queue_sender import QueueSender
 
 # Import utilities
 from .utils import (
