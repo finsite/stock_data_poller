@@ -1,6 +1,6 @@
 from unittest.mock import patch
-from app.utils.validate_environment_variables import validate_environment_variables
-from app.utils.request_with_timeout import request_with_timeout
+from src.utils.validate_environment_variables import validate_environment_variables
+from src.utils.request_with_timeout import request_with_timeout
 
 
 def test_validate_environment_variables():

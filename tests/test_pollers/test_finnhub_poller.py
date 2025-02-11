@@ -1,9 +1,9 @@
 from unittest.mock import patch
-from app.pollers.finnhub_poller import FinnhubPoller
+from src.pollers.finnhub_poller import FinnhubPoller
 from requests.exceptions import Timeout
 
 
-@patch("app.utils.request_with_timeout")
+@patch("src.utils.request_with_timeout")
 def test_finnhub_poller_success(mock_request_with_timeout, mock_queue_sender):
     """Test FinnhubPoller fetches and processes data successfully."""
     mock_request_with_timeout.return_value = {
@@ -34,7 +34,7 @@ def test_finnhub_poller_success(mock_request_with_timeout, mock_queue_sender):
     })
 
 
-@patch("app.utils.request_with_timeout")
+@patch("src.utils.request_with_timeout")
 def test_finnhub_poller_invalid_symbol(mock_request_with_timeout, mock_queue_sender):
     """Test FinnhubPoller handles invalid symbols."""
     mock_request_with_timeout.return_value = {"Error Message": "Invalid symbol"}
@@ -47,7 +47,7 @@ def test_finnhub_poller_invalid_symbol(mock_request_with_timeout, mock_queue_sen
     mock_queue_sender.send_message.assert_not_called()
 
 
-@patch("app.utils.request_with_timeout")
+@patch("src.utils.request_with_timeout")
 def test_finnhub_poller_timeout(mock_request_with_timeout, mock_queue_sender):
     """Test FinnhubPoller handles API timeouts."""
     mock_request_with_timeout.side_effect = Timeout("API request timed out.")

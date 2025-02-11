@@ -1,5 +1,5 @@
 from unittest.mock import patch
-from app.queue.queue_sender import QueueSender
+from src.queue.queue_sender import QueueSender
 
 
 @patch("boto3.client")

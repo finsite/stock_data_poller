@@ -1,6 +1,6 @@
 import time
 import threading
-from app.utils.setup_logger import setup_logger
+from src.utils.setup_logger import setup_logger
 
 logger = setup_logger(__name__)
 

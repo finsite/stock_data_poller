@@ -37,17 +37,17 @@ Common labels
 helm.sh/chart: {{ include "stock_data_poller.chart" . }}
 {{ include "stock_data_poller.selectorLabels" . }}
 {{- if .Chart.AppVersion }}
-app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
+src.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 {{- end }}
-app.kubernetes.io/managed-by: {{ .Release.Service }}
+src.kubernetes.io/managed-by: {{ .Release.Service }}
 {{- end }}
 
 {{/*
 Selector labels
 */}}
 {{- define "stock_data_poller.selectorLabels" -}}
-app.kubernetes.io/name: {{ include "stock_data_poller.name" . }}
-app.kubernetes.io/instance: {{ .Release.Name }}
+src.kubernetes.io/name: {{ include "stock_data_poller.name" . }}
+src.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
 {{/*

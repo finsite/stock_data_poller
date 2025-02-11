@@ -1,5 +1,5 @@
 from unittest.mock import patch
-from app.pollers.yfinance_poller import YFinancePoller
+from src.pollers.yfinance_poller import YFinancePoller
 from requests.exceptions import Timeout
 
 
