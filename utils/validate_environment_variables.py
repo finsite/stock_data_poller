@@ -22,7 +22,7 @@ def validate_environment_variables(required_variables: List[str]) -> None:
         logger.error("required_variables must be a list of strings.")
         raise TypeError("required_variables must be a list of strings.")
 
-    # Check for missing environment variables
+    # Check for missing or empty environment variables
     missing_variables = [
         variable for variable in required_variables if not os.getenv(variable)
     ]
