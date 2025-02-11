@@ -1,4 +1,5 @@
 import pika
+import os
 from src.queue.queue_sender import QueueSender
 from src.utils.setup_logger import setup_logger
 from src.utils.validate_environment_variables import validate_environment_variables
@@ -6,15 +7,14 @@ from src.utils.validate_environment_variables import validate_environment_variab
 # Initialize logger
 logger = setup_logger(__name__)
 
-
 class BasePoller:
     """
     Base class for pollers that handles dynamic queue configuration and message sending.
     """
 
-    def __init__(self, queue_type: str, queue_url: str):
+    def __init__(self):
         """
-        Initializes the BasePoller with dynamic queue configuration.
+        Initializes the BasePoller with dynamic queue configuration based on environment variables.
 
         Args:
             queue_type (str): The type of the queue ('sqs' or 'rabbitmq').
@@ -23,18 +23,32 @@ class BasePoller:
         Raises:
             ValueError: If the queue type is invalid.
         """
-        # Validate required environment variables
-        validate_environment_variables(["QUEUE_TYPE", "QUEUE_URL"])
+        # Validate required environment variables for both RabbitMQ and SQS
+        validate_environment_variables([
+            "QUEUE_TYPE",
+            "RABBITMQ_HOST", 
+            "RABBITMQ_EXCHANGE",
+            "RABBITMQ_ROUTING_KEY",
+            "SQS_QUEUE_URL"
+        ])
 
-        # Ensure valid queue type
-        if queue_type not in {"sqs", "rabbitmq"}:
+        # Get queue type from environment variable
+        self.queue_type = os.getenv("QUEUE_TYPE", "rabbitmq").lower()
+
+        if self.queue_type not in {"rabbitmq", "sqs"}:
             logger.error("QUEUE_TYPE must be either 'sqs' or 'rabbitmq'.")
             raise ValueError("QUEUE_TYPE must be either 'sqs' or 'rabbitmq'.")
 
-        # Initialize the QueueSender
-        self.queue_sender = QueueSender(queue_type=queue_type, queue_url=queue_url)
+        # Initialize QueueSender based on the queue type
+        self.queue_sender = QueueSender(
+            queue_type=self.queue_type,
+            rabbitmq_host=os.getenv("RABBITMQ_HOST", "localhost"),
+            rabbitmq_exchange=os.getenv("RABBITMQ_EXCHANGE", "stock_data_exchange"),
+            rabbitmq_routing_key=os.getenv("RABBITMQ_ROUTING_KEY", "stock_data"),
+            sqs_queue_url=os.getenv("SQS_QUEUE_URL", "")
+        )
 
-        # RabbitMQ-specific attributes
+        # RabbitMQ-specific attributes (if RabbitMQ is used)
         self.connection = None
         self.channel = None
 
@@ -45,9 +59,10 @@ class BasePoller:
         try:
             if not self.connection or self.connection.is_closed:
                 self.connection = pika.BlockingConnection(
-                    pika.URLParameters(self.queue_sender.queue_url)
+                    pika.URLParameters(self.queue_sender.rabbitmq_host)
                 )
                 self.channel = self.connection.channel()
+                self.channel.exchange_declare(exchange=self.queue_sender.rabbitmq_exchange, exchange_type='direct')
                 logger.info("Connected to RabbitMQ successfully.")
         except Exception as e:
             logger.error(f"Failed to connect to RabbitMQ: {e}")
@@ -64,13 +79,13 @@ class BasePoller:
             Exception: If sending the message fails.
         """
         try:
-            if self.queue_sender.queue_type == "rabbitmq":
+            if self.queue_type == "rabbitmq":
                 self._send_to_rabbitmq(payload)
             else:
                 self._send_to_sqs(payload)
         except Exception as e:
             logger.error(
-                f"Failed to send message to the {self.queue_sender.queue_type} queue: {e}"
+                f"Failed to send message to the {self.queue_type} queue: {e}"
             )
             raise
 
@@ -83,11 +98,13 @@ class BasePoller:
         """
         try:
             self.connect_to_rabbitmq()
-            queue_name = self.queue_sender.queue_url.split("/")[-1]  # Extract queue name
+
+            # Declare the queue and send the message
+            queue_name = self.queue_sender.rabbitmq_exchange
             self.channel.queue_declare(queue=queue_name, durable=True)
             self.channel.basic_publish(
-                exchange="",
-                routing_key=queue_name,
+                exchange=self.queue_sender.rabbitmq_exchange,
+                routing_key=self.queue_sender.rabbitmq_routing_key,
                 body=str(payload),
                 properties=pika.BasicProperties(delivery_mode=2),  # Persistent messages
             )
@@ -114,7 +131,7 @@ class BasePoller:
         """
         Closes the RabbitMQ connection if it exists.
         """
-        if self.queue_sender.queue_type == "rabbitmq" and self.connection:
+        if self.queue_type == "rabbitmq" and self.connection:
             try:
                 self.connection.close()
                 logger.info("RabbitMQ connection closed.")

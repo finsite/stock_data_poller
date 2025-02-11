@@ -1,4 +1,4 @@
-import os
+# import os
 import time
 from src.poller_factory import PollerFactory
 from src.utils.rate_limit import RateLimiter
@@ -23,7 +23,10 @@ validate_environment_variables(required_env_vars)
 
 # Queue Configuration
 QUEUE_TYPE = os.getenv("QUEUE_TYPE", "rabbitmq")
-QUEUE_URL = os.getenv("SQS_QUEUE_URL", "")
+QUEUE_URL = os.getenv("SQS_QUEUE_URL", "")  # Used for SQS only
+RABBITMQ_HOST = os.getenv("RABBITMQ_HOST", "localhost")
+RABBITMQ_EXCHANGE = os.getenv("RABBITMQ_EXCHANGE", "stock_data_exchange")
+RABBITMQ_ROUTING_KEY = os.getenv("RABBITMQ_ROUTING_KEY", "stock_data")
 
 if QUEUE_TYPE not in ["rabbitmq", "sqs"]:
     raise ValueError(f"Unsupported QUEUE_TYPE: {QUEUE_TYPE}")
@@ -39,12 +42,17 @@ RATE_LIMIT = int(os.getenv("RATE_LIMIT", 5))  # Requests per second
 rate_limiter = RateLimiter(max_requests=RATE_LIMIT, time_window=1)
 
 # Initialize the queue sender
-queue_sender = QueueSender(queue_type=QUEUE_TYPE, queue_url=QUEUE_URL)
+queue_sender = QueueSender(
+    queue_type=QUEUE_TYPE,
+    queue_url=QUEUE_URL,
+    rabbitmq_host=RABBITMQ_HOST,
+    rabbitmq_exchange=RABBITMQ_EXCHANGE,
+    rabbitmq_routing_key=RABBITMQ_ROUTING_KEY,
+)
 
 # Initialize the PollerFactory and create the poller
 poller_factory = PollerFactory()
 poller = poller_factory.create_poller()
-
 
 def main():
     """
@@ -84,7 +92,6 @@ def main():
         logger.info("Shutting down...")
         queue_sender.close()
 
-
 def get_symbols_to_poll():
     """
     Get the list of stock symbols to poll.
@@ -92,7 +99,6 @@ def get_symbols_to_poll():
     Defaults to 'AAPL,GOOG,MSFT' if SYMBOLS is not set in the environment.
     """
     return os.getenv("SYMBOLS", "AAPL,GOOG,MSFT").split(",")
-
 
 if __name__ == "__main__":
     main()

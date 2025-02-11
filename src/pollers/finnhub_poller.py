@@ -1,4 +1,5 @@
 from typing import List, Dict, Any
+import os
 
 from src.pollers.base_poller import BasePoller
 from src.utils.retry_request import retry_request
@@ -22,7 +23,10 @@ class FinnhubPoller(BasePoller):
             api_key (str): API key for accessing Finnhub API.
         """
         super().__init__()
-        validate_environment_variables(["SQS_QUEUE_URL", "FINNHUB_API_KEY"])
+
+        # Validate environment variables needed for both RabbitMQ and SQS
+        validate_environment_variables(["QUEUE_TYPE", "FINNHUB_API_KEY", "RABBITMQ_HOST", "RABBITMQ_EXCHANGE", "RABBITMQ_ROUTING_KEY", "SQS_QUEUE_URL"])
+
         self.api_key = api_key
 
     def poll(self, symbols: List[str]) -> None:
@@ -45,7 +49,7 @@ class FinnhubPoller(BasePoller):
                     self._handle_failure(f"Validation failed for symbol: {symbol}")
                     continue
 
-                # Send payload to the queue
+                # Send payload to the queue (RabbitMQ or SQS)
                 self.send_to_queue(payload)
 
                 # Track success metrics
@@ -121,3 +125,64 @@ class FinnhubPoller(BasePoller):
         """
         track_polling_metrics("failure", error=error)
         track_request_metrics("failure", source="Finnhub")
+
+    def send_to_queue(self, payload: Dict[str, Any]) -> None:
+        """
+        Sends the payload to the appropriate queue system (RabbitMQ or SQS).
+        """
+        queue_type = os.getenv("QUEUE_TYPE", "rabbitmq")
+
+        if queue_type == "rabbitmq":
+            self.send_to_rabbitmq(payload)
+        elif queue_type == "sqs":
+            self.send_to_sqs(payload)
+        else:
+            raise ValueError(f"Unsupported QUEUE_TYPE: {queue_type}")
+
+    def send_to_rabbitmq(self, payload: Dict[str, Any]) -> None:
+        """
+        Sends the payload to a RabbitMQ exchange.
+        """
+        import pika
+        try:
+            rabbitmq_host = os.getenv("RABBITMQ_HOST", "localhost")
+            rabbitmq_exchange = os.getenv("RABBITMQ_EXCHANGE", "stock_data_exchange")
+            rabbitmq_routing_key = os.getenv("RABBITMQ_ROUTING_KEY", "stock_data")
+
+            # Establish RabbitMQ connection and declare exchange
+            connection = pika.BlockingConnection(pika.ConnectionParameters(host=rabbitmq_host))
+            channel = connection.channel()
+            channel.exchange_declare(exchange=rabbitmq_exchange, exchange_type='direct')
+
+            # Publish the message to RabbitMQ exchange
+            message_body = json.dumps(payload)
+            channel.basic_publish(
+                exchange=rabbitmq_exchange,
+                routing_key=rabbitmq_routing_key,
+                body=message_body
+            )
+            logger.info(f"Sent data to RabbitMQ exchange {rabbitmq_exchange} with routing key {rabbitmq_routing_key}")
+            connection.close()
+
+        except Exception as e:
+            logger.error(f"Error sending data to RabbitMQ: {str(e)}")
+
+    def send_to_sqs(self, payload: Dict[str, Any]) -> None:
+        """
+        Sends the payload to an SQS queue.
+        """
+        import boto3
+        try:
+            sqs = boto3.client('sqs')
+            sqs_queue_url = os.getenv("SQS_QUEUE_URL")
+
+            if not sqs_queue_url:
+                raise ValueError("SQS_QUEUE_URL is not set in environment variables.")
+
+            # Send the message to SQS
+            message_body = json.dumps(payload)
+            sqs.send_message(QueueUrl=sqs_queue_url, MessageBody=message_body)
+            logger.info(f"Sent data to SQS queue: {sqs_queue_url}")
+
+        except Exception as e:
+            logger.error(f"Error sending data to SQS: {str(e)}")
