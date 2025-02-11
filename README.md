@@ -1,29 +1,68 @@
-# Kubernetes Template Project
+# Template
 
-The Kubernetes Template Project is a template for starting new projects in the GitHub organizations owned by Kubernetes. All Kubernetes projects, at minimum, must have the following files:
+## Overview
 
-- a `README.md` outlining the project goals, sponsoring sig, and community contact information
-- an `OWNERS` with the project leads listed as approvers ([docs on `OWNERS` files][owners])
-- a `CONTRIBUTING.md` outlining how to contribute to the project
-- an unmodified copy of `code-of-conduct.md` from this repo, which outlines community behavior and the consequences of breaking the code
-- a `LICENSE` which must be Apache 2.0 for code projects, or [Creative Commons 4.0] for documentation repositories, without any custom content
-- a `SECURITY_CONTACTS` with the contact points for the Product Security Team 
-  to reach out to for triaging and handling of incoming issues. They must agree to abide by the
-  [Embargo Policy](https://git.k8s.io/security/private-distributors-list.md#embargo-policy)
-  and will be removed and replaced if they violate that agreement.
+This is a generic template for a Python application. Please update the details as necessary to fit your project.
 
-## Community, discussion, contribution, and support
+## Getting Started
 
-Learn how to engage with the Kubernetes community on the [community page](http://kubernetes.io/community/).
+Provide a brief description of the application and its purpose.
 
-You can reach the maintainers of this project at:
+### Prerequisites
 
-- [Slack](https://slack.k8s.io/)
-- [Mailing List](https://groups.google.com/a/kubernetes.io/g/dev)
+List any prerequisites needed to run the application.
 
-### Code of conduct
+```markdown
+Each script supports error logging by default. This feature is optional and can be enabled for debugging purposes.
 
-Participation in the Kubernetes community is governed by the [Kubernetes Code of Conduct](code-of-conduct.md).
+Example files are included with each script. Use the command `get-help <scriptname>` to view examples.
+```
 
-[owners]: https://git.k8s.io/community/contributors/guide/owners.md
-[Creative Commons 4.0]: https://git.k8s.io/website/LICENSE
+## Installation
+
+1. Clone the repository.
+2. Set up a virtual environment:
+
+   ```bash
+   python -m venv venv
+   source venv/bin/activate  # On Windows, use `venv\Scripts\activate`
+
+   ```
+
+## Environment Variables
+
+Define any necessary environment variables for the application:
+
+
+## Example .env File
+
+Provide an example `.env` file to illustrate environment variable configuration.
+
+## Running the Tests
+
+Explain how to execute the tests for the application.
+
+## Deployment
+
+Document the deployment process, including any required parameters and instructions.
+
+## Built With
+
+- [Visual Studio Code](https://code.visualstudio.com/)
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit issues or pull requests for improvements.
+
+## Authors
+
+- **Mark Quinn** - [Mobious999](https://github.com/mobious999)
+- **Jason Qualkenbush** - [jasonqualkenbush](https://github.com/CosmicQ)
+
+## License
+
+This project is licensed under the Apache 2.0 License.
+
+## Acknowledgments
+
+Include any references or acknowledgments here.

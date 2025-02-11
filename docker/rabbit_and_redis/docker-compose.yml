@@ -1,0 +1,153 @@
+version: '3.9'
+
+services:
+  rabbitmq1:
+    image: rabbitmq:3.12-management
+    container_name: rabbitmq1
+    hostname: rabbitmq1
+    environment:
+      RABBITMQ_ERLANG_COOKIE: "shared_erlang_cookie_secret"
+      RABBITMQ_DEFAULT_USER: admin
+      RABBITMQ_DEFAULT_PASS: securepassword
+      RABBITMQ_NODENAME: rabbit@rabbitmq1
+      RABBITMQ_CLUSTER_PARTITION_HANDLING: autoheal
+      RABBITMQ_HIPE_COMPILE: "1"
+      RABBITMQ_LOGS: "/var/log/rabbitmq/rabbit.log"
+    ports:
+      - "15672:15672"  # Management console
+      - "5672:5672"    # AMQP port
+      - "25672:25672"  # Cluster communication
+    volumes:
+      - rabbitmq1_data:/var/lib/rabbitmq
+      - ./rabbitmq_definitions.json:/etc/rabbitmq/definitions.json:ro
+      - ./rabbitmq.conf:/etc/rabbitmq/rabbitmq.conf:ro
+    networks:
+      - rabbitmq_net
+    deploy:
+      resources:
+        limits:
+          cpus: "1"
+          memory: "1G"
+      replicas: 3  # Horizontal scaling (in orchestration)
+
+  rabbitmq2:
+    image: rabbitmq:3.12-management
+    container_name: rabbitmq2
+    hostname: rabbitmq2
+    environment:
+      RABBITMQ_ERLANG_COOKIE: "shared_erlang_cookie_secret"
+      RABBITMQ_DEFAULT_USER: admin
+      RABBITMQ_DEFAULT_PASS: securepassword
+      RABBITMQ_NODENAME: rabbit@rabbitmq2
+      RABBITMQ_CLUSTER_PARTITION_HANDLING: autoheal
+    ports:
+      - "5673:5672"
+      - "25673:25672"
+    volumes:
+      - rabbitmq2_data:/var/lib/rabbitmq
+    command: >
+      rabbitmq-server
+      --join-cluster rabbit@rabbitmq1
+    networks:
+      - rabbitmq_net
+    deploy:
+      resources:
+        limits:
+          cpus: "1"
+          memory: "1G"
+      replicas: 3  # Horizontal scaling
+
+  rabbitmq3:
+    image: rabbitmq:3.12-management
+    container_name: rabbitmq3
+    hostname: rabbitmq3
+    environment:
+      RABBITMQ_ERLANG_COOKIE: "shared_erlang_cookie_secret"
+      RABBITMQ_DEFAULT_USER: admin
+      RABBITMQ_DEFAULT_PASS: securepassword
+      RABBITMQ_NODENAME: rabbit@rabbitmq3
+      RABBITMQ_CLUSTER_PARTITION_HANDLING: autoheal
+    ports:
+      - "5674:5672"
+      - "25674:25672"
+    volumes:
+      - rabbitmq3_data:/var/lib/rabbitmq
+    command: >
+      rabbitmq-server
+      --join-cluster rabbit@rabbitmq1
+    networks:
+      - rabbitmq_net
+    deploy:
+      resources:
+        limits:
+          cpus: "1"
+          memory: "1G"
+      replicas: 3  # Horizontal scaling
+
+  redis:
+    image: bitnami/redis:7.2
+    container_name: redis
+    environment:
+      ALLOW_EMPTY_PASSWORD: "no"
+      REDIS_PASSWORD: redispassword
+      REDIS_REPLICATION_MODE: "master"
+      REDIS_LOGLEVEL: "notice"  # Enable logs with a standard level
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/bitnami/redis/data
+    networks:
+      - redis_net
+
+  redis-replica:
+    image: bitnami/redis:7.2
+    container_name: redis-replica
+    environment:
+      ALLOW_EMPTY_PASSWORD: "no"
+      REDIS_PASSWORD: redispassword
+      REDIS_REPLICATION_MODE: "replica"
+      REDIS_MASTER_HOST: redis
+      REDIS_MASTER_PASSWORD: redispassword
+    ports:
+      - "6380:6379"
+    volumes:
+      - redis_replica_data:/bitnami/redis/data
+    networks:
+      - redis_net
+
+  redis-sentinel:
+    image: bitnami/redis-sentinel:7.2
+    container_name: redis-sentinel
+    environment:
+      REDIS_MASTER_HOST: redis
+      REDIS_MASTER_PASSWORD: redispassword
+      REDIS_SENTINEL_QUORUM: "2"
+      REDIS_SENTINEL_PASSWORD: "sentinelpassword"
+    ports:
+      - "26379:26379"
+    volumes:
+      - ./sentinel.conf:/opt/bitnami/redis-sentinel/etc/sentinel.conf
+    command: redis-sentinel /opt/bitnami/redis-sentinel/etc/sentinel.conf
+    networks:
+      - redis_net
+
+  redisinsight:
+    image: redislabs/redisinsight:latest
+    container_name: redisinsight
+    ports:
+      - "8001:8001"  # RedisInsight UI
+    environment:
+      REDIS_URL: redis://redis:6379
+    networks:
+      - redis_net
+
+volumes:
+  rabbitmq1_data:
+  rabbitmq2_data:
+  rabbitmq3_data:
+  redis_data:
+  redis_replica_data:
+
+networks:
+  rabbitmq_net:
+  redis_net:

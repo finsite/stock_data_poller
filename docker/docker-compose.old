@@ -1,0 +1,147 @@
+# version: '3.8'
+
+# services:
+#   # Poller Service (The application that polls stock data)
+#   poller:
+#     image: your-poller-image:latest        # Replace with your Docker image name
+#     container_name: stock_poller
+#     build: .
+#     environment:
+#       - POLLER_TYPE=${POLLER_TYPE}
+#       - POLL_INTERVAL=${POLL_INTERVAL}
+#       - REQUEST_TIMEOUT=${REQUEST_TIMEOUT}
+#       - MAX_RETRIES=${MAX_RETRIES}
+#       - RETRY_DELAY=${RETRY_DELAY}
+#       - LOG_LEVEL=${LOG_LEVEL}
+#       - POLYGON_API_KEY=${POLYGON_API_KEY}
+#       - FINNHUB_API_KEY=${FINNHUB_API_KEY}
+#       - ALPHA_VANTAGE_API_KEY=${ALPHA_VANTAGE_API_KEY}
+#       - YFINANCE_API_KEY=${YFINANCE_API_KEY}
+#       - IEX_API_KEY=${IEX_API_KEY}
+#       - QUANDL_API_KEY=${QUANDL_API_KEY}
+#       - FINNHUB_FILL_RATE_LIMIT=${FINNHUB_FILL_RATE_LIMIT}
+#       - POLYGON_FILL_RATE_LIMIT=${POLYGON_FILL_RATE_LIMIT}
+#       - ALPHA_VANTAGE_FILL_RATE_LIMIT=${ALPHA_VANTAGE_FILL_RATE_LIMIT}
+#       - YFINANCE_FILL_RATE_LIMIT=${YFINANCE_FILL_RATE_LIMIT}
+#       - IEX_FILL_RATE_LIMIT=${IEX_FILL_RATE_LIMIT}
+#       - QUANDL_FILL_RATE_LIMIT=${QUANDL_FILL_RATE_LIMIT}
+#       - RABBITMQ_DEFAULT_USER=${RABBITMQ_DEFAULT_USER}
+#       - RABBITMQ_DEFAULT_PASS=${RABBITMQ_DEFAULT_PASS}
+#       - RABBITMQ_DEFAULT_VHOST=${RABBITMQ_DEFAULT_VHOST}
+#       - RABBITMQ_ERLANG_COOKIE=${RABBITMQ_ERLANG_COOKIE}
+#       - RABBITMQ_CLUSTER_NODES=${RABBITMQ_CLUSTER_NODES}
+#       - QUEUE_1=${QUEUE_1}
+#       - QUEUE_2=${QUEUE_2}
+#       - QUEUE_3=${QUEUE_3}
+#       - QUEUE_4=${QUEUE_4}
+#       - QUEUE_5=${QUEUE_5}
+#       - QUEUE_6=${QUEUE_6}
+#       - QUEUE_7=${QUEUE_7}
+#       - QUEUE_8=${QUEUE_8}
+#       - QUEUE_9=${QUEUE_9}
+#       - QUEUE_10=${QUEUE_10}
+#       - ENABLE_LOGGING=${ENABLE_LOGGING}
+#       - LOG_LEVEL=${LOG_LEVEL}
+#       - CLOUD_LOGGING_ENABLED=${CLOUD_LOGGING_ENABLED}
+#       - CLOUD_LOGGING_ENDPOINT=${CLOUD_LOGGING_ENDPOINT}
+#       - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+#       - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+#       - AWS_REGION=${AWS_REGION}
+#       - ENABLE_RETRY=${ENABLE_RETRY}
+#       - ENABLE_BACKFILL=${ENABLE_BACKFILL}
+#       - POLL_TIMEOUT=${POLL_TIMEOUT}
+#       - MAX_API_CALLS_PER_MIN=${MAX_API_CALLS_PER_MIN}
+#       - QUEUE_TYPE=${QUEUE_TYPE}
+#       - SQS_QUEUE_URL=${SQS_QUEUE_URL}
+#       - REDIS_HOST=redis                                # Set Redis as the host
+#       - REDIS_PORT=6379                                  # Default Redis port
+#     depends_on:
+#       - rabbitmq
+#       - redis
+#     restart: always
+#     volumes:
+#       - .:/app
+
+#   # RabbitMQ Cluster Service (High Availability Setup)
+#   rabbitmq:
+#     image: bitnami/rabbitmq:latest         # Using Bitnami's RabbitMQ image
+#     container_name: rabbitmq
+#     environment:
+#       - RABBITMQ_DEFAULT_USER=${RABBITMQ_DEFAULT_USER}
+#       - RABBITMQ_DEFAULT_PASS=${RABBITMQ_DEFAULT_PASS}
+#       - RABBITMQ_DEFAULT_VHOST=${RABBITMQ_DEFAULT_VHOST}
+#       - RABBITMQ_ERLANG_COOKIE=${RABBITMQ_ERLANG_COOKIE}
+#       - RABBITMQ_CLUSTER_NODES=${RABBITMQ_CLUSTER_NODES}
+#       - RABBITMQ_NODENAME=rabbit@rabbitmq1   # Set the node name for RabbitMQ
+#     ports:
+#       - "5672:5672"                       # Default RabbitMQ port for AMQP protocol
+#       - "15672:15672"                     # Default port for RabbitMQ Management UI
+#     volumes:
+#       - rabbitmq_data:/bitnami/rabbitmq    # Persist RabbitMQ data
+#     restart: always
+#     networks:
+#       - rabbitmq_network
+
+#   rabbitmq_node2:
+#     image: bitnami/rabbitmq:latest         # Another RabbitMQ node for high availability
+#     container_name: rabbitmq_node2
+#     environment:
+#       - RABBITMQ_DEFAULT_USER=${RABBITMQ_DEFAULT_USER}
+#       - RABBITMQ_DEFAULT_PASS=${RABBITMQ_DEFAULT_PASS}
+#       - RABBITMQ_DEFAULT_VHOST=${RABBITMQ_DEFAULT_VHOST}
+#       - RABBITMQ_ERLANG_COOKIE=${RABBITMQ_ERLANG_COOKIE}
+#       - RABBITMQ_NODENAME=rabbit@rabbitmq2   # Set the node name for RabbitMQ
+#       - RABBITMQ_CLUSTER_NODES=rabbit@rabbitmq1,rabbit@rabbitmq2
+#     depends_on:
+#       - rabbitmq
+#     restart: always
+#     networks:
+#       - rabbitmq_network
+
+#   # Redis Cluster (High Availability setup)
+#   redis_primary:
+#     image: redis:alpine
+#     container_name: redis_primary
+#     environment:
+#       - REDIS_PASSWORD=${REDIS_PASSWORD}
+#     ports:
+#       - "6379:6379"                       # Redis default port
+#     networks:
+#       - redis_network
+#     restart: always
+#     volumes:
+#       - redis_data:/data
+
+#   redis_secondary:
+#     image: redis:alpine
+#     container_name: redis_secondary
+#     environment:
+#       - REDIS_PASSWORD=${REDIS_PASSWORD}
+#     depends_on:
+#       - redis_primary
+#     networks:
+#       - redis_network
+#     restart: always
+
+#   # AWS SQS Service (Optional, if you're using SQS instead of RabbitMQ)
+#   # Uncomment if needed.
+#   # sqs:
+#   #   image: amazon/aws-cli:latest
+#   #   container_name: aws-sqs
+#   #   command: >
+#   #     aws sqs create-queue --queue-name ${SQS_QUEUE_NAME}
+#   #   environment:
+#   #     - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+#   #     - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+#   #     - AWS_REGION=${AWS_REGION}
+#   #   restart: always
+
+# # volumes:
+# #   rabbitmq_data:                            # Volume for RabbitMQ to persist data
+# #   redis_data:                               # Volume for Redis to persist data
+
+# # networks:
+# #   rabbitmq_network:
+# #     driver: bridge
+# #   redis_network:
+# #     driver: bridge

@@ -1,0 +1,40 @@
+{
+    "vhosts": [
+      {
+        "name": "/"
+      }
+    ],
+    "queues": [
+      { "name": "queue1", "vhost": "/", "durable": true },
+      { "name": "queue2", "vhost": "/", "durable": true },
+      { "name": "queue3", "vhost": "/", "durable": true },
+      { "name": "queue4", "vhost": "/", "durable": true },
+      { "name": "queue5", "vhost": "/", "durable": true },
+      { "name": "queue6", "vhost": "/", "durable": true },
+      { "name": "queue7", "vhost": "/", "durable": true },
+      { "name": "queue8", "vhost": "/", "durable": true },
+      { "name": "queue9", "vhost": "/", "durable": true },
+      { "name": "queue10", "vhost": "/", "durable": true }
+    ],
+    "exchanges": [
+      {
+        "name": "exchange1",
+        "vhost": "/",
+        "type": "direct",
+        "durable": true
+      }
+    ],
+    "bindings": [
+      { "source": "exchange1", "vhost": "/", "destination": "queue1", "destination_type": "queue", "routing_key": "key1" },
+      { "source": "exchange1", "vhost": "/", "destination": "queue2", "destination_type": "queue", "routing_key": "key2" },
+      { "source": "exchange1", "vhost": "/", "destination": "queue3", "destination_type": "queue", "routing_key": "key3" },
+      { "source": "exchange1", "vhost": "/", "destination": "queue4", "destination_type": "queue", "routing_key": "key4" },
+      { "source": "exchange1", "vhost": "/", "destination": "queue5", "destination_type": "queue", "routing_key": "key5" },
+      { "source": "exchange1", "vhost": "/", "destination": "queue6", "destination_type": "queue", "routing_key": "key6" },
+      { "source": "exchange1", "vhost": "/", "destination": "queue7", "destination_type": "queue", "routing_key": "key7" },
+      { "source": "exchange1", "vhost": "/", "destination": "queue8", "destination_type": "queue", "routing_key": "key8" },
+      { "source": "exchange1", "vhost": "/", "destination": "queue9", "destination_type": "queue", "routing_key": "key9" },
+      { "source": "exchange1", "vhost": "/", "destination": "queue10", "destination_type": "queue", "routing_key": "key10" }
+    ]
+  }
+  

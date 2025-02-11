@@ -1,0 +1,93 @@
+version: '3.8'
+
+services:
+  redis-node-1:
+    image: bitnami/redis-cluster:latest
+    container_name: redis-node-1
+    environment:
+      - REDIS_NODES=redis-node-1,redis-node-2,redis-node-3,redis-node-4,redis-node-5,redis-node-6
+      - REDIS_CLUSTER_CREATOR=yes
+      - REDIS_PASSWORD=${REDIS_PASSWORD}
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_node_1_data:/bitnami/redis
+    networks:
+      - redis_network
+
+  redis-node-2:
+    image: bitnami/redis-cluster:latest
+    container_name: redis-node-2
+    environment:
+      - REDIS_NODES=redis-node-1,redis-node-2,redis-node-3,redis-node-4,redis-node-5,redis-node-6
+      - REDIS_PASSWORD=${REDIS_PASSWORD}
+    depends_on:
+      - redis-node-1
+    volumes:
+      - redis_node_2_data:/bitnami/redis
+    networks:
+      - redis_network
+
+  redis-node-3:
+    image: bitnami/redis-cluster:latest
+    container_name: redis-node-3
+    environment:
+      - REDIS_NODES=redis-node-1,redis-node-2,redis-node-3,redis-node-4,redis-node-5,redis-node-6
+      - REDIS_PASSWORD=${REDIS_PASSWORD}
+    depends_on:
+      - redis-node-1
+    volumes:
+      - redis_node_3_data:/bitnami/redis
+    networks:
+      - redis_network
+
+  redis-node-4:
+    image: bitnami/redis-cluster:latest
+    container_name: redis-node-4
+    environment:
+      - REDIS_NODES=redis-node-1,redis-node-2,redis-node-3,redis-node-4,redis-node-5,redis-node-6
+      - REDIS_PASSWORD=${REDIS_PASSWORD}
+    depends_on:
+      - redis-node-1
+    volumes:
+      - redis_node_4_data:/bitnami/redis
+    networks:
+      - redis_network
+
+  redis-node-5:
+    image: bitnami/redis-cluster:latest
+    container_name: redis-node-5
+    environment:
+      - REDIS_NODES=redis-node-1,redis-node-2,redis-node-3,redis-node-4,redis-node-5,redis-node-6
+      - REDIS_PASSWORD=${REDIS_PASSWORD}
+    depends_on:
+      - redis-node-1
+    volumes:
+      - redis_node_5_data:/bitnami/redis
+    networks:
+      - redis_network
+
+  redis-node-6:
+    image: bitnami/redis-cluster:latest
+    container_name: redis-node-6
+    environment:
+      - REDIS_NODES=redis-node-1,redis-node-2,redis-node-3,redis-node-4,redis-node-5,redis-node-6
+      - REDIS_PASSWORD=${REDIS_PASSWORD}
+    depends_on:
+      - redis-node-1
+    volumes:
+      - redis_node_6_data:/bitnami/redis
+    networks:
+      - redis_network
+
+volumes:
+  redis_node_1_data:
+  redis_node_2_data:
+  redis_node_3_data:
+  redis_node_4_data:
+  redis_node_5_data:
+  redis_node_6_data:
+
+networks:
+  redis_network:
+    driver: bridge

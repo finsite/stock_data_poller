@@ -1,0 +1,61 @@
+{
+  "vhosts": [
+    {
+      "name": "/"
+    }
+  ],
+  "policies": [
+    {
+      "vhost": "/",
+      "name": "ha-all",
+      "pattern": ".*",
+      "definition": {
+        "ha-mode": "all",
+        "ha-sync-mode": "automatic"
+      },
+      "priority": 0
+    }
+  ],
+  "queues": [
+    {
+      "name": "quorum_queue_1",
+      "vhost": "/",
+      "durable": true,
+      "arguments": {
+        "x-queue-type": "quorum"
+      }
+    },
+    {
+      "name": "quorum_queue_2",
+      "vhost": "/",
+      "durable": true,
+      "arguments": {
+        "x-queue-type": "quorum"
+      }
+    }
+  ],
+  "exchanges": [
+    {
+      "name": "test_exchange",
+      "vhost": "/",
+      "type": "direct",
+      "durable": true
+    }
+  ],
+  "bindings": [
+    {
+      "source": "test_exchange",
+      "vhost": "/",
+      "destination": "quorum_queue_1",
+      "destination_type": "queue",
+      "routing_key": "key1"
+    },
+    {
+      "source": "test_exchange",
+      "vhost": "/",
+      "destination": "quorum_queue_2",
+      "destination_type": "queue",
+      "routing_key": "key2"
+    }
+  ]
+}
