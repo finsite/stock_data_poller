@@ -1,2 +1,40 @@
-sphinx==7.2.2          # For generating documentation
-sphinx-rtd-theme==3.0.2  # ReadTheDocs theme for Sphinx
+# ========================
+# Core Dependencies
+# ========================
+hvac>=2.1               # HashiCorp Vault client for secrets management
+pika>=1.3               # RabbitMQ (AMQP) client for queue management
+boto3>=1.34             # AWS SDK for Python (SQS integration)
+requests>=2.31          # HTTP client for making API requests
+
+# ========================
+# API Clients
+# ========================
+yfinance>=0.2           # Yahoo Finance data retrieval
+alpha_vantage>=2.3      # Alpha Vantage API client
+iexfinance>=0.5         # IEX Cloud API client
+quandl>=3.7            # Quandl API client
+finnhub-python>=2.4     # Finnhub API client
+polygon-api-client>=1.0 # Polygon.io API client
+
+# ========================
+# Data Processing & Analysis
+# ========================
+pandas~=2.1             # Data analysis and manipulation
+numpy~=1.26             # Scientific computing with arrays
+
+# ========================
+# Logging & Monitoring
+# ========================
+loguru>=0.7             # Advanced logging library
+
+# ========================
+# Development & Documentation (Use in Dev Only)
+# ========================
+# Move these to `requirements-dev.txt` if used only in development
+sphinx>=7.2             # For generating documentation
+sphinx-rtd-theme>=3.0   # ReadTheDocs theme for Sphinx
+
+# ========================
+# Pin Transitive Dependencies (For Stability Later)
+# ========================
+# Add dependencies here if you find any breaking changes from updates
