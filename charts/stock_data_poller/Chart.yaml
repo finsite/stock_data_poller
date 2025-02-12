@@ -1,5 +1,5 @@
 apiVersion: v2
-name: my-kubernetes-app
+name: stock_data_poller
 description: A Helm chart for Kubernetes applications
 type: application
 version: 0.1.0

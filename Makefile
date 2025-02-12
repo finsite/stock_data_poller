@@ -1,6 +1,6 @@
 # Define variables
-APP_NAME = my-kubernetes-project
-NAMESPACE = my-kubernetes-project
+APP_NAME = STOCK_DATA_POLLER
+NAMESPACE = STOCK_DATA_POLLER
 
 # Kubernetes commands
 deploy:
