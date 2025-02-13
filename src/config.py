@@ -30,6 +30,9 @@ def load_vault_secrets():
 # Load secrets
 VAULT_CONFIG = load_vault_secrets()
 
+#symbols
+SYMBOLS = VAULT_CONFIG.get("SYMBOLS", os.getenv("SYMBOLS", "AAPL,GOOG,MSFT"))
+
 # ✅ RabbitMQ exchange-driven setup (No direct queues)
 POLLER_TYPE = VAULT_CONFIG.get("POLLER_TYPE", os.getenv("POLLER_TYPE", "stock"))
 QUEUE_TYPE = VAULT_CONFIG.get("QUEUE_TYPE", os.getenv("QUEUE_TYPE", "rabbitmq"))
