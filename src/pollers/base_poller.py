@@ -1,6 +1,6 @@
 import pika
 import os
-from queue.queue_sender import QueueSender
+from message_queue.queue_sender import QueueSender
 from utils.setup_logger import setup_logger
 from utils.validate_environment_variables import validate_environment_variables
 

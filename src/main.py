@@ -7,7 +7,7 @@ from utils import (
     track_request_metrics,
     track_polling_metrics,
 )
-from queue.queue_sender import QueueSender
+from message_queue.queue_sender import QueueSender
 from config import (  # ✅ Importing updated config with Vault integration
     POLLER_TYPE,
     SYMBOLS,

@@ -1,5 +1,5 @@
 from unittest.mock import patch
-from src.queue.queue_sender import QueueSender
+from src.message_queue.queue_sender import QueueSender
 import boto3
 import pika
 import pytest
