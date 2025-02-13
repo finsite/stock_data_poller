@@ -30,13 +30,13 @@ services:
 
   poller:
     build: .
-    container_name: stock_data_poller
+    container_name: stock_data_poller  
     depends_on:
       - vault
       - vault-init
     environment:
       - VAULT_ADDR=http://vault:8200
-      - VAULT_TOKEN=root  
+      - VAULT_TOKEN=root
     restart: always
     networks:
       - stock_poller_network  
