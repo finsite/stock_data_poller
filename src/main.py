@@ -1,14 +1,14 @@
 import time
 from poller_factory import PollerFactory
-from src.utils.rate_limit import RateLimiter
-from src.utils.setup_logger import setup_logger
-from src.utils import (
+from utils.rate_limit import RateLimiter
+from utils.setup_logger import setup_logger
+from utils import (
     validate_environment_variables,
     track_request_metrics,
     track_polling_metrics,
 )
-from src.queue.queue_sender import QueueSender
-from src.config import (  # ✅ Importing updated config with Vault integration
+from queue.queue_sender import QueueSender
+from config import (  # ✅ Importing updated config with Vault integration
     POLLER_TYPE,
     SYMBOLS,
     RABBITMQ_HOST,

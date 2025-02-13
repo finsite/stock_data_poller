@@ -4,15 +4,15 @@ import json
 import pika
 import boto3
 from typing import List, Dict, Any
-from src.pollers.base_poller import BasePoller
-from src.utils.request_with_timeout import request_with_timeout
-from src.utils.retry_request import retry_request
-from src.utils.track_polling_metrics import track_polling_metrics
-from src.utils.track_request_metrics import track_request_metrics
-from src.utils.validate_data import validate_data
-from src.utils.validate_environment_variables import validate_environment_variables
-from src.utils.rate_limit import RateLimiter  # Corrected import
-from src.utils.setup_logger import setup_logger
+from pollers.base_poller import BasePoller
+from utils.request_with_timeout import request_with_timeout
+from utils.retry_request import retry_request
+from utils.track_polling_metrics import track_polling_metrics
+from utils.track_request_metrics import track_request_metrics
+from utils.validate_data import validate_data
+from utils.validate_environment_variables import validate_environment_variables
+from utils.rate_limit import RateLimiter  # Corrected import
+from utils.setup_logger import setup_logger
 
 logger = setup_logger(__name__)
 
