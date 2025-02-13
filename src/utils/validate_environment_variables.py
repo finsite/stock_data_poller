@@ -1,6 +1,6 @@
 import os
 from typing import List
-from src.utils.setup_logger import setup_logger
+from utils.setup_logger import setup_logger
 
 # Initialize logger
 logger = setup_logger(__name__)
