@@ -31,6 +31,6 @@ __all__ = [
 
 # Package-level logger setup
 import logging
-from src.utils.setup_logger import setup_logger
+from utils.setup_logger import setup_logger
 
 logger = setup_logger(name="pollers")

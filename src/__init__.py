@@ -3,7 +3,7 @@ This module initializes the main application package.
 
 The app package is structured as follows:
 - pollers: Handles data polling from various APIs (e.g., AlphaVantage, YFinance).
-- queue: Manages queue logic for RabbitMQ and SQS.
+- message_queue: Manages queue logic for RabbitMQ and SQS.
 - utils: Provides utility functions for logging, environment validation, rate-limiting, etc.
 
 Exports:
@@ -13,7 +13,7 @@ Exports:
   request_with_timeout, track_polling_metrics, track_request_metrics, validate_data
 """
 
-# ✅ Import pollers (from `/src/pollers/`)
+# ✅ Import pollers (from `pollers/`)
 from .pollers.alphavantage_poller import AlphaVantagePoller
 from .pollers.base_poller import BasePoller
 from .pollers.finnhub_poller import FinnhubPoller
@@ -25,7 +25,7 @@ from .pollers.yfinance_poller import YFinancePoller
 # ✅ Import queue logic
 from .message_queue.queue_sender import QueueSender
 
-# ✅ Import utilities (from `/src/utils/`)
+# ✅ Import utilities (from `utils/`)
 from .utils.rate_limit import RateLimiter
 from .utils.request_with_timeout import request_with_timeout
 from .utils.retry_request import retry_request
