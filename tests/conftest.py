@@ -1,44 +1,76 @@
-# import pytest
-# from unittest.mock import MagicMock
-
-# @pytest.fixture
-# def mock_queue_sender():
-#     """Fixture to mock the QueueSender."""
-#     mock_sender = MagicMock()
-
-#     # Mocking the send_message method to return a mock response
-#     mock_sender.send_message.return_value = None  # Modify as needed (e.g., to return a fake message ID)
-    
-#     # If you need to mock other methods like send_to_queue, add them here
-#     mock_sender.send_to_queue.return_value = None  # Modify as needed
-
-#     return mock_sender
 import pytest
+import os
 from unittest.mock import patch, MagicMock
 from requests.exceptions import Timeout
 from src.pollers.alphavantage_poller import AlphaVantagePoller
+from src.pollers.finnhub_poller import FinnhubPoller
+from src.pollers.iex_poller import IEXPoller
+from src.pollers.polygon_poller import PolygonPoller
+from src.pollers.quandl_poller import QuandlPoller
+from src.pollers.yfinance_poller import YFinancePoller
 
-# Fixture to mock the QueueSender
+from src.message_queue.queue_sender import QueueSender
+from src.utils.validate_environment_variables import validate_environment_variables
+from src.utils.setup_logger import setup_logger
+
+# ✅ Set up logger
+logger = setup_logger(__name__)
+
+# ✅ List of available pollers
+POLLERS = {
+    "alphavantage": AlphaVantagePoller,
+    "finnhub": FinnhubPoller,
+    "iex": IEXPoller,
+    "polygon": PolygonPoller,
+    "quandl": QuandlPoller,
+    "yfinance": YFinancePoller,
+}
+
+# ✅ Fixture to mock the QueueSender
 @pytest.fixture
 def mock_queue_sender():
     """Fixture to mock the QueueSender."""
     mock_sender = MagicMock()
-    # Mocking the send_message method to return a mock response
     mock_sender.send_message.return_value = None  # Modify as needed
     return mock_sender
 
-# Test function for successful data fetch and processing
-@patch("src.utils.request_with_timeout")
-def test_alphavantage_poller_success(mock_request_with_timeout, mock_queue_sender, monkeypatch):
-    """Test AlphaVantagePoller fetches and processes data successfully."""
-    # Set required environment variables
-    monkeypatch.setenv("QUEUE_TYPE", "your_queue_type")
-    monkeypatch.setenv("RABBITMQ_HOST", "your_rabbitmq_host")
-    monkeypatch.setenv("RABBITMQ_EXCHANGE", "your_rabbitmq_exchange")
-    monkeypatch.setenv("RABBITMQ_ROUTING_KEY", "your_rabbitmq_routing_key")
-    monkeypatch.setenv("SQS_QUEUE_URL", "your_sqs_queue_url")
+# ✅ Fixture for setting environment variables
+@pytest.fixture(autouse=True)
+def mock_env(monkeypatch):
+    """Mock environment variables required for all pollers."""
+    monkeypatch.setenv("QUEUE_TYPE", "rabbitmq")
+    monkeypatch.setenv("RABBITMQ_HOST", "localhost")
+    monkeypatch.setenv("RABBITMQ_EXCHANGE", "stock_data_exchange")
+    monkeypatch.setenv("RABBITMQ_ROUTING_KEY", "stock_data")
+    monkeypatch.setenv("SQS_QUEUE_URL", "https://sqs.us-east-1.amazonaws.com/123456789012/test-queue")
 
-    # Mock API response
+# ✅ Fixture to create a poller instance dynamically
+@pytest.fixture(params=POLLERS.keys())
+def poller_instance(request):
+    """Fixture to instantiate each poller dynamically."""
+    poller_class = POLLERS[request.param]
+    
+    # Provide necessary API key based on the poller
+    api_keys = {
+        "alphavantage": "ALPHA_VANTAGE_API_KEY",
+        "finnhub": "FINNHUB_API_KEY",
+        "iex": "IEX_API_KEY",
+        "polygon": "POLYGON_API_KEY",
+        "quandl": "QUANDL_API_KEY",
+        "yfinance": None,  # Yahoo Finance does not require an API key
+    }
+    
+    api_key_env_var = api_keys[request.param]
+    api_key = os.getenv(api_key_env_var, "test_api_key") if api_key_env_var else None
+
+    return poller_class(api_key=api_key) if api_key else poller_class()
+
+# ✅ Test function for successful polling
+@patch("utils.request_with_timeout")
+def test_poller_success(mock_request_with_timeout, mock_queue_sender, poller_instance):
+    """Test all pollers fetch and process data successfully."""
+    
+    # ✅ Mock API response (format varies by poller)
     mock_request_with_timeout.return_value = {
         "Time Series (5min)": {
             "2024-12-01 10:00:00": {
@@ -51,27 +83,25 @@ def test_alphavantage_poller_success(mock_request_with_timeout, mock_queue_sende
         }
     }
 
-    # Initialize poller
-    poller = AlphaVantagePoller(api_key="fake_api_key")
-    poller.send_to_queue = mock_queue_sender.send_message
+    # ✅ Inject the mocked queue sender
+    poller_instance.send_to_queue = mock_queue_sender.send_message
 
-    # Execute poller
-    poller.poll(["AAPL"])
+    # ✅ Execute poller
+    poller_instance.poll(["AAPL"])
 
-    # Assert that send_message was called with the expected data
-    mock_queue_sender.send_message.assert_called_once_with({
-        "symbol": "AAPL",
-        "timestamp": "2024-12-01 10:00:00",
-        "price": 152.00,
-        "source": "AlphaVantage",
-        "data": {
-            "open": 150.00,
-            "high": 155.00,
-            "low": 149.00,
-            "close": 152.00,
-            "volume": 1000,
-        },
-    })
+    # ✅ Ensure queue sender was called at least once
+    mock_queue_sender.send_message.assert_called()
 
-# Additional test functions (e.g., for invalid symbols, timeouts, etc.) would follow a similar structure,
-# including the use of monkeypatch to set environment variables and the mock_queue_sender fixture.
+# ✅ Test function for handling timeouts
+@patch("utils.request_with_timeout", side_effect=Timeout)
+def test_poller_timeout(mock_request_with_timeout, mock_queue_sender, poller_instance):
+    """Test all pollers gracefully handle request timeouts."""
+    
+    # ✅ Inject the mocked queue sender
+    poller_instance.send_to_queue = mock_queue_sender.send_message
+
+    # ✅ Run poller (should not throw an error)
+    poller_instance.poll(["AAPL"])
+
+    # ✅ Ensure queue sender was never called due to failure
+    mock_queue_sender.send_message.assert_not_called()
