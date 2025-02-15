@@ -15,6 +15,7 @@ from config import (  # ✅ Importing updated config with Vault integration
 )
 
 from utils.setup_logger import setup_logger
+from utils.rate_limit import RateLimiter
 from utils import (
     validate_environment_variables,
     track_request_metrics,
