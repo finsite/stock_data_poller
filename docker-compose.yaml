@@ -1,51 +1,101 @@
+# version: "3.8"
+
+# services:
+#   vault:
+#     image: hashicorp/vault:1.13.3
+#     container_name: vault
+#     restart: always
+#     environment:
+#       - VAULT_DEV_ROOT_TOKEN_ID=root
+#       - VAULT_DEV_LISTEN_ADDRESS=0.0.0.0:8200
+#     ports:
+#       - "8200:8200"
+#     cap_add:
+#       - IPC_LOCK
+#     volumes:
+#       - vault_data:/vault/data  
+#     networks:
+#       - stock_poller_network  
+#     healthcheck:
+#       test: ["CMD", "curl", "-fsS", "http://localhost:8200/v1/sys/health || exit 0"]
+#       interval: 10s
+#       timeout: 5s
+#       retries: 10
+#       start_period: 5s
+
+#   vault-init:
+#     image: curlimages/curl
+#     container_name: vault_init
+#     depends_on:
+#       vault:
+#         condition: service_healthy
+#     entrypoint: ["/bin/sh", "-c", "/vault-init.sh"]
+#     volumes:
+#       - ./vault-init.sh:/vault-init.sh:ro  
+#     networks:
+#       - stock_poller_network  
+
+#   poller:
+#     build: .
+#     container_name: stock_data_poller  
+#     depends_on:
+#       vault:
+#         condition: service_healthy
+#       vault-init:
+#         condition: service_completed_successfully
+#     environment:
+#       - VAULT_ADDR=http://vault:8200
+#       - VAULT_TOKEN=root
+#     restart: always
+#     networks:
+#       - stock_poller_network  
+
+# volumes:
+#   vault_data:  
+
+# networks:
+#   stock_poller_network:  
+#     driver: bridge
+
 version: "3.8"
 
 services:
-  vault:
-    image: hashicorp/vault:1.13.3
-    container_name: vault
-    restart: always
-    environment:
-      - VAULT_DEV_ROOT_TOKEN_ID=root
-      - VAULT_DEV_LISTEN_ADDRESS=0.0.0.0:8200
-    ports:
-      - "8200:8200"
-    cap_add:
-      - IPC_LOCK
-    volumes:
-      - vault_data:/vault/data  
-    networks:
-      - stock_poller_network  
-
-  vault-init:
-    image: curlimages/curl
-    container_name: vault_init
-    depends_on:
-      - vault
-    entrypoint: ["/bin/sh", "-c", "/vault-init.sh"]
-    volumes:
-      - ./vault-init.sh:/vault-init.sh:ro  
-    networks:
-      - stock_poller_network  
-
   poller:
     build: .
     container_name: stock_data_poller  
-    depends_on:
-      - vault
-      - vault-init
+    restart: always
     environment:
-      - POLLER_TYPE=yfinance
-      - QUEUE_TYPE=rabbitmq
-      - RABBITMQ_HOST=localhost    
       - VAULT_ADDR=http://vault:8200
       - VAULT_TOKEN=root
-    restart: always
+      - POLLER_TYPE=yfinance
+      - QUEUE_TYPE=rabbitmq
+      - SYMBOLS=AAPL,TSLA,GOOGL
+      - RABBITMQ_HOST=localhost
+      - RABBITMQ_EXCHANGE=stock_data_exchange
+      - RABBITMQ_ROUTING_KEY=stock_data
+      - SQS_QUEUE_URL=
+      - POLL_INTERVAL=60
+      - REQUEST_TIMEOUT=30
+      - MAX_RETRIES=5
+      - RETRY_DELAY=5
+      - LOG_LEVEL=info
+      - FINNHUB_FILL_RATE_LIMIT=100
+      - POLYGON_FILL_RATE_LIMIT=100
+      - ALPHA_VANTAGE_FILL_RATE_LIMIT=100
+      - YFINANCE_FILL_RATE_LIMIT=100
+      - IEX_FILL_RATE_LIMIT=100
+      - QUANDL_FILL_RATE_LIMIT=100
+      - ENABLE_LOGGING=true
+      - CLOUD_LOGGING_ENABLED=false
+      - AWS_ACCESS_KEY_ID=
+      - AWS_SECRET_ACCESS_KEY=
+      - AWS_REGION=us-east-1
+      - ENABLE_RETRY=true
+      - ENABLE_BACKFILL=false
+      - POLL_TIMEOUT=30
+      - MAX_API_CALLS_PER_MIN=1000
     networks:
       - stock_poller_network  
-
-volumes:
-  vault_data:  
 
 networks:
   stock_poller_network:  
