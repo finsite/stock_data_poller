@@ -35,6 +35,9 @@ services:
       - vault
       - vault-init
     environment:
+      - POLLER_TYPE=yfinance
+      - QUEUE_TYPE=rabbitmq
+      - RABBITMQ_HOST=localhost    
       - VAULT_ADDR=http://vault:8200
       - VAULT_TOKEN=root
     restart: always

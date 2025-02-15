@@ -249,7 +249,7 @@
 # MAX_API_CALLS_PER_MIN = int(VAULT_CONFIG.get("MAX_API_CALLS_PER_MIN", os.getenv("MAX_API_CALLS_PER_MIN", 1000)))
 import os
 import hvac
-from src.utils.validate_environment_variables import validate_environment_variables  # ✅ RESTORED
+from utils.validate_environment_variables import validate_environment_variables  # ✅ RESTORED
 
 def load_vault_secrets():
     """Fetch secrets from HashiCorp Vault and return a dictionary."""
