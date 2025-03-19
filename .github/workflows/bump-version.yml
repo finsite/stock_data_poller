@@ -1,25 +1,22 @@
-name: Bump version
-
+name: Bump My Version
 on:
   workflow_dispatch:
     inputs:
       bump-type:
-        description: 'Bump type'
+        description: "Bump type"
         required: true
-        default: 'patch'
+        default: "patch"
         type: choice
         options:
-        - major
-        - minor
-        - patch
-
+          - major
+          - minor
+          - patch
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout the code
         uses: actions/checkout@v4
-
       - name: Bump version
         id: bump
         uses: callowayproject/bump-my-version@master
@@ -28,7 +25,6 @@ jobs:
         with:
           args: ${{ inputs.bump-type }}
           github-token: ${{ secrets.GH_TOKEN }}
-
       - name: Check
         if: steps.bump.outputs.bumped == 'true'
         run: |

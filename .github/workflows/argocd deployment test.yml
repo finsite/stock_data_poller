@@ -1,0 +1,22 @@
+name: ArgoCD Deployment Test
+on: [push, pull_request]
+
+jobs:
+  argocd-test-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+      - name: Set Up Kubernetes (Kind)
+        uses: helm/kind-action@v1
+      - name: Install ArgoCD
+        run: |
+          kubectl create namespace argocd
+          kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+          kubectl wait --for=condition=available deployment -n argocd argocd-server --timeout=120s
+      - name: Apply ArgoCD App
+        run: kubectl apply -f argocd/application.yaml
+      - name: Wait for Sync
+        run: |
+          sleep 30
+          kubectl get applications -n argocd

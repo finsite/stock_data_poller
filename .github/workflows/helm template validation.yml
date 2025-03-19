@@ -1,0 +1,15 @@
+name: Helm Template & Package Check
+on: [push, pull_request]
+
+jobs:
+  helm-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+      - name: Install Helm
+        uses: azure/setup-helm@v3
+      - name: Run Helm Template Validation
+        run: helm template helm/ --debug
+      - name: Package Helm Chart
+        run: helm package helm/

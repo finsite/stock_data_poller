@@ -1,0 +1,13 @@
+name: Helm Chart Validation
+on: [push, pull_request]
+
+jobs:
+  helm-lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+      - name: Install Helm
+        uses: azure/setup-helm@v3
+      - name: Lint Helm Charts
+        run: helm lint helm/
