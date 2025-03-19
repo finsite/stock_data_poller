@@ -1,0 +1,10 @@
+replicaCount: 1
+
+image:
+  repository: stock_data_poller
+  tag: latest
+  pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  port: 8080

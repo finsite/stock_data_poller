@@ -5,7 +5,7 @@ metadata:
   labels:
     app: stock_data_poller
 spec:
-  replicas: { { .Values.replicaCount } }
+  replicas: 1
   selector:
     matchLabels:
       app: stock_data_poller
@@ -16,6 +16,6 @@ spec:
     spec:
       containers:
       - name: stock_data_poller
-        image: "{ { .Values.image.repository } }:{ { .Values.image.tag } }"
+        image: stock_data_poller:latest
         ports:
         - containerPort: 8080
