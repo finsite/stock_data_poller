@@ -21,19 +21,21 @@ def test_iex_poller_success(mock_request_with_timeout, mock_queue_sender):
 
     poller.poll(["AAPL"])
 
-    mock_queue_sender.send_message.assert_called_once_with({
-        "symbol": "AAPL",
-        "timestamp": 1682468986000,
-        "price": 150.25,
-        "source": "IEX",
-        "data": {
-            "open": 149.00,
-            "high": 151.50,
-            "low": 148.00,
-            "close": 150.25,
-            "volume": 2000000,
-        },
-    })
+    mock_queue_sender.send_message.assert_called_once_with(
+        {
+            "symbol": "AAPL",
+            "timestamp": 1682468986000,
+            "price": 150.25,
+            "source": "IEX",
+            "data": {
+                "open": 149.00,
+                "high": 151.50,
+                "low": 148.00,
+                "close": 150.25,
+                "volume": 2000000,
+            },
+        }
+    )
 
 
 @patch("src.utils.request_with_timeout")

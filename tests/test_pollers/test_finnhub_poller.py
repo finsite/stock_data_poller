@@ -19,19 +19,21 @@ def test_finnhub_poller_success(mock_request_with_timeout, mock_queue_sender):
 
     poller.poll(["AAPL"])
 
-    mock_queue_sender.send_message.assert_called_once_with({
-        "symbol": "AAPL",
-        "timestamp": None,  # 'timestamp' is None as Finnhub doesn't provide it
-        "price": 150.25,
-        "source": "Finnhub",
-        "data": {
-            "current": 150.25,
-            "high": 151.00,
-            "low": 149.00,
-            "open": 150.00,
-            "previous_close": 149.50,
-        },
-    })
+    mock_queue_sender.send_message.assert_called_once_with(
+        {
+            "symbol": "AAPL",
+            "timestamp": None,  # 'timestamp' is None as Finnhub doesn't provide it
+            "price": 150.25,
+            "source": "Finnhub",
+            "data": {
+                "current": 150.25,
+                "high": 151.00,
+                "low": 149.00,
+                "open": 150.00,
+                "previous_close": 149.50,
+            },
+        }
+    )
 
 
 @patch("src.utils.request_with_timeout")

@@ -51,9 +51,10 @@ def test_request_with_timeout_network_error(mock_get):
     """
     Test that request_with_timeout raises a ConnectionError when the request fails due to network issues.
     """
-    mock_get.side_effect = requests.exceptions.ConnectionError  # Mock a connection error
+    mock_get.side_effect = (
+        requests.exceptions.ConnectionError
+    )  # Mock a connection error
 
     with pytest.raises(requests.exceptions.ConnectionError):
         request_with_timeout("http://fake-url.com")
     mock_get.assert_called_once()
-

@@ -1,4 +1,3 @@
-
 from unittest.mock import patch
 from requests.exceptions import Timeout
 from src.pollers.yfinance_poller import YFinancePoller
@@ -23,19 +22,21 @@ def test_yfinance_poller_success(mock_ticker, mock_queue_sender):
     poller.poll(["AAPL"])
 
     # Assert that send_message is called once
-    mock_queue_sender.send_message.assert_called_once_with({
-        "symbol": "AAPL",
-        "timestamp": "2024-12-01T10:00:00",  # Adjust the timestamp based on your needs
-        "price": 105.00,
-        "source": "YFinance",
-        "data": {
-            "open": 100.00,
-            "high": 110.00,
-            "low": 95.00,
-            "close": 105.00,
-            "volume": 1000,
-        },
-    })
+    mock_queue_sender.send_message.assert_called_once_with(
+        {
+            "symbol": "AAPL",
+            "timestamp": "2024-12-01T10:00:00",  # Adjust the timestamp based on your needs
+            "price": 105.00,
+            "source": "YFinance",
+            "data": {
+                "open": 100.00,
+                "high": 110.00,
+                "low": 95.00,
+                "close": 105.00,
+                "volume": 1000,
+            },
+        }
+    )
 
 
 @patch("yfinance.Ticker")
@@ -100,4 +101,3 @@ def test_yfinance_poller_invalid_data_format(mock_ticker, mock_queue_sender):
 
     # Assert that send_message is not called because of invalid data format
     mock_queue_sender.send_message.assert_not_called()
-

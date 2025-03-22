@@ -8,7 +8,12 @@ def test_polygon_poller_success(mock_request_with_timeout, mock_queue_sender):
     """Test PolygonPoller fetches and processes data successfully."""
     mock_request_with_timeout.return_value = {
         "symbol": "AAPL",
-        "last": {"price": 152.5, "timestamp": 1682468986000, "size": 100, "exchange": 11},
+        "last": {
+            "price": 152.5,
+            "timestamp": 1682468986000,
+            "size": 100,
+            "exchange": 11,
+        },
         "status": "success",
     }
 
@@ -17,22 +22,27 @@ def test_polygon_poller_success(mock_request_with_timeout, mock_queue_sender):
 
     poller.poll(["AAPL"])
 
-    mock_queue_sender.send_message.assert_called_once_with({
-        "symbol": "AAPL",
-        "timestamp": 1682468986000,
-        "price": 152.5,
-        "source": "Polygon",
-        "data": {
-            "size": 100,
-            "exchange": 11,
-        },
-    })
+    mock_queue_sender.send_message.assert_called_once_with(
+        {
+            "symbol": "AAPL",
+            "timestamp": 1682468986000,
+            "price": 152.5,
+            "source": "Polygon",
+            "data": {
+                "size": 100,
+                "exchange": 11,
+            },
+        }
+    )
 
 
 @patch("src.utils.request_with_timeout")
 def test_polygon_poller_invalid_symbol(mock_request_with_timeout, mock_queue_sender):
     """Test PolygonPoller handles invalid symbols."""
-    mock_request_with_timeout.return_value = {"status": "error", "message": "Invalid symbol"}
+    mock_request_with_timeout.return_value = {
+        "status": "error",
+        "message": "Invalid symbol",
+    }
 
     poller = PolygonPoller(api_key="fake_api_key")
     poller.send_to_queue = mock_queue_sender.send_message
@@ -90,7 +100,9 @@ def test_polygon_poller_missing_field(mock_request_with_timeout, mock_queue_send
 
 
 @patch("src.utils.request_with_timeout")
-def test_polygon_poller_invalid_data_format(mock_request_with_timeout, mock_queue_sender):
+def test_polygon_poller_invalid_data_format(
+    mock_request_with_timeout, mock_queue_sender
+):
     """Test PolygonPoller handles unexpected data formats."""
     # Simulating an invalid data format (string instead of dict)
     mock_request_with_timeout.return_value = "Invalid data format"
