@@ -3,7 +3,7 @@ name: ❓ Support Request
 about: Ask a question or get help with the project
 title: "[SUPPORT] Brief description of your question"
 labels: question
-assignees: ''
+assignees: ""
 ---
 
 **Question**

@@ -1,11 +1,11 @@
 import os
-from typing import List
-from utils.setup_logger import setup_logger
+from src.utils.setup_logger import setup_logger
 
 # Initialize logger
 logger = setup_logger(__name__)
 
-def validate_environment_variables(required_variables: List[str]) -> None:
+
+def validate_environment_variables(required_variables: list[str]) -> None:
     """
     Verify that all required environment variables are set.
 
@@ -32,7 +32,7 @@ def validate_environment_variables(required_variables: List[str]) -> None:
         logger.error(
             f"Missing required environment variables: {', '.join(missing_variables)}"
         )
-        raise EnvironmentError(
+        raise OSError(
             f"Missing required environment variables: {', '.join(missing_variables)}"
         )
 

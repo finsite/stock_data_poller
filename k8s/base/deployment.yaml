@@ -15,7 +15,7 @@ spec:
         app: stock_data_poller
     spec:
       containers:
-      - name: stock_data_poller
-        image: stock_data_poller:latest
-        ports:
-        - containerPort: 8080
+        - name: stock_data_poller
+          image: stock_data_poller:latest
+          ports:
+            - containerPort: 8080

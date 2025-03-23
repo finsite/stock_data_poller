@@ -1,19 +1,17 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: stock_data_poller
+  name: stock_data_poller-prod
   namespace: argocd
 spec:
-  destination:
-    namespace: default
-    server: https://kubernetes.default.svc
+  project: default
   source:
     repoURL: https://github.com/my-org/stock_data_poller.git
-    path: charts/stock_data_poller
     targetRevision: main
-    helm:
-      valueFiles:
-        - values.yaml
+    path: k8s/overlays/prod
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: default
   syncPolicy:
     automated:
       prune: true

@@ -1,0 +1,81 @@
+# name: Bump My Version
+# on:
+#   workflow_dispatch:
+#     inputs:
+#       bump-type:
+#         description: "Bump type"
+#         required: true
+#         default: "patch"
+#         type: choice
+#         options:
+#           - major
+#           - minor
+#           - patch
+# jobs:
+#   build:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Checkout the code
+#         uses: actions/checkout@v4
+#       - name: Bump version
+#         id: bump
+#         uses: callowayproject/bump-my-version@master
+#         env:
+#           BUMPVERSION_TAG: "true"
+#         with:
+#           args: ${{ inputs.bump-type }}
+#           github-token: ${{ secrets.GH_TOKEN }}
+#       - name: Check
+#         if: steps.bump.outputs.bumped == 'true'
+#         run: |
+#           echo "Version was bumped from ${{ steps.bump.outputs.previous-version }} to ${{ steps.bump.outputs.current-version }}!"
+name: Automated Version Bump and Changelog
+
+on:
+  push:
+    branches: [main]
+    paths-ignore:
+      - "README.md"
+      - "docs/**"
+      - ".github/**"
+
+jobs:
+  bump-version:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
+
+      - name: Install tools
+        run: |
+          pip install bump-my-version
+          sudo apt-get install -y git
+
+      - name: Configure Git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Get latest tag
+        id: latest_tag
+        run: |
+          echo "tag=$(git describe --tags --abbrev=0 || echo 'v0.0.0')" >> $GITHUB_OUTPUT
+
+      - name: Generate changelog
+        run: |
+          echo "## Changelog" > CHANGELOG.md
+          echo "" >> CHANGELOG.md
+          git log ${{ steps.latest_tag.outputs.tag }}..HEAD --pretty=format:"- %s (%an)" >> CHANGELOG.md
+
+      - name: Bump patch version
+        run: |
+          bump-my-version patch --allow-dirty
+          git add bump-my-version.toml CHANGELOG.md
+          git commit -m "bump: patch version + changelog [skip ci]"
+          git push

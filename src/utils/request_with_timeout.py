@@ -1,11 +1,10 @@
 import logging
 import requests
-from typing import Optional
 
 logger = logging.getLogger("poller")
 
 
-def request_with_timeout(url: str, timeout: int = 10) -> Optional[dict]:
+def request_with_timeout(url: str, timeout: int = 10) -> dict | None:
     """
     Request data from a URL with a timeout.
 

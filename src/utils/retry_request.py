@@ -1,17 +1,16 @@
 import time
 import logging
-from typing import Callable, Any, Optional
+from typing import Any
+
+from collections.abc import Callable
 
 # Initialize logger
 logger = logging.getLogger("poller")
 
 
 def retry_request(
-    func: Callable[[], Any],
-    *,
-    max_retries: int = 3,
-    delay_seconds: int = 5
-) -> Optional[Any]:
+    func: Callable[[], Any], *, max_retries: int = 3, delay_seconds: int = 5
+) -> Any | None:
     """
     Retries a given function if it raises an exception.
 

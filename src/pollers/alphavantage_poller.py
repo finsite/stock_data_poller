@@ -1,23 +1,25 @@
-# import time
-# import os
-# import json
-# import pika
-# import boto3
-# from typing import List, Dict, Any
-# from pollers.base_poller import BasePoller
-# from utils.request_with_timeout import request_with_timeout
-# from utils.retry_request import retry_request
-# from utils.track_polling_metrics import track_polling_metrics  # ✅ Added
-# from utils.track_request_metrics import track_request_metrics  # ✅ Added
-# from utils.validate_data import validate_data
-# from utils.validate_environment_variables import validate_environment_variables
-# from utils.rate_limit import RateLimiter
-# from utils.setup_logger import setup_logger
+# from typing import Any
+# from src.pollers.base_poller import BasePoller
+# from src.utils.request_with_timeout import request_with_timeout
+# from src.utils.retry_request import retry_request
+# from src.utils.track_polling_metrics import track_polling_metrics
+# from src.utils.track_request_metrics import track_request_metrics
+# from src.utils.validate_data import validate_data
+# from src.utils.validate_environment_variables import validate_environment_variables
+# from src.utils.rate_limit import RateLimiter
+# from src.utils.setup_logger import setup_logger
+# from src.message_queue.queue_sender import QueueSender  # ✅ Matches other pollers
 # from config import (
-#     RATE_LIMIT, ALPHA_VANTAGE_API_KEY, QUEUE_TYPE,
-#     RABBITMQ_HOST, RABBITMQ_EXCHANGE, RABBITMQ_ROUTING_KEY, SQS_QUEUE_URL
+#     RATE_LIMIT,
+#     ALPHA_VANTAGE_API_KEY,
+#     QUEUE_TYPE,
+#     RABBITMQ_HOST,
+#     RABBITMQ_EXCHANGE,
+#     RABBITMQ_ROUTING_KEY,
+#     SQS_QUEUE_URL,
 # )
 
+# # ✅ Standard logging setup
 # logger = setup_logger(__name__)
 
 
@@ -29,13 +31,32 @@
 #     def __init__(self):
 #         super().__init__()
 
-#         # ✅ Use ALPHA_VANTAGE_API_KEY from config (Vault)
+#         # ✅ Validate environment variables (matches other pollers)
+#         validate_environment_variables(
+#             [
+#                 "QUEUE_TYPE",
+#                 "ALPHA_VANTAGE_API_KEY",
+#                 "RABBITMQ_HOST",
+#                 "RABBITMQ_EXCHANGE",
+#                 "RABBITMQ_ROUTING_KEY",
+#                 "SQS_QUEUE_URL",
+#             ]
+#         )
+
 #         self.api_key = ALPHA_VANTAGE_API_KEY
+#         #self.rate_limiter = RateLimiter(max_requests=RATE_LIMIT, time_window=60)
+#         self.rate_limiter = RateLimiter(max_requests=get_rate_limit(), time_window=60)
 
-#         # ✅ Use RATE_LIMIT from config instead of hardcoding
-#         self.rate_limiter = RateLimiter(max_requests=RATE_LIMIT, time_window=60)
+#         # ✅ Use the `QueueSender` like the other pollers
+#         self.queue_sender = QueueSender(
+#             queue_type=QUEUE_TYPE,
+#             rabbitmq_host=RABBITMQ_HOST,
+#             rabbitmq_exchange=RABBITMQ_EXCHANGE,
+#             rabbitmq_routing_key=RABBITMQ_ROUTING_KEY,
+#             sqs_queue_url=SQS_QUEUE_URL,
+#         )
 
-#     def poll(self, symbols: List[str]) -> None:
+#     def poll(self, symbols: list[str]) -> None:
 #         """
 #         Polls data for the specified symbols from AlphaVantage.
 #         """
@@ -45,7 +66,9 @@
 #                 data = self._fetch_data(symbol)
 
 #                 if "Error Message" in data:
-#                     self._handle_failure("Error Message from AlphaVantage")
+#                     self._handle_failure(
+#                         f"Error from AlphaVantage: {data['Error Message']}"
+#                     )
 #                     continue
 
 #                 payload = self._process_data(symbol, data)
@@ -54,26 +77,23 @@
 #                     self._handle_failure(f"Validation failed for symbol: {symbol}")
 #                     continue
 
-#                 # ✅ Track polling & request metrics
+#                 # ✅ Track polling & request metrics (standardized)
 #                 track_polling_metrics("AlphaVantage", [symbol])
 #                 track_request_metrics(symbol, 30, 5)
 
-#                 self.send_to_queue(payload)
+#                 self.queue_sender.send_message(payload)  # ✅ Matches other pollers
 #                 self._handle_success()
 
 #             except Exception as e:
 #                 self._handle_failure(str(e))
 
 #     def _enforce_rate_limit(self) -> None:
-#         """
-#         Enforces the rate limit using the RateLimiter class.
-#         """
+#         """Enforces the rate limit using the RateLimiter class."""
 #         self.rate_limiter.acquire(context="AlphaVantage")
 
-#     def _fetch_data(self, symbol: str) -> Dict[str, Any]:
-#         """
-#         Fetches data for the given symbol from AlphaVantage.
-#         """
+#     def _fetch_data(self, symbol: str) -> dict[str, Any]:
+#         """Fetches data for the given symbol from AlphaVantage."""
+
 #         def request_func():
 #             url = (
 #                 f"https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY"
@@ -83,10 +103,8 @@
 
 #         return retry_request(request_func)
 
-#     def _process_data(self, symbol: str, data: Dict[str, Any]) -> Dict[str, Any]:
-#         """
-#         Processes the latest time series data into a payload.
-#         """
+#     def _process_data(self, symbol: str, data: dict[str, Any]) -> dict[str, Any]:
+#         """Processes the latest time series data into a payload."""
 #         time_series = data.get("Time Series (5min)")
 #         if not time_series:
 #             raise ValueError(f"No 'Time Series (5min)' data found for symbol: {symbol}")
@@ -108,73 +126,35 @@
 #             },
 #         }
 
-#     def send_to_queue(self, payload: Dict[str, Any]) -> None:
-#         """
-#         Sends the payload to the appropriate queue system (RabbitMQ or SQS).
-#         """
-#         if QUEUE_TYPE == "rabbitmq":
-#             self.send_to_rabbitmq(payload)
-#         elif QUEUE_TYPE == "sqs":
-#             self.send_to_sqs(payload)
-#         else:
-#             raise ValueError(f"Unsupported QUEUE_TYPE: {QUEUE_TYPE}")
+#     def _handle_success(self) -> None:
+#         """Tracks success metrics for polling and requests."""
+#         track_polling_metrics("success")
+#         track_request_metrics("success", source="AlphaVantage")
 
-#     def send_to_rabbitmq(self, payload: Dict[str, Any]) -> None:
-#         """
-#         Sends the payload to a RabbitMQ exchange.
-#         """
-#         try:
-#             connection = pika.BlockingConnection(pika.ConnectionParameters(host=RABBITMQ_HOST))
-#             channel = connection.channel()
-#             channel.exchange_declare(exchange=RABBITMQ_EXCHANGE, exchange_type='direct')
+#     def _handle_failure(self, error: str) -> None:
+#         """Tracks failure metrics for polling and requests."""
+#         track_polling_metrics("failure", error=error)
+#         track_request_metrics("failure", source="AlphaVantage")
+from typing import Any
+from src.pollers.base_poller import BasePoller
+from src.utils.request_with_timeout import request_with_timeout
+from src.utils.retry_request import retry_request
+from src.utils.track_polling_metrics import track_polling_metrics
+from src.utils.track_request_metrics import track_request_metrics
+from src.utils.validate_data import validate_data
+from src.utils.setup_logger import setup_logger
+from src.message_queue.queue_sender import QueueSender
 
-#             message_body = json.dumps(payload)
-#             channel.basic_publish(
-#                 exchange=RABBITMQ_EXCHANGE,
-#                 routing_key=RABBITMQ_ROUTING_KEY,
-#                 body=message_body
-#             )
-#             logger.info(f"Sent data to RabbitMQ exchange {RABBITMQ_EXCHANGE} with routing key {RABBITMQ_ROUTING_KEY}")
-#             connection.close()
-#         except Exception as e:
-#             logger.error(f"Error sending data to RabbitMQ: {str(e)}")
-
-#     def send_to_sqs(self, payload: Dict[str, Any]) -> None:
-#         """
-#         Sends the payload to an SQS queue.
-#         """
-#         try:
-#             sqs = boto3.client('sqs')
-#             if not SQS_QUEUE_URL:
-#                 raise ValueError("SQS_QUEUE_URL is not set in environment variables.")
-
-#             message_body = json.dumps(payload)
-#             sqs.send_message(QueueUrl=SQS_QUEUE_URL, MessageBody=message_body)
-#             logger.info(f"Sent data to SQS queue: {SQS_QUEUE_URL}")
-#         except Exception as e:
-#             logger.error(f"Error sending data to SQS: {str(e)}")
-import time
-import os
-import json
-import pika
-import boto3
-from typing import List, Dict, Any
-from pollers.base_poller import BasePoller
-from utils.request_with_timeout import request_with_timeout
-from utils.retry_request import retry_request
-from utils.track_polling_metrics import track_polling_metrics
-from utils.track_request_metrics import track_request_metrics
-from utils.validate_data import validate_data
-from utils.validate_environment_variables import validate_environment_variables
-from utils.rate_limit import RateLimiter
-from utils.setup_logger import setup_logger
-from message_queue.queue_sender import QueueSender  # ✅ Matches other pollers
-from config import (
-    RATE_LIMIT, ALPHA_VANTAGE_API_KEY, QUEUE_TYPE, RABBITMQ_HOST,
-    RABBITMQ_EXCHANGE, RABBITMQ_ROUTING_KEY, SQS_QUEUE_URL
+from src.config import (
+    get_rate_limit,
+    get_alpha_vantage_api_key,
+    get_queue_type,
+    get_rabbitmq_host,
+    get_rabbitmq_exchange,
+    get_rabbitmq_routing_key,
+    get_sqs_queue_url,
 )
 
-# ✅ Standard logging setup
 logger = setup_logger(__name__)
 
 
@@ -186,29 +166,21 @@ class AlphaVantagePoller(BasePoller):
     def __init__(self):
         super().__init__()
 
-        # ✅ Validate environment variables (matches other pollers)
-        validate_environment_variables([
-            "QUEUE_TYPE",
-            "ALPHA_VANTAGE_API_KEY",
-            "RABBITMQ_HOST",
-            "RABBITMQ_EXCHANGE",
-            "RABBITMQ_ROUTING_KEY",
-            "SQS_QUEUE_URL"
-        ])
+        self.api_key = get_alpha_vantage_api_key()
+        if not self.api_key:
+            raise ValueError("❌ Missing ALPHA_VANTAGE_API_KEY.")
 
-        self.api_key = ALPHA_VANTAGE_API_KEY
-        self.rate_limiter = RateLimiter(max_requests=RATE_LIMIT, time_window=60)
+        self.rate_limiter = RateLimiter(max_requests=get_rate_limit(), time_window=60)
 
-        # ✅ Use the `QueueSender` like the other pollers
         self.queue_sender = QueueSender(
-            queue_type=QUEUE_TYPE,
-            rabbitmq_host=RABBITMQ_HOST,
-            rabbitmq_exchange=RABBITMQ_EXCHANGE,
-            rabbitmq_routing_key=RABBITMQ_ROUTING_KEY,
-            sqs_queue_url=SQS_QUEUE_URL
+            queue_type=get_queue_type(),
+            rabbitmq_host=get_rabbitmq_host(),
+            rabbitmq_exchange=get_rabbitmq_exchange(),
+            rabbitmq_routing_key=get_rabbitmq_routing_key(),
+            sqs_queue_url=get_sqs_queue_url(),
         )
 
-    def poll(self, symbols: List[str]) -> None:
+    def poll(self, symbols: list[str]) -> None:
         """
         Polls data for the specified symbols from AlphaVantage.
         """
@@ -218,31 +190,31 @@ class AlphaVantagePoller(BasePoller):
                 data = self._fetch_data(symbol)
 
                 if "Error Message" in data:
-                    self._handle_failure(f"Error from AlphaVantage: {data['Error Message']}")
+                    self._handle_failure(symbol, f"Error from AlphaVantage: {data['Error Message']}")
                     continue
 
                 payload = self._process_data(symbol, data)
 
                 if not validate_data(payload):
-                    self._handle_failure(f"Validation failed for symbol: {symbol}")
+                    self._handle_failure(symbol, f"Validation failed for symbol: {symbol}")
                     continue
 
-                # ✅ Track polling & request metrics (standardized)
                 track_polling_metrics("AlphaVantage", [symbol])
                 track_request_metrics(symbol, 30, 5)
 
-                self.queue_sender.send_message(payload)  # ✅ Matches other pollers
-                self._handle_success()
+                self.queue_sender.send_message(payload)
+                self._handle_success(symbol)
 
             except Exception as e:
-                self._handle_failure(str(e))
+                self._handle_failure(symbol, str(e))
 
     def _enforce_rate_limit(self) -> None:
         """Enforces the rate limit using the RateLimiter class."""
         self.rate_limiter.acquire(context="AlphaVantage")
 
-    def _fetch_data(self, symbol: str) -> Dict[str, Any]:
+    def _fetch_data(self, symbol: str) -> dict[str, Any]:
         """Fetches data for the given symbol from AlphaVantage."""
+
         def request_func():
             url = (
                 f"https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY"
@@ -252,7 +224,7 @@ class AlphaVantagePoller(BasePoller):
 
         return retry_request(request_func)
 
-    def _process_data(self, symbol: str, data: Dict[str, Any]) -> Dict[str, Any]:
+    def _process_data(self, symbol: str, data: dict[str, Any]) -> dict[str, Any]:
         """Processes the latest time series data into a payload."""
         time_series = data.get("Time Series (5min)")
         if not time_series:
@@ -275,12 +247,13 @@ class AlphaVantagePoller(BasePoller):
             },
         }
 
-    def _handle_success(self) -> None:
+    def _handle_success(self, symbol: str) -> None:
         """Tracks success metrics for polling and requests."""
-        track_polling_metrics("success")
-        track_request_metrics("success", source="AlphaVantage")
+        track_polling_metrics("AlphaVantage", [symbol])
+        track_request_metrics(symbol, 30, 5)
 
-    def _handle_failure(self, error: str) -> None:
+    def _handle_failure(self, symbol: str, error: str) -> None:
         """Tracks failure metrics for polling and requests."""
-        track_polling_metrics("failure", error=error)
-        track_request_metrics("failure", source="AlphaVantage")
+        logger.error(f"❌ AlphaVantage poll failed for {symbol}: {error}")
+        track_polling_metrics("AlphaVantage", [symbol])
+        track_request_metrics(symbol, 30, 5, success=False)

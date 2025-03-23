@@ -3,7 +3,7 @@ name: ⚡ Performance Issue
 about: Report a performance bottleneck or inefficiency
 title: "[PERFORMANCE] Describe the bottleneck concisely"
 labels: performance
-assignees: ''
+assignees: ""
 ---
 
 **Describe the performance issue**

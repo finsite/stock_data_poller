@@ -3,7 +3,7 @@ name: 🔨 Refactor Request
 about: Propose improvements to the existing codebase
 title: "[REFACTOR] Describe the code improvement briefly"
 labels: refactor
-assignees: ''
+assignees: ""
 ---
 
 **Describe the refactor**

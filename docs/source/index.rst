@@ -1,10 +1,10 @@
-.. template documentation master file, created by
-   sphinx-quickstart on Thu Nov 28 19:32:22 2024.
+.. stock_data_poller documentation master file, created by
+   sphinx-quickstart on Sat Mar 22 17:18:14 2025.
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-template documentation
-======================
+stock_data_poller documentation
+===============================
 
 Add your content using ``reStructuredText`` syntax. See the
 `reStructuredText <https://www.sphinx-doc.org/en/master/usage/restructuredtext/index.html>`_
@@ -13,5 +13,9 @@ documentation for details.
 
 .. toctree::
    :maxdepth: 2
-   :caption: Contents:
+   :caption: Modules
 
+.. automodule:: pollers.base_poller
+   :members:
+   :undoc-members:
+   :show-inheritance:

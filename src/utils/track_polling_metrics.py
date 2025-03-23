@@ -5,7 +5,9 @@ from typing import Literal
 logger = logging.getLogger("poller")
 
 
-def track_polling_metrics(status: Literal["success", "failure"], source: str, symbol: str) -> None:
+def track_polling_metrics(
+    status: Literal["success", "failure"], source: str, symbol: str
+) -> None:
     """
     Tracks metrics for polling operations.
 

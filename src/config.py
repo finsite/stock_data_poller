@@ -1,6 +1,207 @@
+# # import os
+# # import hvac
+# # from src.utils.validate_environment_variables import validate_environment_variables
+
+# # # ✅ Runtime-secret cache
+# # _VAULT_CONFIG = None
+
+
+# # def load_vault_secrets():
+# #     """Fetch secrets from HashiCorp Vault and return a dictionary."""
+# #     VAULT_ADDR = os.getenv("VAULT_ADDR", "http://vault:8200")
+# #     VAULT_TOKEN = os.getenv("VAULT_TOKEN")
+
+# #     if not VAULT_TOKEN:
+# #         raise ValueError("❌ Missing VAULT_TOKEN. Ensure it's set in the environment.")
+
+# #     try:
+# #         client = hvac.Client(url=VAULT_ADDR, token=VAULT_TOKEN)
+
+# #         if not client.is_authenticated():
+# #             raise ValueError("❌ Vault authentication failed!")
+
+# #         vault_secrets = client.secrets.kv.v2.read_secret_version(path="poller")["data"]["data"]
+# #         print("✅ Successfully loaded secrets from Vault.")
+# #         return vault_secrets
+
+# #     except Exception as e:
+# #         print(f"⚠️ Warning: Failed to fetch secrets from Vault: {e}")
+# #         return {}
+
+
+# # def get_vault_config():
+# #     """Load and cache Vault config only when needed."""
+# #     global _VAULT_CONFIG
+# #     if _VAULT_CONFIG is None:
+# #         _VAULT_CONFIG = load_vault_secrets()
+# #     return _VAULT_CONFIG
+
+
+# # # ✅ Validate required environment variables
+# # validate_environment_variables(["POLLER_TYPE", "QUEUE_TYPE", "RABBITMQ_HOST"])
+
+# # # ✅ Convenience getter for secrets or env vars
+# # def get_config_value(key, default=None):
+# #     return get_vault_config().get(key, os.getenv(key, default))
+
+
+# # # ✅ Core configuration values
+# # SYMBOLS = get_config_value("SYMBOLS", "AAPL,GOOG,MSFT")
+# # POLLER_TYPE = get_config_value("POLLER_TYPE", "yfinance")
+# # QUEUE_TYPE = get_config_value("QUEUE_TYPE", "rabbitmq")
+
+# # RABBITMQ_HOST = get_config_value("RABBITMQ_HOST", "localhost")
+# # RABBITMQ_EXCHANGE = get_config_value("RABBITMQ_EXCHANGE", "stock_data_exchange")
+# # RABBITMQ_ROUTING_KEY = get_config_value("RABBITMQ_ROUTING_KEY", "stock_data")
+
+# # SQS_QUEUE_URL = get_config_value("SQS_QUEUE_URL", "")
+
+# # POLL_INTERVAL = int(get_config_value("POLL_INTERVAL", 60))
+# # REQUEST_TIMEOUT = int(get_config_value("REQUEST_TIMEOUT", 30))
+# # MAX_RETRIES = int(get_config_value("MAX_RETRIES", 3))
+# # RETRY_DELAY = int(get_config_value("RETRY_DELAY", 5))
+# # LOG_LEVEL = get_config_value("LOG_LEVEL", "info")
+# # RATE_LIMIT = int(get_config_value("RATE_LIMIT", 5))
+
+# # # ✅ API Keys
+# # POLYGON_API_KEY = get_config_value("POLYGON_API_KEY", "")
+# # FINNHUB_API_KEY = get_config_value("FINNHUB_API_KEY", "")
+# # ALPHA_VANTAGE_API_KEY = get_config_value("ALPHA_VANTAGE_API_KEY", "")
+# # YFINANCE_API_KEY = get_config_value("YFINANCE_API_KEY", "")
+# # IEX_API_KEY = get_config_value("IEX_API_KEY", "")
+# # QUANDL_API_KEY = get_config_value("QUANDL_API_KEY", "")
+
+# # # ✅ API Rate Limits
+# # FINNHUB_FILL_RATE_LIMIT = int(get_config_value("FINNHUB_FILL_RATE_LIMIT", 100))
+# # POLYGON_FILL_RATE_LIMIT = int(get_config_value("POLYGON_FILL_RATE_LIMIT", 100))
+# # ALPHA_VANTAGE_FILL_RATE_LIMIT = int(get_config_value("ALPHA_VANTAGE_FILL_RATE_LIMIT", 100))
+# # YFINANCE_FILL_RATE_LIMIT = int(get_config_value("YFINANCE_FILL_RATE_LIMIT", 100))
+# # IEX_FILL_RATE_LIMIT = int(get_config_value("IEX_FILL_RATE_LIMIT", 100))
+# # QUANDL_FILL_RATE_LIMIT = int(get_config_value("QUANDL_FILL_RATE_LIMIT", 100))
+
+# # # ✅ AWS Config
+# # AWS_ACCESS_KEY_ID = get_config_value("AWS_ACCESS_KEY_ID", "")
+# # AWS_SECRET_ACCESS_KEY = get_config_value("AWS_SECRET_ACCESS_KEY", "")
+# # AWS_REGION = get_config_value("AWS_REGION", "us-east-1")
+
+# # # ✅ Feature Toggles
+# # ENABLE_LOGGING = get_config_value("ENABLE_LOGGING", "true") == "true"
+# # CLOUD_LOGGING_ENABLED = get_config_value("CLOUD_LOGGING_ENABLED", "false") == "true"
+# # ENABLE_RETRY = get_config_value("ENABLE_RETRY", "true") == "true"
+# # ENABLE_BACKFILL = get_config_value("ENABLE_BACKFILL", "false") == "true"
+
+# # # ✅ Misc
+# # POLL_TIMEOUT = int(get_config_value("POLL_TIMEOUT", 30))
+# # MAX_API_CALLS_PER_MIN = int(get_config_value("MAX_API_CALLS_PER_MIN", 1000))
+# import os
+# import hvac
+# from src.utils.validate_environment_variables import validate_environment_variables
+
+# # ✅ Cache the secrets so Vault is only queried once
+# _VAULT_CONFIG = None
+
+
+# def load_vault_secrets():
+#     """Fetch secrets from HashiCorp Vault and return a dictionary."""
+#     VAULT_ADDR = os.getenv("VAULT_ADDR", "http://vault:8200")
+#     VAULT_TOKEN = os.getenv("VAULT_TOKEN")
+
+#     if not VAULT_TOKEN:
+#         raise ValueError("❌ Missing VAULT_TOKEN. Ensure it's set in the environment.")
+
+#     try:
+#         client = hvac.Client(url=VAULT_ADDR, token=VAULT_TOKEN)
+#         if not client.is_authenticated():
+#             raise ValueError("❌ Vault authentication failed!")
+
+#         vault_secrets = client.secrets.kv.v2.read_secret_version(path="poller")["data"]["data"]
+#         print("✅ Successfully loaded secrets from Vault.")
+#         return vault_secrets
+
+#     except Exception as e:
+#         print(f"⚠️ Warning: Failed to fetch secrets from Vault: {e}")
+#         return {}
+
+
+# def get_vault_config():
+#     """Lazy-load Vault secrets."""
+#     global _VAULT_CONFIG
+#     if _VAULT_CONFIG is None:
+#         _VAULT_CONFIG = load_vault_secrets()
+#     return _VAULT_CONFIG
+
+
+# def get_config_value(key, default=None):
+#     """Get value from Vault if available, otherwise fallback to env/default."""
+#     return get_vault_config().get(key, os.getenv(key, default))
+
+
+# # ✅ Runtime validation (call manually in main entrypoints only)
+# def validate_required_env():
+#     """Validate required environment variables."""
+#     validate_environment_variables(["POLLER_TYPE", "QUEUE_TYPE", "RABBITMQ_HOST"])
+
+
+# # ✅ Core Configuration
+# SYMBOLS = get_config_value("SYMBOLS", "AAPL,GOOG,MSFT")
+# POLLER_TYPE = get_config_value("POLLER_TYPE", "yfinance")
+# QUEUE_TYPE = get_config_value("QUEUE_TYPE", "rabbitmq")
+
+# # ✅ RabbitMQ
+# RABBITMQ_HOST = get_config_value("RABBITMQ_HOST", "localhost")
+# RABBITMQ_EXCHANGE = get_config_value("RABBITMQ_EXCHANGE", "stock_data_exchange")
+# RABBITMQ_ROUTING_KEY = get_config_value("RABBITMQ_ROUTING_KEY", "stock_data")
+
+# # ✅ SQS
+# SQS_QUEUE_URL = get_config_value("SQS_QUEUE_URL", "")
+
+# # ✅ Timing
+# POLL_INTERVAL = int(get_config_value("POLL_INTERVAL", 60))
+# REQUEST_TIMEOUT = int(get_config_value("REQUEST_TIMEOUT", 30))
+# MAX_RETRIES = int(get_config_value("MAX_RETRIES", 3))
+# RETRY_DELAY = int(get_config_value("RETRY_DELAY", 5))
+# POLL_TIMEOUT = int(get_config_value("POLL_TIMEOUT", 30))
+
+# # ✅ Logging
+# LOG_LEVEL = get_config_value("LOG_LEVEL", "info")
+# ENABLE_LOGGING = get_config_value("ENABLE_LOGGING", "true") == "true"
+# CLOUD_LOGGING_ENABLED = get_config_value("CLOUD_LOGGING_ENABLED", "false") == "true"
+
+# # ✅ Retry & Backfill
+# ENABLE_RETRY = get_config_value("ENABLE_RETRY", "true") == "true"
+# ENABLE_BACKFILL = get_config_value("ENABLE_BACKFILL", "false") == "true"
+
+# # ✅ Rate Limits
+# RATE_LIMIT = int(get_config_value("RATE_LIMIT", 5))
+# MAX_API_CALLS_PER_MIN = int(get_config_value("MAX_API_CALLS_PER_MIN", 1000))
+
+# # ✅ API Keys
+# POLYGON_API_KEY = get_config_value("POLYGON_API_KEY", "")
+# FINNHUB_API_KEY = get_config_value("FINNHUB_API_KEY", "")
+# ALPHA_VANTAGE_API_KEY = get_config_value("ALPHA_VANTAGE_API_KEY", "")
+# YFINANCE_API_KEY = get_config_value("YFINANCE_API_KEY", "")
+# IEX_API_KEY = get_config_value("IEX_API_KEY", "")
+# QUANDL_API_KEY = get_config_value("QUANDL_API_KEY", "")
+
+# # ✅ API-specific fill rate limits
+# FINNHUB_FILL_RATE_LIMIT = int(get_config_value("FINNHUB_FILL_RATE_LIMIT", 100))
+# POLYGON_FILL_RATE_LIMIT = int(get_config_value("POLYGON_FILL_RATE_LIMIT", 100))
+# ALPHA_VANTAGE_FILL_RATE_LIMIT = int(get_config_value("ALPHA_VANTAGE_FILL_RATE_LIMIT", 100))
+# YFINANCE_FILL_RATE_LIMIT = int(get_config_value("YFINANCE_FILL_RATE_LIMIT", 100))
+# IEX_FILL_RATE_LIMIT = int(get_config_value("IEX_FILL_RATE_LIMIT", 100))
+# QUANDL_FILL_RATE_LIMIT = int(get_config_value("QUANDL_FILL_RATE_LIMIT", 100))
+
+# # ✅ AWS
+# AWS_ACCESS_KEY_ID = get_config_value("AWS_ACCESS_KEY_ID", "")
+# AWS_SECRET_ACCESS_KEY = get_config_value("AWS_SECRET_ACCESS_KEY", "")
+# AWS_REGION = get_config_value("AWS_REGION", "us-east-1")
 import os
 import hvac
-from utils.validate_environment_variables import validate_environment_variables  # ✅ RESTORED
+from src.utils.validate_environment_variables import validate_environment_variables
+
+# ✅ Secret cache for runtime use
+_VAULT_CONFIG = None
+
 
 def load_vault_secrets():
     """Fetch secrets from HashiCorp Vault and return a dictionary."""
@@ -11,81 +212,177 @@ def load_vault_secrets():
         raise ValueError("❌ Missing VAULT_TOKEN. Ensure it's set in the environment.")
 
     try:
-        # Connect to Vault
         client = hvac.Client(url=VAULT_ADDR, token=VAULT_TOKEN)
 
-        # Authenticate
         if not client.is_authenticated():
             raise ValueError("❌ Vault authentication failed!")
 
-        # Fetch secrets from Vault
-        vault_secrets = client.secrets.kv.v2.read_secret_version(path="poller")["data"]["data"]
-
+        secrets = client.secrets.kv.v2.read_secret_version(path="poller")["data"]["data"]
         print("✅ Successfully loaded secrets from Vault.")
-        return vault_secrets
+        return secrets
 
     except Exception as e:
         print(f"⚠️ Warning: Failed to fetch secrets from Vault: {e}")
         return {}
 
-# ✅ Load Vault secrets at runtime
-VAULT_CONFIG = load_vault_secrets()
 
-# ✅ Validate required environment variables
-validate_environment_variables(["POLLER_TYPE", "QUEUE_TYPE", "RABBITMQ_HOST"])  # ✅ RESTORED VALIDATION
+def get_vault_config():
+    """Lazy-load and cache Vault secrets."""
+    global _VAULT_CONFIG
+    if _VAULT_CONFIG is None:
+        _VAULT_CONFIG = load_vault_secrets()
+    return _VAULT_CONFIG
 
-# ✅ Default Stock Symbols (Ensures it always has values)
-SYMBOLS = VAULT_CONFIG.get("SYMBOLS", os.getenv("SYMBOLS", "AAPL,GOOG,MSFT"))
 
-# ✅ Default Poller Type (Now set to `yfinance` by default)
-POLLER_TYPE = VAULT_CONFIG.get("POLLER_TYPE", os.getenv("POLLER_TYPE", "yfinance"))
-QUEUE_TYPE = VAULT_CONFIG.get("QUEUE_TYPE", os.getenv("QUEUE_TYPE", "rabbitmq"))
+def get_config_value(key, default=None):
+    """Get value from Vault if available, else from environment or default."""
+    return get_vault_config().get(key, os.getenv(key, default))
 
-# ✅ RabbitMQ Exchange Configuration
-RABBITMQ_HOST = VAULT_CONFIG.get("RABBITMQ_HOST", os.getenv("RABBITMQ_HOST", "localhost"))
-RABBITMQ_EXCHANGE = VAULT_CONFIG.get("RABBITMQ_EXCHANGE", os.getenv("RABBITMQ_EXCHANGE", "stock_data_exchange"))
-RABBITMQ_ROUTING_KEY = VAULT_CONFIG.get("RABBITMQ_ROUTING_KEY", os.getenv("RABBITMQ_ROUTING_KEY", "stock_data"))
 
-# ✅ FIXED: Added missing `SQS_QUEUE_URL`
-SQS_QUEUE_URL = VAULT_CONFIG.get("SQS_QUEUE_URL", os.getenv("SQS_QUEUE_URL", ""))
+# ✅ Call manually in runtime entrypoint (not at import time)
+def validate_required_env():
+    validate_environment_variables(["POLLER_TYPE", "QUEUE_TYPE", "RABBITMQ_HOST"])
 
-# ✅ Polling & API Request Configurations
-POLL_INTERVAL = int(VAULT_CONFIG.get("POLL_INTERVAL", os.getenv("POLL_INTERVAL", 60)))
-REQUEST_TIMEOUT = int(VAULT_CONFIG.get("REQUEST_TIMEOUT", os.getenv("REQUEST_TIMEOUT", 30)))
-MAX_RETRIES = int(VAULT_CONFIG.get("MAX_RETRIES", os.getenv("MAX_RETRIES", 3)))
-RETRY_DELAY = int(VAULT_CONFIG.get("RETRY_DELAY", os.getenv("RETRY_DELAY", 5)))
-LOG_LEVEL = VAULT_CONFIG.get("LOG_LEVEL", os.getenv("LOG_LEVEL", "info"))
 
-# ✅ Added `RATE_LIMIT`
-RATE_LIMIT = int(VAULT_CONFIG.get("RATE_LIMIT", os.getenv("RATE_LIMIT", 5)))
+# --- Getter functions below ---
 
-# ✅ API Keys (All services)
-POLYGON_API_KEY = VAULT_CONFIG.get("POLYGON_API_KEY", os.getenv("POLYGON_API_KEY", ""))
-FINNHUB_API_KEY = VAULT_CONFIG.get("FINNHUB_API_KEY", os.getenv("FINNHUB_API_KEY", ""))
-ALPHA_VANTAGE_API_KEY = VAULT_CONFIG.get("ALPHA_VANTAGE_API_KEY", os.getenv("ALPHA_VANTAGE_API_KEY", ""))
-YFINANCE_API_KEY = VAULT_CONFIG.get("YFINANCE_API_KEY", os.getenv("YFINANCE_API_KEY", ""))
-IEX_API_KEY = VAULT_CONFIG.get("IEX_API_KEY", os.getenv("IEX_API_KEY", ""))
-QUANDL_API_KEY = VAULT_CONFIG.get("QUANDL_API_KEY", os.getenv("QUANDL_API_KEY", ""))
+def get_symbols():
+    return get_config_value("SYMBOLS", "AAPL,GOOG,MSFT")
 
-# ✅ API Rate Limits
-FINNHUB_FILL_RATE_LIMIT = int(VAULT_CONFIG.get("FINNHUB_FILL_RATE_LIMIT", os.getenv("FINNHUB_FILL_RATE_LIMIT", 100)))
-POLYGON_FILL_RATE_LIMIT = int(VAULT_CONFIG.get("POLYGON_FILL_RATE_LIMIT", os.getenv("POLYGON_FILL_RATE_LIMIT", 100)))
-ALPHA_VANTAGE_FILL_RATE_LIMIT = int(VAULT_CONFIG.get("ALPHA_VANTAGE_FILL_RATE_LIMIT", os.getenv("ALPHA_VANTAGE_FILL_RATE_LIMIT", 100)))
-YFINANCE_FILL_RATE_LIMIT = int(VAULT_CONFIG.get("YFINANCE_FILL_RATE_LIMIT", os.getenv("YFINANCE_FILL_RATE_LIMIT", 100)))
-IEX_FILL_RATE_LIMIT = int(VAULT_CONFIG.get("IEX_FILL_RATE_LIMIT", os.getenv("IEX_FILL_RATE_LIMIT", 100)))
-QUANDL_FILL_RATE_LIMIT = int(VAULT_CONFIG.get("QUANDL_FILL_RATE_LIMIT", os.getenv("QUANDL_FILL_RATE_LIMIT", 100)))
 
-# ✅ AWS Config
-AWS_ACCESS_KEY_ID = VAULT_CONFIG.get("AWS_ACCESS_KEY_ID", os.getenv("AWS_ACCESS_KEY_ID", ""))
-AWS_SECRET_ACCESS_KEY = VAULT_CONFIG.get("AWS_SECRET_ACCESS_KEY", os.getenv("AWS_SECRET_ACCESS_KEY", ""))
-AWS_REGION = VAULT_CONFIG.get("AWS_REGION", os.getenv("AWS_REGION", "us-east-1"))
+def get_poller_type():
+    return get_config_value("POLLER_TYPE", "yfinance")
 
-# ✅ Enable Flags (Ensure boolean values are properly set)
-ENABLE_LOGGING = VAULT_CONFIG.get("ENABLE_LOGGING", os.getenv("ENABLE_LOGGING", "true")) == "true"
-CLOUD_LOGGING_ENABLED = VAULT_CONFIG.get("CLOUD_LOGGING_ENABLED", os.getenv("CLOUD_LOGGING_ENABLED", "false")) == "true"
-ENABLE_RETRY = VAULT_CONFIG.get("ENABLE_RETRY", os.getenv("ENABLE_RETRY", "true")) == "true"
-ENABLE_BACKFILL = VAULT_CONFIG.get("ENABLE_BACKFILL", os.getenv("ENABLE_BACKFILL", "false")) == "true"
 
-# ✅ Other Configurations
-POLL_TIMEOUT = int(VAULT_CONFIG.get("POLL_TIMEOUT", os.getenv("POLL_TIMEOUT", 30)))
-MAX_API_CALLS_PER_MIN = int(VAULT_CONFIG.get("MAX_API_CALLS_PER_MIN", os.getenv("MAX_API_CALLS_PER_MIN", 1000)))
+def get_queue_type():
+    return get_config_value("QUEUE_TYPE", "rabbitmq")
+
+
+def get_rabbitmq_host():
+    return get_config_value("RABBITMQ_HOST", "localhost")
+
+
+def get_rabbitmq_exchange():
+    return get_config_value("RABBITMQ_EXCHANGE", "stock_data_exchange")
+
+
+def get_rabbitmq_routing_key():
+    return get_config_value("RABBITMQ_ROUTING_KEY", "stock_data")
+
+
+def get_sqs_queue_url():
+    return get_config_value("SQS_QUEUE_URL", "")
+
+
+def get_poll_interval():
+    return int(get_config_value("POLL_INTERVAL", 60))
+
+
+def get_request_timeout():
+    return int(get_config_value("REQUEST_TIMEOUT", 30))
+
+
+def get_max_retries():
+    return int(get_config_value("MAX_RETRIES", 3))
+
+
+def get_retry_delay():
+    return int(get_config_value("RETRY_DELAY", 5))
+
+
+def get_poll_timeout():
+    return int(get_config_value("POLL_TIMEOUT", 30))
+
+
+def get_log_level():
+    return get_config_value("LOG_LEVEL", "info")
+
+
+def is_logging_enabled():
+    return get_config_value("ENABLE_LOGGING", "true") == "true"
+
+
+def is_cloud_logging_enabled():
+    return get_config_value("CLOUD_LOGGING_ENABLED", "false") == "true"
+
+
+def is_retry_enabled():
+    return get_config_value("ENABLE_RETRY", "true") == "true"
+
+
+def is_backfill_enabled():
+    return get_config_value("ENABLE_BACKFILL", "false") == "true"
+
+
+def get_rate_limit():
+    return int(get_config_value("RATE_LIMIT", 5))
+
+
+def get_max_api_calls_per_min():
+    return int(get_config_value("MAX_API_CALLS_PER_MIN", 1000))
+
+
+# --- API Keys ---
+
+def get_polygon_api_key():
+    return get_config_value("POLYGON_API_KEY", "")
+
+
+def get_finnhub_api_key():
+    return get_config_value("FINNHUB_API_KEY", "")
+
+
+def get_alpha_vantage_api_key():
+    return get_config_value("ALPHA_VANTAGE_API_KEY", "")
+
+
+def get_yfinance_api_key():
+    return get_config_value("YFINANCE_API_KEY", "")
+
+
+def get_iex_api_key():
+    return get_config_value("IEX_API_KEY", "")
+
+
+def get_quandl_api_key():
+    return get_config_value("QUANDL_API_KEY", "")
+
+
+# --- API Rate Limits ---
+
+def get_polygon_fill_rate_limit():
+    return int(get_config_value("POLYGON_FILL_RATE_LIMIT", 100))
+
+
+def get_finnhub_fill_rate_limit():
+    return int(get_config_value("FINNHUB_FILL_RATE_LIMIT", 100))
+
+
+def get_alpha_vantage_fill_rate_limit():
+    return int(get_config_value("ALPHA_VANTAGE_FILL_RATE_LIMIT", 100))
+
+
+def get_yfinance_fill_rate_limit():
+    return int(get_config_value("YFINANCE_FILL_RATE_LIMIT", 100))
+
+
+def get_iex_fill_rate_limit():
+    return int(get_config_value("IEX_FILL_RATE_LIMIT", 100))
+
+
+def get_quandl_fill_rate_limit():
+    return int(get_config_value("QUANDL_FILL_RATE_LIMIT", 100))
+
+
+# --- AWS ---
+
+def get_aws_access_key_id():
+    return get_config_value("AWS_ACCESS_KEY_ID", "")
+
+
+def get_aws_secret_access_key():
+    return get_config_value("AWS_SECRET_ACCESS_KEY", "")
+
+
+def get_aws_region():
+    return get_config_value("AWS_REGION", "us-east-1")

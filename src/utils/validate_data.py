@@ -1,11 +1,11 @@
 import logging
-from typing import Dict, Any
+from typing import Any
 
 # Initialize the logger
 logger = logging.getLogger(__name__)
 
 
-def validate_data(data: Dict[str, Any]) -> bool:
+def validate_data(data: dict[str, Any]) -> bool:
     """
     Validates the data to ensure it conforms to the required schema.
 

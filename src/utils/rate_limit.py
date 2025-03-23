@@ -1,6 +1,6 @@
 import time
 import threading
-from utils.setup_logger import setup_logger
+from src.utils.setup_logger import setup_logger
 
 logger = setup_logger(__name__)
 
@@ -59,4 +59,6 @@ class RateLimiter:
 
             # Consume a token and log
             self.tokens -= 1
-            logger.debug(f"[{context}] Consumed a token. Remaining tokens: {self.tokens:.2f}")
+            logger.debug(
+                f"[{context}] Consumed a token. Remaining tokens: {self.tokens:.2f}"
+            )

@@ -16,4 +16,3 @@ jobs:
           pip install bandit safety
       - name: Run Bandit (code security)
         run: bandit .
-
