@@ -137,6 +137,7 @@
 #         track_request_metrics("failure", source="AlphaVantage")
 from typing import Any
 from src.pollers.base_poller import BasePoller
+from src.utils.rate_limit import RateLimiter
 from src.utils.request_with_timeout import request_with_timeout
 from src.utils.retry_request import retry_request
 from src.utils.track_polling_metrics import track_polling_metrics
