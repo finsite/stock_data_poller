@@ -1,0 +1,33 @@
+name: Helm Dry-Run Deployment
+
+on: [push, pull_request]
+
+jobs:
+  helm-dry-run:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Install Helm
+        uses: azure/setup-helm@v3
+        with:
+          version: v3.13.3
+
+      - name: Set Up Kubernetes (Kind)
+        uses: helm/kind-action@v1
+
+      - name: Ensure Helm dependencies are pulled
+        run: |
+          helm dependency update charts/stock_data_poller || echo "No dependencies to update"
+
+      - name: Validate values.yaml exists
+        run: |
+          if [ ! -f charts/stock_data_poller/values.yaml ]; then
+            echo "::warning file=charts/stock_data_poller/values.yaml::Missing values.yaml file"
+          fi
+
+      - name: Helm Install (Dry Run)
+        run: |
+          helm install test-release charts/stock_data_poller/ --dry-run --debug --values charts/stock_data_poller/values.yaml
