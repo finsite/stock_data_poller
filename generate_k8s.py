@@ -1,12 +1,15 @@
 import os
 import sys
 
+
 def create_directory(path):
     os.makedirs(path, exist_ok=True)
+
 
 def write_file(path, content):
     with open(path, "w") as f:
         f.write(content)
+
 
 def generate_kustomize_base(app_name, repo_path):
     base_path = os.path.join(repo_path, "k8s", "base")
@@ -50,7 +53,7 @@ spec:
       targetPort: 8080
 """
 
-    kustomization_yaml = f"""\
+    kustomization_yaml = """\
 resources:
   - deployment.yaml
   - service.yaml
@@ -60,15 +63,17 @@ resources:
     write_file(os.path.join(base_path, "service.yaml"), service_yaml)
     write_file(os.path.join(base_path, "kustomization.yaml"), kustomization_yaml)
 
+
 def generate_kustomize_overlays(app_name, repo_path):
     for env in ["dev", "prod"]:
         overlay_path = os.path.join(repo_path, "k8s", "overlays", env)
         create_directory(overlay_path)
-        kustomization_yaml = f"""\
+        kustomization_yaml = """\
 resources:
   - ../../base
 """
         write_file(os.path.join(overlay_path, "kustomization.yaml"), kustomization_yaml)
+
 
 def generate_argocd_application(app_name, repo_path):
     app_path = os.path.join(repo_path, "k8s", "application")
@@ -96,6 +101,7 @@ spec:
       selfHeal: true
 """
         write_file(os.path.join(app_path, f"{env}.yaml"), app_yaml)
+
 
 def generate_helm_chart(app_name, repo_path):
     helm_path = os.path.join(repo_path, "charts", app_name)
@@ -149,6 +155,7 @@ spec:
     write_file(os.path.join(helm_path, "Chart.yaml"), chart_yaml)
     write_file(os.path.join(helm_path, "values.yaml"), values_yaml)
     write_file(os.path.join(helm_path, "templates", "deployment.yaml"), deployment_yaml)
+
 
 if __name__ == "__main__":
     if len(sys.argv) != 2:

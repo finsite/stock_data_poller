@@ -191,13 +191,17 @@ class AlphaVantagePoller(BasePoller):
                 data = self._fetch_data(symbol)
 
                 if "Error Message" in data:
-                    self._handle_failure(symbol, f"Error from AlphaVantage: {data['Error Message']}")
+                    self._handle_failure(
+                        symbol, f"Error from AlphaVantage: {data['Error Message']}"
+                    )
                     continue
 
                 payload = self._process_data(symbol, data)
 
                 if not validate_data(payload):
-                    self._handle_failure(symbol, f"Validation failed for symbol: {symbol}")
+                    self._handle_failure(
+                        symbol, f"Validation failed for symbol: {symbol}"
+                    )
                     continue
 
                 track_polling_metrics("AlphaVantage", [symbol])

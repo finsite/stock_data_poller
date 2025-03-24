@@ -102,7 +102,6 @@
 #     # Assert that send_message is not called because of invalid data format
 #     mock_queue_sender.send_message.assert_not_called()
 from unittest.mock import patch
-from requests.exceptions import Timeout
 from src.pollers.yfinance_poller import YFinancePoller
 
 
@@ -119,12 +118,22 @@ def test_yfinance_poller_success(mock_ticker, mock_send_to_queue):
     }
 
     # ✅ Mimic latest row with .name for timestamp
-    mock_history = type("MockHistory", (), {
-        "iloc": [type("LatestRow", (), {
-            "name": "2024-12-01",
-            "__getitem__": lambda self, key: mock_data[key],
-        })]
-    })
+    mock_history = type(
+        "MockHistory",
+        (),
+        {
+            "iloc": [
+                type(
+                    "LatestRow",
+                    (),
+                    {
+                        "name": "2024-12-01",
+                        "__getitem__": lambda self, key: mock_data[key],
+                    },
+                )
+            ]
+        },
+    )
 
     mock_ticker.return_value.history.return_value = mock_history
 
@@ -176,8 +185,10 @@ def test_yfinance_poller_exception(mock_ticker, mock_send_to_queue):
 @patch("yfinance.Ticker")
 def test_yfinance_poller_invalid_symbol(mock_ticker, mock_send_to_queue):
     """Test YFinancePoller handles invalid symbols with empty data."""
+
     class MockHistory:
-        def __bool__(self): return False  # Simulate empty DataFrame
+        def __bool__(self):
+            return False  # Simulate empty DataFrame
 
     mock_ticker.return_value.history.return_value = MockHistory()
 

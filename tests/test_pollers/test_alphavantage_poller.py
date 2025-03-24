@@ -41,7 +41,9 @@ def test_alphavantage_poller_success(mock_request_with_timeout, mock_send_to_que
 
 @patch("src.pollers.alphavantage_poller.AlphaVantagePoller.send_to_queue")
 @patch("src.utils.request_with_timeout")
-def test_alphavantage_poller_invalid_symbol(mock_request_with_timeout, mock_send_to_queue):
+def test_alphavantage_poller_invalid_symbol(
+    mock_request_with_timeout, mock_send_to_queue
+):
     """Test AlphaVantagePoller handles invalid symbols."""
     mock_request_with_timeout.return_value = {"Error Message": "Invalid API call."}
 
@@ -65,7 +67,9 @@ def test_alphavantage_poller_timeout(mock_request_with_timeout, mock_send_to_que
 
 @patch("src.pollers.alphavantage_poller.AlphaVantagePoller.send_to_queue")
 @patch("src.utils.request_with_timeout")
-def test_alphavantage_poller_network_error(mock_request_with_timeout, mock_send_to_queue):
+def test_alphavantage_poller_network_error(
+    mock_request_with_timeout, mock_send_to_queue
+):
     """Test AlphaVantagePoller handles network errors."""
     mock_request_with_timeout.side_effect = Exception("Network error")
 

@@ -13,11 +13,10 @@ jobs:
       - name: Install Helm
         uses: azure/setup-helm@v3
         with:
-          version: v3.13.3  
+          version: v3.13.3
 
       - name: Run Helm Template Validation
         run: helm template charts/stock_data_poller/ --debug
 
       - name: Package Helm Chart
         run: helm package charts/stock_data_poller/
-

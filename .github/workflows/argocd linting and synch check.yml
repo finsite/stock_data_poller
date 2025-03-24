@@ -14,4 +14,3 @@ jobs:
         run: |
           echo "Linting ArgoCD Application manifest..."
           kubectl apply --dry-run=client --validate=true -f k8s/application/dev.yaml
-

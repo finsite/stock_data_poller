@@ -13,7 +13,7 @@ jobs:
       - name: Install Helm
         uses: azure/setup-helm@v3
         with:
-          version: v3.13.3  # or your preferred stable version
+          version: v3.13.3 # or your preferred stable version
 
       - name: Set Up Kubernetes (Kind)
         uses: helm/kind-action@v1

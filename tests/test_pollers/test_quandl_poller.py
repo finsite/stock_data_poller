@@ -118,11 +118,7 @@ from src.pollers.quandl_poller import QuandlPoller
 def test_quandl_poller_success(mock_request_with_timeout, mock_send_to_queue):
     """Test QuandlPoller fetches and processes data successfully."""
     mock_request_with_timeout.return_value = {
-        "dataset": {
-            "data": [
-                ["2024-12-01", 150.0, 155.0, 149.0, 152.0, 1000]
-            ]
-        }
+        "dataset": {"data": [["2024-12-01", 150.0, 155.0, 149.0, 152.0, 1000]]}
     }
 
     poller = QuandlPoller()
@@ -187,9 +183,7 @@ def test_quandl_poller_timeout(mock_request_with_timeout, mock_send_to_queue):
 @patch("src.utils.request_with_timeout")
 def test_quandl_poller_missing_dataset(mock_request_with_timeout, mock_send_to_queue):
     """Test QuandlPoller handles missing dataset field in response."""
-    mock_request_with_timeout.return_value = {
-        "meta": {"info": "no dataset"}
-    }
+    mock_request_with_timeout.return_value = {"meta": {"info": "no dataset"}}
 
     poller = QuandlPoller()
     poller.poll(["AAPL"])
@@ -199,7 +193,9 @@ def test_quandl_poller_missing_dataset(mock_request_with_timeout, mock_send_to_q
 
 @patch("src.pollers.quandl_poller.QuandlPoller.send_to_queue")
 @patch("src.utils.request_with_timeout")
-def test_quandl_poller_invalid_data_format(mock_request_with_timeout, mock_send_to_queue):
+def test_quandl_poller_invalid_data_format(
+    mock_request_with_timeout, mock_send_to_queue
+):
     """Test QuandlPoller handles unexpected data format."""
     mock_request_with_timeout.return_value = "Unexpected response"
 

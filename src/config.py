@@ -217,7 +217,9 @@ def load_vault_secrets():
         if not client.is_authenticated():
             raise ValueError("❌ Vault authentication failed!")
 
-        secrets = client.secrets.kv.v2.read_secret_version(path="poller")["data"]["data"]
+        secrets = client.secrets.kv.v2.read_secret_version(path="poller")["data"][
+            "data"
+        ]
         print("✅ Successfully loaded secrets from Vault.")
         return secrets
 
@@ -245,6 +247,7 @@ def validate_required_env():
 
 
 # --- Getter functions below ---
+
 
 def get_symbols():
     return get_config_value("SYMBOLS", "AAPL,GOOG,MSFT")
@@ -324,6 +327,7 @@ def get_max_api_calls_per_min():
 
 # --- API Keys ---
 
+
 def get_polygon_api_key():
     return get_config_value("POLYGON_API_KEY", "")
 
@@ -350,6 +354,7 @@ def get_quandl_api_key():
 
 # --- API Rate Limits ---
 
+
 def get_polygon_fill_rate_limit():
     return int(get_config_value("POLYGON_FILL_RATE_LIMIT", 100))
 
@@ -375,6 +380,7 @@ def get_quandl_fill_rate_limit():
 
 
 # --- AWS ---
+
 
 def get_aws_access_key_id():
     return get_config_value("AWS_ACCESS_KEY_ID", "")

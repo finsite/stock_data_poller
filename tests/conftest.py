@@ -49,6 +49,7 @@ def mock_env(monkeypatch):
     # ✅ Added to prevent import error from src/config.py
     monkeypatch.setenv("VAULT_TOKEN", "test-token")
 
+
 @pytest.fixture(params=POLLERS.keys())
 def poller_fixture(request):
     """Fixture to provide each poller class and the correct patch path for request_with_timeout."""

@@ -23,5 +23,3 @@ jobs:
 
       - name: Validate Kubernetes Manifests with Kubeval
         run: kubeval k8s/application/*.yaml --ignore-missing-schemas
-
-

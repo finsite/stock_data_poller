@@ -5,7 +5,6 @@ from src.utils.validate_data import validate_data
 from src.utils.track_polling_metrics import track_polling_metrics
 from src.utils.track_request_metrics import track_request_metrics
 from src.utils.request_with_timeout import request_with_timeout
-from src.utils.validate_environment_variables import validate_environment_variables
 from src.utils.rate_limit import RateLimiter
 from src.utils.setup_logger import setup_logger
 
@@ -67,6 +66,7 @@ class IEXPoller(BasePoller):
 
     def _fetch_data(self, symbol: str) -> dict[str, Any]:
         """Fetches stock data for the given symbol from IEX Cloud API."""
+
         def request_func():
             url = f"https://cloud.iexapis.com/stable/stock/{symbol}/quote?token={self.api_key}"
             return request_with_timeout("GET", url)

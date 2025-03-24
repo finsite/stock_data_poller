@@ -37,4 +37,4 @@ jobs:
         run: ruff check .
 
       - name: Check Ruff Formatting
-        run: ruff format --check .        
+        run: ruff format --check .
