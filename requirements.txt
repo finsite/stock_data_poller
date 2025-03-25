@@ -12,7 +12,7 @@ requests>=2.31          # HTTP client for making API requests
 yfinance>=0.2           # Yahoo Finance data retrieval
 alpha_vantage>=2.3      # Alpha Vantage API client
 iexfinance>=0.5         # IEX Cloud API client
-quandl>=3.7            # Quandl API client
+quandl>=3.7             # Quandl API client
 finnhub-python>=2.4     # Finnhub API client
 polygon-api-client>=1.0 # Polygon.io API client
 
@@ -28,13 +28,6 @@ numpy~=1.26             # Scientific computing with arrays
 loguru>=0.7             # Advanced logging library
 
 # ========================
-# Development & Documentation (Use in Dev Only)
+# Pin Transitive Dependencies (If Needed Later)
 # ========================
-# Move these to `requirements-dev.txt` if used only in development
-sphinx>=7.2             # For generating documentation
-sphinx-rtd-theme>=3.0   # ReadTheDocs theme for Sphinx
-
-# ========================
-# Pin Transitive Dependencies (For Stability Later)
-# ========================
-# Add dependencies here if you find any breaking changes from updates
+# Add specific pinned versions here if you encounter regressions

@@ -101,7 +101,7 @@ pre-commit==4.0.1            # Git hook manager
 # ======================
 # Docker (optional)
 # ======================
-# hadolintw==1.2.1           # ❌ Typo or invalid — likely meant to use Hadolint CLI or GitHub Action
+#hadolint==1.2.1 
 
 # ======================
 # Type stubs for common packages (used with mypy)
