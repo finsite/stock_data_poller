@@ -154,35 +154,33 @@
 #                 logger.error(f"❌ Failed to close RabbitMQ connection: {e}")
 #                 raise
 import pika
-from src.message_queue.queue_sender import QueueSender
-from src.utils.setup_logger import setup_logger
-from src.utils.validate_environment_variables import validate_environment_variables
-from src.utils.rate_limit import RateLimiter
 
 from src.config import (
     get_queue_type,
-    get_rabbitmq_host,
     get_rabbitmq_exchange,
+    get_rabbitmq_host,
     get_rabbitmq_routing_key,
-    get_sqs_queue_url,
     get_rate_limit,
+    get_sqs_queue_url,
 )
+from src.message_queue.queue_sender import QueueSender
+from src.utils.rate_limit import RateLimiter
+from src.utils.setup_logger import setup_logger
+from src.utils.validate_environment_variables import validate_environment_variables
 
 # Initialize logger
 logger = setup_logger(__name__)
 
 
 class BasePoller:
-    """
-    Base class for pollers that handles dynamic queue configuration and message sending.
-    """
+    """Base class for pollers that handles dynamic queue configuration and message sending."""
 
     def __init__(self):
-        """
-        Initializes the BasePoller with dynamic queue configuration based on environment variables.
+        """Initializes the BasePoller with dynamic queue configuration based on environment variables.
 
         Raises:
             ValueError: If the queue type is invalid.
+
         """
         # ✅ Validate required environment variables for both RabbitMQ and SQS
         validate_environment_variables(
@@ -211,9 +209,7 @@ class BasePoller:
         self.channel = None
 
     def connect_to_rabbitmq(self) -> None:
-        """
-        Establishes a connection to RabbitMQ and opens a channel for message publishing.
-        """
+        """Establishes a connection to RabbitMQ and opens a channel for message publishing."""
         try:
             if not self.connection or self.connection.is_closed:
                 self.connection = pika.BlockingConnection(
@@ -229,9 +225,7 @@ class BasePoller:
             raise
 
     def send_to_queue(self, payload: dict) -> None:
-        """
-        Sends the processed payload to the configured queue (SQS or RabbitMQ).
-        """
+        """Sends the processed payload to the configured queue (SQS or RabbitMQ)."""
         try:
             self.rate_limiter.acquire(context="QueueSender")
             if self.queue_type == "rabbitmq":
@@ -243,9 +237,7 @@ class BasePoller:
             raise
 
     def _send_to_rabbitmq(self, payload: dict) -> None:
-        """
-        Publishes the message to a RabbitMQ queue.
-        """
+        """Publishes the message to a RabbitMQ queue."""
         try:
             self.connect_to_rabbitmq()
 
@@ -265,9 +257,7 @@ class BasePoller:
             raise
 
     def _send_to_sqs(self, payload: dict) -> None:
-        """
-        Delegates sending the message to the SQS queue using QueueSender.
-        """
+        """Delegates sending the message to the SQS queue using QueueSender."""
         try:
             self.queue_sender.send_message(payload)
             logger.info("✅ Message successfully sent to SQS queue.")
@@ -276,9 +266,7 @@ class BasePoller:
             raise
 
     def close_connection(self) -> None:
-        """
-        Closes the RabbitMQ connection if it exists.
-        """
+        """Closes the RabbitMQ connection if it exists."""
         if self.queue_type == "rabbitmq" and self.connection:
             try:
                 self.connection.close()

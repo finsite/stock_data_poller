@@ -8,8 +8,7 @@ logger = logging.getLogger("poller")
 def track_request_metrics(
     status: Literal["success", "failure"], endpoint: str, response_time: float
 ) -> None:
-    """
-    Tracks metrics for individual API requests.
+    """Tracks metrics for individual API requests.
 
     Args:
         status (Literal["success", "failure"]): The status of the request ('success' or 'failure').
@@ -18,6 +17,7 @@ def track_request_metrics(
 
     Raises:
         ValueError: If the status is not 'success' or 'failure'.
+
     """
     # Validate status
     if status not in {"success", "failure"}:

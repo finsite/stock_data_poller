@@ -209,28 +209,23 @@
 #         track_request_metrics("failure", source="Finnhub")
 #         logger.error(f"Polling error: {error}")
 from typing import Any
+
+from src.config import get_finnhub_api_key, get_rate_limit
 from src.pollers.base_poller import BasePoller
+from src.utils.rate_limit import RateLimiter
+from src.utils.request_with_timeout import request_with_timeout
 from src.utils.retry_request import retry_request
-from src.utils.validate_data import validate_data
+from src.utils.setup_logger import setup_logger
 from src.utils.track_polling_metrics import track_polling_metrics
 from src.utils.track_request_metrics import track_request_metrics
-from src.utils.request_with_timeout import request_with_timeout
-from src.utils.rate_limit import RateLimiter
-from src.utils.setup_logger import setup_logger
-
-from src.config import (
-    get_rate_limit,
-    get_finnhub_api_key,
-)
+from src.utils.validate_data import validate_data
 
 # Initialize logger
 logger = setup_logger(__name__)
 
 
 class FinnhubPoller(BasePoller):
-    """
-    Poller for fetching stock quotes from Finnhub API.
-    """
+    """Poller for fetching stock quotes from Finnhub API."""
 
     def __init__(self):
         super().__init__()
@@ -243,9 +238,7 @@ class FinnhubPoller(BasePoller):
         self.rate_limiter = RateLimiter(max_requests=get_rate_limit(), time_window=60)
 
     def poll(self, symbols: list[str]) -> None:
-        """
-        Polls data for the specified symbols from Finnhub.
-        """
+        """Polls data for the specified symbols from Finnhub."""
         for symbol in symbols:
             try:
                 self._enforce_rate_limit()
@@ -271,15 +264,11 @@ class FinnhubPoller(BasePoller):
                 self._handle_failure(symbol, str(e))
 
     def _enforce_rate_limit(self) -> None:
-        """
-        Enforces the rate limit using the RateLimiter class.
-        """
+        """Enforces the rate limit using the RateLimiter class."""
         self.rate_limiter.acquire(context="Finnhub")
 
     def _fetch_data(self, symbol: str) -> dict[str, Any]:
-        """
-        Fetches stock data for the given symbol from Finnhub.
-        """
+        """Fetches stock data for the given symbol from Finnhub."""
 
         def request_func():
             url = (
@@ -290,9 +279,7 @@ class FinnhubPoller(BasePoller):
         return retry_request(request_func)
 
     def _process_data(self, symbol: str, data: dict[str, Any]) -> dict[str, Any]:
-        """
-        Processes the raw data into the payload format.
-        """
+        """Processes the raw data into the payload format."""
         return {
             "symbol": symbol,
             "timestamp": None,  # Finnhub does not provide timestamps in quotes
@@ -308,16 +295,12 @@ class FinnhubPoller(BasePoller):
         }
 
     def _handle_success(self, symbol: str) -> None:
-        """
-        Tracks success metrics for polling and requests.
-        """
+        """Tracks success metrics for polling and requests."""
         track_polling_metrics("Finnhub", [symbol])
         track_request_metrics(symbol, 30, 5)
 
     def _handle_failure(self, symbol: str, error: str) -> None:
-        """
-        Tracks failure metrics for polling and requests.
-        """
+        """Tracks failure metrics for polling and requests."""
         track_polling_metrics("Finnhub", [symbol])
         track_request_metrics(symbol, 30, 5, success=False)
         logger.error(f"Polling error for {symbol}: {error}")

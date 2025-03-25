@@ -1,12 +1,12 @@
 import logging
+
 import requests
 
 logger = logging.getLogger("poller")
 
 
 def request_with_timeout(url: str, timeout: int = 10) -> dict | None:
-    """
-    Request data from a URL with a timeout.
+    """Request data from a URL with a timeout.
 
     Args:
         url (str): The URL to request data from.
@@ -14,6 +14,7 @@ def request_with_timeout(url: str, timeout: int = 10) -> dict | None:
 
     Returns:
         Optional[dict]: The JSON response from the request, or None if the request fails.
+
     """
     if not url:
         logger.error("URL cannot be empty.")

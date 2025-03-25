@@ -1,5 +1,7 @@
 from unittest.mock import patch
+
 from requests.exceptions import Timeout
+
 from src.pollers.finnhub_poller import FinnhubPoller
 
 

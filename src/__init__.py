@@ -1,5 +1,4 @@
-"""
-This module initializes the main application package.
+"""This module initializes the main application package.
 
 The app package is structured as follows:
 - pollers: Handles data polling from various APIs (e.g., AlphaVantage, YFinance).
@@ -13,6 +12,9 @@ Exports:
   request_with_timeout, track_polling_metrics, track_request_metrics, validate_data
 """
 
+# ✅ Import queue logic
+from src.message_queue.queue_sender import QueueSender
+
 # ✅ Import pollers (from `pollers/`)
 from src.pollers.alphavantage_poller import AlphaVantagePoller
 from src.pollers.base_poller import BasePoller
@@ -21,9 +23,6 @@ from src.pollers.iex_poller import IEXPoller
 from src.pollers.polygon_poller import PolygonPoller
 from src.pollers.quandl_poller import QuandlPoller
 from src.pollers.yfinance_poller import YFinancePoller
-
-# ✅ Import queue logic
-from src.message_queue.queue_sender import QueueSender
 
 # ✅ Import utilities (from `utils/`)
 from src.utils.rate_limit import RateLimiter

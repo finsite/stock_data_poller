@@ -1,14 +1,14 @@
 from unittest.mock import patch
-from src.message_queue.queue_sender import QueueSender
+
 import pika
 import pytest
+
+from src.message_queue.queue_sender import QueueSender
 
 
 @patch("boto3.client")
 def test_sqs_queue_sender(mock_boto3):
-    """
-    Test sending messages to SQS queue using QueueSender.
-    """
+    """Test sending messages to SQS queue using QueueSender."""
     # Mock the response from SQS
     mock_boto3.return_value.send_message.return_value = {"MessageId": "12345"}
 
@@ -27,9 +27,7 @@ def test_sqs_queue_sender(mock_boto3):
 
 @patch("pika.BlockingConnection")
 def test_rabbitmq_queue_sender(mock_pika):
-    """
-    Test sending messages to RabbitMQ queue using QueueSender.
-    """
+    """Test sending messages to RabbitMQ queue using QueueSender."""
     # Initialize QueueSender for RabbitMQ
     sender = QueueSender(
         queue_type="rabbitmq", queue_url="amqp://guest:guest@localhost:5672/"
@@ -53,9 +51,7 @@ def test_rabbitmq_queue_sender(mock_pika):
 
 @patch("boto3.client")
 def test_sqs_queue_sender_failure(mock_boto3):
-    """
-    Test handling errors when sending a message to SQS.
-    """
+    """Test handling errors when sending a message to SQS."""
     # Mock SQS to raise an exception
     mock_boto3.return_value.send_message.side_effect = Exception("SQS send failed")
 
@@ -68,9 +64,7 @@ def test_sqs_queue_sender_failure(mock_boto3):
 
 @patch("pika.BlockingConnection")
 def test_rabbitmq_queue_sender_failure(mock_pika):
-    """
-    Test handling errors when sending a message to RabbitMQ.
-    """
+    """Test handling errors when sending a message to RabbitMQ."""
     # Mock RabbitMQ to raise an exception
     mock_channel = mock_pika.return_value.channel.return_value
     mock_channel.basic_publish.side_effect = Exception("RabbitMQ send failed")

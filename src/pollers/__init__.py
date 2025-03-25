@@ -1,5 +1,4 @@
-"""
-This module initializes the stock polling logic for the application.
+"""This module initializes the stock polling logic for the application.
 
 Pollers included:
 - BasePoller: Abstract base class for all pollers, providing common functionality.
@@ -11,13 +10,13 @@ Pollers included:
 - QuandlPoller: Fetches stock data from the Quandl API.
 """
 
+from src.pollers.alphavantage_poller import AlphaVantagePoller
 from src.pollers.base_poller import BasePoller
+from src.pollers.finnhub_poller import FinnhubPoller
 from src.pollers.iex_poller import IEXPoller
 from src.pollers.polygon_poller import PolygonPoller
-from src.pollers.yfinance_poller import YFinancePoller
-from src.pollers.alphavantage_poller import AlphaVantagePoller
-from src.pollers.finnhub_poller import FinnhubPoller
 from src.pollers.quandl_poller import QuandlPoller
+from src.pollers.yfinance_poller import YFinancePoller
 
 __all__ = [
     "BasePoller",

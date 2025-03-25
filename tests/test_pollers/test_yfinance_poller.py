@@ -102,6 +102,7 @@
 #     # Assert that send_message is not called because of invalid data format
 #     mock_queue_sender.send_message.assert_not_called()
 from unittest.mock import patch
+
 from src.pollers.yfinance_poller import YFinancePoller
 
 

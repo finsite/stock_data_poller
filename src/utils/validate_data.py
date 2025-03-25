@@ -6,14 +6,16 @@ logger = logging.getLogger(__name__)
 
 
 def validate_data(data: dict[str, Any]) -> bool:
-    """
-    Validates the data to ensure it conforms to the required schema.
+    """Validates the data to ensure it conforms to the required schema.
 
-    Parameters:
+    Parameters
+    ----------
         data (Dict[str, Any]): The data to validate.
 
-    Returns:
+    Returns
+    -------
         bool: True if data is valid, False otherwise.
+
     """
     required_keys = {"symbol", "price", "volume", "timestamp"}
 
@@ -35,21 +37,20 @@ def validate_data(data: dict[str, Any]) -> bool:
         return False
     if not _validate_volume(data["volume"]):
         return False
-    if not _validate_timestamp(data["timestamp"]):
-        return False
-
-    return True
+    return _validate_timestamp(data["timestamp"])
 
 
 def _validate_symbol(symbol: Any) -> bool:
-    """
-    Validates the 'symbol' field.
+    """Validates the 'symbol' field.
 
-    Parameters:
+    Parameters
+    ----------
         symbol (Any): The value of the 'symbol' field.
 
-    Returns:
+    Returns
+    -------
         bool: True if valid, False otherwise.
+
     """
     if not isinstance(symbol, str) or not symbol.isalpha():
         logger.error(f"Invalid symbol format: {symbol}")
@@ -58,14 +59,16 @@ def _validate_symbol(symbol: Any) -> bool:
 
 
 def _validate_price(price: Any) -> bool:
-    """
-    Validates the 'price' field.
+    """Validates the 'price' field.
 
-    Parameters:
+    Parameters
+    ----------
         price (Any): The value of the 'price' field.
 
-    Returns:
+    Returns
+    -------
         bool: True if valid, False otherwise.
+
     """
     if not isinstance(price, (int, float)) or price < 0:
         logger.error(f"Invalid price: {price}")
@@ -74,14 +77,16 @@ def _validate_price(price: Any) -> bool:
 
 
 def _validate_volume(volume: Any) -> bool:
-    """
-    Validates the 'volume' field.
+    """Validates the 'volume' field.
 
-    Parameters:
+    Parameters
+    ----------
         volume (Any): The value of the 'volume' field.
 
-    Returns:
+    Returns
+    -------
         bool: True if valid, False otherwise.
+
     """
     if not isinstance(volume, int) or volume < 0:
         logger.error(f"Invalid volume: {volume}")
@@ -90,14 +95,16 @@ def _validate_volume(volume: Any) -> bool:
 
 
 def _validate_timestamp(timestamp: Any) -> bool:
-    """
-    Validates the 'timestamp' field.
+    """Validates the 'timestamp' field.
 
-    Parameters:
+    Parameters
+    ----------
         timestamp (Any): The value of the 'timestamp' field.
 
-    Returns:
+    Returns
+    -------
         bool: True if valid, False otherwise.
+
     """
     if not isinstance(timestamp, str):
         logger.error(f"Invalid timestamp format: {timestamp}")

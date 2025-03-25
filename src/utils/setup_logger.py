@@ -2,8 +2,7 @@ import logging
 
 
 def setup_logger(name: str | None = None, level: int = logging.INFO) -> logging.Logger:
-    """
-    Configure and return a logger for the application.
+    """Configure and return a logger for the application.
 
     This logger logs messages to the console using a StreamHandler and a
     specified format. If the logger already exists, it simply returns the existing instance.
@@ -15,6 +14,7 @@ def setup_logger(name: str | None = None, level: int = logging.INFO) -> logging.
 
     Returns:
         logging.Logger: Configured logger instance.
+
     """
     # Determine the logger name
     logger_name = name or "poller"

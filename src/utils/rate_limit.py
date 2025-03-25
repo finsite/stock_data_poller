@@ -1,23 +1,23 @@
-import time
 import threading
+import time
+
 from src.utils.setup_logger import setup_logger
 
 logger = setup_logger(__name__)
 
 
 class RateLimiter:
-    """
-    A rate limiter based on the token bucket algorithm.
+    """A rate limiter based on the token bucket algorithm.
     Allows a specified number of requests within a time window.
     """
 
     def __init__(self, max_requests: int, time_window: float):
-        """
-        Initialize the RateLimiter.
+        """Initialize the RateLimiter.
 
         Args:
             max_requests (int): Maximum number of requests allowed.
             time_window (float): Time window in seconds.
+
         """
         self.max_requests = max_requests
         self.time_window = time_window
@@ -26,12 +26,12 @@ class RateLimiter:
         self.last_check = time.time()
 
     def acquire(self, context="RateLimiter"):
-        """
-        Acquire permission to proceed with a request.
+        """Acquire permission to proceed with a request.
         Blocks if the rate limit is exceeded.
 
         Args:
             context (str): Optional context for logging (e.g., poller type).
+
         """
         with self.lock:
             current_time = time.time()

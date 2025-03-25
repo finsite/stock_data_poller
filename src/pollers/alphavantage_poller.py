@@ -136,33 +136,31 @@
 #         track_polling_metrics("failure", error=error)
 #         track_request_metrics("failure", source="AlphaVantage")
 from typing import Any
+
+from src.config import (
+    get_alpha_vantage_api_key,
+    get_queue_type,
+    get_rabbitmq_exchange,
+    get_rabbitmq_host,
+    get_rabbitmq_routing_key,
+    get_rate_limit,
+    get_sqs_queue_url,
+)
+from src.message_queue.queue_sender import QueueSender
 from src.pollers.base_poller import BasePoller
 from src.utils.rate_limit import RateLimiter
 from src.utils.request_with_timeout import request_with_timeout
 from src.utils.retry_request import retry_request
+from src.utils.setup_logger import setup_logger
 from src.utils.track_polling_metrics import track_polling_metrics
 from src.utils.track_request_metrics import track_request_metrics
 from src.utils.validate_data import validate_data
-from src.utils.setup_logger import setup_logger
-from src.message_queue.queue_sender import QueueSender
-
-from src.config import (
-    get_rate_limit,
-    get_alpha_vantage_api_key,
-    get_queue_type,
-    get_rabbitmq_host,
-    get_rabbitmq_exchange,
-    get_rabbitmq_routing_key,
-    get_sqs_queue_url,
-)
 
 logger = setup_logger(__name__)
 
 
 class AlphaVantagePoller(BasePoller):
-    """
-    Poller for AlphaVantage API.
-    """
+    """Poller for AlphaVantage API."""
 
     def __init__(self):
         super().__init__()
@@ -182,9 +180,7 @@ class AlphaVantagePoller(BasePoller):
         )
 
     def poll(self, symbols: list[str]) -> None:
-        """
-        Polls data for the specified symbols from AlphaVantage.
-        """
+        """Polls data for the specified symbols from AlphaVantage."""
         for symbol in symbols:
             try:
                 self._enforce_rate_limit()

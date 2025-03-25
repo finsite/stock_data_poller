@@ -1,5 +1,4 @@
-"""
-This module initializes the utilities package for the application.
+"""This module initializes the utilities package for the application.
 
 Utilities included:
 - retry_request: Function for retrying operations with exponential backoff.
@@ -11,13 +10,13 @@ Utilities included:
 - setup_logger: Configures logging for the application.
 """
 
+from .request_with_timeout import request_with_timeout
 from .retry_request import retry_request
-from .validate_data import validate_data
+from .setup_logger import setup_logger
 from .track_polling_metrics import track_polling_metrics
 from .track_request_metrics import track_request_metrics
-from .request_with_timeout import request_with_timeout
+from .validate_data import validate_data
 from .validate_environment_variables import validate_environment_variables
-from .setup_logger import setup_logger
 
 __all__ = [
     "retry_request",

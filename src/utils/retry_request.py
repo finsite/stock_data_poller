@@ -1,8 +1,7 @@
-import time
 import logging
-from typing import Any
-
+import time
 from collections.abc import Callable
+from typing import Any
 
 # Initialize logger
 logger = logging.getLogger("poller")
@@ -11,8 +10,7 @@ logger = logging.getLogger("poller")
 def retry_request(
     func: Callable[[], Any], *, max_retries: int = 3, delay_seconds: int = 5
 ) -> Any | None:
-    """
-    Retries a given function if it raises an exception.
+    """Retries a given function if it raises an exception.
 
     Args:
         func (Callable[[], Any]): The function to be retried.
@@ -25,6 +23,7 @@ def retry_request(
     Raises:
         ValueError: If the function to be retried is None.
         Exception: The last exception encountered if all retries fail.
+
     """
     if func is None:
         raise ValueError("The function to be retried cannot be None")

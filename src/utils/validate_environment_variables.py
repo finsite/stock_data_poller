@@ -1,4 +1,5 @@
 import os
+
 from src.utils.setup_logger import setup_logger
 
 # Initialize logger
@@ -6,14 +7,14 @@ logger = setup_logger(__name__)
 
 
 def validate_environment_variables(required_variables: list[str]) -> None:
-    """
-    Verify that all required environment variables are set.
+    """Verify that all required environment variables are set.
 
     Args:
         required_variables (List[str]): A list of environment variables that are required for the script to run.
 
     Raises:
         EnvironmentError: If any of the environment variables are missing.
+
     """
     # Check that required_variables is a list of strings
     if not isinstance(required_variables, list) or not all(

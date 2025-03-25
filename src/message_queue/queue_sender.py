@@ -56,8 +56,10 @@
 #         except Exception as e:
 #             logger.error(f"❌ Failed to close RabbitMQ connection: {e}")
 import json
-import pika
+
 import boto3
+import pika
+
 from src.utils.setup_logger import setup_logger
 
 # Set up logger
@@ -73,8 +75,7 @@ class QueueSender:
         rabbitmq_routing_key: str = None,
         sqs_queue_url: str = None,
     ):
-        """
-        Initializes the QueueSender for RabbitMQ or SQS.
+        """Initializes the QueueSender for RabbitMQ or SQS.
 
         Args:
             queue_type (str): Type of queue system, either "rabbitmq" or "sqs".
@@ -82,6 +83,7 @@ class QueueSender:
             rabbitmq_exchange (str): RabbitMQ exchange name.
             rabbitmq_routing_key (str): RabbitMQ routing key.
             sqs_queue_url (str): AWS SQS queue URL.
+
         """
         self.queue_type = queue_type.lower()
         self.rabbitmq_host = rabbitmq_host
@@ -115,11 +117,11 @@ class QueueSender:
             raise ValueError(f"❌ Unsupported queue type: {self.queue_type}")
 
     def send_message(self, data: dict):
-        """
-        Sends a message to the configured queue.
+        """Sends a message to the configured queue.
 
         Args:
             data (dict): The message payload.
+
         """
         try:
             if self.queue_type == "rabbitmq":
@@ -157,9 +159,7 @@ class QueueSender:
             raise
 
     def close(self):
-        """
-        Closes the RabbitMQ connection if open.
-        """
+        """Closes the RabbitMQ connection if open."""
         if self.queue_type == "rabbitmq":
             try:
                 if self.connection and self.connection.is_open:

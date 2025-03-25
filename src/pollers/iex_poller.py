@@ -1,26 +1,21 @@
 from typing import Any
+
+from src.config import get_iex_api_key, get_rate_limit
 from src.pollers.base_poller import BasePoller
+from src.utils.rate_limit import RateLimiter
+from src.utils.request_with_timeout import request_with_timeout
 from src.utils.retry_request import retry_request
-from src.utils.validate_data import validate_data
+from src.utils.setup_logger import setup_logger
 from src.utils.track_polling_metrics import track_polling_metrics
 from src.utils.track_request_metrics import track_request_metrics
-from src.utils.request_with_timeout import request_with_timeout
-from src.utils.rate_limit import RateLimiter
-from src.utils.setup_logger import setup_logger
-
-from src.config import (
-    get_rate_limit,
-    get_iex_api_key,
-)
+from src.utils.validate_data import validate_data
 
 # ✅ Standard logger
 logger = setup_logger(__name__)
 
 
 class IEXPoller(BasePoller):
-    """
-    Poller for fetching stock quotes from the IEX Cloud API.
-    """
+    """Poller for fetching stock quotes from the IEX Cloud API."""
 
     def __init__(self):
         super().__init__()
@@ -33,9 +28,7 @@ class IEXPoller(BasePoller):
         self.rate_limiter = RateLimiter(max_requests=get_rate_limit(), time_window=60)
 
     def poll(self, symbols: list[str]) -> None:
-        """
-        Polls data for the specified symbols from IEX Cloud API.
-        """
+        """Polls data for the specified symbols from IEX Cloud API."""
         for symbol in symbols:
             try:
                 self._enforce_rate_limit()
@@ -77,7 +70,7 @@ class IEXPoller(BasePoller):
         """Processes the raw data from IEX Cloud API into the payload format."""
         return {
             "symbol": data.get("symbol", "N/A"),
-            "timestamp": data.get("latestUpdate", None),
+            "timestamp": data.get("latestUpdate"),
             "price": float(data.get("latestPrice", 0.0)),
             "source": "IEX",
             "data": {

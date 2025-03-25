@@ -1,6 +1,7 @@
-import os
+# import os
+from unittest.mock import MagicMock, patch
+
 import pytest
-from unittest.mock import patch, MagicMock
 from requests.exceptions import Timeout
 
 from src.pollers.alphavantage_poller import AlphaVantagePoller
@@ -9,7 +10,6 @@ from src.pollers.iex_poller import IEXPoller
 from src.pollers.polygon_poller import PolygonPoller
 from src.pollers.quandl_poller import QuandlPoller
 from src.pollers.yfinance_poller import YFinancePoller
-
 from src.utils.setup_logger import setup_logger
 
 logger = setup_logger(__name__)
@@ -46,7 +46,6 @@ def mock_env(monkeypatch):
     monkeypatch.setenv(
         "SQS_QUEUE_URL", "https://sqs.us-east-1.amazonaws.com/123456789012/test-queue"
     )
-    # ✅ Added to prevent import error from src/config.py
     monkeypatch.setenv("VAULT_TOKEN", "test-token")
 
 
@@ -56,14 +55,13 @@ def poller_fixture(request):
     poller_key = request.param
     poller_class, patch_path = POLLERS[poller_key]
 
-    # Set fake API key if needed
     api_keys = {
         "alphavantage": "ALPHA_VANTAGE_API_KEY",
         "finnhub": "FINNHUB_API_KEY",
         "iex": "IEX_API_KEY",
         "polygon": "POLYGON_API_KEY",
         "quandl": "QUANDL_API_KEY",
-        "yfinance": None,  # No API key required
+        "yfinance": None,
     }
     api_key_env_var = api_keys[poller_key]
     api_key = os.getenv(api_key_env_var, "test_api_key") if api_key_env_var else None
@@ -74,13 +72,17 @@ def poller_fixture(request):
 
 def _expected_payload_structure(message: dict):
     """Validate that message has the expected structure."""
-    assert "symbol" in message
-    assert "timestamp" in message
-    assert "price" in message
-    assert "source" in message
-    assert isinstance(message["data"], dict)
+    required_keys = ["symbol", "timestamp", "price", "source"]
+    for key in required_keys:
+        if key not in message:
+            pytest.fail(f"Missing top-level key: {key}")
+
+    if not isinstance(message.get("data"), dict):
+        pytest.fail("'data' key must be a dictionary")
+
     for field in ["open", "high", "low", "close", "volume"]:
-        assert field in message["data"]
+        if field not in message["data"]:
+            pytest.fail(f"Missing field in data: {field}")
 
 
 def _mock_success_response():

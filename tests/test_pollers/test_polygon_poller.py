@@ -115,7 +115,9 @@
 #     # Assert that send_message is not called because of invalid format
 #     mock_queue_sender.send_message.assert_not_called()
 from unittest.mock import patch
+
 from requests.exceptions import Timeout
+
 from src.pollers.polygon_poller import PolygonPoller
 
 

@@ -223,28 +223,23 @@
 #         except Exception as e:
 #             print(f"❌ Error sending data to SQS: {str(e)}")
 from typing import Any
+
+from src.config import get_quandl_api_key, get_rate_limit
 from src.pollers.base_poller import BasePoller
+from src.utils.rate_limit import RateLimiter
 from src.utils.request_with_timeout import request_with_timeout
 from src.utils.retry_request import retry_request
+from src.utils.setup_logger import setup_logger
 from src.utils.track_polling_metrics import track_polling_metrics
 from src.utils.track_request_metrics import track_request_metrics
 from src.utils.validate_data import validate_data
-from src.utils.rate_limit import RateLimiter
-from src.utils.setup_logger import setup_logger
-
-from src.config import (
-    get_rate_limit,
-    get_quandl_api_key,
-)
 
 # ✅ Logger setup
 logger = setup_logger(__name__)
 
 
 class QuandlPoller(BasePoller):
-    """
-    Poller for fetching stock data from the Quandl (now Nasdaq Data Link) API.
-    """
+    """Poller for fetching stock data from the Quandl (now Nasdaq Data Link) API."""
 
     def __init__(self):
         super().__init__()
