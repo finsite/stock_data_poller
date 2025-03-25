@@ -15,19 +15,26 @@ jobs:
         with:
           version: v3.13.3
 
-      - name: Set Up Kubernetes (Kind)
-        uses: helm/kind-action@v1
+      - name: Install Kind
+        uses: engineerd/setup-kind@v0.5.0
 
-      - name: Ensure Helm dependencies are pulled
-        run: |
-          helm dependency update charts/stock_data_poller || echo "No dependencies to update"
+      - name: Create Kind Cluster
+        run: kind create cluster --wait 60s
 
-      - name: Validate values.yaml exists
+      - name: Helm Dependency Update (if needed)
         run: |
-          if [ ! -f charts/stock_data_poller/values.yaml ]; then
-            echo "::warning file=charts/stock_data_poller/values.yaml::Missing values.yaml file"
-          fi
+          helm dependency update charts/stock_data_poller || echo "No dependencies"
 
-      - name: Helm Install (Dry Run)
+      - name: Helm Lint
+        run: helm lint charts/stock_data_poller
+
+      - name: Helm Dry Run Install
         run: |
-          helm install test-release charts/stock_data_poller/ --dry-run --debug --values charts/stock_data_poller/values.yaml
+          helm install test-release charts/stock_data_poller \
+            --dry-run \
+            --debug \
+            --values charts/stock_data_poller/values.yaml
+
+      - name: Delete Kind Cluster
+        if: always()
+        run: kind delete cluster
