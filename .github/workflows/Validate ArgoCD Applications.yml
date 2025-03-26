@@ -1,9 +1,12 @@
 name: Validate ArgoCD Applications
 
+# on:
+#   pull_request:
+#   push:
+#     branches: [main]
+
 on:
-  pull_request:
-  push:
-    branches: [main]
+  workflow_dispatch:
 
 jobs:
   validate-apps:
