@@ -173,12 +173,14 @@ logger = setup_logger(__name__)
 
 
 class BasePoller:
+
     """Base class for pollers that handles dynamic queue configuration and message sending."""
 
     def __init__(self):
         """Initializes the BasePoller with dynamic queue configuration based on environment variables.
 
-        Raises:
+        Raises
+        ------
             ValueError: If the queue type is invalid.
 
         """
@@ -249,9 +251,7 @@ class BasePoller:
                 body=str(payload),
                 properties=pika.BasicProperties(delivery_mode=2),  # Persistent messages
             )
-            logger.info(
-                f"✅ Message successfully sent to RabbitMQ queue: {queue_name}."
-            )
+            logger.info(f"✅ Message successfully sent to RabbitMQ queue: {queue_name}.")
         except Exception as e:
             logger.error(f"❌ Error while sending message to RabbitMQ: {e}")
             raise

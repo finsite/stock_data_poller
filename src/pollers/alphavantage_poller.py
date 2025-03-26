@@ -160,6 +160,7 @@ logger = setup_logger(__name__)
 
 
 class AlphaVantagePoller(BasePoller):
+
     """Poller for AlphaVantage API."""
 
     def __init__(self):
@@ -195,9 +196,7 @@ class AlphaVantagePoller(BasePoller):
                 payload = self._process_data(symbol, data)
 
                 if not validate_data(payload):
-                    self._handle_failure(
-                        symbol, f"Validation failed for symbol: {symbol}"
-                    )
+                    self._handle_failure(symbol, f"Validation failed for symbol: {symbol}")
                     continue
 
                 track_polling_metrics("AlphaVantage", [symbol])

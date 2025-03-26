@@ -225,6 +225,7 @@ logger = setup_logger(__name__)
 
 
 class FinnhubPoller(BasePoller):
+
     """Poller for fetching stock quotes from Finnhub API."""
 
     def __init__(self):
@@ -271,9 +272,7 @@ class FinnhubPoller(BasePoller):
         """Fetches stock data for the given symbol from Finnhub."""
 
         def request_func():
-            url = (
-                f"https://finnhub.io/api/v1/quote?symbol={symbol}&token={self.api_key}"
-            )
+            url = f"https://finnhub.io/api/v1/quote?symbol={symbol}&token={self.api_key}"
             return request_with_timeout("GET", url)
 
         return retry_request(request_func)

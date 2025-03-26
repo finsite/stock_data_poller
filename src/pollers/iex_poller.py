@@ -15,6 +15,7 @@ logger = setup_logger(__name__)
 
 
 class IEXPoller(BasePoller):
+
     """Poller for fetching stock quotes from the IEX Cloud API."""
 
     def __init__(self):

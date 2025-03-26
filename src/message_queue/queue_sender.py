@@ -78,6 +78,7 @@ class QueueSender:
         """Initializes the QueueSender for RabbitMQ or SQS.
 
         Args:
+        ----
             queue_type (str): Type of queue system, either "rabbitmq" or "sqs".
             rabbitmq_host (str): RabbitMQ host.
             rabbitmq_exchange (str): RabbitMQ exchange name.
@@ -120,6 +121,7 @@ class QueueSender:
         """Sends a message to the configured queue.
 
         Args:
+        ----
             data (dict): The message payload.
 
         """

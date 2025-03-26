@@ -7,6 +7,7 @@ logger = setup_logger(__name__)
 
 
 class RateLimiter:
+
     """A rate limiter based on the token bucket algorithm.
     Allows a specified number of requests within a time window.
     """
@@ -15,6 +16,7 @@ class RateLimiter:
         """Initialize the RateLimiter.
 
         Args:
+        ----
             max_requests (int): Maximum number of requests allowed.
             time_window (float): Time window in seconds.
 
@@ -30,6 +32,7 @@ class RateLimiter:
         Blocks if the rate limit is exceeded.
 
         Args:
+        ----
             context (str): Optional context for logging (e.g., poller type).
 
         """
@@ -59,6 +62,4 @@ class RateLimiter:
 
             # Consume a token and log
             self.tokens -= 1
-            logger.debug(
-                f"[{context}] Consumed a token. Remaining tokens: {self.tokens:.2f}"
-            )
+            logger.debug(f"[{context}] Consumed a token. Remaining tokens: {self.tokens:.2f}")

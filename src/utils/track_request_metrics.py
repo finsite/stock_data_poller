@@ -11,11 +11,13 @@ def track_request_metrics(
     """Tracks metrics for individual API requests.
 
     Args:
+    ----
         status (Literal["success", "failure"]): The status of the request ('success' or 'failure').
         endpoint (str): The API endpoint that was accessed.
         response_time (float): The time taken for the API request in seconds.
 
     Raises:
+    ------
         ValueError: If the status is not 'success' or 'failure'.
 
     """

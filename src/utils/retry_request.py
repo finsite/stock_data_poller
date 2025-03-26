@@ -13,14 +13,17 @@ def retry_request(
     """Retries a given function if it raises an exception.
 
     Args:
+    ----
         func (Callable[[], Any]): The function to be retried.
         max_retries (int): The maximum number of retry attempts. Defaults to 3.
         delay_seconds (int): The delay in seconds between retries. Defaults to 5.
 
     Returns:
+    -------
         Optional[Any]: The result of the function if successful, or None if all retries fail.
 
     Raises:
+    ------
         ValueError: If the function to be retried is None.
         Exception: The last exception encountered if all retries fail.
 

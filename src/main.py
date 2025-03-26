@@ -1,8 +1,8 @@
 import logging  # ✅ Ensure logging is imported
 import time
 
-from config import (  # ✅ Importing updated config with Vault integration
-    LOG_LEVEL,  # ✅ Ensure LOG_LEVEL is imported
+from src.config import (  # ✅ Importing updated config with Vault integration
+    LOG_LEVEL,
     MAX_RETRIES,
     POLL_INTERVAL,
     POLLER_TYPE,
@@ -34,9 +34,7 @@ LOG_LEVEL_MAP = {
 }
 
 # ✅ Set up logging with the user-defined log level
-logger = setup_logger(
-    __name__, level=LOG_LEVEL_MAP.get(LOG_LEVEL.lower(), logging.INFO)
-)
+logger = setup_logger(__name__, level=LOG_LEVEL_MAP.get(LOG_LEVEL.lower(), logging.INFO))
 
 # ✅ Validate environment variables
 validate_environment_variables(["POLLER_TYPE", "SYMBOLS"])
@@ -60,9 +58,7 @@ def main():
     """Main polling loop to collect stock data."""
     try:
         logger.info(f"Starting {POLLER_TYPE} Poller...")
-        logger.info(
-            f"Polling every {POLL_INTERVAL} seconds with exchange `{RABBITMQ_EXCHANGE}`"
-        )
+        logger.info(f"Polling every {POLL_INTERVAL} seconds with exchange `{RABBITMQ_EXCHANGE}`")
 
         while True:
             symbols = get_symbols_to_poll()

@@ -239,6 +239,7 @@ logger = setup_logger(__name__)
 
 
 class QuandlPoller(BasePoller):
+
     """Poller for fetching stock data from the Quandl (now Nasdaq Data Link) API."""
 
     def __init__(self):
@@ -281,8 +282,7 @@ class QuandlPoller(BasePoller):
     def _fetch_data(self, symbol: str) -> dict[str, Any]:
         def request_func():
             url = (
-                f"https://data.nasdaq.com/api/v3/datasets/WIKI/{symbol}.json?"
-                f"api_key={self.api_key}"
+                f"https://data.nasdaq.com/api/v3/datasets/WIKI/{symbol}.json?api_key={self.api_key}"
             )
             return request_with_timeout("GET", url)
 

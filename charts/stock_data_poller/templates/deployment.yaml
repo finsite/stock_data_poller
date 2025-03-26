@@ -16,6 +16,6 @@ spec:
     spec:
       containers:
         - name: stock_data_poller
-          image: "{ { .Values.image.repository } }:{ { .Values.image.tag } }"
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           ports:
             - containerPort: 8080

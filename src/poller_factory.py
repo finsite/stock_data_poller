@@ -14,6 +14,7 @@ logger = setup_logger(__name__)
 
 
 class PollerFactory:
+
     """Factory class for creating pollers dynamically based on POLLER_TYPE."""
 
     def __init__(self):
@@ -55,7 +56,8 @@ class PollerFactory:
     def create_poller(self):
         """Creates an instance of the poller based on the specified POLLER_TYPE.
 
-        Returns:
+        Returns
+        -------
             BasePoller: An instance of the appropriate poller class.
 
         """
@@ -69,18 +71,14 @@ class PollerFactory:
         elif self.poller_type == "finnhub":
             api_key = os.getenv("FINNHUB_API_KEY")
             if not api_key:
-                raise ValueError(
-                    "Missing API key for Finnhub Poller. Set FINNHUB_API_KEY."
-                )
+                raise ValueError("Missing API key for Finnhub Poller. Set FINNHUB_API_KEY.")
             logger.info("Using Finnhub Poller.")
             return FinnhubPoller(api_key)
 
         elif self.poller_type == "polygon":
             api_key = os.getenv("POLYGON_API_KEY")
             if not api_key:
-                raise ValueError(
-                    "Missing API key for Polygon Poller. Set POLYGON_API_KEY."
-                )
+                raise ValueError("Missing API key for Polygon Poller. Set POLYGON_API_KEY.")
             logger.info("Using Polygon Poller.")
             return PolygonPoller(api_key)
 
@@ -96,18 +94,14 @@ class PollerFactory:
         elif self.poller_type == "yfinance":
             api_key = os.getenv("YFINANCE_API_KEY")
             if not api_key:
-                raise ValueError(
-                    "Missing API key for YFinance Poller. Set YFINANCE_API_KEY."
-                )
+                raise ValueError("Missing API key for YFinance Poller. Set YFINANCE_API_KEY.")
             logger.info("Using YFinance Poller.")
             return YFinancePoller(api_key)
 
         elif self.poller_type == "quandl":
             api_key = os.getenv("QUANDL_API_KEY")
             if not api_key:
-                raise ValueError(
-                    "Missing API key for Quandl Poller. Set QUANDL_API_KEY."
-                )
+                raise ValueError("Missing API key for Quandl Poller. Set QUANDL_API_KEY.")
             logger.info("Using Quandl Poller.")
             return QuandlPoller(api_key)
 

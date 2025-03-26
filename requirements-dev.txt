@@ -82,7 +82,7 @@ safety==3.2.11               # Checks dependencies for known vulnerabilities
 # ======================
 sphinx==7.2.2                        # Python documentation generator
 sphinx-rtd-theme==3.0.2             # ReadTheDocs theme
-furo                                # Alternative modern responsive theme
+furo>=2023.9.10                               # Alternative modern responsive theme
 sphinx-autodoc-typehints            # Display type hints in docstrings
 doc8==1.1.1                         # Validates .rst and Sphinx doc files (optional)
 

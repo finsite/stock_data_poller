@@ -8,11 +8,13 @@ def setup_logger(name: str | None = None, level: int = logging.INFO) -> logging.
     specified format. If the logger already exists, it simply returns the existing instance.
 
     Args:
+    ----
         name (Optional[str]): The name of the logger to create. If not specified, a default
             logger named "poller" is created.
         level (int): The logging level to set. Defaults to INFO.
 
     Returns:
+    -------
         logging.Logger: Configured logger instance.
 
     """
@@ -29,9 +31,7 @@ def setup_logger(name: str | None = None, level: int = logging.INFO) -> logging.
         handler = logging.StreamHandler()
 
         # Define a format for the log messages
-        formatter = logging.Formatter(
-            "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
-        )
+        formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
 
         # Set the format for the StreamHandler
         handler.setFormatter(formatter)

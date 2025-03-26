@@ -7,10 +7,12 @@ def next_version(current: str, part: str) -> str:
     """Increment a version.
 
     Args:
+    ----
         current: The current version string.
         part: The part of the version to increment ('major', 'minor', or 'patch').
 
     Returns:
+    -------
         A new version string with the specified part incremented.
 
     """

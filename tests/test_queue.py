@@ -29,9 +29,7 @@ def test_sqs_queue_sender(mock_boto3):
 def test_rabbitmq_queue_sender(mock_pika):
     """Test sending messages to RabbitMQ queue using QueueSender."""
     # Initialize QueueSender for RabbitMQ
-    sender = QueueSender(
-        queue_type="rabbitmq", queue_url="amqp://guest:guest@localhost:5672/"
-    )
+    sender = QueueSender(queue_type="rabbitmq", queue_url="amqp://guest:guest@localhost:5672/")
 
     # Send a mock message
     sender.send_message({"key": "value"})
@@ -69,9 +67,7 @@ def test_rabbitmq_queue_sender_failure(mock_pika):
     mock_channel = mock_pika.return_value.channel.return_value
     mock_channel.basic_publish.side_effect = Exception("RabbitMQ send failed")
 
-    sender = QueueSender(
-        queue_type="rabbitmq", queue_url="amqp://guest:guest@localhost:5672/"
-    )
+    sender = QueueSender(queue_type="rabbitmq", queue_url="amqp://guest:guest@localhost:5672/")
 
     # Assert that the exception is raised when attempting to send a message
     with pytest.raises(Exception):

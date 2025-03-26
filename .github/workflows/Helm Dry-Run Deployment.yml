@@ -1,6 +1,9 @@
 name: Helm Dry-Run Deployment
 
-on: [push, pull_request]
+# on: [push, pull_request]
+
+on:
+  workflow_dispatch:
 
 jobs:
   helm-dry-run:

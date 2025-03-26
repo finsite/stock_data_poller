@@ -219,9 +219,7 @@ def load_vault_secrets():
         if not client.is_authenticated():
             raise ValueError("❌ Vault authentication failed!")
 
-        secrets = client.secrets.kv.v2.read_secret_version(path="poller")["data"][
-            "data"
-        ]
+        secrets = client.secrets.kv.v2.read_secret_version(path="poller")["data"]["data"]
         print("✅ Successfully loaded secrets from Vault.")
         return secrets
 
