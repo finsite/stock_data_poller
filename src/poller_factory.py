@@ -1,3 +1,7 @@
+"""
+Factory class for creating pollers dynamically based on POLLER_TYPE.
+"""
+
 import os
 
 from src.pollers.alphavantage_poller import AlphaVantagePoller
@@ -14,11 +18,20 @@ logger = setup_logger(__name__)
 
 
 class PollerFactory:
+    """
+    Factory class for creating pollers dynamically based on POLLER_TYPE.
 
-    """Factory class for creating pollers dynamically based on POLLER_TYPE."""
+    Attributes
+    ----------
+    required_env_vars : List[str]
+        List of required environment variables to validate.
+    poller_type : str
+        Type of poller to create, as specified in the POLLER_TYPE environment variable.
+    """
 
     def __init__(self):
-        """Initializes the PollerFactory, validating the required environment
+        """
+        Initializes the PollerFactory, validating the required environment
         variables and determining the appropriate poller class based on the
         configuration.
         """
@@ -55,13 +68,18 @@ class PollerFactory:
             )
 
     def create_poller(self):
-        """Creates an instance of the poller based on the specified
-        POLLER_TYPE.
+        """
+        Creates an instance of the poller based on the specified POLLER_TYPE.
 
         Returns
         -------
-            BasePoller: An instance of the appropriate poller class.
+        BasePoller
+            An instance of the appropriate poller class.
 
+        Raises
+        ------
+        ValueError
+            If the POLLER_TYPE is invalid or if the required API key is missing.
         """
         if self.poller_type == "iex":
             api_key = os.getenv("IEX_API_KEY")
@@ -110,3 +128,4 @@ class PollerFactory:
         else:
             logger.error(f"Unsupported POLLER_TYPE: {self.poller_type}")
             raise ValueError(f"Unsupported POLLER_TYPE: {self.poller_type}")
+

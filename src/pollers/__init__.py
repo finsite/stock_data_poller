@@ -8,10 +8,16 @@ Pollers included:
 - AlphaVantagePoller: Fetches stock data from the Alpha Vantage API.
 - FinnhubPoller: Fetches stock data from the Finnhub API.
 - QuandlPoller: Fetches stock data from the Quandl API.
+
+Note: This module is responsible for importing and exporting the necessary poller
+classes and functions. It also sets up the package-level logger.
 """
 
-from src.pollers.alphavantage_poller import AlphaVantagePoller
+# Import the base poller class
 from src.pollers.base_poller import BasePoller
+
+# Import the concrete poller classes
+from src.pollers.alphavantage_poller import AlphaVantagePoller
 from src.pollers.finnhub_poller import FinnhubPoller
 from src.pollers.iex_poller import IEXPoller
 from src.pollers.polygon_poller import PolygonPoller
@@ -29,7 +35,9 @@ __all__ = [
 ]
 
 # Package-level logger setup
-# import logging
+# Import the logger setup function from the utils module
 from src.utils.setup_logger import setup_logger
 
+# Initialize the logger for the pollers package
 logger = setup_logger(name="pollers")
+

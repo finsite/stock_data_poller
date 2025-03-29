@@ -1,14 +1,20 @@
-from unittest.mock import patch
+"""
+Tests for the QueueSender class.
 
-import pika
-import pytest
-
-from src.message_queue.queue_sender import QueueSender
+This module contains unit tests for the QueueSender class,
+which is responsible for sending messages to SQS or RabbitMQ queues.
+"""
 
 
 @patch("boto3.client")
 def test_sqs_queue_sender(mock_boto3):
-    """Test sending messages to SQS queue using QueueSender."""
+    """
+    Test sending messages to SQS queue using QueueSender.
+
+    This test mocks the response from SQS and asserts that
+    the send_message method was called once with the expected
+    parameters.
+    """
     # Mock the response from SQS
     mock_boto3.return_value.send_message.return_value = {"MessageId": "12345"}
 
@@ -27,7 +33,13 @@ def test_sqs_queue_sender(mock_boto3):
 
 @patch("pika.BlockingConnection")
 def test_rabbitmq_queue_sender(mock_pika):
-    """Test sending messages to RabbitMQ queue using QueueSender."""
+    """
+    Test sending messages to RabbitMQ queue using QueueSender.
+
+    This test mocks the response from RabbitMQ and asserts that
+    the basic_publish method was called once with the expected
+    parameters.
+    """
     # Initialize QueueSender for RabbitMQ
     sender = QueueSender(queue_type="rabbitmq", queue_url="amqp://guest:guest@localhost:5672/")
 
@@ -49,7 +61,12 @@ def test_rabbitmq_queue_sender(mock_pika):
 
 @patch("boto3.client")
 def test_sqs_queue_sender_failure(mock_boto3):
-    """Test handling errors when sending a message to SQS."""
+    """
+    Test handling errors when sending a message to SQS.
+
+    This test mocks SQS to raise an exception and asserts that
+    the exception is raised when attempting to send a message.
+    """
     # Mock SQS to raise an exception
     mock_boto3.return_value.send_message.side_effect = Exception("SQS send failed")
 
@@ -62,7 +79,12 @@ def test_sqs_queue_sender_failure(mock_boto3):
 
 @patch("pika.BlockingConnection")
 def test_rabbitmq_queue_sender_failure(mock_pika):
-    """Test handling errors when sending a message to RabbitMQ."""
+    """
+    Test handling errors when sending a message to RabbitMQ.
+
+    This test mocks RabbitMQ to raise an exception and asserts that
+    the exception is raised when attempting to send a message.
+    """
     # Mock RabbitMQ to raise an exception
     mock_channel = mock_pika.return_value.channel.return_value
     mock_channel.basic_publish.side_effect = Exception("RabbitMQ send failed")
@@ -72,3 +94,4 @@ def test_rabbitmq_queue_sender_failure(mock_pika):
     # Assert that the exception is raised when attempting to send a message
     with pytest.raises(Exception):
         sender.send_message({"key": "value"})
+

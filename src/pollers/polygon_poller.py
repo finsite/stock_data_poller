@@ -1,7 +1,12 @@
 """
 Poller for fetching stock quotes from Polygon.io API.
+
+This poller fetches the previous close data for the given symbols from
+Polygon.io API and sends it to the message queue.
+
+The poller enforces a rate limit of 5 requests per minute, per symbol.
 """
-from typing import Any
+from typing import Any, Dict, List
 
 from src.config import get_polygon_api_key, get_rate_limit
 from src.pollers.base_poller import BasePoller
@@ -37,7 +42,7 @@ class PolygonPoller(BasePoller):
 
         self.rate_limiter = RateLimiter(max_requests=get_rate_limit(), time_window=60)
 
-    def poll(self, symbols: list[str]) -> None:
+    def poll(self, symbols: List[str]) -> None:
         """
         Polls data for the specified symbols from Polygon.io API.
         """
@@ -71,7 +76,7 @@ class PolygonPoller(BasePoller):
         """
         self.rate_limiter.acquire(context="Polygon")
 
-    def _fetch_data(self, symbol: str) -> dict[str, Any]:
+    def _fetch_data(self, symbol: str) -> Dict[str, Any]:
         """
         Fetches stock data for the given symbol from Polygon.io API.
         """
@@ -88,7 +93,7 @@ class PolygonPoller(BasePoller):
 
         return retry_request(request_func)
 
-    def _process_data(self, symbol: str, data: dict[str, Any]) -> dict[str, Any]:
+    def _process_data(self, symbol: str, data: Dict[str, Any]) -> Dict[str, Any]:
         """
         Processes the raw data into the payload format.
         """

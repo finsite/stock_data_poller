@@ -1,4 +1,3 @@
-/*************  ✨ Codeium Command 🌟  *************/
 """
 Poller for fetching stock quotes from the IEX Cloud API.
 """
@@ -147,4 +146,3 @@ class IEXPoller(BasePoller):
         track_request_metrics(symbol, 30, 5, success=False)
         logger.error(f"Polling error for {symbol}: {error}")
 
-/******  b3098d4c-ebd8-4a29-bafa-2b2039f3efe8  *******/

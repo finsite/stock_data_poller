@@ -1,3 +1,12 @@
+"""
+Base class for pollers that handles dynamic queue configuration and message sending.
+
+This class provides a way to dynamically configure the queue based on environment variables
+and provides a common interface for sending messages to the queue.
+
+The class also provides methods for connecting to RabbitMQ and sending messages to the queue.
+"""
+
 import pika
 
 from src.config import (
@@ -21,7 +30,8 @@ class BasePoller:
     """Base class for pollers that handles dynamic queue configuration and message sending."""
 
     def __init__(self):
-        """Initializes the BasePoller with dynamic queue configuration based on environment variables.
+        """
+        Initializes the BasePoller with dynamic queue configuration based on environment variables.
 
         Raises:
             ValueError: If the queue type is invalid.
@@ -69,7 +79,15 @@ class BasePoller:
             raise
 
     def send_to_queue(self, payload: dict) -> None:
-        """Sends the processed payload to the configured queue (SQS or RabbitMQ)."""
+        """
+        Sends the processed payload to the configured queue (SQS or RabbitMQ).
+
+        This method will first acquire a slot in the rate limiter and then send the message
+        to the queue.
+
+        Args:
+            payload (dict): The payload to be sent to the queue.
+        """
         try:
             self.rate_limiter.acquire(context="QueueSender")
             if self.queue_type == "rabbitmq":
@@ -116,3 +134,4 @@ class BasePoller:
             except Exception as e:
                 logger.error(f"Failed to close RabbitMQ connection: {e}")
                 raise
+

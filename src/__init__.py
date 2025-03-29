@@ -12,10 +12,10 @@ Exports:
   request_with_timeout, track_polling_metrics, track_request_metrics, validate_data
 """
 
-# ✅ Import queue logic
+# Import queue logic
 from src.message_queue.queue_sender import QueueSender
 
-# ✅ Import pollers (from `pollers/`)
+# Import pollers (from `pollers/`)
 from src.pollers.alphavantage_poller import AlphaVantagePoller
 from src.pollers.base_poller import BasePoller
 from src.pollers.finnhub_poller import FinnhubPoller
@@ -24,7 +24,7 @@ from src.pollers.polygon_poller import PolygonPoller
 from src.pollers.quandl_poller import QuandlPoller
 from src.pollers.yfinance_poller import YFinancePoller
 
-# ✅ Import utilities (from `utils/`)
+# Import utilities (from `utils/`)
 from src.utils.rate_limit import RateLimiter
 from src.utils.request_with_timeout import request_with_timeout
 from src.utils.retry_request import retry_request
@@ -34,6 +34,7 @@ from src.utils.track_request_metrics import track_request_metrics
 from src.utils.validate_data import validate_data
 from src.utils.validate_environment_variables import validate_environment_variables
 
+# Define the public API of the module
 __all__ = [
     "AlphaVantagePoller",
     "BasePoller",
@@ -53,8 +54,7 @@ __all__ = [
     "validate_data",
 ]
 
-# ✅ Package-level logger setup (moved after imports to prevent circular imports)
-# import logging
-
+# Initialize package-level logger
 logger = setup_logger(name="app")
 logger.info("Application package initialized.")
+
