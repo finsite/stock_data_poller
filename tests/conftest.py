@@ -51,7 +51,9 @@ def mock_env(monkeypatch):
 
 @pytest.fixture(params=POLLERS.keys())
 def poller_fixture(request):
-    """Fixture to provide each poller class and the correct patch path for request_with_timeout."""
+    """Fixture to provide each poller class and the correct patch path for
+    request_with_timeout.
+    """
     poller_key = request.param
     poller_class, patch_path = POLLERS[poller_key]
 

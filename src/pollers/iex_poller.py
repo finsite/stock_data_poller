@@ -1,3 +1,10 @@
+/*************  ✨ Codeium Command 🌟  *************/
+"""
+Poller for fetching stock quotes from the IEX Cloud API.
+"""
+
+
+from typing import Any, Dict, List
 from typing import Any
 
 from src.config import get_iex_api_key, get_rate_limit
@@ -15,19 +22,36 @@ logger = setup_logger(__name__)
 
 
 class IEXPoller(BasePoller):
-
+    """
+    Poller for fetching stock quotes from the IEX Cloud API.
+    """
     """Poller for fetching stock quotes from the IEX Cloud API."""
 
     def __init__(self):
+        """
+        Initializes the IEXPoller.
+
+        Raises:
+            ValueError: If the IEX_API_KEY environment variable is not set.
+        """
         super().__init__()
 
+        # Validate IEX-specific environment
         # ✅ Validate IEX-specific environment
         self.api_key = get_iex_api_key()
         if not self.api_key:
+            raise ValueError("IEX_API_KEY environment variable is not set.")
             raise ValueError("❌ Missing IEX_API_KEY.")
 
         self.rate_limiter = RateLimiter(max_requests=get_rate_limit(), time_window=60)
 
+    def poll(self, symbols: List[str]) -> None:
+        """
+        Polls data for the specified symbols from IEX Cloud API.
+
+        Args:
+            symbols (List[str]): List of stock symbols to poll.
+        """
     def poll(self, symbols: list[str]) -> None:
         """Polls data for the specified symbols from IEX Cloud API."""
         for symbol in symbols:
@@ -55,20 +79,43 @@ class IEXPoller(BasePoller):
                 self._handle_failure(symbol, str(e))
 
     def _enforce_rate_limit(self) -> None:
+        """
+        Enforces the rate limit using the RateLimiter class.
+        """
         """Enforces the rate limit using the RateLimiter class."""
         self.rate_limiter.acquire(context="IEX")
 
+    def _fetch_data(self, symbol: str) -> Dict[str, Any]:
+        """
+        Fetches stock data for the given symbol from IEX Cloud API.
     def _fetch_data(self, symbol: str) -> dict[str, Any]:
         """Fetches stock data for the given symbol from IEX Cloud API."""
 
+        Args:
+            symbol (str): Stock symbol to fetch data for.
+
+        Returns:
+            Dict[str, Any]: Fetched data in the format returned by the IEX API.
+        """
         def request_func():
             url = f"https://cloud.iexapis.com/stable/stock/{symbol}/quote?token={self.api_key}"
             return request_with_timeout("GET", url)
 
         return retry_request(request_func)
 
+    def _process_data(self, data: Dict[str, Any]) -> Dict[str, Any]:
+        """
+        Processes the raw data from IEX Cloud API into the payload
     def _process_data(self, data: dict[str, Any]) -> dict[str, Any]:
-        """Processes the raw data from IEX Cloud API into the payload format."""
+        """Processes the raw data from IEX Cloud API into the payload
+        format.
+
+        Args:
+            data (Dict[str, Any]): Raw data from IEX API.
+
+        Returns:
+            Dict[str, Any]: Processed data in the payload format.
+        """
         return {
             "symbol": data.get("symbol", "N/A"),
             "timestamp": data.get("latestUpdate"),
@@ -84,12 +131,20 @@ class IEXPoller(BasePoller):
         }
 
     def _handle_success(self, symbol: str) -> None:
+        """
+        Tracks success metrics for polling and requests.
+        """
         """Tracks success metrics for polling and requests."""
         track_polling_metrics("IEX", [symbol])
         track_request_metrics(symbol, 30, 5)
 
     def _handle_failure(self, symbol: str, error: str) -> None:
+        """
+        Tracks failure metrics for polling and logs error.
+        """
         """Tracks failure metrics for polling and logs error."""
         track_polling_metrics("IEX", [symbol])
         track_request_metrics(symbol, 30, 5, success=False)
         logger.error(f"Polling error for {symbol}: {error}")
+
+/******  b3098d4c-ebd8-4a29-bafa-2b2039f3efe8  *******/

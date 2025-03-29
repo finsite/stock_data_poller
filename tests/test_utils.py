@@ -9,14 +9,18 @@ from src.utils.validate_environment_variables import validate_environment_variab
 
 
 def test_validate_environment_variables():
-    """Test that validate_environment_variables passes when the required environment variable is set."""
+    """Test that validate_environment_variables passes when the required
+    environment variable is set.
+    """
     os.environ["TEST_VAR"] = "value"
     validate_environment_variables(["TEST_VAR"])
     del os.environ["TEST_VAR"]
 
 
 def test_validate_environment_variables_missing():
-    """Test that validate_environment_variables raises an EnvironmentError when the required environment variable is missing."""
+    """Test that validate_environment_variables raises an EnvironmentError when
+    the required environment variable is missing.
+    """
     with pytest.raises(EnvironmentError):
         validate_environment_variables(["MISSING_VAR"])
 
@@ -36,7 +40,9 @@ def test_request_with_timeout(mock_get):
 
 @patch("requests.get")
 def test_request_with_timeout_failure(mock_get):
-    """Test that request_with_timeout raises a Timeout exception when the request times out."""
+    """Test that request_with_timeout raises a Timeout exception when the
+    request times out.
+    """
     mock_get.side_effect = requests.exceptions.Timeout
 
     with pytest.raises(requests.exceptions.Timeout):
@@ -47,7 +53,9 @@ def test_request_with_timeout_failure(mock_get):
 
 @patch("requests.get")
 def test_request_with_timeout_network_error(mock_get):
-    """Test that request_with_timeout raises a ConnectionError when the request fails due to network issues."""
+    """Test that request_with_timeout raises a ConnectionError when the request
+    fails due to network issues.
+    """
     mock_get.side_effect = requests.exceptions.ConnectionError
 
     with pytest.raises(requests.exceptions.ConnectionError):

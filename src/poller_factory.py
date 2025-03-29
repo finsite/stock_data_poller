@@ -18,8 +18,9 @@ class PollerFactory:
     """Factory class for creating pollers dynamically based on POLLER_TYPE."""
 
     def __init__(self):
-        """Initializes the PollerFactory, validating the required environment variables and
-        determining the appropriate poller class based on the configuration.
+        """Initializes the PollerFactory, validating the required environment
+        variables and determining the appropriate poller class based on the
+        configuration.
         """
         # Define required environment variables for validation
         self.required_env_vars = [
@@ -54,7 +55,8 @@ class PollerFactory:
             )
 
     def create_poller(self):
-        """Creates an instance of the poller based on the specified POLLER_TYPE.
+        """Creates an instance of the poller based on the specified
+        POLLER_TYPE.
 
         Returns
         -------
