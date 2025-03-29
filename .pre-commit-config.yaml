@@ -256,3 +256,16 @@ repos:
         entry: pytest tests --maxfail=3 --disable-warnings -q
         language: system
         pass_filenames: false
+
+  #run mypy
+  - repo: https://github.com/pre-commit/mirrors-mypy
+    rev: v1.8.0
+    hooks:
+      - id: mypy
+        args: ["--strict", "src"]
+
+  #markdownlint
+  - repo: https://github.com/igorshubovych/markdownlint-cli
+    rev: v0.35.0
+    hooks:
+      - id: markdownlint
