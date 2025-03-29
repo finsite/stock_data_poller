@@ -12,7 +12,9 @@ from src.utils.validate_environment_variables import validate_environment_variab
 # Logger setup for YFinancePoller
 logger = setup_logger(__name__)
 
+
 class YFinancePoller(BasePoller):
+
     """Poller for fetching stock data using Yahoo Finance (yfinance)."""
 
     def __init__(self):
@@ -95,4 +97,3 @@ class YFinancePoller(BasePoller):
         track_polling_metrics("failure", [symbol])
         track_request_metrics(symbol, 30, 5, success=False)
         logger.error(f"YFinance polling error for {symbol}: {error}")
-

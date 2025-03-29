@@ -2,6 +2,7 @@ from unittest.mock import patch
 from requests.exceptions import Timeout
 from src.pollers.quandl_poller import QuandlPoller
 
+
 @patch("src.pollers.quandl_poller.QuandlPoller.send_to_queue")
 @patch("src.utils.request_with_timeout")
 def test_quandl_poller_success(mock_request_with_timeout, mock_send_to_queue):
@@ -31,6 +32,7 @@ def test_quandl_poller_success(mock_request_with_timeout, mock_send_to_queue):
         }
     )
 
+
 @patch("src.pollers.quandl_poller.QuandlPoller.send_to_queue")
 @patch("src.utils.request_with_timeout")
 def test_quandl_poller_invalid_symbol(mock_request_with_timeout, mock_send_to_queue):
@@ -46,6 +48,7 @@ def test_quandl_poller_invalid_symbol(mock_request_with_timeout, mock_send_to_qu
     # Ensure no message is sent to the queue
     mock_send_to_queue.assert_not_called()
 
+
 @patch("src.pollers.quandl_poller.QuandlPoller.send_to_queue")
 @patch("src.utils.request_with_timeout")
 def test_quandl_poller_empty_response(mock_request_with_timeout, mock_send_to_queue):
@@ -58,6 +61,7 @@ def test_quandl_poller_empty_response(mock_request_with_timeout, mock_send_to_qu
 
     # Ensure no message is sent to the queue
     mock_send_to_queue.assert_not_called()
+
 
 @patch("src.pollers.quandl_poller.QuandlPoller.send_to_queue")
 @patch("src.utils.request_with_timeout")
@@ -72,6 +76,7 @@ def test_quandl_poller_timeout(mock_request_with_timeout, mock_send_to_queue):
     # Ensure no message is sent due to timeout
     mock_send_to_queue.assert_not_called()
 
+
 @patch("src.pollers.quandl_poller.QuandlPoller.send_to_queue")
 @patch("src.utils.request_with_timeout")
 def test_quandl_poller_missing_dataset(mock_request_with_timeout, mock_send_to_queue):
@@ -85,6 +90,7 @@ def test_quandl_poller_missing_dataset(mock_request_with_timeout, mock_send_to_q
     # Ensure no message is sent due to missing field
     mock_send_to_queue.assert_not_called()
 
+
 @patch("src.pollers.quandl_poller.QuandlPoller.send_to_queue")
 @patch("src.utils.request_with_timeout")
 def test_quandl_poller_invalid_data_format(mock_request_with_timeout, mock_send_to_queue):
@@ -97,4 +103,3 @@ def test_quandl_poller_invalid_data_format(mock_request_with_timeout, mock_send_
 
     # Ensure no message is sent due to invalid format
     mock_send_to_queue.assert_not_called()
-

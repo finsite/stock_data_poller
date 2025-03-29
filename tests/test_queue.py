@@ -1,15 +1,12 @@
-"""
-Tests for the QueueSender class.
+"""Tests for the QueueSender class.
 
 This module contains unit tests for the QueueSender class,
 which is responsible for sending messages to SQS or RabbitMQ queues.
 """
 
-
 @patch("boto3.client")
 def test_sqs_queue_sender(mock_boto3):
-    """
-    Test sending messages to SQS queue using QueueSender.
+    """Test sending messages to SQS queue using QueueSender.
 
     This test mocks the response from SQS and asserts that
     the send_message method was called once with the expected
@@ -33,8 +30,7 @@ def test_sqs_queue_sender(mock_boto3):
 
 @patch("pika.BlockingConnection")
 def test_rabbitmq_queue_sender(mock_pika):
-    """
-    Test sending messages to RabbitMQ queue using QueueSender.
+    """Test sending messages to RabbitMQ queue using QueueSender.
 
     This test mocks the response from RabbitMQ and asserts that
     the basic_publish method was called once with the expected
@@ -61,8 +57,7 @@ def test_rabbitmq_queue_sender(mock_pika):
 
 @patch("boto3.client")
 def test_sqs_queue_sender_failure(mock_boto3):
-    """
-    Test handling errors when sending a message to SQS.
+    """Test handling errors when sending a message to SQS.
 
     This test mocks SQS to raise an exception and asserts that
     the exception is raised when attempting to send a message.
@@ -79,8 +74,7 @@ def test_sqs_queue_sender_failure(mock_boto3):
 
 @patch("pika.BlockingConnection")
 def test_rabbitmq_queue_sender_failure(mock_pika):
-    """
-    Test handling errors when sending a message to RabbitMQ.
+    """Test handling errors when sending a message to RabbitMQ.
 
     This test mocks RabbitMQ to raise an exception and asserts that
     the exception is raised when attempting to send a message.
@@ -94,4 +88,3 @@ def test_rabbitmq_queue_sender_failure(mock_pika):
     # Assert that the exception is raised when attempting to send a message
     with pytest.raises(Exception):
         sender.send_message({"key": "value"})
-

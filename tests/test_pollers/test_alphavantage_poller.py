@@ -2,6 +2,7 @@ from unittest.mock import patch
 from requests.exceptions import Timeout
 from src.pollers.alphavantage_poller import AlphaVantagePoller
 
+
 @patch("src.pollers.alphavantage_poller.AlphaVantagePoller.send_to_queue")
 @patch("src.utils.request_with_timeout")
 def test_alphavantage_poller_success(mock_request_with_timeout, mock_send_to_queue):
@@ -40,6 +41,7 @@ def test_alphavantage_poller_success(mock_request_with_timeout, mock_send_to_que
         }
     )
 
+
 @patch("src.pollers.alphavantage_poller.AlphaVantagePoller.send_to_queue")
 @patch("src.utils.request_with_timeout")
 def test_alphavantage_poller_invalid_symbol(mock_request_with_timeout, mock_send_to_queue):
@@ -53,6 +55,7 @@ def test_alphavantage_poller_invalid_symbol(mock_request_with_timeout, mock_send
 
     # Verifying that no data is sent to the queue
     mock_send_to_queue.assert_not_called()
+
 
 @patch("src.pollers.alphavantage_poller.AlphaVantagePoller.send_to_queue")
 @patch("src.utils.request_with_timeout")
@@ -68,6 +71,7 @@ def test_alphavantage_poller_timeout(mock_request_with_timeout, mock_send_to_que
     # Verifying that no data is sent to the queue due to timeout
     mock_send_to_queue.assert_not_called()
 
+
 @patch("src.pollers.alphavantage_poller.AlphaVantagePoller.send_to_queue")
 @patch("src.utils.request_with_timeout")
 def test_alphavantage_poller_network_error(mock_request_with_timeout, mock_send_to_queue):
@@ -82,6 +86,7 @@ def test_alphavantage_poller_network_error(mock_request_with_timeout, mock_send_
     # Verifying that no data is sent to the queue due to network error
     mock_send_to_queue.assert_not_called()
 
+
 @patch("src.pollers.alphavantage_poller.AlphaVantagePoller.send_to_queue")
 @patch("src.utils.request_with_timeout")
 def test_alphavantage_poller_empty_data(mock_request_with_timeout, mock_send_to_queue):
@@ -95,4 +100,3 @@ def test_alphavantage_poller_empty_data(mock_request_with_timeout, mock_send_to_
 
     # Verifying that no data is sent to the queue due to empty data
     mock_send_to_queue.assert_not_called()
-

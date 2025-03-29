@@ -120,9 +120,7 @@ def test_polygon_poller_missing_field(mock_request_with_timeout, mock_send_to_qu
 
 @patch("src.pollers.polygon_poller.PolygonPoller.send_to_queue")
 @patch("src.utils.request_with_timeout")
-def test_polygon_poller_invalid_data_format(
-    mock_request_with_timeout, mock_send_to_queue
-):
+def test_polygon_poller_invalid_data_format(mock_request_with_timeout, mock_send_to_queue):
     """Test PolygonPoller handles unexpected data formats."""
     # Simulate an invalid data format
     mock_request_with_timeout.return_value = "Invalid data format"
@@ -135,4 +133,3 @@ def test_polygon_poller_invalid_data_format(
 
     # Assert that the send_to_queue method is not called
     mock_send_to_queue.assert_not_called()
-

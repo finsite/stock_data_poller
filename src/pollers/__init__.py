@@ -40,4 +40,3 @@ from src.utils.setup_logger import setup_logger
 
 # Initialize the logger for the pollers package
 logger = setup_logger(name="pollers")
-

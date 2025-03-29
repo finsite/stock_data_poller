@@ -98,4 +98,3 @@ def test_yfinance_poller_invalid_symbol(mock_ticker, mock_send_to_queue):
 
     # Assert that send_message is not called for an invalid symbol
     mock_send_to_queue.assert_not_called()
-

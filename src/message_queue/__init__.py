@@ -1,5 +1,4 @@
-"""
-This module initializes the queue-related functionalities for the
+"""This module initializes the queue-related functionalities for the
 application.
 
 The module provides the QueueSender class which handles sending data to
@@ -16,4 +15,3 @@ from src.message_queue.queue_sender import QueueSender
 
 
 __all__ = ["QueueSender"]
-

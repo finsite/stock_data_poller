@@ -1,5 +1,4 @@
-"""
-Main application entry point.
+"""Main application entry point.
 
 This script is responsible for polling stock data from the IEX Cloud API, and
 sending the data to a RabbitMQ or SQS queue.
@@ -119,4 +118,3 @@ def get_symbols_to_poll():
 
 if __name__ == "__main__":
     main()
-

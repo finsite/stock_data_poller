@@ -1,5 +1,4 @@
-"""
-Test suite for pollers
+"""Test suite for pollers
 
 Contains fixtures and tests for pollers. Each poller is tested for successful and
 timeout scenarios.
@@ -43,12 +42,14 @@ POLLERS = {
     "yfinance": (YFinancePoller, "src.pollers.yfinance_poller.request_with_timeout"),
 }
 
+
 @pytest.fixture
 def mock_queue_sender():
     """Fixture to mock the QueueSender's send_message method."""
     mock_sender = MagicMock()
     mock_sender.send_message.return_value = None
     return mock_sender
+
 
 @pytest.fixture(autouse=True)
 def mock_env(monkeypatch):
@@ -62,6 +63,7 @@ def mock_env(monkeypatch):
         "SQS_QUEUE_URL", "https://sqs.us-east-1.amazonaws.com/123456789012/test-queue"
     )
     monkeypatch.setenv("VAULT_TOKEN", "test-token")
+
 
 @pytest.fixture(params=POLLERS.keys())
 def poller_fixture(request):
@@ -85,6 +87,7 @@ def poller_fixture(request):
     poller_instance = poller_class(api_key=api_key) if api_key else poller_class()
     return poller_instance, patch_path
 
+
 def _expected_payload_structure(message: dict):
     """Validate that message has the expected structure."""
     # Ensure required top-level keys are present
@@ -102,6 +105,7 @@ def _expected_payload_structure(message: dict):
         if field not in message["data"]:
             pytest.fail(f"Missing field in data: {field}")
 
+
 def _mock_success_response():
     """Return a mock successful API response."""
     return {
@@ -115,6 +119,7 @@ def _mock_success_response():
             }
         }
     }
+
 
 def test_poller_success(poller_fixture, mock_queue_sender):
     """Test successful poller behavior with mocked API response."""
@@ -131,6 +136,7 @@ def test_poller_success(poller_fixture, mock_queue_sender):
         args, kwargs = mock_queue_sender.send_message.call_args
         _expected_payload_structure(kwargs["message"])
 
+
 def test_poller_timeout(poller_fixture, mock_queue_sender):
     """Test poller handles timeout exceptions gracefully."""
     poller, patch_path = poller_fixture
@@ -142,4 +148,3 @@ def test_poller_timeout(poller_fixture, mock_queue_sender):
 
         # Ensure that no message is sent when a timeout occurs
         mock_queue_sender.send_message.assert_not_called()
-

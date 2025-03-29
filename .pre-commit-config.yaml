@@ -1,148 +1,19 @@
-# repos:
-#   # ✅ Basic Code Hygiene
-#   - repo: https://github.com/pre-commit/pre-commit-hooks
-#     rev: "v5.0.0"
-#     hooks:
-#       - id: check-yaml
-#         #exclude: "helm/templates/.*\\.yaml" # Skip Helm YAML templates
-#       - id: check-json
-#       - id: detect-private-key
-#       - id: check-added-large-files
-#         args: ["--maxkb=5000"]
-#       - id: debug-statements
-#       - id: check-merge-conflict
-#       - id: check-executables-have-shebangs
-
-#   #spelling chek
-#   - repo: https://github.com/codespell-project/codespell
-#     rev: v2.4.1
-#     hooks:
-#       - id: codespell
-#         args: ["--ignore-words-list", "hte"]
-
-#   # ✅ Autoformatting (Black)
-#   - repo: https://github.com/psf/black
-#     rev: "25.1.0"
-#     hooks:
-#       - id: black
-
-#   # ✅ Linting & Auto-Fixes (Ruff) - Replaces Flake8, Isort, and Pylint
-#   - repo: https://github.com/astral-sh/ruff-pre-commit
-#     rev: v0.9.10
-#     hooks:
-#       - id: ruff
-#         args: [--fix]
-#         types: [python]
-
-#   # ✅ Security Linter for Python Code (Bandit) - Now Scans Tests Too
-#   - repo: https://github.com/PyCQA/bandit
-#     rev: "1.8.3"
-#     hooks:
-#       - id: bandit
-#         entry: bandit -r src tests
-#         language: python
-#         pass_filenames: false
-
-#   # ✅ Dependency Security Audit (Pip-Audit)
-#   - repo: local
-#     hooks:
-#       - id: pip-audit
-#         name: pip-audit
-#         entry: pip-audit --requirement requirements.txt --requirement requirements-dev.txt
-#         language: system
-#         types: [python]
-#         pass_filenames: false
-
-#   # ✅ Ensure All Dependencies Are Installed
-#   - repo: local
-#     hooks:
-#       - id: pip-check
-#         name: Check installed dependencies
-#         entry: pip check
-#         language: system
-#         pass_filenames: false
-
-#   # ✅ Python Syntax Upgrades (PyUpgrade)
-#   - repo: https://github.com/asottile/pyupgrade
-#     rev: "v3.19.1"
-#     hooks:
-#       - id: pyupgrade
-#         args: ["--py311-plus"]
-
-#   # ✅ Dockerfile Linter (Hadolint)
-#   - repo: https://github.com/hadolint/hadolint
-#     rev: v2.13.1-beta
-#     hooks:
-#       - id: hadolint
-#         name: Hadolint
-#         entry: hadolint
-#         language: system
-#         files: Dockerfile
-
-#   # ✅ Shell Script Linter (ShellCheck)
-#   - repo: https://github.com/koalaman/shellcheck-precommit
-#     rev: "v0.10.0"
-#     hooks:
-#       - id: shellcheck
-#         entry: shellcheck
-#         language: system
-
-#   # ✅ Prettier for Markdown, YAML, and JSON Formatting
-#   # - repo: https://github.com/pre-commit/mirrors-prettier
-#   #   rev: "v4.0.0-alpha.8"
-#   #   hooks:
-#   #     - id: prettier
-#   #       args: ["--print-width", "80"]
-#   #       additional_dependencies: ["prettier@latest"]
-#   - repo: https://github.com/pre-commit/mirrors-prettier
-#     rev: "v4.0.0-alpha.8"
-#     hooks:
-#       - id: prettier
-#         args:
-#           ["--print-width", "80", "--write", "**/*.{json,yml,yaml,md,html,css}"]
-#         additional_dependencies: ["prettier@latest"]
-
-#   # ✅ Sphinx Documentation Validation
-#   - repo: local
-#     hooks:
-#       - id: sphinx-lint
-#         name: Sphinx Docs Build
-#         entry: sphinx-build -W -b html docs/source docs/build
-#         language: system
-#         pass_filenames: false
-#         always_run: true
-
-#   # ✅ Conventional Commits Linter (Commitizen)
-#   - repo: https://github.com/commitizen-tools/commitizen
-#     rev: "v4.4.1"
-#     hooks:
-#       - id: commitizen
-#         name: Commitizen Conventional Commit Linter
-#         entry: cz check
-#         language: python # ✅ Uses Python environment
-#         stages: [commit-msg] # ✅ This is the correct field
-
-#   # # ✅ Run Tests (Pytest)
-#   - repo: local
-#     hooks:
-#       - id: pytest
-#         name: Run tests before commit
-#         entry: pytest tests --maxfail=3 --disable-warnings -q
-#         language: system
-#         pass_filenames: false
 repos:
   # ✅ Basic Code Hygiene
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: "v5.0.0"
     hooks:
-      - id: check-yaml
-      - id: check-json
-      - id: detect-private-key
-      - id: check-added-large-files
-        args: ["--maxkb=5000"]
-      - id: debug-statements
-      - id: check-merge-conflict
-      - id: check-executables-have-shebangs
+        - id: check-yaml
+        - id: check-json
+        - id: detect-private-key
+        - id: check-added-large-files
+          args: ["--maxkb=5000"]
+        - id: debug-statements
+        - id: check-merge-conflict
+        - id: check-executables-have-shebangs
+        - id: end-of-file-fixer
+        - id: mixed-line-ending
+          args: [--fix=lf]
 
   # ✅ Spelling
   - repo: https://github.com/codespell-project/codespell
@@ -269,3 +140,14 @@ repos:
     rev: v0.35.0
     hooks:
       - id: markdownlint
+
+  - repo: https://github.com/pre-commit/mirrors-isort
+    rev: v5.12.0
+    hooks:
+      - id: isort
+
+- repo: https://github.com/myint/docformatter
+  rev: v1.7.5
+  hooks:
+    - id: docformatter
+      args: ["--in-place", "--recursive"]

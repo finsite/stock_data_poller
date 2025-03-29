@@ -1,5 +1,4 @@
-"""
-Poller for fetching stock data from AlphaVantage API.
+"""Poller for fetching stock data from AlphaVantage API.
 """
 
 from typing import Any, Dict
@@ -27,13 +26,12 @@ logger = setup_logger(__name__)
 
 
 class AlphaVantagePoller(BasePoller):
-    """
-    Poller for fetching stock data from AlphaVantage API.
+
+    """Poller for fetching stock data from AlphaVantage API.
     """
 
     def __init__(self):
-        """
-        Initializes the AlphaVantagePoller.
+        """Initializes the AlphaVantagePoller.
         """
         super().__init__()
 
@@ -52,8 +50,7 @@ class AlphaVantagePoller(BasePoller):
         )
 
     def poll(self, symbols: list[str]) -> None:
-        """
-        Polls data for the specified symbols from AlphaVantage API.
+        """Polls data for the specified symbols from AlphaVantage API.
         """
         for symbol in symbols:
             try:
@@ -69,9 +66,7 @@ class AlphaVantagePoller(BasePoller):
                 payload = self._process_data(symbol, data)
 
                 if not validate_data(payload):
-                    self._handle_failure(
-                        symbol, f"Validation failed for symbol: {symbol}"
-                    )
+                    self._handle_failure(symbol, f"Validation failed for symbol: {symbol}")
                     continue
 
                 track_polling_metrics("AlphaVantage", [symbol])
@@ -84,15 +79,14 @@ class AlphaVantagePoller(BasePoller):
                 self._handle_failure(symbol, str(e))
 
     def _enforce_rate_limit(self) -> None:
-        """
-        Enforces the rate limit using the RateLimiter class.
+        """Enforces the rate limit using the RateLimiter class.
         """
         self.rate_limiter.acquire(context="AlphaVantage")
 
-    def _fetch_data(self, symbol: str) -> Dict[str, Any]:
+    def _fetch_data(self, symbol: str) -> dict[str, Any]:
+        """Fetches data for the given symbol from AlphaVantage API.
         """
-        Fetches data for the given symbol from AlphaVantage API.
-        """
+
         def request_func():
             url = (
                 f"https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY"
@@ -102,9 +96,8 @@ class AlphaVantagePoller(BasePoller):
 
         return retry_request(request_func)
 
-    def _process_data(self, symbol: str, data: Dict[str, Any]) -> Dict[str, Any]:
-        """
-        Processes the latest time series data into a payload.
+    def _process_data(self, symbol: str, data: dict[str, Any]) -> dict[str, Any]:
+        """Processes the latest time series data into a payload.
         """
         time_series = data.get("Time Series (5min)")
         if not time_series:
@@ -128,17 +121,14 @@ class AlphaVantagePoller(BasePoller):
         }
 
     def _handle_success(self, symbol: str) -> None:
-        """
-        Tracks success metrics for polling and requests.
+        """Tracks success metrics for polling and requests.
         """
         track_polling_metrics("AlphaVantage", [symbol])
         track_request_metrics(symbol, 30, 5)
 
     def _handle_failure(self, symbol: str, error: str) -> None:
-        """
-        Tracks failure metrics for polling and requests.
+        """Tracks failure metrics for polling and requests.
         """
         logger.error(f"AlphaVantage poll failed for {symbol}: {error}")
         track_polling_metrics("AlphaVantage", [symbol])
         track_request_metrics(symbol, 30, 5, success=False)
-

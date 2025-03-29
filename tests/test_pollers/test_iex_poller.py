@@ -106,4 +106,3 @@ def test_iex_poller_invalid_data_format(mock_request_with_timeout, mock_send_to_
     poller.poll(["AAPL"])
 
     mock_send_to_queue.assert_not_called()
-

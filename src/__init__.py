@@ -57,4 +57,3 @@ __all__ = [
 # Initialize package-level logger
 logger = setup_logger(name="app")
 logger.info("Application package initialized.")
-

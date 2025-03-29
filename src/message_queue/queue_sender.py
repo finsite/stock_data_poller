@@ -1,5 +1,4 @@
-"""
-A class for sending messages to a RabbitMQ or SQS queue.
+"""A class for sending messages to a RabbitMQ or SQS queue.
 
 The class provides an interface for sending messages to a RabbitMQ or SQS queue.
 It supports both RabbitMQ and SQS, and it can be configured to use either one
@@ -19,8 +18,8 @@ logger = setup_logger(__name__)
 
 
 class QueueSender:
-    """
-    A class for sending messages to a RabbitMQ or SQS queue.
+
+    """A class for sending messages to a RabbitMQ or SQS queue.
 
     The class provides an interface for sending messages to a RabbitMQ or SQS queue.
     It supports both RabbitMQ and SQS, and it can be configured to use either one
@@ -37,8 +36,7 @@ class QueueSender:
         rabbitmq_routing_key: str = None,
         sqs_queue_url: str = None,
     ):
-        """
-        Initializes the QueueSender for RabbitMQ or SQS.
+        """Initializes the QueueSender for RabbitMQ or SQS.
 
         Args:
         ----
@@ -47,6 +45,7 @@ class QueueSender:
             rabbitmq_exchange (str): RabbitMQ exchange name.
             rabbitmq_routing_key (str): RabbitMQ routing key.
             sqs_queue_url (str): AWS SQS queue URL.
+
         """
         self.queue_type = queue_type.lower()
         self.rabbitmq_host = rabbitmq_host
@@ -80,12 +79,12 @@ class QueueSender:
             raise ValueError(f"Unsupported queue type: {self.queue_type}")
 
     def send_message(self, data: dict):
-        """
-        Sends a message to the configured queue.
+        """Sends a message to the configured queue.
 
         Args:
         ----
             data (dict): The message payload.
+
         """
         try:
             if self.queue_type == "rabbitmq":
@@ -97,12 +96,12 @@ class QueueSender:
             raise
 
     def _send_to_rabbitmq(self, data: dict):
-        """
-        Sends a message to a RabbitMQ queue.
+        """Sends a message to a RabbitMQ queue.
 
         Args:
         ----
             data (dict): The message payload.
+
         """
         try:
             message_body = json.dumps(data)
@@ -119,12 +118,12 @@ class QueueSender:
             raise
 
     def _send_to_sqs(self, data: dict):
-        """
-        Sends a message to an SQS queue.
+        """Sends a message to an SQS queue.
 
         Args:
         ----
             data (dict): The message payload.
+
         """
         try:
             if not self.sqs_queue_url:
@@ -137,8 +136,7 @@ class QueueSender:
             raise
 
     def close(self):
-        """
-        Closes the RabbitMQ connection if open.
+        """Closes the RabbitMQ connection if open.
         """
         if self.queue_type == "rabbitmq":
             try:
@@ -147,4 +145,3 @@ class QueueSender:
                     logger.info("RabbitMQ connection closed.")
             except Exception as e:
                 logger.error(f"Failed to close RabbitMQ connection: {e}")
-
