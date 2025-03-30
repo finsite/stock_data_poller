@@ -1,13 +1,14 @@
 """A class for sending messages to a RabbitMQ or SQS queue.
 
-The class provides an interface for sending messages to a RabbitMQ or SQS queue.
-It supports both RabbitMQ and SQS, and it can be configured to use either one
-or the other.
+The class provides an interface for sending messages to a RabbitMQ or
+SQS queue. It supports both RabbitMQ and SQS, and it can be configured
+to use either one or the other.
 
 The class also provides methods for closing the connection to the queue.
 """
 
 import json
+
 import boto3
 import pika
 
@@ -21,11 +22,12 @@ class QueueSender:
 
     """A class for sending messages to a RabbitMQ or SQS queue.
 
-    The class provides an interface for sending messages to a RabbitMQ or SQS queue.
-    It supports both RabbitMQ and SQS, and it can be configured to use either one
-    or the other.
+    The class provides an interface for sending messages to a RabbitMQ
+    or SQS queue. It supports both RabbitMQ and SQS, and it can be
+    configured to use either one or the other.
 
-    The class also provides methods for closing the connection to the queue.
+    The class also provides methods for closing the connection to the
+    queue.
     """
 
     def __init__(
@@ -136,8 +138,7 @@ class QueueSender:
             raise
 
     def close(self):
-        """Closes the RabbitMQ connection if open.
-        """
+        """Closes the RabbitMQ connection if open."""
         if self.queue_type == "rabbitmq":
             try:
                 if self.connection and self.connection.is_open:

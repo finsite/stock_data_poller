@@ -1,5 +1,7 @@
 from typing import Any
+
 import yfinance as yf
+
 from src.config import get_rate_limit
 from src.pollers.base_poller import BasePoller
 from src.utils.rate_limit import RateLimiter
@@ -18,7 +20,9 @@ class YFinancePoller(BasePoller):
     """Poller for fetching stock data using Yahoo Finance (yfinance)."""
 
     def __init__(self):
-        """Initializes the YFinancePoller with rate limiting and environment validation."""
+        """Initializes the YFinancePoller with rate limiting and environment
+        validation.
+        """
         super().__init__()
 
         # Validate required environment variables
@@ -59,7 +63,9 @@ class YFinancePoller(BasePoller):
         self.rate_limiter.acquire(context="YFinance")
 
     def _fetch_data(self, symbol: str) -> Any:
-        """Fetches recent intraday stock data for the given symbol using yfinance."""
+        """Fetches recent intraday stock data for the given symbol using
+        yfinance.
+        """
         ticker = yf.Ticker(symbol)
         data = ticker.history(period="1d", interval="5m")
 
@@ -69,7 +75,9 @@ class YFinancePoller(BasePoller):
         return data
 
     def _process_data(self, symbol: str, data: Any) -> dict[str, Any]:
-        """Processes the latest row of yfinance data into the standard payload format."""
+        """Processes the latest row of yfinance data into the standard payload
+        format.
+        """
         latest_data = data.iloc[-1]
         timestamp = latest_data.name.isoformat()
 

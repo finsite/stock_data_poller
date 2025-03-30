@@ -1,4 +1,4 @@
-"""Test suite for pollers
+"""Test suite for pollers.
 
 Contains fixtures and tests for pollers. Each poller is tested for successful and
 timeout scenarios.
@@ -15,9 +15,11 @@ Tests:
 """
 
 import os
-import pytest
 from unittest.mock import MagicMock, patch
+
+import pytest
 from requests.exceptions import Timeout
+
 from src.pollers.alphavantage_poller import AlphaVantagePoller
 from src.pollers.finnhub_poller import FinnhubPoller
 from src.pollers.iex_poller import IEXPoller
@@ -67,7 +69,9 @@ def mock_env(monkeypatch):
 
 @pytest.fixture(params=POLLERS.keys())
 def poller_fixture(request):
-    """Fixture to provide each poller class and the correct patch path for request_with_timeout."""
+    """Fixture to provide each poller class and the correct patch path for
+    request_with_timeout.
+    """
     poller_key = request.param
     poller_class, patch_path = POLLERS[poller_key]
 

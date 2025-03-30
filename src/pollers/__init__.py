@@ -13,11 +13,11 @@ Note: This module is responsible for importing and exporting the necessary polle
 classes and functions. It also sets up the package-level logger.
 """
 
-# Import the base poller class
-from src.pollers.base_poller import BasePoller
-
 # Import the concrete poller classes
 from src.pollers.alphavantage_poller import AlphaVantagePoller
+
+# Import the base poller class
+from src.pollers.base_poller import BasePoller
 from src.pollers.finnhub_poller import FinnhubPoller
 from src.pollers.iex_poller import IEXPoller
 from src.pollers.polygon_poller import PolygonPoller

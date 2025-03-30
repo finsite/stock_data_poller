@@ -6,7 +6,7 @@ Polygon.io API and sends it to the message queue.
 The poller enforces a rate limit of 5 requests per minute, per symbol.
 """
 
-from typing import Any, Dict, List
+from typing import Any
 
 from src.config import get_polygon_api_key, get_rate_limit
 from src.pollers.base_poller import BasePoller
@@ -24,8 +24,7 @@ logger = setup_logger(__name__)
 
 class PolygonPoller(BasePoller):
 
-    """Poller for fetching stock quotes from Polygon.io API.
-    """
+    """Poller for fetching stock quotes from Polygon.io API."""
 
     def __init__(self):
         """Initializes the PolygonPoller.
@@ -44,8 +43,7 @@ class PolygonPoller(BasePoller):
         self.rate_limiter = RateLimiter(max_requests=get_rate_limit(), time_window=60)
 
     def poll(self, symbols: list[str]) -> None:
-        """Polls data for the specified symbols from Polygon.io API.
-        """
+        """Polls data for the specified symbols from Polygon.io API."""
         for symbol in symbols:
             try:
                 self._enforce_rate_limit()
@@ -71,13 +69,11 @@ class PolygonPoller(BasePoller):
                 self._handle_failure(symbol, str(e))
 
     def _enforce_rate_limit(self) -> None:
-        """Enforces the rate limit using the RateLimiter class.
-        """
+        """Enforces the rate limit using the RateLimiter class."""
         self.rate_limiter.acquire(context="Polygon")
 
     def _fetch_data(self, symbol: str) -> dict[str, Any]:
-        """Fetches stock data for the given symbol from Polygon.io API.
-        """
+        """Fetches stock data for the given symbol from Polygon.io API."""
 
         def request_func():
             """Makes a GET request to the Polygon.io API to fetch the previous
@@ -92,8 +88,7 @@ class PolygonPoller(BasePoller):
         return retry_request(request_func)
 
     def _process_data(self, symbol: str, data: dict[str, Any]) -> dict[str, Any]:
-        """Processes the raw data into the payload format.
-        """
+        """Processes the raw data into the payload format."""
         results = data["results"][0]  # Only one result for "previous close"
 
         return {
@@ -111,14 +106,12 @@ class PolygonPoller(BasePoller):
         }
 
     def _handle_success(self, symbol: str) -> None:
-        """Tracks success metrics for polling and requests.
-        """
+        """Tracks success metrics for polling and requests."""
         track_polling_metrics("Polygon", [symbol])
         track_request_metrics(symbol, 30, 5)
 
     def _handle_failure(self, symbol: str, error: str) -> None:
-        """Tracks failure metrics for polling and requests.
-        """
+        """Tracks failure metrics for polling and requests."""
         track_polling_metrics("Polygon", [symbol])
         track_request_metrics(symbol, 30, 5, success=False)
         logger.error(f"Polygon polling error for {symbol}: {error}")

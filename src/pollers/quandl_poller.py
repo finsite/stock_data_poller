@@ -16,7 +16,8 @@ logger = setup_logger(__name__)
 
 class QuandlPoller(BasePoller):
 
-    """Poller for fetching stock data from the Quandl (now Nasdaq Data Link) API.
+    """Poller for fetching stock data from the Quandl (now Nasdaq Data Link)
+    API.
     """
 
     def __init__(self):
@@ -70,8 +71,7 @@ class QuandlPoller(BasePoller):
                 self._handle_failure(symbol, str(e))
 
     def _enforce_rate_limit(self) -> None:
-        """Enforces the rate limit using the RateLimiter class.
-        """
+        """Enforces the rate limit using the RateLimiter class."""
         self.rate_limiter.acquire(context="Quandl")
 
     def _fetch_data(self, symbol: str) -> dict[str, Any]:
@@ -129,8 +129,7 @@ class QuandlPoller(BasePoller):
         }
 
     def _handle_success(self, symbol: str) -> None:
-        """Tracks success metrics for polling and requests.
-        """
+        """Tracks success metrics for polling and requests."""
         track_polling_metrics("Quandl", [symbol])
         track_request_metrics(symbol, 30, 5)
 

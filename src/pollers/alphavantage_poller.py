@@ -1,7 +1,6 @@
-"""Poller for fetching stock data from AlphaVantage API.
-"""
+"""Poller for fetching stock data from AlphaVantage API."""
 
-from typing import Any, Dict
+from typing import Any
 
 from src.config import (
     get_alpha_vantage_api_key,
@@ -27,12 +26,10 @@ logger = setup_logger(__name__)
 
 class AlphaVantagePoller(BasePoller):
 
-    """Poller for fetching stock data from AlphaVantage API.
-    """
+    """Poller for fetching stock data from AlphaVantage API."""
 
     def __init__(self):
-        """Initializes the AlphaVantagePoller.
-        """
+        """Initializes the AlphaVantagePoller."""
         super().__init__()
 
         self.api_key = get_alpha_vantage_api_key()
@@ -50,8 +47,7 @@ class AlphaVantagePoller(BasePoller):
         )
 
     def poll(self, symbols: list[str]) -> None:
-        """Polls data for the specified symbols from AlphaVantage API.
-        """
+        """Polls data for the specified symbols from AlphaVantage API."""
         for symbol in symbols:
             try:
                 self._enforce_rate_limit()
@@ -79,13 +75,11 @@ class AlphaVantagePoller(BasePoller):
                 self._handle_failure(symbol, str(e))
 
     def _enforce_rate_limit(self) -> None:
-        """Enforces the rate limit using the RateLimiter class.
-        """
+        """Enforces the rate limit using the RateLimiter class."""
         self.rate_limiter.acquire(context="AlphaVantage")
 
     def _fetch_data(self, symbol: str) -> dict[str, Any]:
-        """Fetches data for the given symbol from AlphaVantage API.
-        """
+        """Fetches data for the given symbol from AlphaVantage API."""
 
         def request_func():
             url = (
@@ -97,8 +91,7 @@ class AlphaVantagePoller(BasePoller):
         return retry_request(request_func)
 
     def _process_data(self, symbol: str, data: dict[str, Any]) -> dict[str, Any]:
-        """Processes the latest time series data into a payload.
-        """
+        """Processes the latest time series data into a payload."""
         time_series = data.get("Time Series (5min)")
         if not time_series:
             raise ValueError(f"No 'Time Series (5min)' data found for symbol: {symbol}")
@@ -121,14 +114,12 @@ class AlphaVantagePoller(BasePoller):
         }
 
     def _handle_success(self, symbol: str) -> None:
-        """Tracks success metrics for polling and requests.
-        """
+        """Tracks success metrics for polling and requests."""
         track_polling_metrics("AlphaVantage", [symbol])
         track_request_metrics(symbol, 30, 5)
 
     def _handle_failure(self, symbol: str, error: str) -> None:
-        """Tracks failure metrics for polling and requests.
-        """
+        """Tracks failure metrics for polling and requests."""
         logger.error(f"AlphaVantage poll failed for {symbol}: {error}")
         track_polling_metrics("AlphaVantage", [symbol])
         track_request_metrics(symbol, 30, 5, success=False)

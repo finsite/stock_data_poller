@@ -1,5 +1,4 @@
-"""Factory class for creating pollers dynamically based on POLLER_TYPE.
-"""
+"""Factory class for creating pollers dynamically based on POLLER_TYPE."""
 
 import os
 
@@ -67,7 +66,8 @@ class PollerFactory:
             )
 
     def create_poller(self):
-        """Creates an instance of the poller based on the specified POLLER_TYPE.
+        """Creates an instance of the poller based on the specified
+        POLLER_TYPE.
 
         Returns
         -------
