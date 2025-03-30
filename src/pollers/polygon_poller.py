@@ -23,7 +23,6 @@ logger = setup_logger(__name__)
 
 
 class PolygonPoller(BasePoller):
-
     """Poller for fetching stock quotes from Polygon.io API."""
 
     def __init__(self):

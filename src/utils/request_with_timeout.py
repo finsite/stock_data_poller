@@ -1,4 +1,14 @@
+"""Request data from a URL with a timeout.
+
+This function performs a GET request to the given URL, with a specified
+timeout in seconds. If the request is successful, it returns the JSON
+response as a dictionary. If the request fails, it logs an error message
+and returns None.
+
+"""
+
 import logging
+from typing import Optional
 
 import requests
 
@@ -18,29 +28,33 @@ def request_with_timeout(url: str, timeout: int = 10) -> dict | None:
         Optional[dict]: The JSON response from the request, or None if the request fails.
 
     """
+    # Check if the URL is empty
     if not url:
         logger.error("URL cannot be empty.")
         return None
 
+    # Perform the GET request
     try:
-        # Perform the GET request
         response = requests.get(url, timeout=timeout)
-        response.raise_for_status()  # Raise an exception for HTTP errors
 
-        # Check Content-Type header
-        content_type = response.headers.get("Content-Type", "")
-        if "application/json" not in content_type:
+        # Raise an exception for HTTP errors
+        response.raise_for_status()
+
+        # Check the Content-Type header
+        content_type = response.headers.get("Content-Type")
+        if content_type is None or "application/json" not in content_type:
             logger.error(f"Expected JSON response from {url}, but got {content_type}.")
             return None
 
         # Parse and return JSON data
         json_response = response.json()
-        if not json_response:
+        if json_response is None:
             logger.error("Received empty JSON response.")
             return None
 
         return json_response
 
+    # Handle exceptions
     except requests.exceptions.Timeout:
         logger.error(f"Timeout occurred while requesting {url}.")
     except requests.exceptions.HTTPError as e:

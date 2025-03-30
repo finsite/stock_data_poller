@@ -7,7 +7,6 @@ logger = setup_logger(__name__)
 
 
 class RateLimiter:
-
     """A rate limiter based on the token bucket algorithm.
 
     Allows a specified number of requests within a time window.

@@ -15,7 +15,6 @@ logger = setup_logger(__name__)
 
 
 class QuandlPoller(BasePoller):
-
     """Poller for fetching stock data from the Quandl (now Nasdaq Data Link)
     API.
     """

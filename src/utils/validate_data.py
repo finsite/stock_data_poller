@@ -17,6 +17,7 @@ def validate_data(data: dict[str, Any]) -> bool:
         bool: True if data is valid, False otherwise.
 
     """
+    # Define the required keys for validation
     required_keys = {"symbol", "price", "volume", "timestamp"}
 
     # Check if the input is a dictionary
@@ -24,13 +25,13 @@ def validate_data(data: dict[str, Any]) -> bool:
         logger.error("Invalid data type. Expected a dictionary.")
         return False
 
-    # Check if all required keys are present
+    # Check if all required keys are present in the data
     missing_keys = required_keys - data.keys()
     if missing_keys:
         logger.error(f"Missing required keys in data: {missing_keys}")
         return False
 
-    # Validate individual fields
+    # Validate individual fields using helper functions
     if not _validate_symbol(data["symbol"]):
         return False
     if not _validate_price(data["price"]):
@@ -41,7 +42,7 @@ def validate_data(data: dict[str, Any]) -> bool:
 
 
 def _validate_symbol(symbol: Any) -> bool:
-    """Validates the 'symbol' field.
+    """Validates the 'symbol' field to ensure it is a string of alphabetical characters.
 
     Parameters
     ----------
@@ -59,7 +60,7 @@ def _validate_symbol(symbol: Any) -> bool:
 
 
 def _validate_price(price: Any) -> bool:
-    """Validates the 'price' field.
+    """Validates the 'price' field to ensure it is a non-negative number.
 
     Parameters
     ----------
@@ -77,7 +78,7 @@ def _validate_price(price: Any) -> bool:
 
 
 def _validate_volume(volume: Any) -> bool:
-    """Validates the 'volume' field.
+    """Validates the 'volume' field to ensure it is a non-negative integer.
 
     Parameters
     ----------
@@ -95,7 +96,7 @@ def _validate_volume(volume: Any) -> bool:
 
 
 def _validate_timestamp(timestamp: Any) -> bool:
-    """Validates the 'timestamp' field.
+    """Validates the 'timestamp' field to ensure it is a string.
 
     Parameters
     ----------

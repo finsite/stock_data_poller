@@ -16,7 +16,6 @@ logger = setup_logger(__name__)
 
 
 class PollerFactory:
-
     """Factory class for creating pollers dynamically based on POLLER_TYPE.
 
     Attributes

@@ -29,7 +29,6 @@ logger = setup_logger(__name__)
 
 
 class BasePoller:
-
     """Base class for pollers that handles dynamic queue configuration and
     message sending.
     """

@@ -1,4 +1,13 @@
-# Secret cache for runtime use
+"""Configuration module for the stock poller.
+
+This module provides functions for retrieving configuration values from
+environment variables or Vault secrets.
+"""
+
+import os
+
+import hvac
+
 _VAULT_CONFIG = None
 
 
@@ -14,20 +23,20 @@ def load_vault_secrets():
     VAULT_TOKEN = os.getenv("VAULT_TOKEN")
 
     if not VAULT_TOKEN:
-        raise ValueError("❌ Missing VAULT_TOKEN. Ensure it's set in the environment.")
+        raise ValueError("Missing VAULT_TOKEN. Ensure it's set in the environment.")
 
     try:
         client = hvac.Client(url=VAULT_ADDR, token=VAULT_TOKEN)
 
         if not client.is_authenticated():
-            raise ValueError("❌ Vault authentication failed!")
+            raise ValueError("Vault authentication failed!")
 
         secrets = client.secrets.kv.v2.read_secret_version(path="poller")["data"]["data"]
-        print("✅ Successfully loaded secrets from Vault.")
+        print("Successfully loaded secrets from Vault.")
         return secrets
 
     except Exception as e:
-        print(f"⚠️ Warning: Failed to fetch secrets from Vault: {e}")
+        print(f"Warning: Failed to fetch secrets from Vault: {e}")
         return {}
 
 

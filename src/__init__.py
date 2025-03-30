@@ -25,14 +25,16 @@ from src.pollers.quandl_poller import QuandlPoller
 from src.pollers.yfinance_poller import YFinancePoller
 
 # Import utilities (from `utils/`)
-from src.utils.rate_limit import RateLimiter
-from src.utils.request_with_timeout import request_with_timeout
-from src.utils.retry_request import retry_request
-from src.utils.setup_logger import setup_logger
-from src.utils.track_polling_metrics import track_polling_metrics
-from src.utils.track_request_metrics import track_request_metrics
-from src.utils.validate_data import validate_data
-from src.utils.validate_environment_variables import validate_environment_variables
+from src.utils import (
+    rate_limit,
+    request_with_timeout,
+    retry_request,
+    setup_logger,
+    track_polling_metrics,
+    track_request_metrics,
+    validate_data,
+    validate_environment_variables,
+)
 
 # Define the public API of the module
 __all__ = [
@@ -46,14 +48,10 @@ __all__ = [
     "QueueSender",
     "setup_logger",
     "validate_environment_variables",
-    "RateLimiter",
+    "rate_limit",
     "retry_request",
     "request_with_timeout",
     "track_polling_metrics",
     "track_request_metrics",
     "validate_data",
 ]
-
-# Initialize package-level logger
-logger = setup_logger(name="app")
-logger.info("Application package initialized.")

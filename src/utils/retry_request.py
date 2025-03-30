@@ -28,23 +28,27 @@ def retry_request(
         Exception: The last exception encountered if all retries fail.
 
     """
+    # Validate the function to be retried
     if func is None:
         raise ValueError("The function to be retried cannot be None")
 
-    last_exception = None
+    last_exception = None  # To store the last exception encountered
 
+    # Attempt to execute the function up to max_retries times
     for attempt in range(1, max_retries + 1):
         try:
             logger.debug(f"Attempt {attempt} of {max_retries}.")
-            return func()
+            return func()  # Call the function and return its result if successful
         except Exception as exception:
-            last_exception = exception
+            last_exception = exception  # Store the exception
             logger.warning(
                 f"Attempt {attempt} failed with error: {exception}. "
                 f"{'Retrying...' if attempt < max_retries else 'No more retries.'}"
             )
+            # Delay before retrying, if more retries are available
             if attempt < max_retries:
                 time.sleep(delay_seconds)
 
+    # Log the final failure and raise the last exception encountered
     logger.error(f"All {max_retries} attempts failed. Last error: {last_exception}")
     raise last_exception

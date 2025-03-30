@@ -1,7 +1,6 @@
-"""Poller for fetching stock quotes from the IEX Cloud API.
-"""
+"""Poller for fetching stock quotes from the IEX Cloud API."""
 
-from typing import Any, Dict, List
+from typing import Any
 
 from src.config import get_iex_api_key, get_rate_limit
 from src.pollers.base_poller import BasePoller
@@ -18,9 +17,7 @@ logger = setup_logger(__name__)
 
 
 class IEXPoller(BasePoller):
-
-    """Poller for fetching stock quotes from the IEX Cloud API.
-    """
+    """Poller for fetching stock quotes from the IEX Cloud API."""
 
     """Poller for fetching stock quotes from the IEX Cloud API."""
 
@@ -148,15 +145,13 @@ class IEXPoller(BasePoller):
         }
 
     def _handle_success(self, symbol: str) -> None:
-        """Tracks success metrics for polling and requests.
-        """
+        """Tracks success metrics for polling and requests."""
         # Track success metrics for polling and requests
         track_polling_metrics("IEX", [symbol])
         track_request_metrics(symbol, 30, 5)
 
     def _handle_failure(self, symbol: str, error: str) -> None:
-        """Tracks failure metrics for polling and logs error.
-        """
+        """Tracks failure metrics for polling and logs error."""
         # Track failure metrics for polling and logs error
         track_polling_metrics("IEX", [symbol])
         track_request_metrics(symbol, 30, 5, success=False)

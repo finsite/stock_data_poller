@@ -33,7 +33,6 @@ Example files are included with each script. Use the command `get-help <scriptna
 
 Define any necessary environment variables for the application:
 
-
 ## Example .env File
 
 Provide an example `.env` file to illustrate environment variable configuration.
