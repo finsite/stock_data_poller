@@ -8,7 +8,6 @@ and returns None.
 """
 
 import logging
-from typing import Optional
 
 import requests
 

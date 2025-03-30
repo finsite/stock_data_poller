@@ -19,6 +19,7 @@ logger = setup_logger(__name__)
 
 
 class QueueSender:
+
     """A class for sending messages to a RabbitMQ or SQS queue.
 
     The class provides an interface for sending messages to a RabbitMQ

@@ -16,6 +16,7 @@ logger = setup_logger(__name__)
 
 
 class YFinancePoller(BasePoller):
+
     """Poller for fetching stock data using Yahoo Finance (yfinance)."""
 
     def __init__(self):

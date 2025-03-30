@@ -25,6 +25,7 @@ logger = setup_logger(__name__)
 
 
 class AlphaVantagePoller(BasePoller):
+
     """Poller for fetching stock data from AlphaVantage API."""
 
     def __init__(self):

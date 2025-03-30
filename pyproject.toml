@@ -32,6 +32,8 @@ pretty = true
 show_error_codes = true
 warn_unused_ignores = true
 warn_return_any = true
+explicit_package_bases = true  
+exclude = ["^tests/"]  
 
 [tool.pytest.ini_options]
 minversion = "7.0"
@@ -42,3 +44,27 @@ testpaths = ["tests"]
 requires = ["setuptools>=42", "wheel"]
 build-backend = "setuptools.build_meta"
     
+[tool.docformatter]
+wrap-summaries = 88
+wrap-descriptions = 88
+pre-summary-newline = true
+make-summary-multi-line = false
+
+[tool.pydocstyle]
+convention = "google"
+add-ignore = ["D100", "D104"]
+match = ".*\\.py"
+match-dir = "[^\\.].*"
+
+[tool.coverage.run]
+branch = true
+source = ["src"]
+
+[tool.coverage.report]
+show_missing = true
+skip_covered = true
+
+[tool.commitizen]
+name = "cz_conventional_commits"
+version = "0.1.0"
+tag_format = "v$version"
