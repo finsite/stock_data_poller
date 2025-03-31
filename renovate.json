@@ -1,7 +1,6 @@
 {
   "extends": ["config:recommended"],
   "dependencyDashboard": true,
-  "logLevel": "debug",
   "labels": ["dependencies"],
   "timezone": "UTC",
   "schedule": ["before 5am on Monday"],
