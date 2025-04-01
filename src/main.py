@@ -164,7 +164,6 @@ from src.config import (
     get_retry_delay,
     get_symbols,
 )
-
 from src.message_queue.queue_sender import QueueSender
 from src.poller_factory import PollerFactory
 from src.utils import (
@@ -218,8 +217,7 @@ poller = poller_factory.create_poller()
 
 
 def main() -> None:
-    """
-    Run the main polling loop to collect and send stock data.
+    """Run the main polling loop to collect and send stock data.
 
     This function starts a while loop that continues until the program is
     interrupted with a KeyboardInterrupt (e.g., Ctrl+C). It polls the specified
@@ -231,6 +229,7 @@ def main() -> None:
 
     Returns:
         None
+
     """
     try:
         logger.info(f"Starting {POLLER_TYPE} Poller...")

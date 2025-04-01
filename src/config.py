@@ -4,12 +4,13 @@ This module provides functions for retrieving configuration values from
 environment variables or Vault secrets.
 """
 
-import os
-from typing import Optional
-import hvac
 import logging
+import os
 
-_VAULT_CONFIG: Optional[dict] = None
+import hvac
+
+_VAULT_CONFIG: dict | None = None
+
 
 def load_vault_secrets() -> dict:
     """Fetch secrets from HashiCorp Vault and return a dictionary.
@@ -23,9 +24,10 @@ def load_vault_secrets() -> dict:
     ------
     ValueError
         If VAULT_TOKEN is not set in the environment or if Vault authentication fails.
+
     """
     VAULT_ADDR: str = os.getenv("VAULT_ADDR", "http://vault:8200")
-    VAULT_TOKEN: Optional[str] = os.getenv("VAULT_TOKEN")
+    VAULT_TOKEN: str | None = os.getenv("VAULT_TOKEN")
 
     if not VAULT_TOKEN:
         raise ValueError("Missing VAULT_TOKEN. Ensure it's set in the environment.")
@@ -57,6 +59,7 @@ def get_vault_config() -> dict:
     -------
     dict
         A dictionary of Vault secrets.
+
     """
     global _VAULT_CONFIG
     if _VAULT_CONFIG is None:
@@ -65,7 +68,7 @@ def get_vault_config() -> dict:
     return _VAULT_CONFIG
 
 
-def get_config_value(key: str, default: Optional[str] = None) -> str:
+def get_config_value(key: str, default: str | None = None) -> str:
     """Get value from Vault if available, else from environment or default.
 
     This function first checks if the key is available in Vault. If it is,
@@ -85,6 +88,7 @@ def get_config_value(key: str, default: Optional[str] = None) -> str:
     -------
     str
         The value for the given key, or the default if not found.
+
     """
     return get_vault_config().get(key, os.getenv(key, default))
 
@@ -102,6 +106,7 @@ def get_symbols() -> list[str]:
     -------
     list[str]
         A list of stock symbols to poll.
+
     """
     return get_config_value("SYMBOLS", "AAPL,GOOG,MSFT").split(",")
 
@@ -117,6 +122,7 @@ def get_poller_type() -> str:
     str
         The type of poller to use. Can be one of 'yfinance', 'iex',
         'finnhub', 'polygon', 'alpha_vantage', or 'quandl'.
+
     """
     return get_config_value("POLLER_TYPE", "yfinance")
 
@@ -132,6 +138,7 @@ def get_queue_type() -> str:
     -------
     str
         The type of queue to be used.
+
     """
     return get_config_value("QUEUE_TYPE", "rabbitmq")
 
@@ -147,6 +154,7 @@ def get_rabbitmq_host() -> str:
     -------
     str
         The RabbitMQ host.
+
     """
     return get_config_value("RABBITMQ_HOST", "localhost")
 
@@ -162,6 +170,7 @@ def get_rabbitmq_exchange() -> str:
     -------
     str
         The RabbitMQ exchange name.
+
     """
     return get_config_value("RABBITMQ_EXCHANGE", "stock_data_exchange")
 
@@ -177,6 +186,7 @@ def get_rabbitmq_routing_key() -> str:
     -------
     str
         The RabbitMQ routing key.
+
     """
     # Fetch the RabbitMQ routing key, defaulting to 'stock_data'
     return get_config_value("RABBITMQ_ROUTING_KEY", "stock_data")
@@ -193,6 +203,7 @@ def get_sqs_queue_url() -> str:
     -------
     str
         The SQS queue URL.
+
     """
     return get_config_value("SQS_QUEUE_URL", "")
 
@@ -208,6 +219,7 @@ def get_poll_interval() -> int:
     -------
     int
         The poll interval in seconds.
+
     """
     return int(get_config_value("POLL_INTERVAL", 60))
 
@@ -223,13 +235,13 @@ def get_request_timeout() -> int:
     -------
     int
         The request timeout in seconds.
+
     """
     return int(get_config_value("REQUEST_TIMEOUT", 30))
 
 
 def get_max_retries() -> int:
-    """
-    Get the maximum number of retries from the configuration.
+    """Get the maximum number of retries from the configuration.
 
     This function fetches the maximum number of retries from Vault secrets or
     the environment variable MAX_RETRIES. If neither is set, it defaults to
@@ -239,6 +251,7 @@ def get_max_retries() -> int:
     -------
     int
         The maximum number of retries.
+
     """
     return int(get_config_value("MAX_RETRIES", 3))
 
@@ -254,14 +267,14 @@ def get_retry_delay() -> int:
     -------
     int
         The retry delay in seconds.
+
     """
     # Fetch the retry delay from configuration, defaulting to 5 seconds
     return int(get_config_value("RETRY_DELAY", 5))
 
 
 def get_poll_timeout() -> int:
-    """
-    Get the poll timeout from the configuration.
+    """Get the poll timeout from the configuration.
 
     This function fetches the poll timeout from Vault secrets or the
     environment variable POLL_TIMEOUT. If neither is set, it defaults
@@ -271,13 +284,13 @@ def get_poll_timeout() -> int:
     -------
     int
         The poll timeout in seconds.
+
     """
     return int(get_config_value("POLL_TIMEOUT", 30))
 
 
 def get_log_level() -> str:
-    """
-    Get the log level from the configuration.
+    """Get the log level from the configuration.
 
     This function fetches the log level from the configuration, either from Vault
     secrets or the environment variable LOG_LEVEL. If neither is set, it defaults
@@ -287,13 +300,13 @@ def get_log_level() -> str:
     -------
     str
         The log level.
+
     """
     return get_config_value("LOG_LEVEL", "info")
 
 
 def is_logging_enabled() -> bool:
-    """
-    Check if logging is enabled from the configuration.
+    """Check if logging is enabled from the configuration.
 
     This function checks the environment variable ENABLE_LOGGING and
     returns True if it is set to "true", and False otherwise.
@@ -308,8 +321,7 @@ def is_logging_enabled() -> bool:
 
 
 def is_cloud_logging_enabled() -> bool:
-    """
-    Check if cloud logging is enabled from the configuration.
+    """Check if cloud logging is enabled from the configuration.
 
     This function checks the configuration for the 'CLOUD_LOGGING_ENABLED'
     key to determine if cloud logging should be enabled. It defaults to
@@ -323,6 +335,7 @@ def is_cloud_logging_enabled() -> bool:
     -------
     bool
         True if cloud logging is enabled, False otherwise.
+
     """
     # Retrieve the cloud logging enabled status from the configuration
     return get_config_value("CLOUD_LOGGING_ENABLED", "false") == "true"
@@ -348,13 +361,13 @@ def is_retry_enabled() -> bool:
     -------
     bool
         True if retry is enabled, False otherwise.
+
     """
     return get_config_value("ENABLE_RETRY", "true") == "true"
 
 
 def is_backfill_enabled() -> bool:
-    """
-    Check if backfill is enabled from the configuration.
+    """Check if backfill is enabled from the configuration.
 
     This function checks the configuration for the 'ENABLE_BACKFILL' key
     to determine if backfill should be enabled. It defaults to 'false' if
@@ -368,14 +381,14 @@ def is_backfill_enabled() -> bool:
     -------
     bool
         True if backfill is enabled, False otherwise.
+
     """
     # Retrieve the backfill enabled status from the configuration
     return get_config_value("ENABLE_BACKFILL", "false") == "true"
 
 
 def get_rate_limit() -> int:
-    """
-    Get the rate limit from the configuration.
+    """Get the rate limit from the configuration.
 
     This function fetches the rate limit from the configuration,
     either from Vault secrets or the environment variable RATE_LIMIT.
@@ -384,6 +397,7 @@ def get_rate_limit() -> int:
     Returns
     -------
     int: The rate limit.
+
     """
     return int(get_config_value("RATE_LIMIT", 5))
 
@@ -400,6 +414,7 @@ def get_max_api_calls_per_min() -> int:
     -------
     int
         The maximum number of API calls per minute.
+
     """
     # Fetch the maximum API calls per minute, defaulting to 1000
     return int(get_config_value("MAX_API_CALLS_PER_MIN", 1000))
@@ -409,8 +424,7 @@ def get_max_api_calls_per_min() -> int:
 
 
 def get_polygon_api_key() -> str:
-    """
-    Get the Polygon API key from the configuration.
+    """Get the Polygon API key from the configuration.
 
     This function fetches the Polygon API key from the configuration,
     either from Vault secrets or the environment variable POLYGON_API_KEY.
@@ -420,13 +434,13 @@ def get_polygon_api_key() -> str:
     -------
     str
         The Polygon API key.
+
     """
     return get_config_value("POLYGON_API_KEY", "")
 
 
 def get_finnhub_api_key() -> str:
-    """
-    Retrieve the Finnhub API key from the configuration.
+    """Retrieve the Finnhub API key from the configuration.
 
     This function fetches the Finnhub API key from the configuration,
     either from Vault secrets or the environment variable FINNHUB_API_KEY.
@@ -436,13 +450,13 @@ def get_finnhub_api_key() -> str:
     -------
     str
         The Finnhub API key.
+
     """
     return get_config_value("FINNHUB_API_KEY", "")
 
 
 def get_alpha_vantage_api_key() -> str:
-    """
-    Retrieve the Alpha Vantage API key from the configuration.
+    """Retrieve the Alpha Vantage API key from the configuration.
 
     This function fetches the Alpha Vantage API key from the configuration,
     either from Vault secrets or the environment variable ALPHA_VANTAGE_API_KEY.
@@ -452,14 +466,14 @@ def get_alpha_vantage_api_key() -> str:
     -------
     str
         The Alpha Vantage API key.
+
     """
     # Fetch the Alpha Vantage API key from the configuration
     return get_config_value("ALPHA_VANTAGE_API_KEY", "")
 
 
 def get_yfinance_api_key() -> str:
-    """
-    Retrieve the Yahoo Finance API key from the configuration.
+    """Retrieve the Yahoo Finance API key from the configuration.
 
     This function fetches the Yahoo Finance API key from the configuration,
     either from Vault secrets or the environment variable YFINANCE_API_KEY.
@@ -469,14 +483,14 @@ def get_yfinance_api_key() -> str:
     -------
     str
         The Yahoo Finance API key as a string.
+
     """
     # Fetch the Yahoo Finance API key from the configuration
     return get_config_value("YFINANCE_API_KEY", "")
 
 
 def get_iex_api_key() -> str:
-    """
-    Retrieve the IEX Cloud API key from the configuration.
+    """Retrieve the IEX Cloud API key from the configuration.
 
     This function fetches the IEX Cloud API key from the configuration,
     either from Vault secrets or the environment variable IEX_API_KEY.
@@ -486,13 +500,13 @@ def get_iex_api_key() -> str:
     -------
     str
         The IEX Cloud API key as a string.
+
     """
     return get_config_value("IEX_API_KEY", "")
 
 
 def get_quandl_api_key() -> str:
-    """
-    Retrieve the Quandl API key from the configuration.
+    """Retrieve the Quandl API key from the configuration.
 
     This function fetches the Quandl API key from the configuration,
     either from Vault secrets or the environment variable QUANDL_API_KEY.
@@ -502,6 +516,7 @@ def get_quandl_api_key() -> str:
     -------
     str:
         The Quandl API key.
+
     """
     # Fetch the Quandl API key from the configuration
     return get_config_value("QUANDL_API_KEY", "")
@@ -511,8 +526,7 @@ def get_quandl_api_key() -> str:
 
 
 def get_polygon_fill_rate_limit() -> int:
-    """
-    Get the Polygon fill rate limit from the configuration.
+    """Get the Polygon fill rate limit from the configuration.
 
     Polygon provides real-time stock data. We need to make sure we don't
     exceed the rate limit of the free tier.
@@ -521,13 +535,13 @@ def get_polygon_fill_rate_limit() -> int:
     -------
     int
         The Polygon fill rate limit.
+
     """
     return int(get_config_value("POLYGON_FILL_RATE_LIMIT", 100))
 
 
 def get_finnhub_fill_rate_limit() -> int:
-    """
-    Get the Finnhub fill rate limit from the configuration.
+    """Get the Finnhub fill rate limit from the configuration.
 
     Finnhub provides real-time stock data. We need to make sure we don't
     exceed the rate limit of the free tier.
@@ -536,13 +550,13 @@ def get_finnhub_fill_rate_limit() -> int:
     -------
     int
         The Finnhub fill rate limit.
+
     """
     return int(get_config_value("FINNHUB_FILL_RATE_LIMIT", 100))
 
 
 def get_alpha_vantage_fill_rate_limit() -> int:
-    """
-    Get the Alpha Vantage fill rate limit from the configuration.
+    """Get the Alpha Vantage fill rate limit from the configuration.
 
     Parameters
     ----------
@@ -552,13 +566,13 @@ def get_alpha_vantage_fill_rate_limit() -> int:
     -------
     int
         The Alpha Vantage fill rate limit.
+
     """
     return int(get_config_value("ALPHA_VANTAGE_FILL_RATE_LIMIT", 100))
 
 
 def get_yfinance_fill_rate_limit() -> int:
-    """
-    Retrieve the Yahoo Finance fill rate limit from the configuration.
+    """Retrieve the Yahoo Finance fill rate limit from the configuration.
 
     This function fetches the fill rate limit for Yahoo Finance from the configuration.
     The rate limit ensures that requests do not exceed the allowed number of calls
@@ -579,8 +593,7 @@ def get_yfinance_fill_rate_limit() -> int:
 
 
 def get_iex_fill_rate_limit() -> int:
-    """
-    Retrieve the IEX fill rate limit from the configuration.
+    """Retrieve the IEX fill rate limit from the configuration.
 
     This function fetches the fill rate limit for IEX from the configuration.
     The rate limit ensures that requests do not exceed the allowed number of calls
@@ -594,14 +607,14 @@ def get_iex_fill_rate_limit() -> int:
     -------
     int
         The IEX fill rate limit, with a default of 100.
+
     """
     # Fetch the fill rate limit from the configuration with a default of 100
     return int(get_config_value("IEX_FILL_RATE_LIMIT", 100))
 
 
 def get_quandl_fill_rate_limit() -> int:
-    """
-    Retrieve the Quandl fill rate limit from the configuration.
+    """Retrieve the Quandl fill rate limit from the configuration.
 
     This function fetches the fill rate limit for Quandl from the configuration.
     The rate limit ensures that requests do not exceed the allowed number of calls
@@ -611,6 +624,7 @@ def get_quandl_fill_rate_limit() -> int:
     -------
     int
         The Quandl fill rate limit.
+
     """
     return int(get_config_value("QUANDL_FILL_RATE_LIMIT", 100))
 
@@ -619,8 +633,7 @@ def get_quandl_fill_rate_limit() -> int:
 
 
 def get_aws_access_key_id() -> str:
-    """
-    Get the AWS access key ID from the configuration.
+    """Get the AWS access key ID from the configuration.
 
     This function retrieves the AWS access key ID from the configuration.
 
@@ -628,13 +641,13 @@ def get_aws_access_key_id() -> str:
     -------
     str
         The AWS access key ID.
+
     """
     return get_config_value("AWS_ACCESS_KEY_ID", "")
 
 
 def get_aws_secret_access_key() -> str:
-    """
-    Retrieve the AWS secret access key from the configuration.
+    """Retrieve the AWS secret access key from the configuration.
 
     This function fetches the AWS secret access key from the configuration,
     either from Vault secrets or the environment variable AWS_SECRET_ACCESS_KEY.
@@ -655,8 +668,7 @@ def get_aws_secret_access_key() -> str:
 
 
 def get_aws_region() -> str:
-    """
-    Get the AWS region from the configuration.
+    """Get the AWS region from the configuration.
 
     This function retrieves the AWS region from the configuration.
     The region is used to determine the correct endpoint for AWS services.
@@ -665,7 +677,7 @@ def get_aws_region() -> str:
     -------
     str
         The AWS region.
+
     """
     # Default to us-east-1 if no region is specified
     return get_config_value("AWS_REGION", "us-east-1")
-
