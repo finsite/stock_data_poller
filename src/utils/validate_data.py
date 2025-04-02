@@ -1,44 +1,71 @@
-import logging
+"""Validate stock data to ensure it conforms to the required schema.
+
+The module provides a function to validate stock data dictionaries
+containing the following required keys: 'symbol', 'price', 'volume',
+and 'timestamp'. It also provides helper functions to validate the
+individual fields.
+"""
+
 from typing import Any
 
-# Initialize the logger
-logger = logging.getLogger(__name__)
+from src.utils.setup_logger import setup_logger
+
+# Set up logger for this module
+logger = setup_logger(__name__)
 
 
 def validate_data(data: dict[str, Any]) -> bool:
     """Validates the data to ensure it conforms to the required schema.
 
+    The function checks that the input data is a dictionary containing
+    the required keys: 'symbol', 'price', 'volume', and 'timestamp'.
+    It also validates the individual fields using helper functions.
+
     Parameters
     ----------
-        data (Dict[str, Any]): The data to validate.
+    data : dict[str, Any]
+        The data to validate.
 
     Returns
     -------
-        bool: True if data is valid, False otherwise.
+    bool
+        True if data is valid, False otherwise.
+
+    Raises
+    ------
+    TypeError
+        If the data is not a dictionary.
+
+    Notes
+    -----
+    The function logs an error message for each validation failure.
 
     """
-    # Define the required keys for validation
-    required_keys = {"symbol", "price", "volume", "timestamp"}
+    required_keys: set[str] = {"symbol", "price", "volume", "timestamp"}
 
-    # Check if the input is a dictionary
     if not isinstance(data, dict):
         logger.error("Invalid data type. Expected a dictionary.")
-        return False
+        raise TypeError("Data must be a dictionary.")
 
-    # Check if all required keys are present in the data
-    missing_keys = required_keys - data.keys()
+    missing_keys: set[str] = required_keys - data.keys()
     if missing_keys:
         logger.error(f"Missing required keys in data: {missing_keys}")
         return False
 
-    # Validate individual fields using helper functions
     if not _validate_symbol(data["symbol"]):
+        logger.error("Symbol validation failed.")
         return False
     if not _validate_price(data["price"]):
+        logger.error("Price validation failed.")
         return False
     if not _validate_volume(data["volume"]):
+        logger.error("Volume validation failed.")
         return False
-    return _validate_timestamp(data["timestamp"])
+    if not _validate_timestamp(data["timestamp"]):
+        logger.error("Timestamp validation failed.")
+        return False
+
+    return True
 
 
 def _validate_symbol(symbol: Any) -> bool:
@@ -46,11 +73,19 @@ def _validate_symbol(symbol: Any) -> bool:
 
     Parameters
     ----------
-        symbol (Any): The value of the 'symbol' field.
+    symbol : Any
+        The value of the 'symbol' field.
 
     Returns
     -------
-        bool: True if valid, False otherwise.
+    bool
+        True if valid, False otherwise.
+
+    Notes
+    -----
+    The function checks the provided symbol to ensure it is a string and contains
+    only alphabetical characters. The function logs an error message if the
+    validation fails.
 
     """
     if not isinstance(symbol, str) or not symbol.isalpha():
@@ -70,11 +105,19 @@ def _validate_price(price: Any) -> bool:
     -------
         bool: True if valid, False otherwise.
 
+    Notes
+    -----
+        A non-negative number is used to represent the price of a stock quote.
+        The function checks the provided price to ensure it is an integer or
+        float and if it is non-negative. If the validation fails, an error
+        message is logged.
+
     """
+    # Check if the price is an integer or float and if it is non-negative
     if not isinstance(price, (int, float)) or price < 0:
-        logger.error(f"Invalid price: {price}")
+        logger.error(f"Invalid price: {price}")  # Log an error if validation fails
         return False
-    return True
+    return True  # Return True if the price is valid
 
 
 def _validate_volume(volume: Any) -> bool:
@@ -88,9 +131,16 @@ def _validate_volume(volume: Any) -> bool:
     -------
         bool: True if valid, False otherwise.
 
+    Notes
+    -----
+        A non-negative integer is used to represent the volume of a stock quote.
+        The function checks that the provided volume is of type int and if it
+        is non-negative. If the validation fails, an error message is logged.
+
     """
+    # Check if the volume is an integer and if it is non-negative
     if not isinstance(volume, int) or volume < 0:
-        logger.error(f"Invalid volume: {volume}")
+        logger.error(f"Invalid volume format: {volume}")  # Log an error if validation fails
         return False
     return True
 
@@ -98,16 +148,22 @@ def _validate_volume(volume: Any) -> bool:
 def _validate_timestamp(timestamp: Any) -> bool:
     """Validates the 'timestamp' field to ensure it is a string.
 
+    The function checks that the provided timestamp is of type string.
+    It logs an error if the validation fails.
+
     Parameters
     ----------
-        timestamp (Any): The value of the 'timestamp' field.
+    timestamp : Any
+        The value of the 'timestamp' field.
 
     Returns
     -------
-        bool: True if valid, False otherwise.
+    bool
+        True if valid, False otherwise.
 
     """
+    # Ensure the timestamp is a string
     if not isinstance(timestamp, str):
-        logger.error(f"Invalid timestamp format: {timestamp}")
+        logger.error(f"Invalid timestamp format: {timestamp}")  # Log an error if validation fails
         return False
-    return True
+    return True  # Return True if the timestamp is valid

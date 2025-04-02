@@ -1,6 +1,6 @@
 """Poller for fetching stock quotes from Polygon.io API.
 
-This poller fetches the previous close data for the given symbols from
+The poller fetches the previous close data for the given symbols from
 Polygon.io API and sends it to the message queue.
 
 The poller enforces a rate limit of 5 requests per minute, per symbol.
@@ -23,7 +23,6 @@ logger = setup_logger(__name__)
 
 
 class PolygonPoller(BasePoller):
-
     """Poller for fetching stock quotes from Polygon.io API."""
 
     def __init__(self):

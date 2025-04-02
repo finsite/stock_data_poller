@@ -16,10 +16,11 @@ exclude = '''
 [tool.ruff]
 line-length = 100
 target-version = "py311"
+exclude = ["tests"]
 
 [tool.ruff.lint]
 extend-select = ["D"]
-ignore = ["D211", "D213"]
+ignore = ["D203", "D211", "D213", "D401"]
 
 [tool.isort]
 profile = "black"

@@ -8,6 +8,11 @@ the status is not 'success' or 'failure'.
 
 from typing import Literal
 
+from src.utils.setup_logger import setup_logger
+
+# Set up logger for this module
+logger = setup_logger(__name__)
+
 
 def track_polling_metrics(status: Literal["success", "failure"], source: str, symbol: str) -> None:
     """Tracks metrics for polling operations.

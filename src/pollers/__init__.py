@@ -1,4 +1,4 @@
-"""This module initializes the stock polling logic for the application.
+"""The module initializes the stock polling logic for the application.
 
 Pollers included:
 - BasePoller: Abstract base class for all pollers, providing common functionality.
@@ -9,7 +9,7 @@ Pollers included:
 - FinnhubPoller: Fetches stock data from the Finnhub API.
 - QuandlPoller: Fetches stock data from the Quandl API.
 
-Note: This module is responsible for importing and exporting the necessary poller
+Note: The module is responsible for importing and exporting the necessary poller
 classes and functions. It also sets up the package-level logger.
 """
 

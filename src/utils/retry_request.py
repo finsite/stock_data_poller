@@ -1,10 +1,20 @@
-import logging
+"""The module provides a decorator for retrying a function if it raises an exception.
+
+The decorator `retry_request` retries a given function if it raises an exception.
+It waits for a specified delay in seconds between retries, and attempts up to
+a maximum number of times. If the function still raises an exception after the
+maximum number of retries, it raises that exception.
+
+"""
+
 import time
 from collections.abc import Callable
 from typing import Any
 
-# Initialize logger
-logger = logging.getLogger("poller")
+from src.utils.setup_logger import setup_logger
+
+# Set up logger for this module
+logger = setup_logger(__name__)
 
 
 def retry_request(

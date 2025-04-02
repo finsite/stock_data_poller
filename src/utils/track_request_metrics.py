@@ -1,8 +1,19 @@
-import logging
+"""The module provides a function to track metrics for individual API requests.
+
+Metrics tracked include the status of the request (success or failure), the API endpoint
+that was accessed, and the response time in seconds.
+
+The function logs the tracked metrics to the logger at the INFO level.
+
+The function raises a ValueError if the status is not either 'success' or 'failure'.
+"""
+
 from typing import Literal
 
-# Initialize logger for tracking request metrics
-logger = logging.getLogger("poller")
+from src.utils.setup_logger import setup_logger
+
+# Set up logger for this module
+logger = setup_logger(__name__)
 
 
 def track_request_metrics(

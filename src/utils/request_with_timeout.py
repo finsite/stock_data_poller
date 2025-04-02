@@ -1,17 +1,18 @@
 """Request data from a URL with a timeout.
 
-This function performs a GET request to the given URL, with a specified
+The function performs a GET request to the given URL, with a specified
 timeout in seconds. If the request is successful, it returns the JSON
 response as a dictionary. If the request fails, it logs an error message
 and returns None.
 
 """
 
-import logging
-
 import requests
 
-logger = logging.getLogger("poller")
+from src.utils.setup_logger import setup_logger
+
+# Set up logger for this module
+logger = setup_logger(__name__)
 
 
 def request_with_timeout(url: str, timeout: int = 10) -> dict | None:

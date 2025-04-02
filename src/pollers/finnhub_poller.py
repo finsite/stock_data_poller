@@ -15,7 +15,6 @@ logger = setup_logger(__name__)
 
 
 class FinnhubPoller(BasePoller):
-
     """Poller for fetching stock quotes from Finnhub API.
 
     Attributes

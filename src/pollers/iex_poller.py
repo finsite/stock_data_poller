@@ -17,7 +17,6 @@ logger = setup_logger(__name__)
 
 
 class IEXPoller(BasePoller):
-
     """Poller for fetching stock quotes from the IEX Cloud API."""
 
     """Poller for fetching stock quotes from the IEX Cloud API."""
@@ -43,7 +42,7 @@ class IEXPoller(BasePoller):
     def poll(self, symbols: list[str]) -> None:
         """Polls data for the specified symbols from IEX Cloud API.
 
-        This function iterates over the list of symbols and fetches the latest
+        The function iterates over the list of symbols and fetches the latest
         price from the IEX Cloud API. If the response is valid and contains the
         "latestPrice" key, the data is processed into a payload and sent to the
         message queue. If the response is invalid or contains missing data, an

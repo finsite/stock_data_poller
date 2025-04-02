@@ -1,4 +1,6 @@
 # -- Path setup -----------------------------------------------------
+# This is necessary so Sphinx can find the source code relative to this
+# configuration file.
 import os
 import sys
 
