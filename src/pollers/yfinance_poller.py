@@ -1,4 +1,23 @@
-from typing import Any
+"""
+The module provides a poller class for fetching stock data using Yahoo Finance
+(yfinance).
+
+The module uses the following libraries:
+- yfinance: To fetch stock data from Yahoo Finance.
+- src.config: To get the rate limit for the poller.
+- src.pollers.base_poller: To inherit the base poller functionality.
+- src.utils.rate_limit: To enforce the rate limit using the RateLimiter class.
+- src.utils.setup_logger: To set up the logger for the module.
+- src.utils.track_polling_metrics: To track metrics for polling operations.
+- src.utils.track_request_metrics: To track metrics for individual API requests.
+- src.utils.validate_data: To validate the fetched data against the required schema.
+- src.utils.validate_environment_variables: To validate the environment variables
+  used by the poller.
+
+The poller class is YFinancePoller and it inherits the BasePoller class.
+The poller class fetches stock data from Yahoo Finance using the yfinance library.
+It also enforces a rate limit using the RateLimiter class.
+"""
 
 import yfinance as yf
 
@@ -20,8 +39,7 @@ class YFinancePoller(BasePoller):
 
     def __init__(self):
         """Initializes the YFinancePoller with rate limiting and environment
-        validation.
-        """
+        validation."""
         super().__init__()
 
         # Validate required environment variables
@@ -62,9 +80,7 @@ class YFinancePoller(BasePoller):
         self.rate_limiter.acquire(context="YFinance")
 
     def _fetch_data(self, symbol: str) -> Any:
-        """Fetches recent intraday stock data for the given symbol using
-        yfinance.
-        """
+        """Fetches recent intraday stock data for the given symbol using yfinance."""
         ticker = yf.Ticker(symbol)
         data = ticker.history(period="1d", interval="5m")
 
@@ -75,8 +91,7 @@ class YFinancePoller(BasePoller):
 
     def _process_data(self, symbol: str, data: Any) -> dict[str, Any]:
         """Processes the latest row of yfinance data into the standard payload
-        format.
-        """
+        format."""
         latest_data = data.iloc[-1]
         timestamp = latest_data.name.isoformat()
 

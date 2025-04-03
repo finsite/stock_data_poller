@@ -3,7 +3,8 @@
 @patch("src.pollers.finnhub_poller.FinnhubPoller.send_to_queue")
 @patch("src.utils.request_with_timeout")
 def test_finnhub_poller_success(mock_request_with_timeout, mock_send_to_queue):
-    """Test FinnhubPoller fetches and processes data successfully.
+    """
+    Test FinnhubPoller fetches and processes data successfully.
 
     Tests that the poller sends a message to the queue with the correct data.
     """
@@ -38,9 +39,11 @@ def test_finnhub_poller_success(mock_request_with_timeout, mock_send_to_queue):
 @patch("src.pollers.finnhub_poller.FinnhubPoller.send_to_queue")
 @patch("src.utils.request_with_timeout")
 def test_finnhub_poller_invalid_symbol(mock_request_with_timeout, mock_send_to_queue):
-    """Test FinnhubPoller handles invalid symbols.
+    """
+    Test FinnhubPoller handles invalid symbols.
 
-    Tests that the poller does not send a message to the queue when the symbol is invalid.
+    Tests that the poller does not send a message to the queue when the symbol is
+    invalid.
     """
     mock_request_with_timeout.return_value = {"Error Message": "Invalid symbol"}
 
@@ -53,9 +56,11 @@ def test_finnhub_poller_invalid_symbol(mock_request_with_timeout, mock_send_to_q
 @patch("src.pollers.finnhub_poller.FinnhubPoller.send_to_queue")
 @patch("src.utils.request_with_timeout")
 def test_finnhub_poller_timeout(mock_request_with_timeout, mock_send_to_queue):
-    """Test FinnhubPoller handles API timeouts.
+    """
+    Test FinnhubPoller handles API timeouts.
 
-    Tests that the poller does not send a message to the queue when the API request times out.
+    Tests that the poller does not send a message to the queue when the API request
+    times out.
     """
     mock_request_with_timeout.side_effect = Timeout("API request timed out.")
 
@@ -68,9 +73,11 @@ def test_finnhub_poller_timeout(mock_request_with_timeout, mock_send_to_queue):
 @patch("src.pollers.finnhub_poller.FinnhubPoller.send_to_queue")
 @patch("src.utils.request_with_timeout")
 def test_finnhub_poller_network_error(mock_request_with_timeout, mock_send_to_queue):
-    """Test FinnhubPoller handles network errors.
+    """
+    Test FinnhubPoller handles network errors.
 
-    Tests that the poller does not send a message to the queue when a network error occurs.
+    Tests that the poller does not send a message to the queue when a network error
+    occurs.
     """
     mock_request_with_timeout.side_effect = Exception("Network error")
 
@@ -83,9 +90,11 @@ def test_finnhub_poller_network_error(mock_request_with_timeout, mock_send_to_qu
 @patch("src.pollers.finnhub_poller.FinnhubPoller.send_to_queue")
 @patch("src.utils.request_with_timeout")
 def test_finnhub_poller_empty_data(mock_request_with_timeout, mock_send_to_queue):
-    """Test FinnhubPoller handles empty data response.
+    """
+    Test FinnhubPoller handles empty data response.
 
-    Tests that the poller does not send a message to the queue when the response is empty.
+    Tests that the poller does not send a message to the queue when the response is
+    empty.
     """
     mock_request_with_timeout.return_value = {}
 

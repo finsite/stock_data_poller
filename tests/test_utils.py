@@ -11,10 +11,11 @@ from src.utils.validate_environment_variables import validate_environment_variab
 
 
 def test_validate_environment_variables():
-    """Test validate_environment_variables with environment variable set.
+    """
+    Test validate_environment_variables with environment variable set.
 
-    This test ensures that the validate_environment_variables function
-    passes without errors when the required environment variable is set.
+    This test ensures that the validate_environment_variables function passes without
+    errors when the required environment variable is set.
     """
     # Set a test environment variable
     os.environ["TEST_VAR"] = "value"
@@ -27,11 +28,11 @@ def test_validate_environment_variables():
 
 
 def test_validate_environment_variables_missing():
-    """Test validate_environment_variables with missing environment variable.
+    """
+    Test validate_environment_variables with missing environment variable.
 
-    This test checks that the validate_environment_variables function
-    raises an EnvironmentError when the required environment variable is
-    missing.
+    This test checks that the validate_environment_variables function raises an
+    EnvironmentError when the required environment variable is missing.
     """
     # Expect an EnvironmentError to be raised for a missing variable
     with pytest.raises(EnvironmentError):
@@ -40,10 +41,11 @@ def test_validate_environment_variables_missing():
 
 @patch("requests.get")
 def test_request_with_timeout(mock_get):
-    """Test request_with_timeout with a valid response.
+    """
+    Test request_with_timeout with a valid response.
 
-    This test verifies that the request_with_timeout function correctly
-    processes a valid JSON response from a mocked GET request.
+    This test verifies that the request_with_timeout function correctly processes a
+    valid JSON response from a mocked GET request.
     """
     # Mock a successful JSON response
     mock_get.return_value.json.return_value = {"key": "value"}
@@ -61,10 +63,11 @@ def test_request_with_timeout(mock_get):
 
 @patch("requests.get")
 def test_request_with_timeout_failure(mock_get):
-    """Test request_with_timeout with a timeout exception.
+    """
+    Test request_with_timeout with a timeout exception.
 
-    This test ensures that the request_with_timeout function raises a
-    Timeout exception when the GET request times out.
+    This test ensures that the request_with_timeout function raises a Timeout exception
+    when the GET request times out.
     """
     # Mock a timeout exception
     mock_get.side_effect = requests.exceptions.Timeout
@@ -79,10 +82,11 @@ def test_request_with_timeout_failure(mock_get):
 
 @patch("requests.get")
 def test_request_with_timeout_network_error(mock_get):
-    """Test request_with_timeout with a network error.
+    """
+    Test request_with_timeout with a network error.
 
-    This test verifies that the request_with_timeout function raises a
-    ConnectionError when the GET request fails due to network issues.
+    This test verifies that the request_with_timeout function raises a ConnectionError
+    when the GET request fails due to network issues.
     """
     # Mock a connection error
     mock_get.side_effect = requests.exceptions.ConnectionError

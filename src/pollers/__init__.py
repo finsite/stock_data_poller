@@ -1,4 +1,5 @@
-"""The module initializes the stock polling logic for the application.
+"""
+The module initializes the stock polling logic for the application.
 
 Pollers included:
 - BasePoller: Abstract base class for all pollers, providing common functionality.

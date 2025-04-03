@@ -1,9 +1,12 @@
-"""QueueSender class for message delivery to RabbitMQ or SQS.
+"""
+QueueSender class for message delivery to RabbitMQ or SQS.
 
-The class offers an interface for dispatching messages to either a RabbitMQ or SQS queue.
-It is configurable to support both RabbitMQ and SQS systems, allowing selection between them.
+The class offers an interface for dispatching messages to either a RabbitMQ or SQS
+queue. It is configurable to support both RabbitMQ and SQS systems, allowing selection
+between them.
 
-Additionally, this class includes methods for closing connections to the configured queue.
+Additionally, this class includes methods for closing connections to the configured
+queue.
 """
 
 import json
@@ -18,14 +21,14 @@ logger = setup_logger(__name__)
 
 
 class QueueSender:
-    """A class for sending messages to a RabbitMQ or SQS queue.
+    """
+    A class for sending messages to a RabbitMQ or SQS queue.
 
-    The class provides an interface for sending messages to a RabbitMQ
-    or SQS queue. It supports both RabbitMQ and SQS, and it can be
-    configured to use either one or the other.
+    The class provides an interface for sending messages to a RabbitMQ or SQS queue. It
+    supports both RabbitMQ and SQS, and it can be configured to use either one or the
+    other.
 
-    The class also provides methods for closing the connection to the
-    queue.
+    The class also provides methods for closing the connection to the queue.
     """
 
     def __init__(
@@ -36,7 +39,8 @@ class QueueSender:
         rabbitmq_routing_key: str = None,  # RabbitMQ routing key.
         sqs_queue_url: str = None,  # AWS SQS queue URL.
     ) -> None:
-        """Initializes the QueueSender for RabbitMQ or SQS.
+        """
+        Initializes the QueueSender for RabbitMQ or SQS.
 
         The QueueSender class is a utility for sending messages to either a RabbitMQ
         or an SQS queue. It supports both RabbitMQ and SQS, and it can be
@@ -53,7 +57,6 @@ class QueueSender:
         Raises:
         ------
             ValueError: If the queue type is invalid.
-
         """
         self.queue_type = queue_type.lower()
         self.rabbitmq_host = rabbitmq_host
@@ -90,7 +93,8 @@ class QueueSender:
             raise ValueError(f"Unsupported queue type: {self.queue_type}")
 
     def send_message(self, data: dict) -> None:
-        """Sends a message to the configured queue.
+        """
+        Sends a message to the configured queue.
 
         The method will first acquire a slot in the rate limiter and then send the message
         to the queue.
@@ -102,7 +106,6 @@ class QueueSender:
         Raises:
         ------
             Exception: If the message could not be sent to the queue.
-
         """
         try:
             if self.queue_type == "rabbitmq":
@@ -114,7 +117,8 @@ class QueueSender:
             raise
 
     def _send_to_rabbitmq(self, data: dict) -> None:
-        """Sends a message to a RabbitMQ queue.
+        """
+        Sends a message to a RabbitMQ queue.
 
         This method serializes the given data into JSON format and publishes
         it to a specified RabbitMQ exchange using the provided routing key.
@@ -126,7 +130,6 @@ class QueueSender:
         Raises:
         ------
             Exception: If there is an error while sending the message.
-
         """
         try:
             message_body: str = json.dumps(data)  # Convert the data dictionary to a JSON string
@@ -145,7 +148,8 @@ class QueueSender:
             raise
 
     def _send_to_sqs(self, data: Dict[str, Any]) -> None:
-        """Sends a message to an SQS queue.
+        """
+        Sends a message to an SQS queue.
 
         Args:
             data (Dict[str, Any]): The message payload to be sent, as a dictionary.
@@ -153,7 +157,6 @@ class QueueSender:
         Raises:
             ValueError: If the SQS queue URL is not set.
             Exception: If there is an error while sending the message.
-
         """
         try:
             # Check if the SQS queue URL is set
@@ -174,7 +177,8 @@ class QueueSender:
             raise
 
     def close(self) -> None:
-        """Closes the RabbitMQ connection if open.
+        """
+        Closes the RabbitMQ connection if open.
 
         This method is used to clean up resources when the object is no longer
         needed. It closes the RabbitMQ connection if it is open.
@@ -187,7 +191,6 @@ class QueueSender:
 
         Raises:
             Exception: If there is an error while closing the connection.
-
         """
         if self.queue_type == "rabbitmq":
             try:

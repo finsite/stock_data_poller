@@ -1,25 +1,40 @@
-"""Poller for fetching stock data from AlphaVantage API."""
+"""
+Poller for fetching stock data from AlphaVantage API.
+
+The AlphaVantagePoller class fetches the daily data for the given symbols from the
+AlphaVantage API and sends it to the message queue.
+
+The poller enforces a rate limit of 5 requests per minute, per symbol.
+"""
 
 from typing import Any
 
+from src.config import get_alpha_vantage_api_key  # AlphaVantage API key
+from src.config import get_queue_type  # Message queue type (RabbitMQ or SQS)
 from src.config import (
-    get_alpha_vantage_api_key,
-    get_queue_type,
-    get_rabbitmq_exchange,
-    get_rabbitmq_host,
-    get_rabbitmq_routing_key,
-    get_rate_limit,
-    get_sqs_queue_url,
+    get_rabbitmq_exchange,  # RabbitMQ exchange name (if RabbitMQ is used)
 )
-from src.message_queue.queue_sender import QueueSender
-from src.pollers.base_poller import BasePoller
-from src.utils.rate_limit import RateLimiter
-from src.utils.request_with_timeout import request_with_timeout
-from src.utils.retry_request import retry_request
-from src.utils.setup_logger import setup_logger
-from src.utils.track_polling_metrics import track_polling_metrics
-from src.utils.track_request_metrics import track_request_metrics
-from src.utils.validate_data import validate_data
+from src.config import (
+    get_rabbitmq_host,  # RabbitMQ server hostname (if RabbitMQ is used)
+)
+from src.config import (
+    get_rabbitmq_routing_key,  # RabbitMQ routing key (if RabbitMQ is used)
+)
+from src.config import get_rate_limit  # Maximum number of requests per second
+from src.config import get_sqs_queue_url  # SQS queue URL (if SQS is used)
+from src.message_queue.queue_sender import QueueSender  # Message queue sender
+from src.pollers.base_poller import BasePoller  # Base poller class
+from src.utils.rate_limit import RateLimiter  # Rate limiter class
+from src.utils.request_with_timeout import request_with_timeout  # Request with timeout
+from src.utils.retry_request import retry_request  # Retry request
+from src.utils.setup_logger import setup_logger  # Logger setup
+from src.utils.track_polling_metrics import (
+    track_polling_metrics,  # Track polling metrics
+)
+from src.utils.track_request_metrics import (
+    track_request_metrics,  # Track request metrics
+)
+from src.utils.validate_data import validate_data  # Validate data
 
 logger = setup_logger(__name__)
 

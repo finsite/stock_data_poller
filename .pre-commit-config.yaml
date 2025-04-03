@@ -126,6 +126,24 @@ repos:
         args: ["--print-width", "80"]
         additional_dependencies: ["prettier@latest"]
 
+  - repo: local
+    hooks:
+      - id: docformatter
+        name: Format docstrings with docformatter
+        entry: docformatter
+        language: system
+        types: [python]
+        args:
+          [
+            "--in-place",
+            "--recursive",
+            "--wrap-summaries",
+            "88",
+            "--wrap-descriptions",
+            "88",
+          ]
+        files: \.py$
+
   # # ✅ Frontend, Markdown, YAML, HTML, JSON
   # - repo: https://github.com/pre-commit/mirrors-prettier
   #   rev: "v4.0.0-alpha.8"
