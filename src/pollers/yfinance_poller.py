@@ -11,8 +11,7 @@ The module uses the following libraries:
 - src.utils.track_polling_metrics: To track metrics for polling operations.
 - src.utils.track_request_metrics: To track metrics for individual API requests.
 - src.utils.validate_data: To validate the fetched data against the required schema.
-- src.utils.validate_environment_variables: To validate the environment variables
-  used by the poller.
+- src.utils.validate_environment_variables: To validate the environment variables used by the poller.
 
 The poller class is YFinancePoller and it inherits the BasePoller class.
 The poller class fetches stock data from Yahoo Finance using the yfinance library.

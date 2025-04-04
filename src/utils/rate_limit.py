@@ -34,9 +34,11 @@ class RateLimiter:
         limiter.
 
         Args:
-        ----
             max_requests (int): Maximum number of requests allowed.
             time_window (float): Time window in seconds.
+
+        Returns:
+            None
         """
         self._max_requests = max_requests
         self._time_window = time_window
@@ -49,10 +51,6 @@ class RateLimiter:
         Acquire permission to proceed with a request. Blocks if the rate limit is
         exceeded.
 
-        The function uses the token bucket algorithm to manage the request rate.
-        It replenishes tokens based on the elapsed time since the last check and
-        blocks if the rate limit is exceeded.
-
         Args:
         ----
             context (str, optional): Optional context for logging (e.g., poller type).
@@ -62,30 +60,26 @@ class RateLimiter:
         -------
             None
         """
-        with self.lock:
-            current_time = time.time()
-            elapsed = current_time - self.last_check
+        with self._lock:  # type: ignore # type: threading.Lock
+            current_time: float = time.time()
+            elapsed: float = current_time - self._last_check
 
-            # Add tokens based on elapsed time
-            tokens_to_add = elapsed * (self.max_requests / self.time_window)
-            self.tokens = min(self.max_requests, self.tokens + tokens_to_add)
-            self.last_check = current_time
+            tokens_to_add: float = elapsed * (self._max_requests / self._time_window)
+            self._tokens: float = min(self._max_requests, self._tokens + tokens_to_add)
+            self._last_check: float = current_time
 
-            # Log token replenishment
             logger.debug(
                 f"[{context}] Replenished {tokens_to_add:.2f} tokens. "
-                f"Available tokens: {self.tokens:.2f}"
+                f"Available tokens: {self._tokens:.2f}"
             )
 
-            # Wait if no tokens are available
-            if self.tokens < 1:
-                sleep_time = (1 - self.tokens) * (self.time_window / self.max_requests)
+            if self._tokens < 1:
+                sleep_time: float = (1 - self._tokens) * (self._time_window / self._max_requests)
                 logger.info(
                     f"[{context}] Rate limit reached. Sleeping for {sleep_time:.2f} seconds."
                 )
                 time.sleep(sleep_time)
-                self.tokens = 1  # Add one token after sleeping
+                self._tokens = 1
 
-            # Consume a token and log
-            self.tokens -= 1
-            logger.debug(f"[{context}] Consumed a token. Remaining tokens: {self.tokens:.2f}")
+            self._tokens -= 1
+            logger.debug(f"[{context}] Consumed a token. Remaining tokens: {self._tokens:.2f}")
