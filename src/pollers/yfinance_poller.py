@@ -1,4 +1,5 @@
-"""The module provides a poller class for fetching stock data using Yahoo Finance
+"""
+The module provides a poller class for fetching stock data using Yahoo Finance
 (yfinance).
 
 The module uses the following libraries:
@@ -17,7 +18,10 @@ The poller class fetches stock data from Yahoo Finance using the yfinance librar
 It also enforces a rate limit using the RateLimiter class.
 """
 
+from typing import Any
+
 import yfinance as yf
+
 from src.config import get_rate_limit
 from src.pollers.base_poller import BasePoller
 from src.utils.rate_limit import RateLimiter
@@ -26,7 +30,6 @@ from src.utils.track_polling_metrics import track_polling_metrics
 from src.utils.track_request_metrics import track_request_metrics
 from src.utils.validate_data import validate_data
 from src.utils.validate_environment_variables import validate_environment_variables
-from typing import Any
 
 # Logger setup for YFinancePoller
 logger = setup_logger(__name__)
@@ -37,8 +40,7 @@ class YFinancePoller(BasePoller):
 
     def __init__(self):
         """Initializes the YFinancePoller with rate limiting and environment
-        validation.
-        """
+        validation."""
         super().__init__()
 
         # Validate required environment variables
@@ -90,8 +92,7 @@ class YFinancePoller(BasePoller):
 
     def _process_data(self, symbol: str, data: Any) -> dict[str, Any]:
         """Processes the latest row of yfinance data into the standard payload
-        format.
-        """
+        format."""
         latest_data = data.iloc[-1]
         timestamp = latest_data.name.isoformat()
 

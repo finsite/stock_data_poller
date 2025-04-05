@@ -1,4 +1,5 @@
-"""Initialize the stock polling logic for the application.
+"""
+Initialize the stock polling logic for the application.
 
 Pollers included:
 - BasePoller: Abstract base class for all pollers, providing common functionality.
@@ -13,7 +14,6 @@ Note:
 ----
     This module imports and exports poller classes for use across the application
     and sets up the package-level logger.
-
 """
 
 import logging
@@ -25,7 +25,6 @@ from src.pollers.iex_poller import IEXPoller
 from src.pollers.polygon_poller import PolygonPoller
 from src.pollers.quandl_poller import QuandlPoller
 from src.pollers.yfinance_poller import YFinancePoller
-
 from src.utils.setup_logger import setup_logger
 
 __all__ = [

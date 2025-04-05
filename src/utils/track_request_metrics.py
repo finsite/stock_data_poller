@@ -1,4 +1,5 @@
-"""The module provides a function to track metrics for individual API requests.
+"""
+The module provides a function to track metrics for individual API requests.
 
 Metrics tracked include the status of the request (success or failure), the API endpoint
 that was accessed, and the response time in seconds.
@@ -19,7 +20,8 @@ logger = setup_logger(__name__)
 def track_request_metrics(
     status: Literal["success", "failure"], endpoint: str, response_time: float
 ) -> None:
-    """Tracks metrics for individual API requests.
+    """
+    Tracks metrics for individual API requests.
 
     Args:
     ----
@@ -30,7 +32,6 @@ def track_request_metrics(
     Raises:
     ------
         ValueError: If the status is not 'success' or 'failure'.
-
     """
     # Validate status to ensure it is either 'success' or 'failure'
     if status not in {"success", "failure"}:

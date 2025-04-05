@@ -1,4 +1,5 @@
-"""The module provides the QueueSender class for handling message delivery to either
+"""
+The module provides the QueueSender class for handling message delivery to either
 RabbitMQ or SQS queues.
 
 The QueueSender class encapsulates the logic for sending data to RabbitMQ or
@@ -16,7 +17,6 @@ Methods
 -------
     send_message: Sends a message to the configured queue. Handles exceptions
                   and logs errors appropriately.
-
 """
 
 from src.message_queue.queue_sender import QueueSender
