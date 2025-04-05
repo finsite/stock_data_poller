@@ -1,5 +1,4 @@
-"""
-Main application entry point.
+"""Main application entry point.
 
 The script polls stock data from the IEX Cloud API and sends the data to a
 RabbitMQ or SQS queue. It uses environment variables or Vault to configure its behavior.
@@ -87,8 +86,7 @@ poller = poller_factory.create_poller()
 
 
 def main() -> None:
-    """
-    Run the main polling loop to collect and send stock data.
+    """Run the main polling loop to collect and send stock data.
 
     This function starts a while loop that continues until the program is
     interrupted with a KeyboardInterrupt (e.g., Ctrl+C). It polls the specified
@@ -98,8 +96,10 @@ def main() -> None:
     If an exception is raised during polling, the error is logged and the program
     waits for the specified retry delay before retrying the poll for the symbol.
 
-    Returns:
+    Returns
+    -------
         None
+
     """
     try:
         logger.info(f"Starting {POLLER_TYPE} Poller...")

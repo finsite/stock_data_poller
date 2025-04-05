@@ -1,5 +1,4 @@
-"""
-Validate environment variables.
+"""Validate environment variables.
 
 The module provides a function to validate that all required environment variables are set.
 
@@ -18,18 +17,21 @@ logger = setup_logger(__name__)
 
 
 def validate_environment_variables(required_variables: list[str]) -> None:
-    """
-    Verify that all required environment variables are set.
+    """Verify that all required environment variables are set.
 
     Args:
+    ----
         required_variables (List[str]): A list of environment variables that are required for the script to run.
 
     Raises:
+    ------
         TypeError: If required_variables is not a list of strings.
         EnvironmentError: If any of the environment variables are missing.
 
     Notes:
+    -----
         The function logs a success message if all variables are set, and raises an error if any variables are missing.
+
     """
     # Check that required_variables is a list of strings
     if not isinstance(required_variables, list) or not all(

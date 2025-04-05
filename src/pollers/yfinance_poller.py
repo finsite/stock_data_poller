@@ -1,5 +1,4 @@
-"""
-The module provides a poller class for fetching stock data using Yahoo Finance
+"""The module provides a poller class for fetching stock data using Yahoo Finance
 (yfinance).
 
 The module uses the following libraries:
@@ -38,7 +37,8 @@ class YFinancePoller(BasePoller):
 
     def __init__(self):
         """Initializes the YFinancePoller with rate limiting and environment
-        validation."""
+        validation.
+        """
         super().__init__()
 
         # Validate required environment variables
@@ -90,7 +90,8 @@ class YFinancePoller(BasePoller):
 
     def _process_data(self, symbol: str, data: Any) -> dict[str, Any]:
         """Processes the latest row of yfinance data into the standard payload
-        format."""
+        format.
+        """
         latest_data = data.iloc[-1]
         timestamp = latest_data.name.isoformat()
 

@@ -4,8 +4,7 @@ from packaging.version import Version
 
 
 def next_version(current: str, part: str) -> str:
-    """
-    Increment a version.
+    """Increment a version.
 
     Args:
     ----
@@ -15,6 +14,7 @@ def next_version(current: str, part: str) -> str:
     Returns:
     -------
         A new version string with the specified part incremented.
+
     """
     v = Version(current)
     if part == "major":
