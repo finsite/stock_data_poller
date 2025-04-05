@@ -20,7 +20,7 @@ exclude = ["tests"]
 
 [tool.ruff.lint]
 extend-select = ["D"]
-ignore = ["D203", "D211", "D213", "D401"]
+ignore = ["D203", "D211", "D213", "D401", "D205"]
 
 [tool.isort]
 profile = "black"

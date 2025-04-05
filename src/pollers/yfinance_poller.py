@@ -18,7 +18,6 @@ It also enforces a rate limit using the RateLimiter class.
 """
 
 import yfinance as yf
-
 from src.config import get_rate_limit
 from src.pollers.base_poller import BasePoller
 from src.utils.rate_limit import RateLimiter
@@ -27,6 +26,7 @@ from src.utils.track_polling_metrics import track_polling_metrics
 from src.utils.track_request_metrics import track_request_metrics
 from src.utils.validate_data import validate_data
 from src.utils.validate_environment_variables import validate_environment_variables
+from typing import Any
 
 # Logger setup for YFinancePoller
 logger = setup_logger(__name__)

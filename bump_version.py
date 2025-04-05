@@ -1,27 +1,46 @@
+"""Script to bump the version number in the repository.
+
+The script takes two arguments from the command line. The first argument is the
+current version string, and the second argument is the part of the version to
+increment. The parts of the version are 'major', 'minor', and 'patch'.
+
+The script will exit with a status code of 1 if there is an error.
+"""
+
 import sys
 
-from packaging.version import Version
+from packaging.version import Version  # Import Version class for version handling
+
+# Example usage:
+# python bump_version.py 1.0.0 patch
 
 
 def next_version(current: str, part: str) -> str:
     """Increment a version.
 
+    This function takes a version string and a part ('major', 'minor', or 'patch'),
+    and returns a new version string with the specified part incremented.
+
     Args:
     ----
-        current: The current version string.
-        part: The part of the version to increment ('major', 'minor', or 'patch').
+        current (str): The current version string.
+        part (str): The part of the version to increment ('major', 'minor', or 'patch').
 
     Returns:
     -------
-        A new version string with the specified part incremented.
+        str: A new version string with the specified part incremented.
+
+    Raises:
+    ------
+        ValueError: If the part is not 'major', 'minor', or 'patch'.
 
     """
-    v = Version(current)
-    if part == "major":
+    v = Version(current)  # Parse the current version string
+    if part == "major":  # Increment the major version
         return f"{v.major + 1}.0.0"
-    elif part == "minor":
+    elif part == "minor":  # Increment the minor version
         return f"{v.major}.{v.minor + 1}.0"
-    elif part == "patch":
+    elif part == "patch":  # Increment the patch version
         return f"{v.major}.{v.minor}.{v.micro + 1}"
     else:
         raise ValueError("Specify 'major', 'minor', or 'patch'.")

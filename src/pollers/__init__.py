@@ -1,4 +1,4 @@
-"""The module initializes the stock polling logic for the application.
+"""Initialize the stock polling logic for the application.
 
 Pollers included:
 - BasePoller: Abstract base class for all pollers, providing common functionality.
@@ -9,20 +9,24 @@ Pollers included:
 - FinnhubPoller: Fetches stock data from the Finnhub API.
 - QuandlPoller: Fetches stock data from the Quandl API.
 
-Note: The module is responsible for importing and exporting the necessary poller
-classes and functions. It also sets up the package-level logger.
+Note:
+----
+    This module imports and exports poller classes for use across the application
+    and sets up the package-level logger.
+
 """
 
-# Import the concrete poller classes
-from src.pollers.alphavantage_poller import AlphaVantagePoller
+import logging
 
-# Import the base poller class
+from src.pollers.alphavantage_poller import AlphaVantagePoller
 from src.pollers.base_poller import BasePoller
 from src.pollers.finnhub_poller import FinnhubPoller
 from src.pollers.iex_poller import IEXPoller
 from src.pollers.polygon_poller import PolygonPoller
 from src.pollers.quandl_poller import QuandlPoller
 from src.pollers.yfinance_poller import YFinancePoller
+
+from src.utils.setup_logger import setup_logger
 
 __all__ = [
     "BasePoller",
@@ -34,9 +38,5 @@ __all__ = [
     "QuandlPoller",
 ]
 
-# Package-level logger setup
-# Import the logger setup function from the utils module
-from src.utils.setup_logger import setup_logger
-
-# Initialize the logger for the pollers package
-logger = setup_logger(name="pollers")
+# Configure package-level logger
+logger: logging.Logger = setup_logger(name="pollers")

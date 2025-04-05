@@ -9,10 +9,10 @@ queue.
 """
 
 import json
-
 import boto3
 import pika
 
+from typing import Dict, Any
 from src.utils.setup_logger import setup_logger
 
 # Set up logger
