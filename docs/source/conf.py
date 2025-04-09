@@ -11,7 +11,8 @@ import sys
 
 # -- Path setup -----------------------------------------------------
 # Add the project root directory to the Python path to allow Sphinx to find the source code.
-sys.path.insert(0, os.path.abspath("../.."))  # includes `src/`
+SRC_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../src"))
+sys.path.insert(0, SRC_PATH)
 
 # -- Project information --------------------------------------------
 # Define basic project information.
