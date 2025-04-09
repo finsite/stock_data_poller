@@ -405,8 +405,7 @@
 #             except Exception as e:
 #                 logger.error(f"Failed to close RabbitMQ connection: {e}")
 #                 raise
-"""
-QueueSender module for message delivery to RabbitMQ or AWS SQS.
+"""QueueSender module for message delivery to RabbitMQ or AWS SQS.
 
 This module defines the QueueSender class, which sends messages to a configured RabbitMQ
 or Amazon SQS queue and supports proper connection cleanup.
@@ -434,8 +433,7 @@ logger = setup_logger(__name__)
 
 
 class QueueSender:
-    """
-    A class for sending messages to a RabbitMQ or SQS queue.
+    """A class for sending messages to a RabbitMQ or SQS queue.
 
     Supports configuration for either queue type. Handles message serialization,
     dispatch, connection setup, and cleanup.
@@ -449,8 +447,7 @@ class QueueSender:
         rabbitmq_routing_key: str | None = None,
         sqs_queue_url: str | None = None,
     ) -> None:
-        """
-        Initialize the QueueSender for RabbitMQ or SQS.
+        """Initialize the QueueSender for RabbitMQ or SQS.
 
         Args:
             queue_type (str): Either "rabbitmq" or "sqs".
@@ -461,6 +458,7 @@ class QueueSender:
 
         Raises:
             ValueError: If the queue_type is unsupported.
+
         """
         self.queue_type = queue_type.lower()
         self.rabbitmq_host = rabbitmq_host
@@ -518,14 +516,14 @@ class QueueSender:
             raise
 
     def send_message(self, data: dict[str, Any]) -> None:
-        """
-        Send a message to the configured queue.
+        """Send a message to the configured queue.
 
         Args:
             data (Dict[str, Any]): Message payload.
 
         Raises:
             Exception: If message delivery fails.
+
         """
         try:
             if self.queue_type == "rabbitmq":
@@ -544,14 +542,14 @@ class QueueSender:
         reraise=True,
     )
     def _send_to_rabbitmq(self, data: dict[str, Any]) -> None:
-        """
-        Send a message to RabbitMQ (with retry).
+        """Send a message to RabbitMQ (with retry).
 
         Args:
             data (Dict[str, Any]): Message payload.
 
         Raises:
             Exception: If sending fails.
+
         """
         message_body = json.dumps(data)
         self.channel.basic_publish(
@@ -573,8 +571,7 @@ class QueueSender:
         reraise=True,
     )
     def _send_to_sqs(self, data: dict[str, Any]) -> None:
-        """
-        Send a message to AWS SQS (with retry).
+        """Send a message to AWS SQS (with retry).
 
         Args:
             data (Dict[str, Any]): Message payload.
@@ -582,6 +579,7 @@ class QueueSender:
         Raises:
             ValueError: If the queue URL is missing.
             Exception: If sending fails.
+
         """
         if not self.sqs_queue_url:
             raise ValueError("SQS_QUEUE_URL is not configured.")
@@ -591,11 +589,11 @@ class QueueSender:
         logger.info(f"Message sent to SQS queue: {self.sqs_queue_url}")
 
     def close(self) -> None:
-        """
-        Close the RabbitMQ connection if it exists and is open.
+        """Close the RabbitMQ connection if it exists and is open.
 
         Raises:
             Exception: If closing fails.
+
         """
         if self.queue_type == "rabbitmq":
             try:

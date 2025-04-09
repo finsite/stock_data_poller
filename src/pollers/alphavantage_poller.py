@@ -1,5 +1,4 @@
-"""
-Poller for fetching stock data from AlphaVantage API.
+"""Poller for fetching stock data from AlphaVantage API.
 
 The AlphaVantagePoller class fetches the daily data for the given symbols from the
 AlphaVantage API and sends it to the message queue.
