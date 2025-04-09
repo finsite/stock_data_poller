@@ -64,7 +64,6 @@ specified name and logging level.
 """
 
 import logging
-from typing import Optional
 
 
 def setup_logger(name: str | None = None, level: int = logging.INFO) -> logging.Logger:
