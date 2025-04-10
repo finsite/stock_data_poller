@@ -1,4 +1,5 @@
-"""Script to bump the version number in the repository.
+"""
+Script to bump the version number in the repository.
 
 The script takes two arguments from the command line. The first argument is the current
 version string, and the second argument is the part of the version to increment. The
@@ -16,7 +17,8 @@ from packaging.version import Version  # Import Version class for version handli
 
 
 def next_version(current: str, part: str) -> str:
-    """Increment a version.
+    """
+    Increment a version.
 
     This function takes a version string and a part ('major', 'minor', or 'patch'),
     and returns a new version string with the specified part incremented.
@@ -33,7 +35,6 @@ def next_version(current: str, part: str) -> str:
     Raises:
     ------
         ValueError: If the part is not 'major', 'minor', or 'patch'.
-
     """
     v = Version(current)  # Parse the current version string
     if part == "major":  # Increment the major version

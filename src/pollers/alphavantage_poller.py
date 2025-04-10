@@ -1,4 +1,5 @@
-"""Poller for fetching stock data from AlphaVantage API.
+"""
+Poller for fetching stock data from AlphaVantage API.
 
 The AlphaVantagePoller class fetches the daily data for the given symbols from the
 AlphaVantage API and sends it to the message queue.
@@ -41,17 +42,31 @@ logger = setup_logger(__name__)
 class AlphaVantagePoller(BasePoller):
     """Poller for fetching stock data from AlphaVantage API."""
 
-    def __init__(self):
-        """Initializes the AlphaVantagePoller."""
+    def __init__(self) -> None:
+        """
+        Initializes the AlphaVantagePoller.
+
+        The class takes the following environment variables:
+
+        - ALPHA_VANTAGE_API_KEY: str, The AlphaVantage API key.
+        - QUEUE_TYPE: str, The message queue type (RabbitMQ or SQS).
+        - RABBITMQ_HOST: str, The RabbitMQ server hostname (if RabbitMQ is used).
+        - RABBITMQ_EXCHANGE: str, The RabbitMQ exchange name (if RabbitMQ is used).
+        - RABBITMQ_ROUTING_KEY: str, The RabbitMQ routing key (if RabbitMQ is used).
+        - SQS_QUEUE_URL: str, The SQS queue URL (if SQS is used).
+        """
         super().__init__()
 
-        self.api_key = get_alpha_vantage_api_key()
+        # Get the AlphaVantage API key
+        self.api_key: str = get_alpha_vantage_api_key()
         if not self.api_key:
             raise ValueError("Missing ALPHA_VANTAGE_API_KEY.")
 
-        self.rate_limiter = RateLimiter(max_requests=get_rate_limit(), time_window=60)
+        # Initialize rate limiter with configured limit
+        self.rate_limiter: RateLimiter = RateLimiter(max_requests=get_rate_limit(), time_window=60)
 
-        self.queue_sender = QueueSender(
+        # Initialize queue sender with configured queue
+        self.queue_sender: QueueSender = QueueSender(
             queue_type=get_queue_type(),
             rabbitmq_host=get_rabbitmq_host(),
             rabbitmq_exchange=get_rabbitmq_exchange(),
@@ -60,41 +75,91 @@ class AlphaVantagePoller(BasePoller):
         )
 
     def poll(self, symbols: list[str]) -> None:
-        """Polls data for the specified symbols from AlphaVantage API."""
+        """
+        Polls data for the specified symbols from AlphaVantage API.
+
+        Args:
+            symbols (list[str]): The list of symbols to poll.
+
+        Returns:
+            None
+        """
         for symbol in symbols:
             try:
+                # Enforce rate limit
                 self._enforce_rate_limit()
-                data = self._fetch_data(symbol)
+                # Fetch data from AlphaVantage API
+                data: dict[str, Any] = self._fetch_data(symbol)
 
                 if "Error Message" in data:
+                    # Handle failure if the API returns an error message
                     self._handle_failure(
                         symbol, f"Error from AlphaVantage: {data['Error Message']}"
                     )
                     continue
 
-                payload = self._process_data(symbol, data)
+                # Process data into payload
+                payload: dict[str, Any] = self._process_data(symbol, data)
 
                 if not validate_data(payload):
+                    # Handle failure if the data does not pass validation
                     self._handle_failure(symbol, f"Validation failed for symbol: {symbol}")
                     continue
 
+                # Track metrics
                 track_polling_metrics("AlphaVantage", [symbol])
                 track_request_metrics(symbol, 30, 5)
 
+                # Send payload to message queue
                 self.queue_sender.send_message(payload)
+                # Handle success
                 self._handle_success(symbol)
 
             except Exception as e:
+                # Handle failure if an unexpected exception is raised
                 self._handle_failure(symbol, str(e))
 
     def _enforce_rate_limit(self) -> None:
-        """Enforces the rate limit using the RateLimiter class."""
-        self.rate_limiter.acquire(context="AlphaVantage")
+        """
+        Enforces the rate limit using the RateLimiter class.
+
+        The function acquires a token from the rate limiter and blocks until the
+        token is available. This ensures that the maximum number of requests per
+        minute is not exceeded.
+
+        Args:
+            None
+
+        Returns:
+            None
+        """
+        # Acquire a token from the rate limiter and block until the token is available
+        self.rate_limiter.acquire(context="AlphaVantage")  # type: ignore
 
     def _fetch_data(self, symbol: str) -> dict[str, Any]:
-        """Fetches data for the given symbol from AlphaVantage API."""
+        """
+        Fetches data for the given symbol from AlphaVantage API.
 
-        def request_func():
+        The function makes a GET request to the AlphaVantage API and fetches the
+        intraday time series data for the given symbol. The request is made with a
+        timeout and the result is returned as a dictionary.
+
+        Args:
+            symbol (str): The symbol for which data is to be fetched.
+
+        Returns:
+            dict[str, Any]: The fetched data as a dictionary.
+        """
+
+        def request_func() -> dict[str, Any]:
+            """
+            Makes a GET request to the AlphaVantage API to fetch the intraday time
+            series data for the given symbol.
+
+            Returns:
+                dict[str, Any]: The fetched data as a dictionary.
+            """
+
             url = (
                 f"https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY"
                 f"&symbol={symbol}&interval=5min&apikey={self.api_key}"
@@ -104,14 +169,29 @@ class AlphaVantagePoller(BasePoller):
         return retry_request(request_func)
 
     def _process_data(self, symbol: str, data: dict[str, Any]) -> dict[str, Any]:
-        """Processes the latest time series data into a payload."""
-        time_series = data.get("Time Series (5min)")
+        """
+        Processes the latest time series data into a payload.
+
+        The function takes the latest time series data from AlphaVantage and
+        processes it into a payload dictionary. The latest time series is
+        determined by finding the maximum time in the time series.
+
+        Parameters:
+            symbol (str): The symbol for which polling was performed.
+            data (dict[str, Any]): The time series data from AlphaVantage.
+
+        Returns:
+            dict[str, Any]: The processed payload dictionary.
+        """
+        time_series: dict[str, dict[str, str]] = data.get("Time Series (5min)")
         if not time_series:
             raise ValueError(f"No 'Time Series (5min)' data found for symbol: {symbol}")
 
-        latest_time = max(time_series.keys())
-        latest_data = time_series[latest_time]
+        # Determine the latest time in the time series
+        latest_time: str = max(time_series.keys())
+        latest_data: dict[str, str] = time_series[latest_time]
 
+        # Process the latest time series data into a payload
         return {
             "symbol": symbol,
             "timestamp": latest_time,
@@ -127,12 +207,37 @@ class AlphaVantagePoller(BasePoller):
         }
 
     def _handle_success(self, symbol: str) -> None:
-        """Tracks success metrics for polling and requests."""
+        """
+        Tracks success metrics for polling and requests.
+
+        Metrics tracked include the source of the data (AlphaVantage) and the symbol
+        for which polling was performed.
+
+        Args:
+            symbol (str): The symbol for which polling was performed.
+
+        Returns:
+            None
+        """
+        # Track success metrics for polling and requests
         track_polling_metrics("AlphaVantage", [symbol])
         track_request_metrics(symbol, 30, 5)
 
     def _handle_failure(self, symbol: str, error: str) -> None:
-        """Tracks failure metrics for polling and requests."""
+        """
+        Tracks failure metrics for polling and requests.
+
+        Metrics tracked include the source of the data (AlphaVantage) and the symbol
+        for which polling was performed. The error message is also logged.
+
+        Args:
+            symbol (str): The symbol for which polling was performed.
+            error (str): The error message.
+
+        Returns:
+            None
+        """
         logger.error(f"AlphaVantage poll failed for {symbol}: {error}")
+        # Track failure metrics for polling and requests
         track_polling_metrics("AlphaVantage", [symbol])
         track_request_metrics(symbol, 30, 5, success=False)

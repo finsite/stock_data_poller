@@ -1,4 +1,5 @@
-"""Poller for fetching stock quotes from Polygon.io API.
+"""
+Poller for fetching stock quotes from Polygon.io API.
 
 The poller fetches the previous close data for the given symbols from Polygon.io API and
 sends it to the message queue.
@@ -26,12 +27,12 @@ class PolygonPoller(BasePoller):
     """Poller for fetching stock quotes from Polygon.io API."""
 
     def __init__(self):
-        """Initializes the PolygonPoller.
+        """
+        Initializes the PolygonPoller.
 
         Raises
         ------
             ValueError: If POLYGON_API_KEY is not set.
-
         """
         super().__init__()
 
@@ -76,8 +77,7 @@ class PolygonPoller(BasePoller):
 
         def request_func():
             """Makes a GET request to the Polygon.io API to fetch the previous close
-            data for the given symbol.
-            """
+            data for the given symbol."""
             url = (
                 f"https://api.polygon.io/v2/aggs/ticker/{symbol}/prev?"
                 f"adjusted=true&apiKey={self.api_key}"

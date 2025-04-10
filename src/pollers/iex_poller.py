@@ -1,4 +1,5 @@
-"""The module provides a poller class for fetching stock quotes from the IEX Cloud API.
+"""
+The module provides a poller class for fetching stock quotes from the IEX Cloud API.
 
 The poller enforces a rate limit of 5 requests per minute, per symbol.
 """
@@ -25,12 +26,12 @@ class IEXPoller(BasePoller):
     """Poller for fetching stock quotes from the IEX Cloud API."""
 
     def __init__(self):
-        """Initializes the IEXPoller.
+        """
+        Initializes the IEXPoller.
 
         Raises
         ------
             ValueError: If the IEX_API_KEY environment variable is not set.
-
         """
         super().__init__()
 
@@ -44,7 +45,8 @@ class IEXPoller(BasePoller):
         self.rate_limiter = RateLimiter(max_requests=get_rate_limit(), time_window=60)
 
     def poll(self, symbols: list[str]) -> None:
-        """Polls data for the specified symbols from IEX Cloud API.
+        """
+        Polls data for the specified symbols from IEX Cloud API.
 
         The function iterates over the list of symbols and fetches the latest
         price from the IEX Cloud API. If the response is valid and contains the
@@ -55,7 +57,6 @@ class IEXPoller(BasePoller):
         Args:
         ----
             symbols (List[str]): List of stock symbols to poll.
-
         """
         for symbol in symbols:
             try:
@@ -94,8 +95,7 @@ class IEXPoller(BasePoller):
 
     def _enforce_rate_limit(self) -> None:
         """Enforces the rate limit using the RateLimiter class to avoid exceeding the
-        allowed number of requests per minute.
-        """
+        allowed number of requests per minute."""
         """
         Enforces the rate limit using the RateLimiter class to avoid exceeding the
         allowed number of requests per minute.
@@ -105,7 +105,8 @@ class IEXPoller(BasePoller):
         self.rate_limiter.acquire(context="IEX")
 
     def _fetch_data(self, symbol: str) -> dict[str, Any]:
-        """Fetches stock data for the given symbol from the IEX Cloud API.
+        """
+        Fetches stock data for the given symbol from the IEX Cloud API.
 
         Args:
         ----
@@ -114,7 +115,6 @@ class IEXPoller(BasePoller):
         Returns:
         -------
             Dict[str, Any]: Fetched data in the format returned by the IEX API.
-
         """
 
         def request_func():
@@ -127,7 +127,8 @@ class IEXPoller(BasePoller):
         return retry_request(request_func)
 
     def _process_data(self, data: dict[str, Any]) -> dict[str, Any]:
-        """Processes the raw data from IEX Cloud API into the payload format.
+        """
+        Processes the raw data from IEX Cloud API into the payload format.
 
         Args:
         ----
@@ -136,7 +137,6 @@ class IEXPoller(BasePoller):
         Returns:
         -------
             Dict[str, Any]: Processed data in the payload format.
-
         """
         # Process the raw data into the payload format
         return {
