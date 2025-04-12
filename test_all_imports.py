@@ -3,12 +3,14 @@ import traceback
 
 SRC_DIR = "src"
 
+
 def import_path(path):
     # Convert file path to module path (e.g. src/utils/thing.py → src.utils.thing)
     rel_path = os.path.relpath(path, ".").replace(os.sep, ".")
     if rel_path.endswith(".py"):
         rel_path = rel_path[:-3]  # strip .py
     return rel_path
+
 
 failures = []
 
@@ -21,7 +23,7 @@ for root, _, files in os.walk(SRC_DIR):
             try:
                 print(f"🔍 Importing {module}...")
                 __import__(module)
-            except Exception as e:
+            except Exception:
                 print(f"❌ FAILED: {module}")
                 traceback.print_exc()
                 failures.append(module)
