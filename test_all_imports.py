@@ -1,4 +1,5 @@
-"""Check that all modules in the src directory can be imported without errors.
+"""
+Check that all modules in the src directory can be imported without errors.
 
 This script helps ensure that there are no circular imports or other issues that
 prevent importing the modules in the src directory.
@@ -6,18 +7,17 @@ prevent importing the modules in the src directory.
 Imports:
     os: Provides functions for interacting with the operating system.
     traceback: Provides utilities for extracting, formatting, and printing stack traces.
-
 """
 
 import os
 import traceback
 
-
 SRC_DIR = "src"
 
 
 def import_path(path: str) -> str:
-    """Convert a file path to a module path.
+    """
+    Convert a file path to a module path.
 
     Takes a file path (e.g., "src/utils/thing.py") and converts it to a
     module path (e.g., "src.utils.thing").
