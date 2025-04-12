@@ -13,6 +13,7 @@ from src.config import (
     get_max_retries,
     get_poll_interval,
     get_poller_type,
+    get_queue_type,
     get_rabbitmq_exchange,
     get_rabbitmq_host,
     get_rabbitmq_routing_key,
@@ -63,6 +64,7 @@ def main() -> None:
     # Initialize
     rate_limiter = RateLimiter(max_requests=rate_limit, time_window=1)
     queue_sender = QueueSender(
+        queue_type=get_queue_type(),
         rabbitmq_host=rabbitmq_host,
         rabbitmq_exchange=rabbitmq_exchange,
         rabbitmq_routing_key=rabbitmq_routing_key,

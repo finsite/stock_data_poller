@@ -1,5 +1,5 @@
 # ---- Stage 1: Builder Image ----
-    FROM python:3.9-slim AS builder
+    FROM python:3.12-slim AS builder
 
     WORKDIR /app
     
@@ -17,7 +17,7 @@
     RUN pip install --no-cache-dir --prefix=/install -r requirements.txt
     
     # ---- Stage 2: Minimal Final Image ----
-    FROM python:3.9-slim
+    FROM python:3.12-slim
     
     WORKDIR /app
     
@@ -28,7 +28,7 @@
     COPY src /app/src
     
     # ✅ Set PYTHONPATH so `src/` is recognized inside the container
-    ENV PYTHONPATH="/app/src"
+    ENV PYTHONPATH="/app"
     
     # ✅ Create a non-root user for security
     RUN useradd -m appuser && chown -R appuser /app
