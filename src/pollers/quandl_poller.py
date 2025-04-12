@@ -7,7 +7,7 @@ fetches stock data from the Quandl API using the request_with_timeout function. 
 enforces a rate limit using the RateLimiter class.
 """
 
-from typing import Any, str
+from typing import Any
 
 from src.config import get_quandl_api_key, get_rate_limit
 from src.pollers.base_poller import BasePoller

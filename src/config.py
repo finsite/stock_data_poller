@@ -13,39 +13,65 @@ import hvac
 _VAULT_CONFIG: dict | None = None
 
 
+# def load_vault_secrets() -> dict:
+#     """
+#     Fetch secrets from HashiCorp Vault and return a dictionary.
+
+#     Returns
+#     -------
+#     dict
+#         A dictionary containing secrets fetched from Vault.
+
+#     Raises
+#     ------
+#     ValueError
+#         If VAULT_TOKEN is not set in the environment or if Vault authentication fails.
+#     """
+#     VAULT_ADDR: str = os.getenv("VAULT_ADDR", "http://vault:8200")
+#     VAULT_TOKEN: str | None = os.getenv("VAULT_TOKEN")
+
+#     if not VAULT_TOKEN:
+#         raise ValueError("Missing VAULT_TOKEN. Ensure it's set in the environment.")
+
+#     try:
+#         client = hvac.Client(url=VAULT_ADDR, token=VAULT_TOKEN)
+
+#         if not client.is_authenticated():
+#             raise ValueError("Vault authentication failed!")
+
+#         secrets: dict = client.secrets.kv.v2.read_secret_version(path="poller")["data"]["data"]
+#         print("Successfully loaded secrets from Vault.")
+#         return secrets
+
+
+#     except Exception as e:
+#         logger = logging.getLogger(__name__)
+#         logger.warning(f"Vault not available: {e}")
+#         return {}
 def load_vault_secrets() -> dict:
-    """
-    Fetch secrets from HashiCorp Vault and return a dictionary.
-
-    Returns
-    -------
-    dict
-        A dictionary containing secrets fetched from Vault.
-
-    Raises
-    ------
-    ValueError
-        If VAULT_TOKEN is not set in the environment or if Vault authentication fails.
-    """
+    """Fetch secrets from HashiCorp Vault and return a dictionary."""
     VAULT_ADDR: str = os.getenv("VAULT_ADDR", "http://vault:8200")
     VAULT_TOKEN: str | None = os.getenv("VAULT_TOKEN")
 
+    logger = logging.getLogger(__name__)
+
     if not VAULT_TOKEN:
-        raise ValueError("Missing VAULT_TOKEN. Ensure it's set in the environment.")
+        logger.warning("VAULT_TOKEN not set. Skipping Vault secret load.")
+        return {}
 
     try:
         client = hvac.Client(url=VAULT_ADDR, token=VAULT_TOKEN)
 
         if not client.is_authenticated():
-            raise ValueError("Vault authentication failed!")
+            logger.warning("Vault authentication failed.")
+            return {}
 
         secrets: dict = client.secrets.kv.v2.read_secret_version(path="poller")["data"]["data"]
-        print("Successfully loaded secrets from Vault.")
+        logger.info("Successfully loaded secrets from Vault.")
         return secrets
 
     except Exception as e:
-        logger = logging.getLogger(__name__)
-        logger.warning(f"Vault not available: {e}")
+        logger.warning(f"Vault not available or failed: {e}")
         return {}
 
 

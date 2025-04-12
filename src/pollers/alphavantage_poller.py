@@ -156,10 +156,17 @@ class AlphaVantagePoller(BasePoller):
             Makes a GET request to the AlphaVantage API to fetch the intraday time
             series data for the given symbol.
 
+            The request is made with the following parameters:
+            - function: TIME_SERIES_INTRADAY
+            - symbol: The symbol for which data is to be fetched (str)
+            - interval: 5min
+            - apikey: The AlphaVantage API key (str)
+
+            The function returns the fetched data as a dictionary (dict[str, Any]).
+
             Returns:
                 dict[str, Any]: The fetched data as a dictionary.
             """
-
             url = (
                 f"https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY"
                 f"&symbol={symbol}&interval=5min&apikey={self.api_key}"
@@ -172,16 +179,17 @@ class AlphaVantagePoller(BasePoller):
         """
         Processes the latest time series data into a payload.
 
-        The function takes the latest time series data from AlphaVantage and
-        processes it into a payload dictionary. The latest time series is
-        determined by finding the maximum time in the time series.
+        Parameters
+        ----------
+        symbol: str
+            The symbol for which polling was performed.
+        data: dict[str, Any]
+            The time series data from AlphaVantage.
 
-        Parameters:
-            symbol (str): The symbol for which polling was performed.
-            data (dict[str, Any]): The time series data from AlphaVantage.
-
-        Returns:
-            dict[str, Any]: The processed payload dictionary.
+        Returns
+        -------
+        dict[str, Any]:
+            The processed payload dictionary.
         """
         time_series: dict[str, dict[str, str]] = data.get("Time Series (5min)")
         if not time_series:

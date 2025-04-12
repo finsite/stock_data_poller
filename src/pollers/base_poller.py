@@ -8,7 +8,8 @@ The class also provides methods for connecting to RabbitMQ and sending messages 
 queue.
 """
 
-from typing import Any, Dict, List, Optional
+import json
+from typing import Any
 
 import pika
 
@@ -33,7 +34,6 @@ from src.utils.validate_environment_variables import (  # Function for validatin
 logger = setup_logger(__name__)
 
 
-
 class BasePoller:
     """Base class for pollers that handles dynamic queue configuration and message
     sending."""
@@ -53,7 +53,7 @@ class BasePoller:
             ValueError: If the queue type is invalid.
         """
         # Validate required environment variables for both RabbitMQ and SQS
-        required_env_vars: List[str] = [
+        required_env_vars: list[str] = [
             "QUEUE_TYPE",
             "RABBITMQ_HOST",
             "RABBITMQ_EXCHANGE",
@@ -79,13 +79,12 @@ class BasePoller:
         self.rate_limiter: RateLimiter = RateLimiter(max_requests=get_rate_limit(), time_window=60)
 
         # RabbitMQ-specific attributes (if RabbitMQ is used)
-        self.connection: Optional[pika.BlockingConnection] = None
-        self.channel: Optional[pika.adapters.blocking_connection.BlockingChannel] = None
+        self.connection: pika.BlockingConnection | None = None
+        self.channel: pika.adapters.blocking_connection.BlockingChannel | None = None
 
     def connect_to_rabbitmq(self) -> None:
         """
-        Establishes a connection to RabbitMQ and opens a channel for message
-        publishing.
+        Establishes a connection to RabbitMQ and opens a channel for message publishing.
 
         This method will first check if the connection is closed or not. If it is,
         it will establish a new connection to RabbitMQ and open a new channel for
@@ -98,7 +97,7 @@ class BasePoller:
         Returns:
             None
 
-        Raises
+        Raises:
         ------
             Exception: If the connection to RabbitMQ fails.
         """
@@ -116,7 +115,7 @@ class BasePoller:
             logger.error(f"Failed to connect to RabbitMQ: {e}")
             raise
 
-    def send_to_queue(self, payload: Dict[str, Any]) -> None:
+    def send_to_queue(self, payload: dict[str, Any]) -> None:
         """
         Sends the processed payload to the configured queue (SQS or RabbitMQ).
 
@@ -148,8 +147,9 @@ class BasePoller:
             logger.error(f"Failed to send message to {self.queue_type} queue: {e}")
             raise
 
-    def _send_to_rabbitmq(self, payload: Dict[str, Any]) -> None:
-        """Publishes the message to a RabbitMQ queue.
+    def _send_to_rabbitmq(self, payload: dict[str, Any]) -> None:
+        """
+        Publishes the message to a RabbitMQ queue.
 
         This method will connect to RabbitMQ, declare a queue, and publish the message
         to the queue. If there is an error while sending the message, it will catch the
