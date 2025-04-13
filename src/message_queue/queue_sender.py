@@ -198,8 +198,7 @@
 #             except Exception as e:
 #                 logger.error(f"Failed to close RabbitMQ connection: {e}")
 #                 raise
-"""
-QueueSender module for message delivery to RabbitMQ or AWS SQS.
+"""QueueSender module for message delivery to RabbitMQ or AWS SQS.
 
 This module defines the QueueSender class, which sends messages to a configured RabbitMQ
 or Amazon SQS queue and supports proper connection cleanup.
@@ -227,8 +226,7 @@ logger = setup_logger(__name__)
 
 
 class QueueSender:
-    """
-    A class for sending messages to a RabbitMQ or SQS queue.
+    """A class for sending messages to a RabbitMQ or SQS queue.
 
     Supports configuration for either queue type. Handles message serialization,
     dispatch, connection setup, and cleanup.
@@ -243,13 +241,13 @@ class QueueSender:
         rabbitmq_vhost: str | None = "/",
         sqs_queue_url: str | None = None,
     ) -> None:
-        """
-        Initialize the QueueSender for RabbitMQ or SQS.
+        """Initialize the QueueSender for RabbitMQ or SQS.
 
         Raises
         ------
             ValueError: If the queue_type is unsupported.
             EnvironmentError: If required environment variables are missing.
+
         """
         self.queue_type = queue_type.lower()
         self.rabbitmq_host = rabbitmq_host
@@ -269,7 +267,8 @@ class QueueSender:
 
     def _validate_required_vars(self) -> None:
         """Ensure all required environment variables are set for the configured
-        queue."""
+        queue.
+        """
         if self.queue_type == "rabbitmq":
             missing = [
                 var
