@@ -162,49 +162,128 @@ class PolygonPoller(BasePoller):
         )
 
     def poll(self, symbols: list[str]) -> None:
-        """Polls data for the specified symbols from Polygon.io API."""
+        """
+        Polls data for the specified symbols from Polygon.io API.
+
+        This method fetches the previous close data for the given symbols from
+        Polygon.io API and sends it to the message queue.
+
+        Args:
+            symbols (list[str]): List of stock symbols to poll.
+
+        Raises:
+            Exception: If any error occurs during polling.
+        """
         for symbol in symbols:
             try:
+                # Enforce rate limit for the symbol
                 self._enforce_rate_limit()
+
+                # Fetch data from Polygon.io API
                 data = self._fetch_data(symbol)
 
+                # Check if data is valid
                 if not data or "results" not in data:
-                    self._handle_failure(symbol, "Missing results in API response.")
+                    self._handle_failure(
+                        symbol, "Missing results in API response. Please check the API response."
+                    )
                     continue
 
+                # Process the data
                 payload = self._process_data(symbol, data)
 
+                # Validate the processed data
                 if not validate_data(payload):
-                    self._handle_failure(symbol, "Validation failed.")
+                    self._handle_failure(symbol, "Validation failed. Please check the data.")
                     continue
 
+                # Track metrics for successful polling and request
                 track_polling_metrics("Polygon", [symbol])
                 track_request_metrics(symbol, 30, 5)
 
+                # Send the processed data to the message queue
                 self.send_to_queue(payload)
                 self._handle_success(symbol)
 
             except Exception as e:
+                # Handle any exceptions and track the failure
                 self._handle_failure(symbol, str(e))
 
     def _enforce_rate_limit(self) -> None:
-        """Enforces the rate limit using the RateLimiter class."""
+        """
+        Enforces the rate limit using the RateLimiter class.
+
+        The rate limiter is configured to allow a maximum of 5 requests per minute per
+        symbol.
+        """
+        # Acquire permission to proceed with the request
+        # If the rate limit is exceeded, the call will block until the limit
+        # is replenished
         self.rate_limiter.acquire(context="Polygon")
 
     def _fetch_data(self, symbol: str) -> dict[str, Any]:
-        """Fetches stock data for the given symbol from Polygon.io API."""
+        """
+        Fetches stock data for the given symbol from Polygon.io API.
 
+        The API endpoint is the "previous close" endpoint which returns the
+        latest available data for the given symbol.
+
+        The API key is obtained from the environment variable
+        POLYGON_API_KEY.
+
+        If the request fails, the retry_request function is used to retry the
+        request up to 3 times with a 5 second delay between retries.
+
+        Returns:
+            dict[str, Any]: The fetched data in JSON format.
+        """
+        # Define the request function
         def request_func():
+            """
+            Makes a GET request to the Polygon.io API to fetch the previous close data
+            for the given symbol.
+
+            Returns:
+                dict[str, Any]: The JSON response from the API.
+            """
+            # Construct the URL with the API key
             url = (
                 f"https://api.polygon.io/v2/aggs/ticker/{symbol}/prev?"
                 f"adjusted=true&apiKey={self.api_key}"
             )
+            # Make the request with a timeout
             return request_with_timeout("GET", url)
 
+        # Retry the request up to 3 times with a 5 second delay between retries
         return retry_request(request_func)
 
     def _process_data(self, symbol: str, data: dict[str, Any]) -> dict[str, Any]:
-        """Processes the raw data into the payload format."""
+        """
+        Processes the raw data into the payload format.
+
+        The raw data is a dictionary containing the results of the API call,
+        which is a list of dictionaries. This method processes the first result
+        in the list and returns the processed data in the payload format.
+
+        The payload format is a dictionary with the following keys:
+
+        * symbol (str): The stock symbol for which the data was fetched.
+        * timestamp (int): The timestamp for which the data was fetched, in
+          seconds since the epoch.
+        * price (float): The price of the stock at the given timestamp.
+        * source (str): The source of the data, which is "Polygon" for this
+          poller.
+        * data (dict): A dictionary containing the following keys:
+
+          * open (float): The opening price of the stock at the given timestamp.
+          * high (float): The highest price of the stock at the given timestamp.
+          * low (float): The lowest price of the stock at the given timestamp.
+          * close (float): The closing price of the stock at the given timestamp.
+          * volume (int): The volume of the stock at the given timestamp.
+
+        Returns:
+            dict[str, Any]: The processed data in the payload format.
+        """
         results = data["results"][0]  # Only one result for "previous close"
 
         return {
@@ -222,12 +301,40 @@ class PolygonPoller(BasePoller):
         }
 
     def _handle_success(self, symbol: str) -> None:
-        """Tracks success metrics for polling and requests."""
-        track_polling_metrics("Polygon", [symbol])
-        track_request_metrics(symbol, 30, 5)
+        """
+        Tracks success metrics for polling and requests.
+
+        Metrics tracked include the source of the data (Polygon) and the symbol
+        for which polling was performed.
+
+        Args:
+            symbol (str): The symbol for which polling was performed.
+
+        Returns:
+            None
+        """
+        # Track success metrics for polling and requests
+        # Polygon is the source of the data for this poller
+        track_polling_metrics("Polygon", [symbol])  # type: ignore
+        # 30 requests per minute, 5 minute window
+        track_request_metrics(symbol, 30, 5)  # type: ignore
 
     def _handle_failure(self, symbol: str, error: str) -> None:
-        """Tracks failure metrics for polling and requests."""
-        track_polling_metrics("Polygon", [symbol])
-        track_request_metrics(symbol, 30, 5, success=False)
+        """
+        Tracks failure metrics for polling and requests.
+
+        Metrics tracked include the source of the data (Polygon) and the symbol
+        for which polling was performed. The error message is also logged.
+
+        Args:
+            symbol (str): The symbol for which polling was performed.
+            error (str): The error message.
+
+        Returns:
+            None
+        """
+        # Track failure metrics for polling and requests
+        track_polling_metrics("Polygon", [symbol])  # type: ignore
+        # 30 requests per minute, 5 minute window, but failed
+        track_request_metrics(symbol, 30, 5, success=False)  # type: ignore
         logger.error(f"Polygon polling error for {symbol}: {error}")
