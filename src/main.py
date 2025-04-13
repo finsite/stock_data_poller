@@ -17,6 +17,7 @@ from src.config import (
     get_rabbitmq_exchange,
     get_rabbitmq_host,
     get_rabbitmq_routing_key,
+    get_rabbitmq_vhost,
     get_rate_limit,
     get_request_timeout,
     get_retry_delay,
@@ -68,6 +69,7 @@ def main() -> None:
         rabbitmq_host=rabbitmq_host,
         rabbitmq_exchange=rabbitmq_exchange,
         rabbitmq_routing_key=rabbitmq_routing_key,
+        rabbitmq_vhost=get_rabbitmq_vhost(),
     )
     poller_factory = PollerFactory()
     poller = poller_factory.create_poller()

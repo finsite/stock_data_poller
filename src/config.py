@@ -12,70 +12,55 @@ import hvac
 
 _VAULT_CONFIG: dict | None = None
 
+def load_vault_secrets() -> dict[str, str]:
+    """
+    Fetch secrets from HashiCorp Vault and return a dictionary of secrets.
 
-# def load_vault_secrets() -> dict:
-#     """
-#     Fetch secrets from HashiCorp Vault and return a dictionary.
+    Parameters
+    ----------
+        None
 
-#     Returns
-#     -------
-#     dict
-#         A dictionary containing secrets fetched from Vault.
-
-#     Raises
-#     ------
-#     ValueError
-#         If VAULT_TOKEN is not set in the environment or if Vault authentication fails.
-#     """
-#     VAULT_ADDR: str = os.getenv("VAULT_ADDR", "http://vault:8200")
-#     VAULT_TOKEN: str | None = os.getenv("VAULT_TOKEN")
-
-#     if not VAULT_TOKEN:
-#         raise ValueError("Missing VAULT_TOKEN. Ensure it's set in the environment.")
-
-#     try:
-#         client = hvac.Client(url=VAULT_ADDR, token=VAULT_TOKEN)
-
-#         if not client.is_authenticated():
-#             raise ValueError("Vault authentication failed!")
-
-#         secrets: dict = client.secrets.kv.v2.read_secret_version(path="poller")["data"]["data"]
-#         print("Successfully loaded secrets from Vault.")
-#         return secrets
-
-
-#     except Exception as e:
-#         logger = logging.getLogger(__name__)
-#         logger.warning(f"Vault not available: {e}")
-#         return {}
-def load_vault_secrets() -> dict:
-    """Fetch secrets from HashiCorp Vault and return a dictionary."""
+    Returns
+    -------
+        dict[str, str]: A dictionary of secrets, or an empty dictionary if the Vault
+            secrets cannot be loaded.
+    """
+    # Get the Vault address from the environment variable
     VAULT_ADDR: str = os.getenv("VAULT_ADDR", "http://vault:8200")
+    # Get the Vault token from the environment variable
     VAULT_TOKEN: str | None = os.getenv("VAULT_TOKEN")
 
     logger = logging.getLogger(__name__)
 
     if not VAULT_TOKEN:
+        # If the VAULT_TOKEN is not set, log a warning and return an empty dictionary
         logger.warning("VAULT_TOKEN not set. Skipping Vault secret load.")
         return {}
 
     try:
+        # Create a Vault client with the given VAULT_ADDR and VAULT_TOKEN
         client = hvac.Client(url=VAULT_ADDR, token=VAULT_TOKEN)
 
+        # Check if the client is authenticated
         if not client.is_authenticated():
             logger.warning("Vault authentication failed.")
             return {}
 
-        secrets: dict = client.secrets.kv.v2.read_secret_version(path="poller")["data"]["data"]
+        # Read the secrets from Vault
+        secrets: dict[str, str] = client.secrets.kv.v2.read_secret_version(path="poller")["data"]["data"]
+        # Log a success message
         logger.info("Successfully loaded secrets from Vault.")
+        # Return the secrets
         return secrets
 
     except Exception as e:
+        # Log a warning if the Vault is not available or if there is an error
         logger.warning(f"Vault not available or failed: {e}")
+        # Return an empty dictionary
         return {}
 
 
-def get_vault_config() -> dict:
+def get_vault_config() -> dict[str, str]:
     """
     Lazy-load and cache Vault secrets.
 
@@ -83,9 +68,13 @@ def get_vault_config() -> dict:
     and cache it in the `_VAULT_CONFIG` variable. If it has been loaded,
     return the cached configuration.
 
+    This function is used to avoid loading the Vault configuration multiple
+    times, which can be useful if the configuration is used in multiple places
+    in the code.
+
     Returns
     -------
-    dict
+    dict[str, str]
         A dictionary of Vault secrets.
     """
     global _VAULT_CONFIG
@@ -95,14 +84,16 @@ def get_vault_config() -> dict:
     return _VAULT_CONFIG
 
 
-def get_config_value(key: str, default: str | None = None) -> str:
+def get_config_value(
+    key: str, default: str | None = None
+) -> str | None:
     """
-    Get value from Vault if available, else from environment or default.
+    Retrieve a configuration value from Vault, environment, or default.
 
-    The function first checks if the key is available in Vault. If it is,
-    it returns the value from Vault. If the key is not available in Vault,
-    it falls back to checking the environment variable. If the key is not
-    available in the environment either, it returns the default value.
+    This function attempts to get the specified configuration value by first
+    checking the Vault secrets. If the key is not found in Vault, it checks
+    the environment variables. If the key is also not found in the environment,
+    it returns the provided default value.
 
     Parameters
     ----------
@@ -110,14 +101,18 @@ def get_config_value(key: str, default: str | None = None) -> str:
         The key to look up in Vault and environment variables.
     default : Optional[str], optional
         The default value to return if the key is not found in Vault or
-        environment variables. If not specified, it defaults to None.
+        environment variables. Defaults to None.
 
     Returns
     -------
-    str
-        The value for the given key, or the default if not found.
+    str | None
+        The configuration value for the given key, or the default if not found.
     """
-    return get_vault_config().get(key, os.getenv(key, default))
+    # Attempt to retrieve the value from Vault secrets
+    vault_config = get_vault_config()
+
+    # Retrieve the value from Vault, or fall back to the environment variable
+    return vault_config.get(key, os.getenv(key, default))
 
 
 # --- Getter functions below ---
@@ -218,6 +213,20 @@ def get_rabbitmq_routing_key() -> str:
     # Fetch the RabbitMQ routing key, defaulting to 'stock_data'
     return get_config_value("RABBITMQ_ROUTING_KEY", "stock_data")
 
+def get_rabbitmq_vhost() -> str:
+    """
+    Get the RabbitMQ virtual host from the configuration.
+
+    This function retrieves the RabbitMQ virtual host from Vault secrets
+    or the environment variable RABBITMQ_VHOST. If neither is set, it
+    defaults to '/'.
+
+    Returns
+    -------
+    str
+        The RabbitMQ virtual host.
+    """
+    return get_config_value("RABBITMQ_VHOST", "/")
 
 def get_sqs_queue_url() -> str:
     """
@@ -518,11 +527,14 @@ def get_yfinance_api_key() -> str:
 
 def get_iex_api_key() -> str:
     """
-    Retrieve the IEX Cloud API key from the configuration.
+    Retrieves the IEX Cloud API key from the configuration.
 
     The function fetches the IEX Cloud API key from the configuration,
     either from Vault secrets or the environment variable IEX_API_KEY.
     If neither is set, it defaults to an empty string.
+
+    The IEX Cloud API is a financial data API that provides data on equities, options, and
+    forex. It is used in the IEXPoller to fetch the latest prices of the specified symbols.
 
     Returns
     -------
@@ -571,15 +583,16 @@ def get_finnhub_fill_rate_limit() -> int:
     """
     Get the Finnhub fill rate limit from the configuration.
 
-    Finnhub provides real-time stock data. We need to make sure we don't
-    exceed the rate limit of the free tier.
+    Finnhub provides real-time stock data. The free tier has a rate limit
+    of 30 requests per minute. We need to make sure we don't exceed this
+    rate limit.
 
     Returns
     -------
     int
-        The Finnhub fill rate limit.
+        The Finnhub fill rate limit as an integer.
     """
-    return int(get_config_value("FINNHUB_FILL_RATE_LIMIT", 100))
+    return int(get_config_value("FINNHUB_FILL_RATE_LIMIT", 30))
 
 
 def get_alpha_vantage_fill_rate_limit() -> int:
@@ -715,3 +728,96 @@ def get_aws_region() -> str:
     """
     # Fetch the AWS region from the configuration with a default of 'us-east-1'
     return get_config_value("AWS_REGION", "us-east-1")
+
+def get_alpha_vantage_fill_rate_limit() -> int:
+    """
+    Get the Alpha Vantage fill rate limit from the configuration.
+
+    The function fetches the Alpha Vantage fill rate limit from the configuration,
+    either from Vault secrets or the environment variable
+    ALPHA_VANTAGE_FILL_RATE_LIMIT. If neither is set, it defaults to the
+    configured rate limit.
+
+    Returns
+    -------
+    int
+        The Alpha Vantage fill rate limit as an integer.
+    """
+    return int(get_config_value("ALPHA_VANTAGE_FILL_RATE_LIMIT", str(get_rate_limit())))
+
+def get_iex_fill_rate_limit() -> int:
+    """
+    Get the IEX fill rate limit from the configuration.
+
+    The function fetches the IEX fill rate limit from the configuration,
+    either from Vault secrets or the environment variable IEX_FILL_RATE_LIMIT.
+    If neither is set, it defaults to the configured rate limit.
+
+    Returns
+    -------
+    int
+        The IEX fill rate limit as an integer.
+    """
+    return int(get_config_value("IEX_FILL_RATE_LIMIT", str(get_rate_limit())))
+
+def get_finnhub_fill_rate_limit() -> int:
+    """
+    Get the Finnhub fill rate limit from the configuration.
+
+    The function fetches the Finnhub fill rate limit from the configuration,
+    either from Vault secrets or the environment variable FINNHUB_FILL_RATE_LIMIT.
+    If neither is set, it defaults to the configured rate limit.
+
+    Returns
+    -------
+    int
+        The Finnhub fill rate limit as an integer.
+    """
+    return int(get_config_value("FINNHUB_FILL_RATE_LIMIT", str(get_rate_limit())))
+
+def get_polygon_fill_rate_limit() -> int:
+    """
+    Get the Polygon fill rate limit from the configuration.
+
+    The function fetches the Polygon fill rate limit from the configuration,
+    either from Vault secrets or the environment variable POLYGON_FILL_RATE_LIMIT.
+    If neither is set, it defaults to the configured rate limit.
+
+    Returns
+    -------
+    int
+        The Polygon fill rate limit as an integer.
+    """
+    # Fetch the fill rate limit from the configuration with a default fallback
+    return int(get_config_value("POLYGON_FILL_RATE_LIMIT", str(get_rate_limit())))
+
+def get_quandl_fill_rate_limit() -> int:
+    """
+    Get the Quandl fill rate limit from the configuration.
+
+    The function fetches the Quandl fill rate limit from the configuration,
+    either from Vault secrets or the environment variable QUANDL_FILL_RATE_LIMIT.
+    If neither is set, it defaults to the configured rate limit.
+
+    Returns
+    -------
+    int
+        The Quandl fill rate limit as an integer.
+    """
+    return int(get_config_value("QUANDL_FILL_RATE_LIMIT", str(get_rate_limit())))
+
+def get_yfinance_fill_rate_limit() -> int:
+    """
+    Get the Yahoo Finance fill rate limit from the configuration.
+
+    The function fetches the Yahoo Finance fill rate limit from the configuration,
+    either from Vault secrets or the environment variable YFINANCE_FILL_RATE_LIMIT.
+    If neither is set, it defaults to the configured rate limit.
+
+    Returns
+    -------
+    int
+        The Yahoo Finance fill rate limit as an integer.
+    """
+    # Fetch the fill rate limit from the configuration with a default fallback
+    return int(get_config_value("YFINANCE_FILL_RATE_LIMIT", str(get_rate_limit())))
