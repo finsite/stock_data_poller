@@ -162,8 +162,7 @@
 #         track_polling_metrics("Finnhub", [symbol])
 #         track_request_metrics(symbol, 30, 5, success=False)
 #         logger.error(f"Polling error for {symbol}: {error}")
-"""
-The module provides a poller class for fetching stock data using the Finnhub API.
+"""The module provides a poller class for fetching stock data using the Finnhub API.
 
 The module uses the following libraries:
 - src.config: To get the rate limit for the poller and the Finnhub API key.
@@ -194,8 +193,7 @@ logger = setup_logger(__name__)
 
 
 class FinnhubPoller(BasePoller):
-    """
-    Poller for fetching stock quotes from Finnhub API.
+    """Poller for fetching stock quotes from Finnhub API.
 
     Attributes
     ----------
@@ -203,6 +201,7 @@ class FinnhubPoller(BasePoller):
         The API key to access the Finnhub API.
     rate_limiter : RateLimiter
         The rate limiter to manage the request rate.
+
     """
 
     def __init__(self):
@@ -213,16 +212,15 @@ class FinnhubPoller(BasePoller):
         if not self.api_key:
             raise ValueError("Missing FINNHUB_API_KEY environment variable.")
 
-        self.rate_limiter = RateLimiter(
-            max_requests=get_finnhub_fill_rate_limit(), time_window=60
-        )
+        self.rate_limiter = RateLimiter(max_requests=get_finnhub_fill_rate_limit(), time_window=60)
 
     def poll(self, symbols: list[str]) -> None:
-        """
-        Polls data for the specified symbols from Finnhub.
+        """Polls data for the specified symbols from Finnhub.
 
         Args:
+        ----
             symbols (list[str]): The list of symbols to poll.
+
         """
         for symbol in symbols:
             try:
@@ -253,14 +251,16 @@ class FinnhubPoller(BasePoller):
         self.rate_limiter.acquire(context="Finnhub")
 
     def _fetch_data(self, symbol: str) -> dict[str, Any]:
-        """
-        Fetches stock data for the given symbol from Finnhub.
+        """Fetches stock data for the given symbol from Finnhub.
 
         Args:
+        ----
             symbol (str): The symbol to fetch data for.
 
         Returns:
+        -------
             dict[str, Any]: The fetched data.
+
         """
 
         def request_func():
@@ -270,15 +270,17 @@ class FinnhubPoller(BasePoller):
         return retry_request(request_func)
 
     def _process_data(self, symbol: str, data: dict[str, Any]) -> dict[str, Any]:
-        """
-        Processes the raw data into the payload format.
+        """Processes the raw data into the payload format.
 
         Args:
+        ----
             symbol (str): The symbol to process data for.
             data (dict[str, Any]): The raw data to process.
 
         Returns:
+        -------
             dict[str, Any]: The processed payload.
+
         """
         return {
             "symbol": symbol,

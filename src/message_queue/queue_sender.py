@@ -198,17 +198,15 @@
 #             except Exception as e:
 #                 logger.error(f"Failed to close RabbitMQ connection: {e}")
 #                 raise
-"""
-QueueSender module for message delivery to RabbitMQ or AWS SQS.
+"""QueueSender module for message delivery to RabbitMQ or AWS SQS.
 
-This module defines the QueueSender class, which sends messages to a configured
-RabbitMQ or Amazon SQS queue and supports proper connection cleanup.
+This module defines the QueueSender class, which sends messages to a configured RabbitMQ
+or Amazon SQS queue and supports proper connection cleanup.
 """
-
 import json
 import logging
 import os
-from typing import Any, Optional
+from typing import Any
 
 import boto3
 import pika
@@ -228,8 +226,7 @@ logger = setup_logger(__name__)
 
 
 class QueueSender:
-    """
-    A class for sending messages to a RabbitMQ or SQS queue.
+    """A class for sending messages to a RabbitMQ or SQS queue.
 
     Supports configuration for either queue type. Handles message serialization,
     dispatch, connection setup, and cleanup.
@@ -244,19 +241,13 @@ class QueueSender:
         rabbitmq_vhost: str | None = "/",
         sqs_queue_url: str | None = None,
     ) -> None:
-        """
-        Initialize the QueueSender for RabbitMQ or SQS.
+        """Initialize the QueueSender for RabbitMQ or SQS.
 
-        Args:
-            queue_type (str): Either "rabbitmq" or "sqs".
-            rabbitmq_host (Optional[str]): RabbitMQ host, if applicable.
-            rabbitmq_exchange (Optional[str]): RabbitMQ exchange name.
-            rabbitmq_routing_key (Optional[str]): RabbitMQ routing key.
-            rabbitmq_vhost (Optional[str]): RabbitMQ virtual host.
-            sqs_queue_url (Optional[str]): AWS SQS queue URL.
-
-        Raises:
+        Raises
+        ------
             ValueError: If the queue_type is unsupported.
+            EnvironmentError: If required environment variables are missing.
+
         """
         self.queue_type = queue_type.lower()
         self.rabbitmq_host = rabbitmq_host
@@ -265,12 +256,38 @@ class QueueSender:
         self.rabbitmq_vhost = rabbitmq_vhost
         self.sqs_queue_url = sqs_queue_url
 
+        self._validate_required_vars()
+
         if self.queue_type == "rabbitmq":
             self._init_rabbitmq()
         elif self.queue_type == "sqs":
             self._init_sqs()
         else:
             raise ValueError(f"Unsupported queue type: {self.queue_type}")
+
+    def _validate_required_vars(self) -> None:
+        """Ensure all required environment variables are set for the configured
+        queue.
+        """
+        if self.queue_type == "rabbitmq":
+            missing = [
+                var
+                for var in [
+                    "RABBITMQ_USER",
+                    "RABBITMQ_PASS",
+                    "RABBITMQ_HOST",
+                    "RABBITMQ_EXCHANGE",
+                    "RABBITMQ_ROUTING_KEY",
+                ]
+                if not os.getenv(var)
+            ]
+            if missing:
+                raise OSError(
+                    f"Missing required RabbitMQ environment variables: {', '.join(missing)}"
+                )
+        elif self.queue_type == "sqs":
+            if not self.sqs_queue_url:
+                raise OSError("Missing required SQS environment variable: SQS_QUEUE_URL")
 
     @retry(
         stop=stop_after_attempt(3),
@@ -280,13 +297,7 @@ class QueueSender:
         reraise=True,
     )
     def _init_rabbitmq(self) -> None:
-        """
-        Initialize RabbitMQ connection with retry logic.
-
-        Raises:
-            AMQPConnectionError: If the RabbitMQ connection fails.
-            Exception: If other errors occur during initialization.
-        """
+        """Initialize RabbitMQ connection with retry."""
         try:
             logger.warning("🐇 Connecting to RabbitMQ with:")
             logger.warning(f"  host={self.rabbitmq_host}")
@@ -324,12 +335,7 @@ class QueueSender:
         reraise=True,
     )
     def _init_sqs(self) -> None:
-        """
-        Initialize SQS client with retry.
-
-        Raises:
-            BotoCoreError or ClientError: If the SQS connection fails.
-        """
+        """Initialize SQS client with retry."""
         try:
             self.sqs = boto3.client("sqs")
             logger.info("SQS client initialized.")
@@ -341,15 +347,7 @@ class QueueSender:
             raise
 
     def send_message(self, data: dict[str, Any]) -> None:
-        """
-        Send a message to the configured queue.
-
-        Args:
-            data (Dict[str, Any]): Message payload.
-
-        Raises:
-            Exception: If message delivery fails.
-        """
+        """Send a message to the configured queue."""
         try:
             if self.queue_type == "rabbitmq":
                 self._send_to_rabbitmq(data)
@@ -367,15 +365,7 @@ class QueueSender:
         reraise=True,
     )
     def _send_to_rabbitmq(self, data: dict[str, Any]) -> None:
-        """
-        Send a message to RabbitMQ (with retry).
-
-        Args:
-            data (Dict[str, Any]): Message payload.
-
-        Raises:
-            Exception: If sending fails.
-        """
+        """Send a message to RabbitMQ (with retry)."""
         message_body = json.dumps(data)
         self.channel.basic_publish(
             exchange=self.rabbitmq_exchange,
@@ -396,16 +386,7 @@ class QueueSender:
         reraise=True,
     )
     def _send_to_sqs(self, data: dict[str, Any]) -> None:
-        """
-        Send a message to AWS SQS (with retry).
-
-        Args:
-            data (Dict[str, Any]): Message payload.
-
-        Raises:
-            ValueError: If the queue URL is missing.
-            Exception: If sending fails.
-        """
+        """Send a message to AWS SQS (with retry)."""
         if not self.sqs_queue_url:
             raise ValueError("SQS_QUEUE_URL is not configured.")
 
@@ -414,12 +395,7 @@ class QueueSender:
         logger.info(f"Message sent to SQS queue: {self.sqs_queue_url}")
 
     def close(self) -> None:
-        """
-        Close the RabbitMQ connection if it exists and is open.
-
-        Raises:
-            Exception: If closing fails.
-        """
+        """Close the RabbitMQ connection if it exists and is open."""
         if self.queue_type == "rabbitmq":
             try:
                 if self.connection and self.connection.is_open:

@@ -114,8 +114,7 @@
 #         track_polling_metrics("Polygon", [symbol])
 #         track_request_metrics(symbol, 30, 5, success=False)
 #         logger.error(f"Polygon polling error for {symbol}: {error}")
-"""
-Poller for fetching stock quotes from Polygon.io API.
+"""Poller for fetching stock quotes from Polygon.io API.
 
 The poller fetches the previous close data for the given symbols from Polygon.io API and
 sends it to the message queue.
@@ -143,12 +142,12 @@ class PolygonPoller(BasePoller):
     """Poller for fetching stock quotes from Polygon.io API."""
 
     def __init__(self):
-        """
-        Initializes the PolygonPoller.
+        """Initializes the PolygonPoller.
 
         Raises
         ------
             ValueError: If POLYGON_API_KEY is not set.
+
         """
         super().__init__()
 

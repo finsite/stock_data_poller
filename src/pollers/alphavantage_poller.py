@@ -251,21 +251,18 @@
 #         # Track failure metrics for polling and requests
 #         track_polling_metrics("AlphaVantage", [symbol])
 #         track_request_metrics(symbol, 30, 5, success=False)
-"""
-Poller for fetching stock data from AlphaVantage API.
+"""Poller for fetching stock data from AlphaVantage API.
 
 The AlphaVantagePoller class fetches the daily data for the given symbols from the
 AlphaVantage API and sends it to the message queue.
 
-The poller enforces a per-minute rate limit using the configured environment or Vault value.
+The poller enforces a per-minute rate limit using the configured environment or Vault
+value.
 """
 
 from typing import Any
 
-from src.config import (
-    get_alpha_vantage_api_key,
-    get_alpha_vantage_fill_rate_limit,
-)
+from src.config import get_alpha_vantage_api_key, get_alpha_vantage_fill_rate_limit
 from src.pollers.base_poller import BasePoller
 from src.utils.rate_limit import RateLimiter
 from src.utils.request_with_timeout import request_with_timeout
@@ -294,11 +291,12 @@ class AlphaVantagePoller(BasePoller):
         )
 
     def poll(self, symbols: list[str]) -> None:
-        """
-        Polls data for the specified symbols from AlphaVantage API.
+        """Polls data for the specified symbols from AlphaVantage API.
 
         Args:
+        ----
             symbols (list[str]): The list of symbols to poll.
+
         """
         for symbol in symbols:
             try:
@@ -331,14 +329,16 @@ class AlphaVantagePoller(BasePoller):
         self.rate_limiter.acquire(context="AlphaVantage")
 
     def _fetch_data(self, symbol: str) -> dict[str, Any]:
-        """
-        Fetches data for the given symbol from AlphaVantage API.
+        """Fetches data for the given symbol from AlphaVantage API.
 
         Args:
+        ----
             symbol (str): The stock symbol.
 
         Returns:
+        -------
             dict[str, Any]: The fetched data from AlphaVantage.
+
         """
 
         def request_func() -> dict[str, Any]:
@@ -351,15 +351,17 @@ class AlphaVantagePoller(BasePoller):
         return retry_request(request_func)
 
     def _process_data(self, symbol: str, data: dict[str, Any]) -> dict[str, Any]:
-        """
-        Processes the latest time series data into a standardized payload.
+        """Processes the latest time series data into a standardized payload.
 
         Args:
+        ----
             symbol (str): Stock symbol.
             data (dict[str, Any]): Raw data from AlphaVantage.
 
         Returns:
+        -------
             dict[str, Any]: Transformed payload.
+
         """
         time_series = data.get("Time Series (5min)")
         if not time_series:

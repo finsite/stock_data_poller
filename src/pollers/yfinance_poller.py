@@ -46,7 +46,7 @@
 
 #         # Validate required environment variables
 #         validate_environment_variables(["QUEUE_TYPE"])
-        
+
 #         # Initialize rate limiter for yfinance
 #         self.rate_limiter = RateLimiter(max_requests=get_yfinance_fill_rate_limit(), time_window=60)
 #         # Initialize rate limiter
@@ -123,8 +123,7 @@
 #         track_polling_metrics("failure", [symbol])
 #         track_request_metrics(symbol, 30, 5, success=False)
 #         logger.error(f"YFinance polling error for {symbol}: {error}")
-"""
-The module provides a poller class for fetching stock data using Yahoo Finance
+"""The module provides a poller class for fetching stock data using Yahoo Finance
 (yfinance).
 """
 
@@ -149,8 +148,8 @@ class YFinancePoller(BasePoller):
     """Poller for fetching stock data using Yahoo Finance (yfinance)."""
 
     def __init__(self):
-        """
-        Initializes the YFinancePoller with rate limiting and environment validation.
+        """Initializes the YFinancePoller with rate limiting and environment
+        validation.
         """
         super().__init__()
 
@@ -164,11 +163,12 @@ class YFinancePoller(BasePoller):
         )
 
     def poll(self, symbols: list[str]) -> None:
-        """
-        Polls data for the specified symbols using yfinance.
+        """Polls data for the specified symbols using yfinance.
 
         Args:
+        ----
             symbols (list[str]): The stock symbols to fetch data for.
+
         """
         for symbol in symbols:
             try:
@@ -210,7 +210,9 @@ class YFinancePoller(BasePoller):
         return data
 
     def _process_data(self, symbol: str, data: Any) -> dict[str, Any]:
-        """Processes the latest row of yfinance data into the standard payload format."""
+        """Processes the latest row of yfinance data into the standard payload
+        format.
+        """
         latest_data = data.iloc[-1]
         timestamp = latest_data.name.isoformat()
 

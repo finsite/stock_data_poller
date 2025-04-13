@@ -1,19 +1,19 @@
-"""
-Base class for pollers that handles dynamic queue configuration and message sending.
+"""Base class for pollers that handles dynamic queue configuration and message sending.
 
-This class provides a shared interface for pollers and delegates queue logic to QueueSender.
+This class provides a shared interface for pollers and delegates queue logic to
+QueueSender.
 """
 
 from typing import Any
 
 from src.config import (
     get_queue_type,
-    get_rate_limit,
-    get_rabbitmq_host,
     get_rabbitmq_exchange,
+    get_rabbitmq_host,
     get_rabbitmq_routing_key,
-    get_sqs_queue_url,
     get_rabbitmq_vhost,
+    get_rate_limit,
+    get_sqs_queue_url,
 )
 from src.message_queue.queue_sender import QueueSender
 from src.utils.rate_limit import RateLimiter
@@ -23,11 +23,13 @@ logger = setup_logger(__name__)
 
 
 class BasePoller:
-    """Base class for pollers that handles dynamic queue configuration and message sending."""
+    """Base class for pollers that handles dynamic queue configuration and message
+    sending.
+    """
 
     def __init__(self) -> None:
-        """
-        Initializes the BasePoller with dynamic queue configuration and rate limiting.
+        """Initializes the BasePoller with dynamic queue configuration and rate
+        limiting.
         """
         self.queue_type = get_queue_type().lower()
         if self.queue_type not in {"rabbitmq", "sqs"}:
@@ -45,9 +47,7 @@ class BasePoller:
         self.rate_limiter = RateLimiter(max_requests=get_rate_limit(), time_window=60)
 
     def send_to_queue(self, payload: dict[str, Any]) -> None:
-        """
-        Sends the processed payload to the configured queue (SQS or RabbitMQ).
-        """
+        """Sends the processed payload to the configured queue (SQS or RabbitMQ)."""
         try:
             self.rate_limiter.acquire(context="QueueSender")
             self.queue_sender.send_message(payload)
@@ -57,9 +57,7 @@ class BasePoller:
             raise
 
     def close_connection(self) -> None:
-        """
-        Closes the queue connection if necessary.
-        """
+        """Closes the queue connection if necessary."""
         try:
             self.queue_sender.close()
         except Exception as e:

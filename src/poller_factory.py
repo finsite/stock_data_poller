@@ -1,7 +1,6 @@
 """Factory class for creating pollers dynamically based on POLLER_TYPE."""
 
 import os
-from typing import List
 
 from src.pollers.alphavantage_poller import AlphaVantagePoller
 from src.pollers.finnhub_poller import FinnhubPoller
@@ -16,15 +15,14 @@ logger = setup_logger(__name__)
 
 
 class PollerFactory:
-    """
-    Factory class for creating pollers dynamically based on POLLER_TYPE.
+    """Factory class for creating pollers dynamically based on POLLER_TYPE.
 
     Validates only the required API key for the selected poller, except for `yfinance`.
     """
 
     def __init__(self) -> None:
-        """
-        Initializes the PollerFactory and validates the required API key for the selected poller.
+        """Initializes the PollerFactory and validates the required API key for the
+        selected poller.
         """
         self.poller_type: str = os.getenv("POLLER_TYPE", "").lower()
 
@@ -53,13 +51,13 @@ class PollerFactory:
             validate_environment_variables(["POLLER_TYPE"])
 
     def create_poller(self):
-        """
-        Creates an instance of the poller based on POLLER_TYPE.
+        """Creates an instance of the poller based on POLLER_TYPE.
 
         Returns
         -------
         BasePoller
             An instance of the poller class.
+
         """
         if self.poller_type == "iex":
             logger.info("Using IEX Poller.")
