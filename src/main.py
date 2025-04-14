@@ -82,8 +82,6 @@ def main() -> None:
             symbols: list[str] = get_symbols()
             logger.info(f"Polling for symbols: {symbols}")
 
-            track_polling_metrics(poller_type, symbols)
-
             for symbol in symbols:
                 rate_limiter.acquire(context=f"{poller_type} - {symbol}")
                 try:

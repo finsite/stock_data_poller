@@ -59,7 +59,6 @@ class YFinancePoller(BasePoller):
                     continue
 
                 # Track polling and request metrics
-                track_polling_metrics("YFinance", [symbol])
                 track_request_metrics(symbol, 30, 5)
 
                 self.send_to_queue(payload)

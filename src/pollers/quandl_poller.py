@@ -69,7 +69,6 @@ class QuandlPoller(BasePoller):
                     continue
 
                 # Track metrics for successful polling and request
-                track_polling_metrics("Quandl", [symbol])
                 track_request_metrics(symbol, 30, 5)
 
                 self.send_to_queue(payload)

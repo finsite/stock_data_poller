@@ -89,7 +89,6 @@ class PolygonPoller(BasePoller):
                     continue
 
                 # Track metrics for successful polling and request
-                track_polling_metrics("Polygon", [symbol])
                 track_request_metrics(symbol, 30, 5)
 
                 # Send the processed data to the message queue

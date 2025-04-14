@@ -91,7 +91,6 @@ class FinnhubPoller(BasePoller):
                     self._handle_failure(symbol, "Validation failed.")
                     continue
 
-                track_polling_metrics("Finnhub", [symbol])
                 track_request_metrics(symbol, 30, 5)
 
                 self.send_to_queue(payload)
@@ -173,16 +172,6 @@ class FinnhubPoller(BasePoller):
             },
         }
 
-    # def _handle_success(self, symbol: str) -> None:
-    #     """Tracks success metrics for polling and requests."""
-    #     track_polling_metrics("Finnhub", [symbol])
-    #     track_request_metrics(symbol, 30, 5)
-
-    # def _handle_failure(self, symbol: str, error: str) -> None:
-    #     """Tracks failure metrics for polling and logs the error."""
-    #     logger.error(f"Finnhub polling error for {symbol}: {error}")
-    #     track_polling_metrics("Finnhub", [symbol])
-    #     track_request_metrics(symbol, 30, 5, success=False)
     def _handle_success(self, symbol: str) -> None:
         """
         Tracks success metrics for polling and requests.

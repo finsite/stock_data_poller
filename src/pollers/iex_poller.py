@@ -71,6 +71,8 @@ class IEXPoller(BasePoller):
                     self._handle_failure(symbol, "Validation failed.")
                     continue
 
+                track_request_metrics(symbol, 30, 5)
+
                 self.send_to_queue(payload)
                 self._handle_success(symbol)
 
