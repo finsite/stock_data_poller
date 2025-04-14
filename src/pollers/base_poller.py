@@ -1,4 +1,5 @@
-"""Base class for pollers that handles dynamic queue configuration and message sending.
+"""
+Base class for pollers that handles dynamic queue configuration and message sending.
 
 This class provides a shared interface for pollers and delegates queue logic to
 QueueSender.
@@ -24,13 +25,11 @@ logger = setup_logger(__name__)
 
 class BasePoller:
     """Base class for pollers that handles dynamic queue configuration and message
-    sending.
-    """
+    sending."""
 
     def __init__(self) -> None:
         """Initializes the BasePoller with dynamic queue configuration and rate
-        limiting.
-        """
+        limiting."""
         self.queue_type = get_queue_type().lower()
         if self.queue_type not in {"rabbitmq", "sqs"}:
             raise ValueError("QUEUE_TYPE must be either 'sqs' or 'rabbitmq'.")

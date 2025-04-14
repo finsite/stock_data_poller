@@ -124,8 +124,7 @@
 #         track_request_metrics(symbol, 30, 5, success=False)
 #         logger.error(f"YFinance polling error for {symbol}: {error}")
 """The module provides a poller class for fetching stock data using Yahoo Finance
-(yfinance).
-"""
+(yfinance)."""
 
 from typing import Any
 
@@ -149,8 +148,7 @@ class YFinancePoller(BasePoller):
 
     def __init__(self):
         """Initializes the YFinancePoller with rate limiting and environment
-        validation.
-        """
+        validation."""
         super().__init__()
 
         # Validate required environment variables
@@ -163,12 +161,12 @@ class YFinancePoller(BasePoller):
         )
 
     def poll(self, symbols: list[str]) -> None:
-        """Polls data for the specified symbols using yfinance.
+        """
+        Polls data for the specified symbols using yfinance.
 
         Args:
         ----
             symbols (list[str]): The stock symbols to fetch data for.
-
         """
         for symbol in symbols:
             try:
@@ -211,8 +209,7 @@ class YFinancePoller(BasePoller):
 
     def _process_data(self, symbol: str, data: Any) -> dict[str, Any]:
         """Processes the latest row of yfinance data into the standard payload
-        format.
-        """
+        format."""
         latest_data = data.iloc[-1]
         timestamp = latest_data.name.isoformat()
 
