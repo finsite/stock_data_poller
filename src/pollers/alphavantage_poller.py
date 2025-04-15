@@ -8,6 +8,7 @@ The poller enforces a per-minute rate limit using the configured environment or 
 value.
 """
 
+from datetime import datetime
 from typing import Any
 
 from src.config import get_alpha_vantage_api_key, get_alpha_vantage_fill_rate_limit
@@ -76,8 +77,6 @@ class AlphaVantagePoller(BasePoller):
                     self._handle_failure(symbol, "Validation failed.")
                     continue
 
-                track_request_metrics(symbol, 30, 5)
-
                 self.send_to_queue(payload)
                 self._handle_success(symbol)
 
@@ -143,7 +142,7 @@ class AlphaVantagePoller(BasePoller):
 
         return {
             "symbol": symbol,
-            "timestamp": latest_time,
+            "timestamp": int(datetime.fromisoformat(latest_time).timestamp()),
             "price": float(latest_data["4. close"]),
             "source": "AlphaVantage",
             "data": {
@@ -155,16 +154,6 @@ class AlphaVantagePoller(BasePoller):
             },
         }
 
-    # def _handle_success(self, symbol: str) -> None:
-    #     """Tracks success metrics for polling and requests."""
-    #     track_polling_metrics("AlphaVantage", [symbol])
-    #     track_request_metrics(symbol, 30, 5)
-
-    # def _handle_failure(self, symbol: str, error: str) -> None:
-    #     """Tracks failure metrics and logs the error."""
-    #     logger.error(f"AlphaVantage poll failed for {symbol}: {error}")
-    #     track_polling_metrics("AlphaVantage", [symbol])
-    #     track_request_metrics(symbol, 30, 5, success=False)
     def _handle_success(self, symbol: str) -> None:
         """
         Tracks success metrics for polling and requests.

@@ -13,6 +13,7 @@ The module uses the following libraries:
 - src.utils.validate_data: To validate the fetched data against the required schema.
 """
 
+import time
 from typing import Any
 
 from src.config import get_finnhub_api_key, get_finnhub_fill_rate_limit
@@ -91,8 +92,6 @@ class FinnhubPoller(BasePoller):
                     self._handle_failure(symbol, "Validation failed.")
                     continue
 
-                track_request_metrics(symbol, 30, 5)
-
                 self.send_to_queue(payload)
                 self._handle_success(symbol)
 
@@ -160,7 +159,7 @@ class FinnhubPoller(BasePoller):
         """
         return {
             "symbol": symbol,  # str
-            "timestamp": None,  # Finnhub quote endpoint does not provide timestamp
+            "timestamp": int(time.time()),  # Time of polling (not actual market update time)
             "price": float(data["c"]),  # float
             "source": "Finnhub",  # str
             "data": {  # dict[str, float]

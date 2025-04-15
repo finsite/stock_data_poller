@@ -71,8 +71,6 @@ class IEXPoller(BasePoller):
                     self._handle_failure(symbol, "Validation failed.")
                     continue
 
-                track_request_metrics(symbol, 30, 5)
-
                 self.send_to_queue(payload)
                 self._handle_success(symbol)
 
@@ -142,16 +140,6 @@ class IEXPoller(BasePoller):
             },
         }
 
-    # def _handle_success(self, symbol: str) -> None:
-    #     """Tracks success metrics for polling and requests."""
-    #     track_polling_metrics("IEX", [symbol])
-    #     track_request_metrics(symbol, 30, 5)
-
-    # def _handle_failure(self, symbol: str, error: str) -> None:
-    #     """Tracks failure metrics for polling and logs error."""
-    #     logger.error(f"IEX polling error for {symbol}: {error}")
-    #     track_polling_metrics("IEX", [symbol])
-    #     track_request_metrics(symbol, 30, 5, success=False)
     def _handle_success(self, symbol: str) -> None:
         """
         Tracks success metrics for polling and requests.

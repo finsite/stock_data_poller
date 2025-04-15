@@ -10,7 +10,6 @@ from typing import Any
 
 from src.config import (
     get_log_level,
-    get_max_retries,
     get_poll_interval,
     get_poller_type,
     get_queue_type,
@@ -19,17 +18,12 @@ from src.config import (
     get_rabbitmq_routing_key,
     get_rabbitmq_vhost,
     get_rate_limit,
-    get_request_timeout,
     get_retry_delay,
     get_symbols,
 )
 from src.message_queue.queue_sender import QueueSender
 from src.poller_factory import PollerFactory
-from src.utils import (
-    track_polling_metrics,
-    track_request_metrics,
-    validate_environment_variables,
-)
+from src.utils import validate_environment_variables
 from src.utils.rate_limit import RateLimiter
 from src.utils.setup_logger import setup_logger
 
@@ -49,14 +43,12 @@ def main() -> None:
 
     # Load config
     log_level = get_log_level()
-    max_retries = get_max_retries()
     poll_interval = get_poll_interval()
     poller_type = get_poller_type()
     rabbitmq_host = get_rabbitmq_host()
     rabbitmq_exchange = get_rabbitmq_exchange()
     rabbitmq_routing_key = get_rabbitmq_routing_key()
     rate_limit = get_rate_limit()
-    request_timeout = get_request_timeout()
     retry_delay = get_retry_delay()
 
     # Setup logger
@@ -86,9 +78,8 @@ def main() -> None:
                 rate_limiter.acquire(context=f"{poller_type} - {symbol}")
                 try:
                     logger.info(f"Polling data for {symbol}")
-                    track_request_metrics(symbol, request_timeout, max_retries)
                     data: Any = poller.poll([symbol])
-                    queue_sender.send(data)
+                    queue_sender.send_message(data)
                 except Exception as e:
                     logger.error(f"Error polling {symbol}: {e}")
                     logger.info(f"Retrying {symbol} after {retry_delay} seconds...")
