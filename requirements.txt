@@ -20,7 +20,7 @@ polygon-api-client>=1.0 # Polygon.io API client
 # Data Processing & Analysis
 # ========================
 pandas~=2.1             # Data analysis and manipulation
-numpy~=1.26             # Scientific computing with arrays
+numpy~=2.2             # Scientific computing with arrays
 
 # ========================
 # Logging & Monitoring
