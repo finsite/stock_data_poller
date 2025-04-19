@@ -1,0 +1,19 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: stock_data_poller
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/your-org/stock_data_poller.git
+    targetRevision: HEAD
+    path: charts/stock_data_poller
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: default
+  syncPolicy:
+    automated:
+      selfHeal: true
+      prune: true

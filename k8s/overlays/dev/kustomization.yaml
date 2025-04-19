@@ -1,2 +1,21 @@
+---
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
 resources:
-  - ../../base
+  - ../../base/
+
+namespace: default
+
+labels:
+  - includeSelectors: true
+    pairs:
+      app: stock_data_poller
+
+images:
+  - name: stock_data_poller
+    newName: stock_data_poller
+    newTag: latest
+
+patchesStrategicMerge:
+  - # patch-deployment.yaml

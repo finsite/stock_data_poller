@@ -1,3 +1,4 @@
+---
 apiVersion: v2
 name: stock_data_poller
 description: A Helm chart for stock_data_poller
