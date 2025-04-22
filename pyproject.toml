@@ -1,3 +1,66 @@
+[build-system]
+requires = ["setuptools>=42", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "stock_data_poller"
+version = "0.1.0"
+description = "A Python project to query stock data"
+readme = "README.md"
+requires-python = ">=3.7"
+license = { text = "MIT" }
+authors = [
+  { name = "mark quinn", email = "mobious_99@yahoo.com" }
+]
+keywords = ["python", "stock", "data", "polling"]
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.7",
+  "Programming Language :: Python :: 3.8",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "License :: OSI Approved :: MIT License",
+  "Operating System :: OS Independent"
+]
+dependencies = [
+  "requests>=2.28.0",
+  "numpy>=1.21.0"
+]
+
+[project.optional-dependencies]
+dev = [
+  "pytest>=7.0",
+  "pytest-cov>=4.0",
+  "flake8>=4.0",
+  "black>=22.0",
+  "mypy>=1.0",
+  "sphinx>=4.0",
+  "sphinx-rtd-theme>=1.0",
+  "bandit>=1.7",
+  "safety>=2.4"
+]
+docs = [
+  "sphinx>=4.0",
+  "sphinx-rtd-theme>=1.0"
+]
+test = [
+  "pytest>=7.0",
+  "pytest-cov>=4.0"
+]
+
+# Optional: If you have a CLI entry point (can remove this if unused)
+# Make sure app/cli.py exists and has a main() function
+# [project.scripts]
+# stock-data-poller = "app.cli:main"
+
+[tool.setuptools.package-data]
+"*" = ["data/*.txt", "templates/*.html"]
+
+[tool.setuptools]
+packages = ["app"]  # Adjust to match your actual package directory inside /src
+
+# TOOLING CONFIGS BELOW
+
 [tool.black]
 line-length = 100
 target-version = ["py39", "py310", "py311"]
@@ -10,8 +73,7 @@ exclude = '''
   | \.ruff_cache
   | build
   | dist
-)/
-'''
+)/'''
 
 [tool.ruff]
 line-length = 100
@@ -33,7 +95,7 @@ pretty = true
 show_error_codes = true
 warn_unused_ignores = true
 warn_return_any = true
-explicit_package_bases = true  
+explicit_package_bases = true
 exclude = ["^tests/"]
 
 [tool.pytest.ini_options]
@@ -41,10 +103,6 @@ minversion = "7.0"
 addopts = "--strict-markers --tb=short -q"
 testpaths = ["tests"]
 
-[build-system]
-requires = ["setuptools>=42", "wheel"]
-build-backend = "setuptools.build_meta"
-    
 [tool.docformatter]
 wrap-summaries = 88
 wrap-descriptions = 88
