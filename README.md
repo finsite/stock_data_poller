@@ -68,7 +68,9 @@ Include any references or acknowledgments here. -->
 
 Thank you for sticking with this — now I fully get what you're after.
 
-Here is the **entire `README.md` file output as plain text**, no markdown fences, no annotations, **just exactly as it would appear in the actual `README.md` file**. This is now directly copy/pasteable into your repository:
+Here is the **entire `README.md` file output as plain text**, no markdown
+fences, no annotations, **just exactly as it would appear in the actual
+`README.md` file**. This is now directly copy/pasteable into your repository:
 
 ---
 
@@ -78,11 +80,14 @@ Here is the **entire `README.md` file output as plain text**, no markdown fences
 [![Docker Build](https://github.com/mobious999/template/actions/workflows/build-and-push-docker.yml/badge.svg)](https://github.com/mobious999/template/actions/workflows/build-and-push-docker.yml)  
 [![Code Coverage](https://codecov.io/gh/mobious999/template/branch/main/graph/badge.svg)](https://codecov.io/gh/mobious999/template)
 
-> 🚧 This is a customizable template for a Python microservice with Docker, Kubernetes, and GitHub Actions CI/CD. Please update project-specific content as needed.
+> 🚧 This is a customizable template for a Python microservice with Docker,
+> Kubernetes, and GitHub Actions CI/CD. Please update project-specific content
+> as needed.
 
 ## 🧭 Overview
 
-This application serves as a template for a Python-based microservice. It includes:
+This application serves as a template for a Python-based microservice. It
+includes:
 
 - Modular structure (`src/`, `tests/`)
 - Docker and GitHub Container Registry support
@@ -147,7 +152,8 @@ docker run --env-file .env -p 8080:8080 mobious999/template:latest
 
 ## 🚢 Deployment
 
-This repo includes Kubernetes manifests compatible with **ArgoCD** and **Kustomize**:
+This repo includes Kubernetes manifests compatible with **ArgoCD** and
+**Kustomize**:
 
 ```
 k8s/
@@ -173,7 +179,8 @@ This repository includes automated workflows for:
 - ✅ Docker Build & Push (`build-and-push-docker.yml`)
 - ✅ Security Scanning (`pip-audit.yml`)
 - ✅ Version Bumping with bump-my-version
-- ✅ Kustomize/ArgoCD Validation (`validate-kustomize-overlays.yml`, `validate-argocd-applications.yml`)
+- ✅ Kustomize/ArgoCD Validation (`validate-kustomize-overlays.yml`,
+  `validate-argocd-applications.yml`)
 
 These workflows are triggered on pull requests and pushes to main.
 
@@ -200,7 +207,8 @@ Contributions are welcome! Please:
 
 ## 📄 License
 
-This project is licensed under the Apache 2.0 License — see the [LICENSE](LICENSE) file for details.
+This project is licensed under the Apache 2.0 License — see the
+[LICENSE](LICENSE) file for details.
 
 ## 🙏 Acknowledgments
 
@@ -208,4 +216,6 @@ Thanks to all open-source libraries and tools that make this template possible.
 
 ---
 
-✅ This is now a fully copy/pasteable `README.md` file as you'd find in a repository. Let me know if you want me to save this into your project directly or generate it with your scaffolding script.
+✅ This is now a fully copy/pasteable `README.md` file as you'd find in a
+repository. Let me know if you want me to save this into your project directly
+or generate it with your scaffolding script.

@@ -260,7 +260,9 @@ repos:
     hooks:
       - id: pip-audit
         name: pip-audit
-        entry: pip-audit --requirement requirements.txt --requirement requirements-dev.txt
+        entry:
+          pip-audit --requirement requirements.txt --requirement
+          requirements-dev.txt
         language: system
         types: [python]
         pass_filenames: false

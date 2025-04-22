@@ -862,7 +862,8 @@ from src.utils.vault_client import load_vault_secrets
 # Load and cache Vault secrets from centralized Vault client
 _vault_config: dict[str, str] = load_vault_secrets()
 
-def get_config_value(key: str, default: Optional[str] = None) -> Optional[str]:
+
+def get_config_value(key: str, default: str | None = None) -> str | None:
     """
     Retrieve a configuration value from Vault, environment, or default.
 
