@@ -48,18 +48,14 @@ test = [
   "pytest-cov>=4.0"
 ]
 
-# Optional: If you have a CLI entry point (can remove this if unused)
-# Make sure app/cli.py exists and has a main() function
-# [project.scripts]
-# stock-data-poller = "app.cli:main"
+[tool.setuptools]
+package-dir = { "" = "src" }
+
+[tool.setuptools.packages.find]
+where = ["src"]
 
 [tool.setuptools.package-data]
 "*" = ["data/*.txt", "templates/*.html"]
-
-[tool.setuptools]
-packages = ["app"]  # Adjust to match your actual package directory inside /src
-
-# TOOLING CONFIGS BELOW
 
 [tool.black]
 line-length = 100
