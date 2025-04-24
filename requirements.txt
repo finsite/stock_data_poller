@@ -1,38 +1,13 @@
-# ========================
-# Core Dependencies
-# ========================
-hvac>=2.1               # HashiCorp Vault client for secrets management
-pika>=1.3               # RabbitMQ (AMQP) client for queue management
-boto3>=1.34             # AWS SDK for Python (SQS integration)
-requests>=2.31          # HTTP client for making API requests
+# Core dependencies
+pandas>=2.2.3,<2.3
+numpy>=1.25,<2.0
+scipy>=1.9.0,<2.0
+matplotlib>=3.6.0,<4.0
 
-# ========================
-# API Clients
-# ========================
-yfinance>=0.2           # Yahoo Finance data retrieval
-alpha_vantage>=2.3      # Alpha Vantage API client
-iexfinance>=0.5         # IEX Cloud API client
-quandl>=3.7             # Quandl API client
-finnhub-python>=2.4     # Finnhub API client
-polygon-api-client>=1.0 # Polygon.io API client
+# Messaging and Cloud
+pika>=1.3.0  # For RabbitMQ integration
+boto3>=1.28.0  # If using AWS SQS
 
-# ========================
-# Data Processing & Analysis
-# ========================
-pandas~=2.1             # Data analysis and manipulation
-numpy~=2.2             # Scientific computing with arrays
-
-# ========================
-# Logging & Monitoring
-# ========================
-loguru>=0.7             # Advanced logging library
-
-# ========================
-# Reliability & Retry
-# ========================
-tenacity>=8.2.3         # Retry logic with exponential backoff
-
-# ========================
-# Pin Transitive Dependencies (If Needed Later)
-# ========================
-# Add specific pinned versions here if you encounter regressions
+# Logging & Environment Management
+loguru>=0.7.0  # Enhanced logging
+python-dotenv>=1.0.0  # Environment variable management
