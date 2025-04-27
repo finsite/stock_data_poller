@@ -2,29 +2,29 @@
 The module provides a poller class for fetching stock data using the Finnhub API.
 
 The module uses the following libraries:
-- src.config: To get the rate limit for the poller and the Finnhub API key.
-- src.pollers.base_poller: To inherit the base poller functionality.
-- src.utils.rate_limit: To enforce the rate limit using the RateLimiter class.
-- src.utils.request_with_timeout: To make HTTP requests with a timeout.
-- src.utils.retry_request: To retry operations with exponential backoff.
-- src.utils.setup_logger: To set up the logger for the module.
-- src.utils.track_polling_metrics: To track metrics for polling operations.
-- src.utils.track_request_metrics: To track metrics for individual API requests.
-- src.utils.validate_data: To validate the fetched data against the required schema.
+- app.config: To get the rate limit for the poller and the Finnhub API key.
+- app.pollers.base_poller: To inherit the base poller functionality.
+- app.utils.rate_limit: To enforce the rate limit using the RateLimiter class.
+- app.utils.request_with_timeout: To make HTTP requests with a timeout.
+- app.utils.retry_request: To retry operations with exponential backoff.
+- app.utils.setup_logger: To set up the logger for the module.
+- app.utils.track_polling_metrics: To track metrics for polling operations.
+- app.utils.track_request_metrics: To track metrics for individual API requests.
+- app.utils.validate_data: To validate the fetched data against the required schema.
 """
 
 import time
 from typing import Any
 
-from src.config import get_finnhub_api_key, get_finnhub_fill_rate_limit
-from src.pollers.base_poller import BasePoller
-from src.utils.rate_limit import RateLimiter
-from src.utils.request_with_timeout import request_with_timeout
-from src.utils.retry_request import retry_request
-from src.utils.setup_logger import setup_logger
-from src.utils.track_polling_metrics import track_polling_metrics
-from src.utils.track_request_metrics import track_request_metrics
-from src.utils.validate_data import validate_data
+from app.config import get_finnhub_api_key, get_finnhub_fill_rate_limit
+from app.pollers.base_poller import BasePoller
+from app.utils.rate_limit import RateLimiter
+from app.utils.request_with_timeout import request_with_timeout
+from app.utils.retry_request import retry_request
+from app.utils.setup_logger import setup_logger
+from app.utils.track_polling_metrics import track_polling_metrics
+from app.utils.track_request_metrics import track_request_metrics
+from app.utils.validate_data import validate_data
 
 # Initialize logger
 logger = setup_logger(__name__)

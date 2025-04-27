@@ -19,6 +19,6 @@ Methods
                   and logs errors appropriately.
 """
 
-from src.message_queue.queue_sender import QueueSender
+from app.message_queue.queue_sender import QueueSender
 
 __all__ = ["QueueSender"]

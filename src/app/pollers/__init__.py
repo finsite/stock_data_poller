@@ -18,14 +18,14 @@ Note:
 
 import logging
 
-from src.pollers.alphavantage_poller import AlphaVantagePoller
-from src.pollers.base_poller import BasePoller
-from src.pollers.finnhub_poller import FinnhubPoller
-from src.pollers.iex_poller import IEXPoller
-from src.pollers.polygon_poller import PolygonPoller
-from src.pollers.quandl_poller import QuandlPoller
-from src.pollers.yfinance_poller import YFinancePoller
-from src.utils.setup_logger import setup_logger
+from app.pollers.alphavantage_poller import AlphaVantagePoller
+from app.pollers.base_poller import BasePoller
+from app.pollers.finnhub_poller import FinnhubPoller
+from app.pollers.iex_poller import IEXPoller
+from app.pollers.polygon_poller import PolygonPoller
+from app.pollers.quandl_poller import QuandlPoller
+from app.pollers.yfinance_poller import YFinancePoller
+from app.utils.setup_logger import setup_logger
 
 __all__ = [
     "BasePoller",

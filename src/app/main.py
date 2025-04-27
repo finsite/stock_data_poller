@@ -21,11 +21,11 @@ from src.config import (
     get_retry_delay,
     get_symbols,
 )
-from src.message_queue.queue_sender import QueueSender
-from src.poller_factory import PollerFactory
-from src.utils import validate_environment_variables
-from src.utils.rate_limit import RateLimiter
-from src.utils.setup_logger import setup_logger
+from app.message_queue.queue_sender import QueueSender
+from app.poller_factory import PollerFactory
+from app.utils import validate_environment_variables
+from app.utils.rate_limit import RateLimiter
+from app.utils.setup_logger import setup_logger
 
 # Mapping of log level strings to logging module constants
 LOG_LEVEL_MAP = {
