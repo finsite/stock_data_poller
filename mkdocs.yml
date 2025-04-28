@@ -1,22 +1,19 @@
+---
 site_name: Stock Data Poller
 site_description: Documentation for the Stock Data Poller Python Project
 site_author: Mark Quinn
 repo_url: https://github.com/finsite/stock_data_poller
 theme:
   name: material
-
 nav:
   - Home: index.md
   - API Reference: api.md
-
 plugins:
   - search
   - mkdocstrings:
       handlers:
         python:
-          setup_commands:
-            - import sys; sys.path.append('src')
-
+          setup_commands: [import sys; sys.path.append('src')]
 markdown_extensions:
   - admonition
   - toc:
