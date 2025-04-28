@@ -34,6 +34,7 @@ RUN apt-get update && \
 # Copy only the built dependencies from builder
 COPY --from=builder /install /usr/local
 
+# Copy application code
 COPY src /app/src
 
 # Set environment variables
