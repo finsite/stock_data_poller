@@ -21,5 +21,3 @@ markdown_extensions:
   - admonition
   - toc:
       permalink: true
-
-repo_url: https://github.com/finsite/stock_data_poller
