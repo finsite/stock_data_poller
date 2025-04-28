@@ -1,10 +1,10 @@
 # Tests for the YFinancePoller class
 from unittest.mock import patch
 
-from src.pollers.yfinance_poller import YFinancePoller
+from src.app.pollers.yfinance_poller import YFinancePoller
 
 
-@patch("src.pollers.yfinance_poller.YFinancePoller.send_to_queue")
+@patch("src.app.pollers.yfinance_poller.YFinancePoller.send_to_queue")
 @patch("yfinance.Ticker")
 def test_yfinance_poller_success(mock_ticker, mock_send_to_queue):
     """Test YFinancePoller fetches and processes data successfully."""
@@ -56,7 +56,7 @@ def test_yfinance_poller_success(mock_ticker, mock_send_to_queue):
     )
 
 
-@patch("src.pollers.yfinance_poller.YFinancePoller.send_to_queue")
+@patch("src.app.pollers.yfinance_poller.YFinancePoller.send_to_queue")
 @patch("yfinance.Ticker")
 def test_yfinance_poller_empty_data(mock_ticker, mock_send_to_queue):
     """Test YFinancePoller handles empty history data."""
@@ -69,7 +69,7 @@ def test_yfinance_poller_empty_data(mock_ticker, mock_send_to_queue):
     mock_send_to_queue.assert_not_called()
 
 
-@patch("src.pollers.yfinance_poller.YFinancePoller.send_to_queue")
+@patch("src.app.pollers.yfinance_poller.YFinancePoller.send_to_queue")
 @patch("yfinance.Ticker")
 def test_yfinance_poller_exception(mock_ticker, mock_send_to_queue):
     """Test YFinancePoller handles unexpected errors."""
@@ -82,7 +82,7 @@ def test_yfinance_poller_exception(mock_ticker, mock_send_to_queue):
     mock_send_to_queue.assert_not_called()
 
 
-@patch("src.pollers.yfinance_poller.YFinancePoller.send_to_queue")
+@patch("src.app.pollers.yfinance_poller.YFinancePoller.send_to_queue")
 @patch("yfinance.Ticker")
 def test_yfinance_poller_invalid_symbol(mock_ticker, mock_send_to_queue):
     """Test YFinancePoller handles invalid symbols with empty data."""

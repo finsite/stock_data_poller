@@ -6,8 +6,8 @@ import pytest
 import requests
 
 # Import functions to be tested
-from src.utils.request_with_timeout import request_with_timeout
-from src.utils.validate_environment_variables import validate_environment_variables
+from src.app.utils.request_with_timeout import request_with_timeout
+from src.app.utils.validate_environment_variables import validate_environment_variables
 
 
 def test_validate_environment_variables():

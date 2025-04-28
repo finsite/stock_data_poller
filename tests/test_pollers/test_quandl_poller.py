@@ -2,11 +2,11 @@ from unittest.mock import patch
 
 from requests.exceptions import Timeout
 
-from src.pollers.quandl_poller import QuandlPoller
+from src.app.pollers.quandl_poller import QuandlPoller
 
 
-@patch("src.pollers.quandl_poller.QuandlPoller.send_to_queue")
-@patch("src.utils.request_with_timeout")
+@patch("src.app.pollers.quandl_poller.QuandlPoller.send_to_queue")
+@patch("src.app.utils.request_with_timeout")
 def test_quandl_poller_success(mock_request_with_timeout, mock_send_to_queue):
     """Test QuandlPoller fetches and processes data successfully."""
     # Mocking a successful API response
@@ -35,8 +35,8 @@ def test_quandl_poller_success(mock_request_with_timeout, mock_send_to_queue):
     )
 
 
-@patch("src.pollers.quandl_poller.QuandlPoller.send_to_queue")
-@patch("src.utils.request_with_timeout")
+@patch("src.app.pollers.quandl_poller.QuandlPoller.send_to_queue")
+@patch("src.app.utils.request_with_timeout")
 def test_quandl_poller_invalid_symbol(mock_request_with_timeout, mock_send_to_queue):
     """Test QuandlPoller handles invalid symbols."""
     # Mocking an invalid symbol response
@@ -51,8 +51,8 @@ def test_quandl_poller_invalid_symbol(mock_request_with_timeout, mock_send_to_qu
     mock_send_to_queue.assert_not_called()
 
 
-@patch("src.pollers.quandl_poller.QuandlPoller.send_to_queue")
-@patch("src.utils.request_with_timeout")
+@patch("src.app.pollers.quandl_poller.QuandlPoller.send_to_queue")
+@patch("src.app.utils.request_with_timeout")
 def test_quandl_poller_empty_response(mock_request_with_timeout, mock_send_to_queue):
     """Test QuandlPoller handles an empty API response."""
     # Mocking an empty response
@@ -65,8 +65,8 @@ def test_quandl_poller_empty_response(mock_request_with_timeout, mock_send_to_qu
     mock_send_to_queue.assert_not_called()
 
 
-@patch("src.pollers.quandl_poller.QuandlPoller.send_to_queue")
-@patch("src.utils.request_with_timeout")
+@patch("src.app.pollers.quandl_poller.QuandlPoller.send_to_queue")
+@patch("src.app.utils.request_with_timeout")
 def test_quandl_poller_timeout(mock_request_with_timeout, mock_send_to_queue):
     """Test QuandlPoller handles API timeouts."""
     # Simulate a timeout exception
@@ -79,8 +79,8 @@ def test_quandl_poller_timeout(mock_request_with_timeout, mock_send_to_queue):
     mock_send_to_queue.assert_not_called()
 
 
-@patch("src.pollers.quandl_poller.QuandlPoller.send_to_queue")
-@patch("src.utils.request_with_timeout")
+@patch("src.app.pollers.quandl_poller.QuandlPoller.send_to_queue")
+@patch("src.app.utils.request_with_timeout")
 def test_quandl_poller_missing_dataset(mock_request_with_timeout, mock_send_to_queue):
     """Test QuandlPoller handles missing dataset field in response."""
     # Mocking a response with missing dataset field
@@ -93,8 +93,8 @@ def test_quandl_poller_missing_dataset(mock_request_with_timeout, mock_send_to_q
     mock_send_to_queue.assert_not_called()
 
 
-@patch("src.pollers.quandl_poller.QuandlPoller.send_to_queue")
-@patch("src.utils.request_with_timeout")
+@patch("src.app.pollers.quandl_poller.QuandlPoller.send_to_queue")
+@patch("src.app.utils.request_with_timeout")
 def test_quandl_poller_invalid_data_format(mock_request_with_timeout, mock_send_to_queue):
     """Test QuandlPoller handles unexpected data format."""
     # Simulating an invalid data format response

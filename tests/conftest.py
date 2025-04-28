@@ -21,13 +21,13 @@ from unittest.mock import MagicMock, patch
 import pytest
 from requests.exceptions import Timeout
 
-from src.pollers.alphavantage_poller import AlphaVantagePoller
-from src.pollers.finnhub_poller import FinnhubPoller
-from src.pollers.iex_poller import IEXPoller
-from src.pollers.polygon_poller import PolygonPoller
-from src.pollers.quandl_poller import QuandlPoller
-from src.pollers.yfinance_poller import YFinancePoller
-from src.utils.setup_logger import setup_logger
+from src.app.pollers.alphavantage_poller import AlphaVantagePoller
+from src.app.pollers.finnhub_poller import FinnhubPoller
+from src.app.pollers.iex_poller import IEXPoller
+from src.app.pollers.polygon_poller import PolygonPoller
+from src.app.pollers.quandl_poller import QuandlPoller
+from src.app.pollers.yfinance_poller import YFinancePoller
+from src.app.utils.setup_logger import setup_logger
 
 # Initialize logger
 logger = setup_logger(__name__)

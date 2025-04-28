@@ -4,11 +4,11 @@ from unittest.mock import patch
 
 from requests.exceptions import Timeout
 
-from src.pollers.iex_poller import IEXPoller
+from src.app.pollers.iex_poller import IEXPoller
 
 
-@patch("src.pollers.iex_poller.IEXPoller.send_to_queue")
-@patch("src.utils.request_with_timeout")
+@patch("src.app.pollers.iex_poller.IEXPoller.send_to_queue")
+@patch("src.app.utils.request_with_timeout")
 def test_iex_poller_success(mock_request_with_timeout, mock_send_to_queue):
     """Test IEXPoller fetches and processes data successfully."""
     # Mock the API response with sample data
@@ -44,8 +44,8 @@ def test_iex_poller_success(mock_request_with_timeout, mock_send_to_queue):
     )
 
 
-@patch("src.pollers.iex_poller.IEXPoller.send_to_queue")
-@patch("src.utils.request_with_timeout")
+@patch("src.app.pollers.iex_poller.IEXPoller.send_to_queue")
+@patch("src.app.utils.request_with_timeout")
 def test_iex_poller_invalid_symbol(mock_request_with_timeout, mock_send_to_queue):
     """Test IEXPoller handles invalid symbols."""
     # Mock the API response with an error message
@@ -59,8 +59,8 @@ def test_iex_poller_invalid_symbol(mock_request_with_timeout, mock_send_to_queue
     mock_send_to_queue.assert_not_called()
 
 
-@patch("src.pollers.iex_poller.IEXPoller.send_to_queue")
-@patch("src.utils.request_with_timeout")
+@patch("src.app.pollers.iex_poller.IEXPoller.send_to_queue")
+@patch("src.app.utils.request_with_timeout")
 def test_iex_poller_empty_response(mock_request_with_timeout, mock_send_to_queue):
     """Test IEXPoller handles an empty API response."""
     # Mock the API response with an empty dictionary
@@ -74,8 +74,8 @@ def test_iex_poller_empty_response(mock_request_with_timeout, mock_send_to_queue
     mock_send_to_queue.assert_not_called()
 
 
-@patch("src.pollers.iex_poller.IEXPoller.send_to_queue")
-@patch("src.utils.request_with_timeout")
+@patch("src.app.pollers.iex_poller.IEXPoller.send_to_queue")
+@patch("src.app.utils.request_with_timeout")
 def test_iex_poller_timeout(mock_request_with_timeout, mock_send_to_queue):
     """Test IEXPoller handles API timeouts."""
     # Simulate a timeout exception
@@ -89,8 +89,8 @@ def test_iex_poller_timeout(mock_request_with_timeout, mock_send_to_queue):
     mock_send_to_queue.assert_not_called()
 
 
-@patch("src.pollers.iex_poller.IEXPoller.send_to_queue")
-@patch("src.utils.request_with_timeout")
+@patch("src.app.pollers.iex_poller.IEXPoller.send_to_queue")
+@patch("src.app.utils.request_with_timeout")
 def test_iex_poller_missing_field(mock_request_with_timeout, mock_send_to_queue):
     """Test IEXPoller handles missing fields in the response."""
     # Mock the API response with missing fields
@@ -111,8 +111,8 @@ def test_iex_poller_missing_field(mock_request_with_timeout, mock_send_to_queue)
     mock_send_to_queue.assert_not_called()
 
 
-@patch("src.pollers.iex_poller.IEXPoller.send_to_queue")
-@patch("src.utils.request_with_timeout")
+@patch("src.app.pollers.iex_poller.IEXPoller.send_to_queue")
+@patch("src.app.utils.request_with_timeout")
 def test_iex_poller_invalid_data_format(mock_request_with_timeout, mock_send_to_queue):
     """Test IEXPoller handles unexpected data formats."""
     # Mock the API response with an invalid data format

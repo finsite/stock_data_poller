@@ -4,11 +4,11 @@ from unittest.mock import patch
 
 from requests.exceptions import Timeout
 
-from src.pollers.polygon_poller import PolygonPoller
+from src.app.pollers.polygon_poller import PolygonPoller
 
 
-@patch("src.pollers.polygon_poller.PolygonPoller.send_to_queue")
-@patch("src.utils.request_with_timeout")
+@patch("src.app.pollers.polygon_poller.PolygonPoller.send_to_queue")
+@patch("src.app.utils.request_with_timeout")
 def test_polygon_poller_success(mock_request_with_timeout, mock_send_to_queue):
     """Test PolygonPoller fetches and processes data successfully."""
     # Simulate a successful API response
@@ -44,8 +44,8 @@ def test_polygon_poller_success(mock_request_with_timeout, mock_send_to_queue):
     )
 
 
-@patch("src.pollers.polygon_poller.PolygonPoller.send_to_queue")
-@patch("src.utils.request_with_timeout")
+@patch("src.app.pollers.polygon_poller.PolygonPoller.send_to_queue")
+@patch("src.app.utils.request_with_timeout")
 def test_polygon_poller_invalid_symbol(mock_request_with_timeout, mock_send_to_queue):
     """Test PolygonPoller handles invalid symbols."""
     # Simulate an invalid symbol
@@ -64,8 +64,8 @@ def test_polygon_poller_invalid_symbol(mock_request_with_timeout, mock_send_to_q
     mock_send_to_queue.assert_not_called()
 
 
-@patch("src.pollers.polygon_poller.PolygonPoller.send_to_queue")
-@patch("src.utils.request_with_timeout")
+@patch("src.app.pollers.polygon_poller.PolygonPoller.send_to_queue")
+@patch("src.app.utils.request_with_timeout")
 def test_polygon_poller_empty_response(mock_request_with_timeout, mock_send_to_queue):
     """Test PolygonPoller handles an empty API response."""
     # Simulate an empty API response
@@ -81,8 +81,8 @@ def test_polygon_poller_empty_response(mock_request_with_timeout, mock_send_to_q
     mock_send_to_queue.assert_not_called()
 
 
-@patch("src.pollers.polygon_poller.PolygonPoller.send_to_queue")
-@patch("src.utils.request_with_timeout")
+@patch("src.app.pollers.polygon_poller.PolygonPoller.send_to_queue")
+@patch("src.app.utils.request_with_timeout")
 def test_polygon_poller_timeout(mock_request_with_timeout, mock_send_to_queue):
     """Test PolygonPoller handles API timeouts."""
     # Simulate an API timeout
@@ -98,8 +98,8 @@ def test_polygon_poller_timeout(mock_request_with_timeout, mock_send_to_queue):
     mock_send_to_queue.assert_not_called()
 
 
-@patch("src.pollers.polygon_poller.PolygonPoller.send_to_queue")
-@patch("src.utils.request_with_timeout")
+@patch("src.app.pollers.polygon_poller.PolygonPoller.send_to_queue")
+@patch("src.app.utils.request_with_timeout")
 def test_polygon_poller_missing_field(mock_request_with_timeout, mock_send_to_queue):
     """Test PolygonPoller handles missing fields in the response."""
     # Simulate a missing 'last' field
@@ -118,8 +118,8 @@ def test_polygon_poller_missing_field(mock_request_with_timeout, mock_send_to_qu
     mock_send_to_queue.assert_not_called()
 
 
-@patch("src.pollers.polygon_poller.PolygonPoller.send_to_queue")
-@patch("src.utils.request_with_timeout")
+@patch("src.app.pollers.polygon_poller.PolygonPoller.send_to_queue")
+@patch("src.app.utils.request_with_timeout")
 def test_polygon_poller_invalid_data_format(mock_request_with_timeout, mock_send_to_queue):
     """Test PolygonPoller handles unexpected data formats."""
     # Simulate an invalid data format

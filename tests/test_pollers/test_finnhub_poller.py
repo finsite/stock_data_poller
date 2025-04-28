@@ -1,7 +1,7 @@
 """Tests for FinnhubPoller."""
 
-@patch("src.pollers.finnhub_poller.FinnhubPoller.send_to_queue")
-@patch("src.utils.request_with_timeout")
+@patch("src.app.pollers.finnhub_poller.FinnhubPoller.send_to_queue")
+@patch("src.app.utils.request_with_timeout")
 def test_finnhub_poller_success(mock_request_with_timeout, mock_send_to_queue):
     """
     Test FinnhubPoller fetches and processes data successfully.
@@ -36,8 +36,8 @@ def test_finnhub_poller_success(mock_request_with_timeout, mock_send_to_queue):
     )
 
 
-@patch("src.pollers.finnhub_poller.FinnhubPoller.send_to_queue")
-@patch("src.utils.request_with_timeout")
+@patch("src.app.pollers.finnhub_poller.FinnhubPoller.send_to_queue")
+@patch("src.app.utils.request_with_timeout")
 def test_finnhub_poller_invalid_symbol(mock_request_with_timeout, mock_send_to_queue):
     """
     Test FinnhubPoller handles invalid symbols.
@@ -53,8 +53,8 @@ def test_finnhub_poller_invalid_symbol(mock_request_with_timeout, mock_send_to_q
     mock_send_to_queue.assert_not_called()
 
 
-@patch("src.pollers.finnhub_poller.FinnhubPoller.send_to_queue")
-@patch("src.utils.request_with_timeout")
+@patch("src.app.pollers.finnhub_poller.FinnhubPoller.send_to_queue")
+@patch("src.app.utils.request_with_timeout")
 def test_finnhub_poller_timeout(mock_request_with_timeout, mock_send_to_queue):
     """
     Test FinnhubPoller handles API timeouts.
@@ -70,8 +70,8 @@ def test_finnhub_poller_timeout(mock_request_with_timeout, mock_send_to_queue):
     mock_send_to_queue.assert_not_called()
 
 
-@patch("src.pollers.finnhub_poller.FinnhubPoller.send_to_queue")
-@patch("src.utils.request_with_timeout")
+@patch("src.app.pollers.finnhub_poller.FinnhubPoller.send_to_queue")
+@patch("src.app.utils.request_with_timeout")
 def test_finnhub_poller_network_error(mock_request_with_timeout, mock_send_to_queue):
     """
     Test FinnhubPoller handles network errors.
@@ -87,8 +87,8 @@ def test_finnhub_poller_network_error(mock_request_with_timeout, mock_send_to_qu
     mock_send_to_queue.assert_not_called()
 
 
-@patch("src.pollers.finnhub_poller.FinnhubPoller.send_to_queue")
-@patch("src.utils.request_with_timeout")
+@patch("src.app.pollers.finnhub_poller.FinnhubPoller.send_to_queue")
+@patch("src.app.utils.request_with_timeout")
 def test_finnhub_poller_empty_data(mock_request_with_timeout, mock_send_to_queue):
     """
     Test FinnhubPoller handles empty data response.

@@ -2,7 +2,7 @@ from unittest.mock import patch
 
 from requests.exceptions import Timeout
 
-from src.pollers.alphavantage_poller import AlphaVantagePoller
+from src.app.pollers.alphavantage_poller import AlphaVantagePoller
 
 
 @patch("src.pollers.alphavantage_poller.AlphaVantagePoller.send_to_queue")
