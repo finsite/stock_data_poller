@@ -3,9 +3,9 @@ requires = ["setuptools>=42", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "template_python"
+name = "stock_data_poller"
 version = "0.1.0"
-description = "A template for the default python project"
+description = "A template for the stock_data_poller python project"
 readme = "README.md"
 requires-python = ">=3.7"
 license = { text = "MIT" }
@@ -111,7 +111,7 @@ version = "0.1.0"
 tag_format = "v$version"
 
 [tool.bumpversion]
-current_version = "0.1.30"
+current_version = "0.1.31"
 parse = "(?P<major>\\d+)\\.(?P<minor>\\d+)\\.(?P<patch>\\d+)"
 serialize = ["{major}.{minor}.{patch}"]
 search = "{current_version}"
