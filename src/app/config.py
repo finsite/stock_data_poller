@@ -436,7 +436,6 @@ environment variables, or defaults — in that order.
 """
 
 import os
-from typing import Optional
 
 from app.utils.vault_client import load_vault_secrets
 
