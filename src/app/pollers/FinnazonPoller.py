@@ -1,7 +1,8 @@
-import requests
 from typing import Any
 
-from app.config import get_finnazon_key, get_finnazon_fill_rate_limit
+import requests
+
+from app.config import get_finnazon_fill_rate_limit, get_finnazon_key
 from app.pollers.base_poller import BasePoller
 from app.utils.rate_limit import RateLimiter
 from app.utils.setup_logger import setup_logger
@@ -22,9 +23,7 @@ class FinnazonPoller(BasePoller):
 
         validate_environment_variables(["QUEUE_TYPE", "FINNAZON_API_KEY"])
 
-        self.rate_limiter = RateLimiter(
-            max_requests=get_finnazon_fill_rate_limit(), time_window=60
-        )
+        self.rate_limiter = RateLimiter(max_requests=get_finnazon_fill_rate_limit(), time_window=60)
 
         self.base_url = "https://api.finazon.com/api/v1/quotes/historical"
         self.headers = {

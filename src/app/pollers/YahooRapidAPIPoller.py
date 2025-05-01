@@ -1,9 +1,8 @@
-import requests
 from typing import Any
 
-# This module contains a poller class for Yahoo Finance using RapidAPI
+import requests
 
-from app.config import get_rapidapi_key, get_rapidapi_host, get_yfinance_fill_rate_limit
+from app.config import get_rapidapi_host, get_rapidapi_key, get_yfinance_fill_rate_limit
 from app.pollers.base_poller import BasePoller
 from app.utils.rate_limit import RateLimiter
 from app.utils.setup_logger import setup_logger
@@ -12,6 +11,9 @@ from app.utils.track_request_metrics import track_request_metrics
 from app.utils.validate_data import validate_data
 from app.utils.validate_environment_variables import validate_environment_variables
 
+# This module contains a poller class for Yahoo Finance using RapidAPI
+
+
 logger = setup_logger(__name__)
 
 
@@ -19,12 +21,13 @@ class YahooRapidAPIPoller(BasePoller):
     """Poller using RapidAPI Yahoo Finance endpoint."""
 
     def __init__(self, symbols: list[str]) -> None:
-        """Initializes the YahooRapidAPIPoller with rate limiting and environment validation.
+        """
+        Initializes the YahooRapidAPIPoller with rate limiting and environment
+        validation.
 
         Args:
         ----
             symbols (list[str]): The stock symbols to poll.
-
         """
         super().__init__()
         self.symbols = symbols
@@ -33,9 +36,7 @@ class YahooRapidAPIPoller(BasePoller):
         validate_environment_variables(["QUEUE_TYPE", "RAPIDAPI_KEY", "RAPIDAPI_HOST"])
 
         # Initialize rate limiter
-        self.rate_limiter = RateLimiter(
-            max_requests=get_yfinance_fill_rate_limit(), time_window=60
-        )
+        self.rate_limiter = RateLimiter(max_requests=get_yfinance_fill_rate_limit(), time_window=60)
 
         # Set up the base URL and headers for the Yahoo Finance API call
         self.base_url = f"https://{get_rapidapi_host()}/stock/v2/get-summary"
@@ -75,7 +76,9 @@ class YahooRapidAPIPoller(BasePoller):
         return results
 
     def _process_data(self, symbol: str, price_info: dict[str, Any]) -> dict[str, Any]:
-        """Processes the raw data from the Yahoo Finance API into a standardized payload format.
+        """
+        Processes the raw data from the Yahoo Finance API into a standardized payload
+        format.
 
         Args:
         ----
@@ -90,7 +93,6 @@ class YahooRapidAPIPoller(BasePoller):
                 - price (float): The latest price of the stock.
                 - source (str): The source of the data, "YahooRapidAPI".
                 - data (dict[str, float]): The additional data fields.
-
         """
         return {
             "symbol": symbol,

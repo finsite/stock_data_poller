@@ -1,4 +1,5 @@
-"""Main application entry point.
+"""
+Main application entry point.
 
 Polls stock data and sends it to RabbitMQ or SQS.
 """
@@ -20,6 +21,7 @@ from src.config import (
     get_retry_delay,
     get_symbols,
 )
+
 from app.message_queue.queue_sender import QueueSender
 from app.poller_factory import PollerFactory
 from app.utils import validate_environment_variables
