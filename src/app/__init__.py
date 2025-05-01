@@ -1,5 +1,4 @@
-"""
-The module initializes the main application package.
+"""The module initializes the main application package.
 
 The app package is structured as follows:
 - pollers: Handles data polling from various APIs (e.g., AlphaVantage, YFinance).

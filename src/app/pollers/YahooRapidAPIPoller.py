@@ -19,11 +19,12 @@ class YahooRapidAPIPoller(BasePoller):
     """Poller using RapidAPI Yahoo Finance endpoint."""
 
     def __init__(self, symbols: list[str]) -> None:
-        """
-        Initializes the YahooRapidAPIPoller with rate limiting and environment validation.
+        """Initializes the YahooRapidAPIPoller with rate limiting and environment validation.
 
         Args:
+        ----
             symbols (list[str]): The stock symbols to poll.
+
         """
         super().__init__()
         self.symbols = symbols
@@ -74,20 +75,22 @@ class YahooRapidAPIPoller(BasePoller):
         return results
 
     def _process_data(self, symbol: str, price_info: dict[str, Any]) -> dict[str, Any]:
-        """
-        Processes the raw data from the Yahoo Finance API into a standardized payload format.
+        """Processes the raw data from the Yahoo Finance API into a standardized payload format.
 
         Args:
+        ----
             symbol (str): The stock symbol.
             price_info (dict[str, Any]): The raw data from the Yahoo Finance API.
 
         Returns:
+        -------
             dict[str, Any]: The processed payload with the following keys:
                 - symbol (str): The stock symbol.
                 - timestamp (int): The timestamp of the data.
                 - price (float): The latest price of the stock.
                 - source (str): The source of the data, "YahooRapidAPI".
                 - data (dict[str, float]): The additional data fields.
+
         """
         return {
             "symbol": symbol,

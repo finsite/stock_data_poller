@@ -34,11 +34,12 @@ class YFinancePoller(BasePoller):
         )
 
     def poll(self, symbols: list[str]) -> None:
-        """
-        Polls data for the specified symbols using yfinance.
+        """Polls data for the specified symbols using yfinance.
 
         Args:
+        ----
             symbols (list[str]): The stock symbols to fetch data for.
+
         """
         for symbol in symbols:
             try:
@@ -66,14 +67,16 @@ class YFinancePoller(BasePoller):
         self.rate_limiter.acquire(context="YFinance")
 
     def _fetch_data(self, symbol: str) -> Any:
-        """
-        Fetches recent intraday stock data for the given symbol using yfinance.
+        """Fetches recent intraday stock data for the given symbol using yfinance.
 
         Args:
+        ----
             symbol (str): The stock symbol to fetch.
 
         Returns:
+        -------
             Any: A DataFrame or None if no data is found.
+
         """
         ticker = yf.Ticker(symbol)
         data = ticker.history(period="1d", interval="5m")
@@ -81,15 +84,17 @@ class YFinancePoller(BasePoller):
         return None if data.empty else data
 
     def _process_data(self, symbol: str, data: Any) -> dict[str, Any]:
-        """
-        Processes the latest row of yfinance data into the standard payload format.
+        """Processes the latest row of yfinance data into the standard payload format.
 
         Args:
+        ----
             symbol (str): The stock symbol.
             data (Any): Raw data from yfinance.
 
         Returns:
+        -------
             dict[str, Any]: A structured payload dictionary.
+
         """
         latest_data = data.iloc[-1]
         timestamp = latest_data.name.isoformat()
@@ -109,22 +114,24 @@ class YFinancePoller(BasePoller):
         }
 
     def _handle_success(self, symbol: str) -> None:
-        """
-        Tracks success metrics for polling and requests.
+        """Tracks success metrics for polling and requests.
 
         Args:
+        ----
             symbol (str): The stock symbol.
+
         """
         track_polling_metrics("success", "YFinance", symbol)
         track_request_metrics(symbol, 30, 5)
 
     def _handle_failure(self, symbol: str, error: str) -> None:
-        """
-        Tracks failure metrics and logs the error.
+        """Tracks failure metrics and logs the error.
 
         Args:
+        ----
             symbol (str): The stock symbol.
             error (str): The error message.
+
         """
         track_polling_metrics("failure", "YFinance", symbol)
         track_request_metrics(symbol, 30, 5, success=False)

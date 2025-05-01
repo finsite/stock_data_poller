@@ -1,5 +1,4 @@
-"""
-Main application entry point.
+"""Main application entry point.
 
 Polls stock data and sends it to RabbitMQ or SQS.
 """

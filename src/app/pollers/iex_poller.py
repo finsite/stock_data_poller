@@ -1,5 +1,4 @@
-"""
-The module provides a poller class for fetching stock quotes from the IEX Cloud API.
+"""The module provides a poller class for fetching stock quotes from the IEX Cloud API.
 
 The poller enforces a rate limit specific to IEX, with a fallback to the default limit.
 """
@@ -24,12 +23,12 @@ class IEXPoller(BasePoller):
     """Poller for fetching stock quotes from the IEX Cloud API."""
 
     def __init__(self):
-        """
-        Initializes the IEXPoller.
+        """Initializes the IEXPoller.
 
         Raises
         ------
             ValueError: If the IEX_API_KEY environment variable is not set.
+
         """
         super().__init__()
 
@@ -40,8 +39,7 @@ class IEXPoller(BasePoller):
         self.rate_limiter = RateLimiter(max_requests=get_iex_fill_rate_limit(), time_window=60)
 
     def poll(self, symbols: list[str]) -> None:
-        """
-        Polls data for the specified symbols from IEX Cloud API.
+        """Polls data for the specified symbols from IEX Cloud API.
 
         Args:
         ----
@@ -55,6 +53,7 @@ class IEXPoller(BasePoller):
         This method polls the IEX Cloud API for the given symbols and sends the
         fetched data to the message queue. If any error occurs during polling, the
         error is tracked and logged.
+
         """
         for symbol in symbols:
             try:
@@ -78,23 +77,24 @@ class IEXPoller(BasePoller):
                 self._handle_failure(symbol, str(e))
 
     def _enforce_rate_limit(self) -> None:
-        """
-        Enforces the IEX-specific rate limit.
+        """Enforces the IEX-specific rate limit.
 
         The IEX Cloud API has a rate limit of 5 requests per second and 100,000 requests
         per month. The rate limit is enforced here to prevent hitting the limit.
 
         Args:
+        ----
             None
 
         Returns:
+        -------
             None
+
         """
         self.rate_limiter.acquire(context="IEX")
 
     def _fetch_data(self, symbol: str) -> dict[str, Any]:
-        """
-        Fetches stock data for the given symbol from the IEX Cloud API.
+        """Fetches stock data for the given symbol from the IEX Cloud API.
 
         Args:
         ----
@@ -103,6 +103,7 @@ class IEXPoller(BasePoller):
         Returns:
         -------
             dict[str, Any]: Fetched data from the IEX API.
+
         """
 
         def request_func() -> dict[str, Any]:
@@ -112,8 +113,7 @@ class IEXPoller(BasePoller):
         return retry_request(request_func)
 
     def _process_data(self, data: dict[str, Any]) -> dict[str, Any]:
-        """
-        Processes the raw data from IEX Cloud API into the payload format.
+        """Processes the raw data from IEX Cloud API into the payload format.
 
         Args:
         ----
@@ -124,6 +124,7 @@ class IEXPoller(BasePoller):
             dict[str, Any]: Processed data in the payload format, including stock
                 symbol (str), timestamp (int), latest price (float), and additional
                 stock data (dict[str, float|int]).
+
         """
         # Extract and format the processed data
         return {
@@ -141,17 +142,19 @@ class IEXPoller(BasePoller):
         }
 
     def _handle_success(self, symbol: str) -> None:
-        """
-        Tracks success metrics for polling and requests.
+        """Tracks success metrics for polling and requests.
 
         Metrics tracked include the source of the data (IEX) and the symbol
         for which polling was performed.
 
         Args:
+        ----
             symbol (str): The stock symbol that was successfully polled.
 
         Returns:
+        -------
             None
+
         """
         # Validate status to ensure it is either 'success' or 'failure'
         track_polling_metrics("success", "IEX", symbol)
@@ -159,19 +162,20 @@ class IEXPoller(BasePoller):
         track_request_metrics(symbol, 30, 5)
 
     def _handle_failure(self, symbol: str, error: str) -> None:
-        """
-        Tracks failure metrics for polling and logs the error.
+        """Tracks failure metrics for polling and logs the error.
 
         This method is called when polling for a stock symbol fails. It logs
         the error and tracks the failure metrics for monitoring purposes.
 
-        Parameters:
+        Parameters
+        ----------
         symbol (str): The stock symbol for which polling failed.
         error (str): The error message describing the failure.
 
-        Returns:
+        Returns
         -------
         None
+
         """
         # Log the error message for debugging purposes
         logger.error(f"IEX polling error for {symbol}: {error}")

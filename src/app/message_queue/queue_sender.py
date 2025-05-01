@@ -1,5 +1,4 @@
-"""
-QueueSender module for message delivery to RabbitMQ or AWS SQS.
+"""QueueSender module for message delivery to RabbitMQ or AWS SQS.
 
 This module defines the QueueSender class, which sends messages to a configured RabbitMQ
 or Amazon SQS queue and supports proper connection cleanup.
@@ -28,8 +27,7 @@ logger = setup_logger(__name__)
 
 
 class QueueSender:
-    """
-    A class for sending messages to a RabbitMQ or SQS queue.
+    """A class for sending messages to a RabbitMQ or SQS queue.
 
     Supports configuration for either queue type. Handles message serialization,
     dispatch, connection setup, and cleanup.
@@ -44,13 +42,13 @@ class QueueSender:
         rabbitmq_vhost: str | None = "/",
         sqs_queue_url: str | None = None,
     ) -> None:
-        """
-        Initialize the QueueSender for RabbitMQ or SQS.
+        """Initialize the QueueSender for RabbitMQ or SQS.
 
         Raises
         ------
         ValueError: If the queue_type is unsupported.
         EnvironmentError: If required environment variables are missing.
+
         """
         self.queue_type = queue_type.lower()
         self.rabbitmq_host = rabbitmq_host
@@ -207,8 +205,7 @@ class QueueSender:
                 raise
 
     def flush(self) -> None:
-        """
-        Flush logic for future enhancements.
+        """Flush logic for future enhancements.
 
         This method currently performs no operations but can be extended to
         flush buffer or pending messages if batching is implemented in the future.
@@ -216,11 +213,12 @@ class QueueSender:
         logger.info("Flush called - no operation performed.")
 
     def health_check(self) -> bool:
-        """
-        Check the health of the queue sender connection.
+        """Check the health of the queue sender connection.
 
-        Returns:
+        Returns
+        -------
             bool: True if the connection is considered healthy, otherwise False.
+
         """
         if self.queue_type == "rabbitmq":
             return self.connection.is_open if hasattr(self, "connection") else False
