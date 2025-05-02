@@ -14,21 +14,18 @@ repos:
       - id: end-of-file-fixer
       - id: mixed-line-ending
         args: [--fix=lf]
-
   - repo: https://github.com/codespell-project/codespell
     rev: v2.4.1
     hooks:
       - id: codespell
         exclude: package-lock.json
         args: [--ignore-words-list, hte]
-
   - repo: https://github.com/psf/black
     rev: 25.1.0
     hooks:
       - id: black
-  
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.11.7  
+    rev: v0.11.7
     hooks:
       - id: ruff
         args: [--fix, --extend-select=D, ANN]
@@ -61,7 +58,6 @@ repos:
         language: node
         types: [python]
         pass_filenames: false
-
   - repo: local
     hooks:
       - id: docformatter
@@ -76,7 +72,6 @@ repos:
           - --wrap-descriptions=88
           - --pre-summary-newline
         files: \.py$
-
   - repo: https://github.com/PyCQA/bandit
     rev: 1.8.3
     hooks:
@@ -94,7 +89,6 @@ repos:
         language: system
         types: [python]
         pass_filenames: false
-
   - repo: local
     hooks:
       - id: pip-check
@@ -112,14 +106,12 @@ repos:
   #       entry: hadolint
   #       language: system
   #       files: Dockerfile
-
   - repo: https://github.com/koalaman/shellcheck-precommit
     rev: v0.10.0
     hooks:
       - id: shellcheck
         entry: shellcheck
         language: system
-
   - repo: https://github.com/pre-commit/mirrors-prettier
     rev: v4.0.0-alpha.8
     hooks:
@@ -127,7 +119,6 @@ repos:
         files: \.(json|md|html|css)$  # REMOVE yaml and yml from the file list
         args: [--print-width, '80']
         additional_dependencies: [prettier@latest]
-
   - repo: https://github.com/lyz-code/yamlfix
     rev: 1.17.0
     hooks:
@@ -160,13 +151,11 @@ repos:
   #       entry: pytest --maxfail=3 --disable-warnings --cov=src --cov-report=term-missing --cov-fail-under=85
   #       language: system
   #       pass_filenames: false
-
   - repo: https://github.com/fpgmaas/deptry.git
     rev: 0.23.0
     hooks:
       - id: deptry
         args: [--ignore, 'DEP001,DEP002,DEP003']
-
   - repo: local
     hooks:
       - id: pip-compile-prod
@@ -179,7 +168,6 @@ repos:
         language: system
         entry: pip-compile --upgrade --output-file=requirements-dev.txt requirements-dev.in
         files: ^requirements-dev\.in$
-
   - repo: local
     hooks:
       - id: git-add-requirements
