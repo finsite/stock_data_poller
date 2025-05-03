@@ -718,27 +718,27 @@ def get_yfinance_key() -> str:
     return get_config_value("YFINANCE_API_KEY", "")
 
 
-def get_iex_key() -> str:
+def get_iex_api_key() -> str:
     """IEX API key."""
     return get_config_value("IEX_API_KEY", "")
 
 
-def get_finnhub_key() -> str:
+def get_finnhub_api_key() -> str:
     """Finnhub API key."""
     return get_config_value("FINNHUB_API_KEY", "")
 
 
-def get_polygon_key() -> str:
+def get_polygon_api_key() -> str:
     """Polygon API key."""
     return get_config_value("POLYGON_API_KEY", "")
 
 
-def get_alpha_vantage_key() -> str:
+def get_alpha_vantage_api_key() -> str:
     """Alpha Vantage API key."""
     return get_config_value("ALPHA_VANTAGE_API_KEY", "")
 
 
-def get_quandl_key() -> str:
+def get_quandl_api_key() -> str:
     """Quandl API key."""
     return get_config_value("QUANDL_API_KEY", "")
 
@@ -834,3 +834,14 @@ def get_rabbitmq_password() -> str:
 def get_sqs_queue_url() -> str:
     """SQS queue URL."""
     return get_config_value("SQS_QUEUE_URL", "")
+
+def get_rate_limit() -> int:
+    """
+    Get the general rate limit if a poller-specific one isn't set.
+
+    Returns
+    -------
+    int
+        Default max requests per minute. Defaults to 0 (no limit).
+    """
+    return int(get_config_value("RATE_LIMIT", 0))

@@ -8,7 +8,7 @@ import logging
 import time
 from typing import Any
 
-from src.config import (
+from app.config import (
     get_log_level,
     get_poll_interval,
     get_poller_type,
