@@ -70,6 +70,11 @@ class RateLimiter:
           context: str:  (Default value = "RateLimiter")
 
         Returns:
+
+        Args:
+          context: str:  (Default value = "RateLimiter")
+
+        Returns:
         """
         with self._lock:  # type: ignore # type: threading.Lock
             current_time: float = time.time()

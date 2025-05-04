@@ -69,6 +69,8 @@ class IntrinioPoller(BasePoller):
           symbol: str:
           price: dict[str:
           Any]:
+          symbol: str:
+          price: dict[str:
 
         Returns:
 
@@ -90,6 +92,7 @@ class IntrinioPoller(BasePoller):
     def _handle_success(self, symbol: str) -> None:
         """Args:
           symbol: str:
+          symbol: str:
 
         Returns:
 
@@ -99,6 +102,8 @@ class IntrinioPoller(BasePoller):
 
     def _handle_failure(self, symbol: str, error: str) -> None:
         """Args:
+          symbol: str:
+          error: str:
           symbol: str:
           error: str:
 

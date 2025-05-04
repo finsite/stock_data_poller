@@ -35,6 +35,14 @@ def track_polling_metrics(status: Literal["success", "failure"], source: str, sy
       symbol: str:
 
     Returns:
+
+    Args:
+      status: Literal["success":
+      "failure"]:
+      source: str:
+      symbol: str:
+
+    Returns:
     """
     # Validate status
     if status not in {"success", "failure"}:

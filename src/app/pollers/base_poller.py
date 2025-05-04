@@ -98,6 +98,7 @@ class BasePoller:
         Args:
           payload: dict[str:
           Any]:
+          payload: dict[str:
 
         Returns:
         """

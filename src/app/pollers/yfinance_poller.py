@@ -41,6 +41,7 @@ class YFinancePoller(BasePoller):
         Args:
           symbols(list[str]): The stock symbols to fetch data for.
           symbols: list[str]:
+          symbols: list[str]:
 
         Returns:
         """
@@ -85,6 +86,11 @@ class YFinancePoller(BasePoller):
           symbol: str:
 
         Returns:
+
+        Args:
+          symbol: str:
+
+        Returns:
         """
         ticker = yf.Ticker(symbol)
         data = ticker.history(period="1d", interval="5m")
@@ -103,6 +109,12 @@ class YFinancePoller(BasePoller):
         Returns:
         -------
             dict[str, Any]: A structured payload dictionary.
+
+        Args:
+          symbol: str:
+          data: Any:
+
+        Returns:
 
         Args:
           symbol: str:
@@ -134,6 +146,7 @@ class YFinancePoller(BasePoller):
         Args:
           symbol(str): The stock symbol.
           symbol: str:
+          symbol: str:
 
         Returns:
         """
@@ -147,6 +160,8 @@ class YFinancePoller(BasePoller):
         Args:
           symbol(str): The stock symbol.
           error(str): The error message.
+          symbol: str:
+          error: str:
           symbol: str:
           error: str:
 

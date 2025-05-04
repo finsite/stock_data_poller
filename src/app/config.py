@@ -25,14 +25,16 @@ def get_config_value(key: str, default: str | None = None) -> str:
     Retrieve a configuration value from Vault, environment variable, or default.
 
     Args:
-        key (str): The configuration key to retrieve.
-        default (Optional[str]): The fallback value if neither Vault nor environment contain the key.
+      key(str): The configuration key to retrieve.
+      default(Optional[str]): The fallback value if neither Vault nor environment contain the key.
+      key: str:
+      default: str | None:  (Default value = None)
 
     Returns:
-        str: The resolved configuration value.
+      str: The resolved configuration value.
 
     Raises:
-        ValueError: If the key is missing and no default is provided.
+      ValueError: If the key is missing and no default is provided.
     """
     val = _vault.get(key, os.getenv(key))
     if val is None:

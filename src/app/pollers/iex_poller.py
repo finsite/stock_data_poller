@@ -60,6 +60,11 @@ class IEXPoller(BasePoller):
           symbols: list[str]:
 
         Returns:
+
+        Args:
+          symbols: list[str]:
+
+        Returns:
         """
         for symbol in symbols:
             try:
@@ -100,6 +105,10 @@ class IEXPoller(BasePoller):
         Args:
 
         Returns:
+
+        Args:
+
+        Returns:
         """
         self.rate_limiter.acquire(context="IEX")
 
@@ -108,6 +117,7 @@ class IEXPoller(BasePoller):
         Fetches stock data for the given symbol from the IEX Cloud API.
 
         Args:
+          symbol: str:
           symbol: str:
 
         Returns:
@@ -136,6 +146,12 @@ class IEXPoller(BasePoller):
             dict[str, Any]: Processed data in the payload format, including stock
                 symbol (str), timestamp (int), latest price (float), and additional
                 stock data (dict[str, float|int]).
+
+        Args:
+          data: dict[str:
+          Any]:
+
+        Returns:
 
         Args:
           data: dict[str:
@@ -177,6 +193,11 @@ class IEXPoller(BasePoller):
           symbol: str:
 
         Returns:
+
+        Args:
+          symbol: str:
+
+        Returns:
         """
         # Validate status to ensure it is either 'success' or 'failure'
         track_polling_metrics("success", "IEX", symbol)
@@ -191,8 +212,10 @@ class IEXPoller(BasePoller):
         the error and tracks the failure metrics for monitoring purposes.
 
         Args:
-          symbol (str)(The stock symbol for which polling failed.):
-          error (str)(The error message describing the failure.):
+          symbol(str):
+          error(str):
+          symbol: str:
+          error: str:
           symbol: str:
           error: str:
 

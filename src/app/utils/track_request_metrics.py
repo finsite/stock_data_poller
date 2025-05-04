@@ -29,6 +29,10 @@ def track_request_metrics(
       rate_limit: int:
       time_window: float:
       success: bool:  (Default value = True)
+      symbol: str:
+      rate_limit: int:
+      time_window: float:
+      success: bool:  (Default value = True)
 
     Returns:
     """

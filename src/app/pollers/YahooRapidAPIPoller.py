@@ -101,6 +101,13 @@ class YahooRapidAPIPoller(BasePoller):
           Any]:
 
         Returns:
+
+        Args:
+          symbol: str:
+          price_info: dict[str:
+          Any]:
+
+        Returns:
         """
         return {
             "symbol": symbol,
@@ -128,6 +135,7 @@ class YahooRapidAPIPoller(BasePoller):
     def _handle_success(self, symbol: str) -> None:
         """Args:
           symbol: str:
+          symbol: str:
 
         Returns:
 
@@ -137,6 +145,8 @@ class YahooRapidAPIPoller(BasePoller):
 
     def _handle_failure(self, symbol: str, error: str) -> None:
         """Args:
+          symbol: str:
+          error: str:
           symbol: str:
           error: str:
 

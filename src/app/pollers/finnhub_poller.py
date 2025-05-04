@@ -73,6 +73,11 @@ class FinnhubPoller(BasePoller):
           symbols: list[str]:
 
         Returns:
+
+        Args:
+          symbols: list[str]:
+
+        Returns:
         """
         for symbol in symbols:
             try:
@@ -113,6 +118,10 @@ class FinnhubPoller(BasePoller):
         Args:
 
         Returns:
+
+        Args:
+
+        Returns:
         """
         self.rate_limiter.acquire(context="Finnhub")
 
@@ -121,6 +130,7 @@ class FinnhubPoller(BasePoller):
         Fetches stock data for the given symbol from Finnhub using the quote endpoint.
 
         Args:
+          symbol: str:
           symbol: str:
 
         Returns:
@@ -149,6 +159,13 @@ class FinnhubPoller(BasePoller):
         Returns:
         -------
             dict[str, Any]: The processed payload.
+
+        Args:
+          symbol: str:
+          data: dict[str:
+          Any]:
+
+        Returns:
 
         Args:
           symbol: str:
@@ -190,6 +207,11 @@ class FinnhubPoller(BasePoller):
           symbol: str:
 
         Returns:
+
+        Args:
+          symbol: str:
+
+        Returns:
         """
         # Track polling metrics indicating a successful polling operation
         track_polling_metrics("success", "Finnhub", symbol)
@@ -209,6 +231,12 @@ class FinnhubPoller(BasePoller):
         Returns:
         -------
             None
+
+        Args:
+          symbol: str:
+          error: str:
+
+        Returns:
 
         Args:
           symbol: str:

@@ -32,6 +32,12 @@ def request_with_timeout(url: str, timeout: int = 10) -> dict | None:
       timeout: int:  (Default value = 10)
 
     Returns:
+
+    Args:
+      url: str:
+      timeout: int:  (Default value = 10)
+
+    Returns:
     """
     # Check if the URL is empty
     if not url:

@@ -52,6 +52,7 @@ class QuandlPoller(BasePoller):
         Args:
           symbols(list[str]): List of stock symbols to poll.
           symbols: list[str]:
+          symbols: list[str]:
 
         Returns:
         """
@@ -105,6 +106,11 @@ class QuandlPoller(BasePoller):
           symbol: str:
 
         Returns:
+
+        Args:
+          symbol: str:
+
+        Returns:
         """
 
         def request_func():
@@ -128,6 +134,13 @@ class QuandlPoller(BasePoller):
         Returns:
         -------
             dict[str, Any]: Processed data in the payload format.
+
+        Args:
+          symbol: str:
+          data: dict[str:
+          Any]:
+
+        Returns:
 
         Args:
           symbol: str:
@@ -161,6 +174,7 @@ class QuandlPoller(BasePoller):
 
         Args:
           symbol: str:
+          symbol: str:
 
         Returns:
         """
@@ -172,6 +186,8 @@ class QuandlPoller(BasePoller):
         Tracks failure metrics for polling and logs the error.
 
         Args:
+          symbol: str:
+          error: str:
           symbol: str:
           error: str:
 

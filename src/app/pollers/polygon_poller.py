@@ -49,6 +49,7 @@ class PolygonPoller(BasePoller):
         Args:
           symbols(list[str]): List of stock symbols.
           symbols: list[str]:
+          symbols: list[str]:
 
         Returns:
         """
@@ -93,6 +94,11 @@ class PolygonPoller(BasePoller):
           symbol: str:
 
         Returns:
+
+        Args:
+          symbol: str:
+
+        Returns:
         """
 
         def request_func():
@@ -127,6 +133,13 @@ class PolygonPoller(BasePoller):
           Any]:
 
         Returns:
+
+        Args:
+          symbol: str:
+          data: dict[str:
+          Any]:
+
+        Returns:
         """
         result = data["results"][0]
 
@@ -151,6 +164,7 @@ class PolygonPoller(BasePoller):
         Args:
           symbol(str): The stock symbol.
           symbol: str:
+          symbol: str:
 
         Returns:
         """
@@ -164,6 +178,8 @@ class PolygonPoller(BasePoller):
         Args:
           symbol(str): The stock symbol.
           error(str): The error message.
+          symbol: str:
+          error: str:
           symbol: str:
           error: str:
 

@@ -363,6 +363,7 @@ class QueueSender:
 
         Args:
           data: dict:
+          data: dict:
 
         Returns:
         """
@@ -387,6 +388,7 @@ class QueueSender:
         Send a message to RabbitMQ (with retry).
 
         Args:
+          data: dict:
           data: dict:
 
         Returns:
@@ -415,6 +417,7 @@ class QueueSender:
         Send a message to AWS SQS (with retry).
 
         Args:
+          data: dict:
           data: dict:
 
         Returns:

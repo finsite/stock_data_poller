@@ -64,6 +64,11 @@ class AlphaVantagePoller(BasePoller):
           symbols: list[str]:
 
         Returns:
+
+        Args:
+          symbols: list[str]:
+
+        Returns:
         """
         for symbol in symbols:
             try:
@@ -106,6 +111,10 @@ class AlphaVantagePoller(BasePoller):
         Args:
 
         Returns:
+
+        Args:
+
+        Returns:
         """
         self.rate_limiter.acquire(context="AlphaVantage")
 
@@ -124,6 +133,11 @@ class AlphaVantagePoller(BasePoller):
         Raises:
         ------
             ValueError: If no data is returned.
+
+        Args:
+          symbol: str:
+
+        Returns:
 
         Args:
           symbol: str:
@@ -164,6 +178,13 @@ class AlphaVantagePoller(BasePoller):
           Any]:
 
         Returns:
+
+        Args:
+          symbol: str:
+          data: dict[str:
+          Any]:
+
+        Returns:
         """
         time_series = data.get("Time Series (5min)")
         if not time_series:
@@ -191,7 +212,8 @@ class AlphaVantagePoller(BasePoller):
         Tracks success metrics for polling and requests.
 
         Args:
-          symbol (str)(The stock symbol that was successfully polled.):
+          symbol(str):
+          symbol: str:
           symbol: str:
 
         Returns:
@@ -210,6 +232,8 @@ class AlphaVantagePoller(BasePoller):
         symbol. It logs the error and tracks the failure metrics.
 
         Args:
+          symbol: str:
+          error: str:
           symbol: str:
           error: str:
 
