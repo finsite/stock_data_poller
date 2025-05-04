@@ -47,8 +47,10 @@ class PolygonPoller(BasePoller):
         Poll data for the given list of stock symbols.
 
         Args:
-        ----
-            symbols (list[str]): List of stock symbols.
+          symbols(list[str]): List of stock symbols.
+          symbols: list[str]:
+
+        Returns:
         """
         for symbol in symbols:
             try:
@@ -86,9 +88,15 @@ class PolygonPoller(BasePoller):
         Returns:
         -------
             dict[str, Any]: The raw response data.
+
+        Args:
+          symbol: str:
+
+        Returns:
         """
 
         def request_func():
+            """"""
             url = (
                 f"https://api.polygon.io/v2/aggs/ticker/{symbol}/prev?"
                 f"adjusted=true&apiKey={self.api_key}"
@@ -112,6 +120,13 @@ class PolygonPoller(BasePoller):
         Returns:
         -------
             dict[str, Any]: Formatted payload.
+
+        Args:
+          symbol: str:
+          data: dict[str:
+          Any]:
+
+        Returns:
         """
         result = data["results"][0]
 
@@ -134,8 +149,10 @@ class PolygonPoller(BasePoller):
         Track success metrics for polling.
 
         Args:
-        ----
-            symbol (str): The stock symbol.
+          symbol(str): The stock symbol.
+          symbol: str:
+
+        Returns:
         """
         track_polling_metrics("success", "Polygon", symbol)
         track_request_metrics(symbol, 30, 5)
@@ -145,9 +162,12 @@ class PolygonPoller(BasePoller):
         Track failure metrics and log error.
 
         Args:
-        ----
-            symbol (str): The stock symbol.
-            error (str): The error message.
+          symbol(str): The stock symbol.
+          error(str): The error message.
+          symbol: str:
+          error: str:
+
+        Returns:
         """
         track_polling_metrics("failure", "Polygon", symbol)
         track_request_metrics(symbol, 30, 5, success=False)

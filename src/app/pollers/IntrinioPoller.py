@@ -29,6 +29,7 @@ class IntrinioPoller(BasePoller):
         self.auth = (get_intrinio_key(), "")  # Intrinio uses basic auth with API key as username
 
     def poll(self) -> list[dict[str, Any]]:
+        """"""
         results = []
         for symbol in self.symbols:
             try:
@@ -64,6 +65,14 @@ class IntrinioPoller(BasePoller):
         return results
 
     def _process_data(self, symbol: str, price: dict[str, Any]) -> dict[str, Any]:
+        """Args:
+          symbol: str:
+          price: dict[str:
+          Any]:
+
+        Returns:
+
+        """
         return {
             "symbol": symbol,
             "timestamp": price["date"],
@@ -79,10 +88,23 @@ class IntrinioPoller(BasePoller):
         }
 
     def _handle_success(self, symbol: str) -> None:
+        """Args:
+          symbol: str:
+
+        Returns:
+
+        """
         track_polling_metrics("success", "Intrinio", symbol)
         track_request_metrics(symbol, 30, 5)
 
     def _handle_failure(self, symbol: str, error: str) -> None:
+        """Args:
+          symbol: str:
+          error: str:
+
+        Returns:
+
+        """
         track_polling_metrics("failure", "Intrinio", symbol)
         track_request_metrics(symbol, 30, 5, success=False)
         logger.error(f"Intrinio polling error for {symbol}: {error}")

@@ -55,6 +55,11 @@ class IEXPoller(BasePoller):
         This method polls the IEX Cloud API for the given symbols and sends the
         fetched data to the message queue. If any error occurs during polling, the
         error is tracked and logged.
+
+        Args:
+          symbols: list[str]:
+
+        Returns:
         """
         for symbol in symbols:
             try:
@@ -91,6 +96,10 @@ class IEXPoller(BasePoller):
         Returns:
         -------
             None
+
+        Args:
+
+        Returns:
         """
         self.rate_limiter.acquire(context="IEX")
 
@@ -98,12 +107,14 @@ class IEXPoller(BasePoller):
         """
         Fetches stock data for the given symbol from the IEX Cloud API.
 
-        Raises
-        ------
-        ValueError: If no data is returned from the API.
+        Args:
+          symbol: str:
+
+        Returns:
         """
 
         def request_func():
+            """"""
             url = f"https://cloud.iexapis.com/stable/stock/{symbol}/quote?token={self.api_key}"
             return request_with_timeout(url)
 
@@ -125,6 +136,12 @@ class IEXPoller(BasePoller):
             dict[str, Any]: Processed data in the payload format, including stock
                 symbol (str), timestamp (int), latest price (float), and additional
                 stock data (dict[str, float|int]).
+
+        Args:
+          data: dict[str:
+          Any]:
+
+        Returns:
         """
         # Extract and format the processed data
         return {
@@ -155,6 +172,11 @@ class IEXPoller(BasePoller):
         Returns:
         -------
             None
+
+        Args:
+          symbol: str:
+
+        Returns:
         """
         # Validate status to ensure it is either 'success' or 'failure'
         track_polling_metrics("success", "IEX", symbol)
@@ -168,14 +190,13 @@ class IEXPoller(BasePoller):
         This method is called when polling for a stock symbol fails. It logs
         the error and tracks the failure metrics for monitoring purposes.
 
-        Parameters
-        ----------
-        symbol (str): The stock symbol for which polling failed.
-        error (str): The error message describing the failure.
+        Args:
+          symbol (str)(The stock symbol for which polling failed.):
+          error (str)(The error message describing the failure.):
+          symbol: str:
+          error: str:
 
-        Returns
-        -------
-        None
+        Returns:
         """
         # Log the error message for debugging purposes
         logger.error(f"IEX polling error for {symbol}: {error}")

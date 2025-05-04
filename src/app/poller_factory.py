@@ -105,6 +105,10 @@ class PollerFactory:
     Factory class for creating pollers dynamically based on POLLER_TYPE.
 
     Validates only the required API key for the selected poller, except for `yfinance`.
+
+    Args:
+
+    Returns:
     """
 
     def __init__(self) -> None:
@@ -133,14 +137,7 @@ class PollerFactory:
         validate_environment_variables(keys_to_validate)
 
     def create_poller(self):
-        """
-        Creates an instance of the poller based on POLLER_TYPE.
-
-        Returns
-        -------
-        BasePoller
-            An instance of the poller class.
-        """
+        """Creates an instance of the poller based on POLLER_TYPE."""
         if self.poller_type == "iex":
             logger.info("Using IEX Poller.")
             return IEXPoller()

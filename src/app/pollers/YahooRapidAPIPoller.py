@@ -46,6 +46,7 @@ class YahooRapidAPIPoller(BasePoller):
         }
 
     def poll(self) -> list[dict[str, Any]]:
+        """"""
         results = []
         for symbol in self.symbols:
             try:
@@ -93,6 +94,13 @@ class YahooRapidAPIPoller(BasePoller):
                 - price (float): The latest price of the stock.
                 - source (str): The source of the data, "YahooRapidAPI".
                 - data (dict[str, float]): The additional data fields.
+
+        Args:
+          symbol: str:
+          price_info: dict[str:
+          Any]:
+
+        Returns:
         """
         return {
             "symbol": symbol,
@@ -118,10 +126,23 @@ class YahooRapidAPIPoller(BasePoller):
         }
 
     def _handle_success(self, symbol: str) -> None:
+        """Args:
+          symbol: str:
+
+        Returns:
+
+        """
         track_polling_metrics("success", "YahooRapidAPI", symbol)
         track_request_metrics(symbol, 30, 5)
 
     def _handle_failure(self, symbol: str, error: str) -> None:
+        """Args:
+          symbol: str:
+          error: str:
+
+        Returns:
+
+        """
         track_polling_metrics("failure", "YahooRapidAPI", symbol)
         track_request_metrics(symbol, 30, 5, success=False)
         logger.error(f"YahooRapidAPI polling error for {symbol}: {error}")

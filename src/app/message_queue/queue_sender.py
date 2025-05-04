@@ -281,6 +281,10 @@ class QueueSender:
 
     Supports configuration for either queue type. Handles message serialization,
     dispatch, connection setup, and cleanup.
+
+    Args:
+
+    Returns:
     """
 
     def __init__(self) -> None:
@@ -354,7 +358,14 @@ class QueueSender:
         logger.info("SQS client initialized.")
 
     def send_message(self, data: dict) -> None:
-        """Send a message to the configured queue."""
+        """
+        Send a message to the configured queue.
+
+        Args:
+          data: dict:
+
+        Returns:
+        """
         try:
             if self.queue_type == "rabbitmq":
                 self._send_to_rabbitmq(data)
@@ -372,7 +383,14 @@ class QueueSender:
         reraise=True,
     )
     def _send_to_rabbitmq(self, data: dict) -> None:
-        """Send a message to RabbitMQ (with retry)."""
+        """
+        Send a message to RabbitMQ (with retry).
+
+        Args:
+          data: dict:
+
+        Returns:
+        """
         message_body = json.dumps(data)
         self.channel.basic_publish(
             exchange=self.rabbitmq_exchange or "",
@@ -393,7 +411,14 @@ class QueueSender:
         reraise=True,
     )
     def _send_to_sqs(self, data: dict) -> None:
-        """Send a message to AWS SQS (with retry)."""
+        """
+        Send a message to AWS SQS (with retry).
+
+        Args:
+          data: dict:
+
+        Returns:
+        """
         message_body = json.dumps(data)
         self.sqs.send_message(QueueUrl=self.sqs_queue_url, MessageBody=message_body)
         logger.info(f"Message sent to SQS queue: {self.sqs_queue_url}")

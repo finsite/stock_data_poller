@@ -92,7 +92,15 @@ class BasePoller:
         self.rate_limiter = RateLimiter(max_requests=get_rate_limit(), time_window=60)
 
     def send_to_queue(self, payload: dict[str, Any]) -> None:
-        """Sends the processed payload to the configured queue (SQS or RabbitMQ)."""
+        """
+        Sends the processed payload to the configured queue (SQS or RabbitMQ).
+
+        Args:
+          payload: dict[str:
+          Any]:
+
+        Returns:
+        """
         try:
             self.rate_limiter.acquire(context="QueueSender")
             self.queue_sender.send_message(payload)

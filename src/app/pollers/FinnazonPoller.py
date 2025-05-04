@@ -32,6 +32,7 @@ class FinnazonPoller(BasePoller):
         }
 
     def poll(self) -> list[dict[str, Any]]:
+        """"""
         results = []
         for symbol in self.symbols:
             try:
@@ -67,6 +68,14 @@ class FinnazonPoller(BasePoller):
         return results
 
     def _process_data(self, symbol: str, quote: dict[str, Any]) -> dict[str, Any]:
+        """Args:
+          symbol: str:
+          quote: dict[str:
+          Any]:
+
+        Returns:
+
+        """
         return {
             "symbol": symbol,
             "timestamp": quote["date"],
@@ -82,10 +91,23 @@ class FinnazonPoller(BasePoller):
         }
 
     def _handle_success(self, symbol: str) -> None:
+        """Args:
+          symbol: str:
+
+        Returns:
+
+        """
         track_polling_metrics("success", "Finnazon", symbol)
         track_request_metrics(symbol, 30, 5)
 
     def _handle_failure(self, symbol: str, error: str) -> None:
+        """Args:
+          symbol: str:
+          error: str:
+
+        Returns:
+
+        """
         track_polling_metrics("failure", "Finnazon", symbol)
         track_request_metrics(symbol, 30, 5, success=False)
         logger.error(f"Finnazon polling error for {symbol}: {error}")

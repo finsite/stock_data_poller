@@ -39,8 +39,10 @@ class YFinancePoller(BasePoller):
         Polls data for the specified symbols using yfinance.
 
         Args:
-        ----
-            symbols (list[str]): The stock symbols to fetch data for.
+          symbols(list[str]): The stock symbols to fetch data for.
+          symbols: list[str]:
+
+        Returns:
         """
         for symbol in symbols:
             try:
@@ -78,6 +80,11 @@ class YFinancePoller(BasePoller):
         Returns:
         -------
             Any: A DataFrame or None if no data is found.
+
+        Args:
+          symbol: str:
+
+        Returns:
         """
         ticker = yf.Ticker(symbol)
         data = ticker.history(period="1d", interval="5m")
@@ -96,6 +103,12 @@ class YFinancePoller(BasePoller):
         Returns:
         -------
             dict[str, Any]: A structured payload dictionary.
+
+        Args:
+          symbol: str:
+          data: Any:
+
+        Returns:
         """
         latest_data = data.iloc[-1]
         timestamp = latest_data.name.isoformat()
@@ -119,8 +132,10 @@ class YFinancePoller(BasePoller):
         Tracks success metrics for polling and requests.
 
         Args:
-        ----
-            symbol (str): The stock symbol.
+          symbol(str): The stock symbol.
+          symbol: str:
+
+        Returns:
         """
         track_polling_metrics("success", "YFinance", symbol)
         track_request_metrics(symbol, 30, 5)
@@ -130,9 +145,12 @@ class YFinancePoller(BasePoller):
         Tracks failure metrics and logs the error.
 
         Args:
-        ----
-            symbol (str): The stock symbol.
-            error (str): The error message.
+          symbol(str): The stock symbol.
+          error(str): The error message.
+          symbol: str:
+          error: str:
+
+        Returns:
         """
         track_polling_metrics("failure", "YFinance", symbol)
         track_request_metrics(symbol, 30, 5, success=False)

@@ -59,6 +59,11 @@ class AlphaVantagePoller(BasePoller):
         Returns:
         -------
             None: This function does not return a value.
+
+        Args:
+          symbols: list[str]:
+
+        Returns:
         """
         for symbol in symbols:
             try:
@@ -97,6 +102,10 @@ class AlphaVantagePoller(BasePoller):
         Returns:
         -------
             None
+
+        Args:
+
+        Returns:
         """
         self.rate_limiter.acquire(context="AlphaVantage")
 
@@ -115,9 +124,15 @@ class AlphaVantagePoller(BasePoller):
         Raises:
         ------
             ValueError: If no data is returned.
+
+        Args:
+          symbol: str:
+
+        Returns:
         """
 
         def request_func():
+            """"""
             url = (
                 f"https://www.alphavantage.co/query?"
                 f"function=TIME_SERIES_INTRADAY&symbol={symbol}"
@@ -142,6 +157,13 @@ class AlphaVantagePoller(BasePoller):
         Returns:
         -------
             dict[str, Any]: Transformed payload.
+
+        Args:
+          symbol: str:
+          data: dict[str:
+          Any]:
+
+        Returns:
         """
         time_series = data.get("Time Series (5min)")
         if not time_series:
@@ -168,13 +190,11 @@ class AlphaVantagePoller(BasePoller):
         """
         Tracks success metrics for polling and requests.
 
-        Parameters
-        ----------
-        symbol (str): The stock symbol that was successfully polled.
+        Args:
+          symbol (str)(The stock symbol that was successfully polled.):
+          symbol: str:
 
-        Returns
-        -------
-        None
+        Returns:
         """
         # Track polling metrics indicating a successful polling operation
         track_polling_metrics("success", "AlphaVantage", symbol)
@@ -189,10 +209,11 @@ class AlphaVantagePoller(BasePoller):
         This method is called when the poller fails to fetch data for a given
         symbol. It logs the error and tracks the failure metrics.
 
-        Parameters
-        ----------
-        symbol (str): The stock symbol for which polling failed.
-        error (str): The error message describing the failure.
+        Args:
+          symbol: str:
+          error: str:
+
+        Returns:
         """
         # Log the error for debugging purposes
         logger.error(f"AlphaVantage poll failed for {symbol}: {error}")

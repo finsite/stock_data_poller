@@ -50,8 +50,10 @@ class QuandlPoller(BasePoller):
         Polls data for the specified symbols from Quandl API.
 
         Args:
-        ----
-            symbols (list[str]): List of stock symbols to poll.
+          symbols(list[str]): List of stock symbols to poll.
+          symbols: list[str]:
+
+        Returns:
         """
         for symbol in symbols:
             try:
@@ -80,6 +82,10 @@ class QuandlPoller(BasePoller):
 
         The rate limit is set to X requests per minute. If the rate limit is exceeded,
         the function will block until the limit is replenished.
+
+        Args:
+
+        Returns:
         """
         self.rate_limiter.acquire(context="Quandl")
 
@@ -94,9 +100,15 @@ class QuandlPoller(BasePoller):
         Returns:
         -------
             dict[str, Any]: Fetched data in the format returned by the Quandl API.
+
+        Args:
+          symbol: str:
+
+        Returns:
         """
 
         def request_func():
+            """"""
             url = (
                 f"https://data.nasdaq.com/api/v3/datasets/WIKI/{symbol}.json?api_key={self.api_key}"
             )
@@ -116,6 +128,13 @@ class QuandlPoller(BasePoller):
         Returns:
         -------
             dict[str, Any]: Processed data in the payload format.
+
+        Args:
+          symbol: str:
+          data: dict[str:
+          Any]:
+
+        Returns:
         """
         dataset = data["dataset"]
         latest_row = dataset["data"][0]
@@ -140,10 +159,10 @@ class QuandlPoller(BasePoller):
         """
         Tracks success metrics for polling and requests.
 
-        Parameters
-        ----------
-            symbol : str
-                The symbol for which polling was performed.
+        Args:
+          symbol: str:
+
+        Returns:
         """
         track_polling_metrics("success", "Quandl", symbol)
         track_request_metrics(symbol, 30, 5)
@@ -152,10 +171,11 @@ class QuandlPoller(BasePoller):
         """
         Tracks failure metrics for polling and logs the error.
 
-        Parameters
-        ----------
-            symbol (str): The stock symbol for which polling failed.
-            error (str): The error message describing the failure.
+        Args:
+          symbol: str:
+          error: str:
+
+        Returns:
         """
         track_polling_metrics("failure", "Quandl", symbol)
         track_request_metrics(symbol, 30, 5, success=False)
