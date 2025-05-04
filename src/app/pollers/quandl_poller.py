@@ -100,9 +100,9 @@ class QuandlPoller(BasePoller):
             url = (
                 f"https://data.nasdaq.com/api/v3/datasets/WIKI/{symbol}.json?api_key={self.api_key}"
             )
-            return request_with_timeout("GET", url)
+            return request_with_timeout(url)
 
-        return retry_request(request_func)
+        return retry_request(request_func) or {}
 
     def _process_data(self, symbol: str, data: dict[str, Any]) -> dict[str, Any]:
         """

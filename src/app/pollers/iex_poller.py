@@ -98,20 +98,19 @@ class IEXPoller(BasePoller):
         """
         Fetches stock data for the given symbol from the IEX Cloud API.
 
-        Args:
-        ----
-            symbol (str): Stock symbol to fetch data for.
-
-        Returns:
-        -------
-            dict[str, Any]: Fetched data from the IEX API.
+        Raises
+        ------
+        ValueError: If no data is returned from the API.
         """
 
-        def request_func() -> dict[str, Any]:
+        def request_func():
             url = f"https://cloud.iexapis.com/stable/stock/{symbol}/quote?token={self.api_key}"
-            return request_with_timeout("GET", url)
+            return request_with_timeout(url)
 
-        return retry_request(request_func)
+        data = retry_request(request_func)
+        if data is None:
+            raise ValueError(f"IEX API returned no data for symbol: {symbol}")
+        return data
 
     def _process_data(self, data: dict[str, Any]) -> dict[str, Any]:
         """

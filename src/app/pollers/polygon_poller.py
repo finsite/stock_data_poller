@@ -93,9 +93,12 @@ class PolygonPoller(BasePoller):
                 f"https://api.polygon.io/v2/aggs/ticker/{symbol}/prev?"
                 f"adjusted=true&apiKey={self.api_key}"
             )
-            return request_with_timeout("GET", url)
+            return request_with_timeout(url)
 
-        return retry_request(request_func)
+        data = retry_request(request_func)
+        if data is None:
+            raise ValueError(f"Polygon API returned no data for symbol: {symbol}")
+        return data
 
     def _process_data(self, symbol: str, data: dict[str, Any]) -> dict[str, Any]:
         """

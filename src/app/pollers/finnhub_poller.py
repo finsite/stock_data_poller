@@ -120,34 +120,23 @@ class FinnhubPoller(BasePoller):
         """
         Fetches stock data for the given symbol from Finnhub using the quote endpoint.
 
-        The function makes a GET request to the Finnhub API with the symbol and API key.
-        The response is expected to be a JSON object containing the current price,
-        high, low, open, and previous close prices for the given symbol.
-
-        Args:
-        ----
-            symbol (str): The symbol to fetch data for.
-
-        Returns:
+        Returns
         -------
-            dict[str, Any]: The fetched data.
+        dict[str, Any]: The fetched data.
+
+        Raises
+        ------
+        ValueError: If no data is returned from the API.
         """
 
-        def request_func() -> dict[str, Any]:
-            """
-            Makes a GET request to the Finnhub API to fetch the quote data.
-
-            The request is made with the symbol and API key as query parameters.
-            The response is expected to be a JSON object containing the quote data.
-
-            Returns
-            -------
-                dict[str, Any]: The fetched data.
-            """
+        def request_func():
             url = f"https://finnhub.io/api/v1/quote?symbol={symbol}&token={self.api_key}"
-            return request_with_timeout("GET", url)
+            return request_with_timeout(url, timeout=30)
 
-        return retry_request(request_func)
+        data = retry_request(request_func)
+        if data is None:
+            raise ValueError(f"Finnhub API returned no data for symbol: {symbol}")
+        return data
 
     def _process_data(self, symbol: str, data: dict[str, Any]) -> dict[str, Any]:
         """

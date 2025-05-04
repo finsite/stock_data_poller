@@ -102,25 +102,33 @@ class AlphaVantagePoller(BasePoller):
 
     def _fetch_data(self, symbol: str) -> dict[str, Any]:
         """
-        Fetches data for the given symbol from AlphaVantage API.
+        Fetches stock data for the given symbol from the Alpha Vantage API.
 
         Args:
         ----
-            symbol (str): The stock symbol.
+            symbol (str): Stock symbol to fetch data for.
 
         Returns:
         -------
-            dict[str, Any]: The fetched data from AlphaVantage.
+            dict[str, Any]: Parsed response from Alpha Vantage.
+
+        Raises:
+        ------
+            ValueError: If no data is returned.
         """
 
-        def request_func() -> dict[str, Any]:
+        def request_func():
             url = (
-                "https://www.alphavantage.co/query"
-                f"?function=TIME_SERIES_INTRADAY&symbol={symbol}&interval=5min&apikey={self.api_key}"
+                f"https://www.alphavantage.co/query?"
+                f"function=TIME_SERIES_INTRADAY&symbol={symbol}"
+                f"&interval=1min&apikey={self.api_key}&outputsize=compact"
             )
-            return request_with_timeout(url)
+            return request_with_timeout(url, timeout=30)
 
-        return retry_request(request_func)
+        data = retry_request(request_func)
+        if data is None:
+            raise ValueError(f"Alpha Vantage API returned no data for symbol: {symbol}")
+        return data
 
     def _process_data(self, symbol: str, data: dict[str, Any]) -> dict[str, Any]:
         """
