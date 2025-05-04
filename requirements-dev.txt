@@ -70,7 +70,7 @@ httpcore==1.0.9
     # via httpx
 httpx==0.28.1
     # via safety
-hvac==2.3.0
+hvac==1.2.1
     # via -r D:\git\stock_data_poller\requirements.in
 idna==3.10
     # via
@@ -158,6 +158,8 @@ pyflakes==3.3.2
     # via flake8
 pygments==2.19.1
     # via rich
+pyhcl==0.4.5
+    # via hvac
 pyparsing==3.2.3
     # via matplotlib
 pytest==8.3.5
