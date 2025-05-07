@@ -1,6 +1,5 @@
 # Changelog
 
-
 - Merge branch 'main' of https://github.com/finsite/stock_data_poller (Mark
   Quinn)
 - Making sure Dockerfile is correct (Mark Quinn)

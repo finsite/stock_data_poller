@@ -74,6 +74,8 @@ class FinnazonPoller(BasePoller):
           Any]:
           symbol: str:
           quote: dict[str:
+          symbol: str:
+          quote: dict[str:
 
         Returns:
 
@@ -96,6 +98,7 @@ class FinnazonPoller(BasePoller):
         """Args:
           symbol: str:
           symbol: str:
+          symbol: str:
 
         Returns:
 
@@ -105,6 +108,8 @@ class FinnazonPoller(BasePoller):
 
     def _handle_failure(self, symbol: str, error: str) -> None:
         """Args:
+          symbol: str:
+          error: str:
           symbol: str:
           error: str:
           symbol: str:

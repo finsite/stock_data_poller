@@ -1,5 +1,4 @@
-"""
-Initialize the stock polling logic for the application.
+"""Initialize the stock polling logic for the application.
 
 Pollers included:
 - BasePoller: Abstract base class for all pollers, providing common functionality.
@@ -14,6 +13,7 @@ Note:
 ----
     This module imports and exports poller classes for use across the application
     and sets up the package-level logger.
+
 """
 
 import logging

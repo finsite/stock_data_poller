@@ -237,8 +237,7 @@
 #                 logger.warning(f"SQS health check failed: {e}")
 #                 return False
 #         return False
-"""
-QueueSender module for message delivery to RabbitMQ or AWS SQS.
+"""QueueSender module for message delivery to RabbitMQ or AWS SQS.
 
 This module defines the QueueSender class, which sends messages to a configured RabbitMQ
 or Amazon SQS queue and supports proper connection cleanup.
@@ -276,8 +275,7 @@ logger = setup_logger(__name__)
 
 
 class QueueSender:
-    """
-    A class for sending messages to a RabbitMQ or SQS queue.
+    """A class for sending messages to a RabbitMQ or SQS queue.
 
     Supports configuration for either queue type. Handles message serialization,
     dispatch, connection setup, and cleanup.
@@ -285,6 +283,7 @@ class QueueSender:
     Args:
 
     Returns:
+
     """
 
     def __init__(self) -> None:
@@ -358,14 +357,15 @@ class QueueSender:
         logger.info("SQS client initialized.")
 
     def send_message(self, data: dict) -> None:
-        """
-        Send a message to the configured queue.
+        """Send a message to the configured queue.
 
         Args:
           data: dict:
           data: dict:
+          data: dict:
 
         Returns:
+
         """
         try:
             if self.queue_type == "rabbitmq":
@@ -384,14 +384,15 @@ class QueueSender:
         reraise=True,
     )
     def _send_to_rabbitmq(self, data: dict) -> None:
-        """
-        Send a message to RabbitMQ (with retry).
+        """Send a message to RabbitMQ (with retry).
 
         Args:
           data: dict:
           data: dict:
+          data: dict:
 
         Returns:
+
         """
         message_body = json.dumps(data)
         self.channel.basic_publish(
@@ -413,14 +414,15 @@ class QueueSender:
         reraise=True,
     )
     def _send_to_sqs(self, data: dict) -> None:
-        """
-        Send a message to AWS SQS (with retry).
+        """Send a message to AWS SQS (with retry).
 
         Args:
           data: dict:
           data: dict:
+          data: dict:
 
         Returns:
+
         """
         message_body = json.dumps(data)
         self.sqs.send_message(QueueUrl=self.sqs_queue_url, MessageBody=message_body)

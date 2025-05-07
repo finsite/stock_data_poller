@@ -1,5 +1,4 @@
-"""
-Poller for fetching stock data from AlphaVantage API.
+"""Poller for fetching stock data from AlphaVantage API.
 
 The AlphaVantagePoller class fetches the daily data for the given symbols from the
 AlphaVantage API and sends it to the message queue.
@@ -28,13 +27,13 @@ class AlphaVantagePoller(BasePoller):
     """Poller for fetching stock data from AlphaVantage API."""
 
     def __init__(self) -> None:
-        """
-        Initializes the AlphaVantagePoller with rate limit and API key.
+        """Initializes the AlphaVantagePoller with rate limit and API key.
 
         Raises
         ------
         ValueError
             If the ALPHA_VANTAGE_API_KEY environment variable is not set.
+
         """
         super().__init__()
 
@@ -49,8 +48,7 @@ class AlphaVantagePoller(BasePoller):
         )
 
     def poll(self, symbols: list[str]) -> None:
-        """
-        Polls data for the specified symbols from AlphaVantage API.
+        """Polls data for the specified symbols from AlphaVantage API.
 
         Args:
         ----
@@ -69,6 +67,12 @@ class AlphaVantagePoller(BasePoller):
           symbols: list[str]:
 
         Returns:
+
+        Args:
+          symbols: list[str]:
+
+        Returns:
+
         """
         for symbol in symbols:
             try:
@@ -94,8 +98,7 @@ class AlphaVantagePoller(BasePoller):
                 self._handle_failure(symbol, str(e))
 
     def _enforce_rate_limit(self) -> None:
-        """
-        Enforces the rate limit using the RateLimiter class.
+        """Enforces the rate limit using the RateLimiter class.
 
         Acquires permission to proceed with a request. Blocks if the rate limit is
         exceeded.
@@ -115,12 +118,16 @@ class AlphaVantagePoller(BasePoller):
         Args:
 
         Returns:
+
+        Args:
+
+        Returns:
+
         """
         self.rate_limiter.acquire(context="AlphaVantage")
 
     def _fetch_data(self, symbol: str) -> dict[str, Any]:
-        """
-        Fetches stock data for the given symbol from the Alpha Vantage API.
+        """Fetches stock data for the given symbol from the Alpha Vantage API.
 
         Args:
         ----
@@ -143,6 +150,12 @@ class AlphaVantagePoller(BasePoller):
           symbol: str:
 
         Returns:
+
+        Args:
+          symbol: str:
+
+        Returns:
+
         """
 
         def request_func():
@@ -160,8 +173,7 @@ class AlphaVantagePoller(BasePoller):
         return data
 
     def _process_data(self, symbol: str, data: dict[str, Any]) -> dict[str, Any]:
-        """
-        Processes the latest time series data into a standardized payload.
+        """Processes the latest time series data into a standardized payload.
 
         Args:
         ----
@@ -185,6 +197,14 @@ class AlphaVantagePoller(BasePoller):
           Any]:
 
         Returns:
+
+        Args:
+          symbol: str:
+          data: dict[str:
+          Any]:
+
+        Returns:
+
         """
         time_series = data.get("Time Series (5min)")
         if not time_series:
@@ -208,15 +228,16 @@ class AlphaVantagePoller(BasePoller):
         }
 
     def _handle_success(self, symbol: str) -> None:
-        """
-        Tracks success metrics for polling and requests.
+        """Tracks success metrics for polling and requests.
 
         Args:
           symbol(str):
           symbol: str:
           symbol: str:
+          symbol: str:
 
         Returns:
+
         """
         # Track polling metrics indicating a successful polling operation
         track_polling_metrics("success", "AlphaVantage", symbol)
@@ -225,8 +246,7 @@ class AlphaVantagePoller(BasePoller):
         track_request_metrics(symbol, 30, 5)
 
     def _handle_failure(self, symbol: str, error: str) -> None:
-        """
-        Tracks failure metrics and logs the error.
+        """Tracks failure metrics and logs the error.
 
         This method is called when the poller fails to fetch data for a given
         symbol. It logs the error and tracks the failure metrics.
@@ -236,8 +256,11 @@ class AlphaVantagePoller(BasePoller):
           error: str:
           symbol: str:
           error: str:
+          symbol: str:
+          error: str:
 
         Returns:
+
         """
         # Log the error for debugging purposes
         logger.error(f"AlphaVantage poll failed for {symbol}: {error}")

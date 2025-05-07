@@ -1,5 +1,4 @@
-"""
-The module provides a poller class for fetching stock data using the Finnhub API.
+"""The module provides a poller class for fetching stock data using the Finnhub API.
 
 The module uses the following libraries:
 - app.config: To get the rate limit for the poller and the Finnhub API key.
@@ -34,13 +33,13 @@ class FinnhubPoller(BasePoller):
     """Poller for fetching stock quotes from Finnhub API."""
 
     def __init__(self) -> None:
-        """
-        Initializes the FinnhubPoller with necessary configurations.
+        """Initializes the FinnhubPoller with necessary configurations.
 
         Raises
         ------
         ValueError
             If the FINNHUB_API_KEY environment variable is not set.
+
         """
         super().__init__()
 
@@ -58,8 +57,7 @@ class FinnhubPoller(BasePoller):
         )
 
     def poll(self, symbols: list[str]) -> None:
-        """
-        Polls data for the specified symbols from Finnhub.
+        """Polls data for the specified symbols from Finnhub.
 
         Args:
         ----
@@ -78,6 +76,12 @@ class FinnhubPoller(BasePoller):
           symbols: list[str]:
 
         Returns:
+
+        Args:
+          symbols: list[str]:
+
+        Returns:
+
         """
         for symbol in symbols:
             try:
@@ -101,8 +105,7 @@ class FinnhubPoller(BasePoller):
                 self._handle_failure(symbol, str(e))
 
     def _enforce_rate_limit(self) -> None:
-        """
-        Enforces the rate limit using the RateLimiter class.
+        """Enforces the rate limit using the RateLimiter class.
 
         This function acquires permission to proceed with a request. If the rate limit
         is exceeded, the function will block until the limit is replenished.
@@ -122,19 +125,25 @@ class FinnhubPoller(BasePoller):
         Args:
 
         Returns:
+
+        Args:
+
+        Returns:
+
         """
         self.rate_limiter.acquire(context="Finnhub")
 
     def _fetch_data(self, symbol: str) -> dict[str, Any]:
-        """
-        Fetches stock data for the given symbol from Finnhub using the quote endpoint.
+        """Fetches stock data for the given symbol from Finnhub using the quote endpoint.
 
         Args:
+          symbol: str:
           symbol: str:
           symbol: str:
 
         Returns:
           The fetched data.:
+
         """
 
         def request_func():
@@ -148,8 +157,7 @@ class FinnhubPoller(BasePoller):
         return data
 
     def _process_data(self, symbol: str, data: dict[str, Any]) -> dict[str, Any]:
-        """
-        Processes the raw data into the payload format.
+        """Processes the raw data into the payload format.
 
         Args:
         ----
@@ -173,6 +181,14 @@ class FinnhubPoller(BasePoller):
           Any]:
 
         Returns:
+
+        Args:
+          symbol: str:
+          data: dict[str:
+          Any]:
+
+        Returns:
+
         """
         return {
             "symbol": symbol,  # str
@@ -189,8 +205,7 @@ class FinnhubPoller(BasePoller):
         }
 
     def _handle_success(self, symbol: str) -> None:
-        """
-        Tracks success metrics for polling and requests.
+        """Tracks success metrics for polling and requests.
 
         Args:
         ----
@@ -212,6 +227,12 @@ class FinnhubPoller(BasePoller):
           symbol: str:
 
         Returns:
+
+        Args:
+          symbol: str:
+
+        Returns:
+
         """
         # Track polling metrics indicating a successful polling operation
         track_polling_metrics("success", "Finnhub", symbol)
@@ -220,8 +241,7 @@ class FinnhubPoller(BasePoller):
         track_request_metrics(symbol, 30, 5)
 
     def _handle_failure(self, symbol: str, error: str) -> None:
-        """
-        Tracks failure metrics for polling and logs the error.
+        """Tracks failure metrics for polling and logs the error.
 
         Args:
         ----
@@ -243,6 +263,13 @@ class FinnhubPoller(BasePoller):
           error: str:
 
         Returns:
+
+        Args:
+          symbol: str:
+          error: str:
+
+        Returns:
+
         """
         # Log the error message for debugging purposes
         logger.error(f"Finnhub polling error for {symbol}: {error}")

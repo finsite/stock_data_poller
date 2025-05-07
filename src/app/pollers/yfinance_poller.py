@@ -22,7 +22,8 @@ class YFinancePoller(BasePoller):
 
     def __init__(self) -> None:
         """Initializes the YFinancePoller with rate limiting and environment
-        validation."""
+        validation.
+        """
         super().__init__()
 
         # Ensure required environment variables are present
@@ -35,15 +36,16 @@ class YFinancePoller(BasePoller):
         )
 
     def poll(self, symbols: list[str]) -> None:
-        """
-        Polls data for the specified symbols using yfinance.
+        """Polls data for the specified symbols using yfinance.
 
         Args:
           symbols(list[str]): The stock symbols to fetch data for.
           symbols: list[str]:
           symbols: list[str]:
+          symbols: list[str]:
 
         Returns:
+
         """
         for symbol in symbols:
             try:
@@ -71,8 +73,7 @@ class YFinancePoller(BasePoller):
         self.rate_limiter.acquire(context="YFinance")
 
     def _fetch_data(self, symbol: str) -> Any:
-        """
-        Fetches recent intraday stock data for the given symbol using yfinance.
+        """Fetches recent intraday stock data for the given symbol using yfinance.
 
         Args:
         ----
@@ -91,6 +92,12 @@ class YFinancePoller(BasePoller):
           symbol: str:
 
         Returns:
+
+        Args:
+          symbol: str:
+
+        Returns:
+
         """
         ticker = yf.Ticker(symbol)
         data = ticker.history(period="1d", interval="5m")
@@ -98,8 +105,7 @@ class YFinancePoller(BasePoller):
         return None if data.empty else data
 
     def _process_data(self, symbol: str, data: Any) -> dict[str, Any]:
-        """
-        Processes the latest row of yfinance data into the standard payload format.
+        """Processes the latest row of yfinance data into the standard payload format.
 
         Args:
         ----
@@ -121,6 +127,13 @@ class YFinancePoller(BasePoller):
           data: Any:
 
         Returns:
+
+        Args:
+          symbol: str:
+          data: Any:
+
+        Returns:
+
         """
         latest_data = data.iloc[-1]
         timestamp = latest_data.name.isoformat()
@@ -140,22 +153,22 @@ class YFinancePoller(BasePoller):
         }
 
     def _handle_success(self, symbol: str) -> None:
-        """
-        Tracks success metrics for polling and requests.
+        """Tracks success metrics for polling and requests.
 
         Args:
           symbol(str): The stock symbol.
           symbol: str:
           symbol: str:
+          symbol: str:
 
         Returns:
+
         """
         track_polling_metrics("success", "YFinance", symbol)
         track_request_metrics(symbol, 30, 5)
 
     def _handle_failure(self, symbol: str, error: str) -> None:
-        """
-        Tracks failure metrics and logs the error.
+        """Tracks failure metrics and logs the error.
 
         Args:
           symbol(str): The stock symbol.
@@ -164,8 +177,11 @@ class YFinancePoller(BasePoller):
           error: str:
           symbol: str:
           error: str:
+          symbol: str:
+          error: str:
 
         Returns:
+
         """
         track_polling_metrics("failure", "YFinance", symbol)
         track_request_metrics(symbol, 30, 5, success=False)
