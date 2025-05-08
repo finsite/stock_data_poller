@@ -99,7 +99,8 @@
 
 # if __name__ == "__main__":
 #     main()
-"""Main application entry point.
+"""
+Main application entry point.
 
 Polls stock data and sends it to RabbitMQ or SQS.
 """

@@ -1,4 +1,5 @@
-"""The module provides a poller class for fetching stock data using the Quandl (now Nasdaq
+"""
+The module provides a poller class for fetching stock data using the Quandl (now Nasdaq
 Data Link) API.
 
 The poller class is QuandlPoller and it inherits the BasePoller class. The poller class
@@ -26,12 +27,12 @@ class QuandlPoller(BasePoller):
     """Poller for fetching stock data from the Quandl (now Nasdaq Data Link) API."""
 
     def __init__(self):
-        """Initializes the QuandlPoller.
+        """
+        Initializes the QuandlPoller.
 
         Raises
         ------
         ValueError: If QUANDL_API_KEY is not set.
-
         """
         super().__init__()
 
@@ -45,16 +46,17 @@ class QuandlPoller(BasePoller):
         )
 
     def poll(self, symbols: list[str]) -> None:
-        """Polls data for the specified symbols from Quandl API.
+        """
+        Polls data for the specified symbols from Quandl API.
 
         Args:
           symbols(list[str]): List of stock symbols to poll.
           symbols: list[str]:
           symbols: list[str]:
           symbols: list[str]:
+          symbols: list[str]:
 
         Returns:
-
         """
         for symbol in symbols:
             try:
@@ -78,7 +80,8 @@ class QuandlPoller(BasePoller):
                 self._handle_failure(symbol, str(e))
 
     def _enforce_rate_limit(self) -> None:
-        """Enforces the rate limit using the RateLimiter class.
+        """
+        Enforces the rate limit using the RateLimiter class.
 
         The rate limit is set to X requests per minute. If the rate limit is exceeded,
         the function will block until the limit is replenished.
@@ -86,12 +89,12 @@ class QuandlPoller(BasePoller):
         Args:
 
         Returns:
-
         """
         self.rate_limiter.acquire(context="Quandl")
 
     def _fetch_data(self, symbol: str) -> dict[str, Any]:
-        """Fetches stock data for the given symbol from Quandl API.
+        """
+        Fetches stock data for the given symbol from Quandl API.
 
         Args:
         ----
@@ -116,6 +119,10 @@ class QuandlPoller(BasePoller):
 
         Returns:
 
+        Args:
+          symbol: str:
+
+        Returns:
         """
 
         def request_func():
@@ -128,7 +135,8 @@ class QuandlPoller(BasePoller):
         return retry_request(request_func) or {}
 
     def _process_data(self, symbol: str, data: dict[str, Any]) -> dict[str, Any]:
-        """Processes the raw data from Quandl API into the payload format.
+        """
+        Processes the raw data from Quandl API into the payload format.
 
         Args:
         ----
@@ -160,6 +168,12 @@ class QuandlPoller(BasePoller):
 
         Returns:
 
+        Args:
+          symbol: str:
+          data: dict[str:
+          Any]:
+
+        Returns:
         """
         dataset = data["dataset"]
         latest_row = dataset["data"][0]
@@ -181,21 +195,23 @@ class QuandlPoller(BasePoller):
         }
 
     def _handle_success(self, symbol: str) -> None:
-        """Tracks success metrics for polling and requests.
+        """
+        Tracks success metrics for polling and requests.
 
         Args:
           symbol: str:
           symbol: str:
           symbol: str:
+          symbol: str:
 
         Returns:
-
         """
         track_polling_metrics("success", "Quandl", symbol)
         track_request_metrics(symbol, 30, 5)
 
     def _handle_failure(self, symbol: str, error: str) -> None:
-        """Tracks failure metrics for polling and logs the error.
+        """
+        Tracks failure metrics for polling and logs the error.
 
         Args:
           symbol: str:
@@ -204,9 +220,10 @@ class QuandlPoller(BasePoller):
           error: str:
           symbol: str:
           error: str:
+          symbol: str:
+          error: str:
 
         Returns:
-
         """
         track_polling_metrics("failure", "Quandl", symbol)
         track_request_metrics(symbol, 30, 5, success=False)

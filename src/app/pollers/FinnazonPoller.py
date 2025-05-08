@@ -68,14 +68,18 @@ class FinnazonPoller(BasePoller):
         return results
 
     def _process_data(self, symbol: str, quote: dict[str, Any]) -> dict[str, Any]:
-        """Args:
+        """
+
+        Args:
           symbol: str:
           quote: dict[str:
-          Any]:
+          Any]: 
           symbol: str:
           quote: dict[str:
           symbol: str:
           quote: dict[str:
+          symbol: str: 
+          quote: dict[str: 
 
         Returns:
 
@@ -95,10 +99,13 @@ class FinnazonPoller(BasePoller):
         }
 
     def _handle_success(self, symbol: str) -> None:
-        """Args:
+        """
+
+        Args:
           symbol: str:
           symbol: str:
           symbol: str:
+          symbol: str: 
 
         Returns:
 
@@ -107,13 +114,17 @@ class FinnazonPoller(BasePoller):
         track_request_metrics(symbol, 30, 5)
 
     def _handle_failure(self, symbol: str, error: str) -> None:
-        """Args:
+        """
+
+        Args:
           symbol: str:
           error: str:
           symbol: str:
           error: str:
           symbol: str:
           error: str:
+          symbol: str: 
+          error: str: 
 
         Returns:
 
