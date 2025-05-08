@@ -1,5 +1,4 @@
-"""
-Configuration module for the stock poller.
+"""Configuration module for the stock poller.
 
 Provides typed getter functions to retrieve configuration values from HashiCorp Vault,
 environment variables, or defaults — in that order.
@@ -21,12 +20,15 @@ _vault = VaultClient()
 
 
 def get_config_value(key: str, default: str | None = None) -> str:
-    """
-    Retrieve a configuration value from Vault, environment variable, or default.
+    """Retrieve a configuration value from Vault, environment variable, or default.
 
     Args:
       key(str): The configuration key to retrieve.
       default(Optional[str]): The fallback value if neither Vault nor environment contain the key.
+      key: str:
+      default: str | None:  (Default value = None)
+      key: str:
+      default: str | None:  (Default value = None)
       key: str:
       default: str | None:  (Default value = None)
       key: str:
@@ -39,6 +41,7 @@ def get_config_value(key: str, default: str | None = None) -> str:
 
     Raises:
       ValueError: If the key is missing and no default is provided.
+
     """
     val = _vault.get(key, os.getenv(key))
     if val is None:

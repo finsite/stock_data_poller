@@ -21,13 +21,13 @@ class YahooRapidAPIPoller(BasePoller):
     """Poller using RapidAPI Yahoo Finance endpoint."""
 
     def __init__(self, symbols: list[str]) -> None:
-        """
-        Initializes the YahooRapidAPIPoller with rate limiting and environment
+        """Initializes the YahooRapidAPIPoller with rate limiting and environment
         validation.
 
         Args:
         ----
             symbols (list[str]): The stock symbols to poll.
+
         """
         super().__init__()
         self.symbols = symbols
@@ -77,8 +77,7 @@ class YahooRapidAPIPoller(BasePoller):
         return results
 
     def _process_data(self, symbol: str, price_info: dict[str, Any]) -> dict[str, Any]:
-        """
-        Processes the raw data from the Yahoo Finance API into a standardized payload
+        """Processes the raw data from the Yahoo Finance API into a standardized payload
         format.
 
         Args:
@@ -122,6 +121,21 @@ class YahooRapidAPIPoller(BasePoller):
           Any]:
 
         Returns:
+
+        Args:
+          symbol: str:
+          price_info: dict[str:
+          Any]:
+
+        Returns:
+
+        Args:
+          symbol: str:
+          price_info: dict[str:
+          Any]:
+
+        Returns:
+
         """
         return {
             "symbol": symbol,
@@ -147,13 +161,13 @@ class YahooRapidAPIPoller(BasePoller):
         }
 
     def _handle_success(self, symbol: str) -> None:
-        """
-
-        Args:
+        """Args:
           symbol: str:
           symbol: str:
           symbol: str:
-          symbol: str: 
+          symbol: str:
+          symbol: str:
+          symbol: str:
 
         Returns:
 
@@ -162,17 +176,19 @@ class YahooRapidAPIPoller(BasePoller):
         track_request_metrics(symbol, 30, 5)
 
     def _handle_failure(self, symbol: str, error: str) -> None:
-        """
-
-        Args:
+        """Args:
           symbol: str:
           error: str:
           symbol: str:
           error: str:
           symbol: str:
           error: str:
-          symbol: str: 
-          error: str: 
+          symbol: str:
+          error: str:
+          symbol: str:
+          error: str:
+          symbol: str:
+          error: str:
 
         Returns:
 

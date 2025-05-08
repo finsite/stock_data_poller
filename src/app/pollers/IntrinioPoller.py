@@ -65,18 +65,20 @@ class IntrinioPoller(BasePoller):
         return results
 
     def _process_data(self, symbol: str, price: dict[str, Any]) -> dict[str, Any]:
-        """
-
-        Args:
+        """Args:
           symbol: str:
           price: dict[str:
-          Any]: 
+          Any]:
           symbol: str:
           price: dict[str:
           symbol: str:
           price: dict[str:
-          symbol: str: 
-          price: dict[str: 
+          symbol: str:
+          price: dict[str:
+          symbol: str:
+          price: dict[str:
+          symbol: str:
+          price: dict[str:
 
         Returns:
 
@@ -96,13 +98,13 @@ class IntrinioPoller(BasePoller):
         }
 
     def _handle_success(self, symbol: str) -> None:
-        """
-
-        Args:
+        """Args:
           symbol: str:
           symbol: str:
           symbol: str:
-          symbol: str: 
+          symbol: str:
+          symbol: str:
+          symbol: str:
 
         Returns:
 
@@ -111,17 +113,19 @@ class IntrinioPoller(BasePoller):
         track_request_metrics(symbol, 30, 5)
 
     def _handle_failure(self, symbol: str, error: str) -> None:
-        """
-
-        Args:
+        """Args:
           symbol: str:
           error: str:
           symbol: str:
           error: str:
           symbol: str:
           error: str:
-          symbol: str: 
-          error: str: 
+          symbol: str:
+          error: str:
+          symbol: str:
+          error: str:
+          symbol: str:
+          error: str:
 
         Returns:
 

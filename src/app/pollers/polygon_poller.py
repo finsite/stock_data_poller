@@ -1,5 +1,4 @@
-"""
-Poller for fetching stock quotes from Polygon.io API.
+"""Poller for fetching stock quotes from Polygon.io API.
 
 This module fetches the previous close data for the given symbols from Polygon.io API
 and sends it to the message queue. The poller enforces a rate limit of configured
@@ -26,8 +25,7 @@ class PolygonPoller(BasePoller):
     """Poller for fetching stock quotes from Polygon.io API."""
 
     def __init__(self):
-        """
-        Initializes the PolygonPoller.
+        """Initializes the PolygonPoller.
 
         Fetches the API key from the environment and configures the rate limiter.
         """
@@ -43,8 +41,7 @@ class PolygonPoller(BasePoller):
         )
 
     def poll(self, symbols: list[str]) -> None:
-        """
-        Poll data for the given list of stock symbols.
+        """Poll data for the given list of stock symbols.
 
         Args:
           symbols(list[str]): List of stock symbols.
@@ -52,8 +49,11 @@ class PolygonPoller(BasePoller):
           symbols: list[str]:
           symbols: list[str]:
           symbols: list[str]:
+          symbols: list[str]:
+          symbols: list[str]:
 
         Returns:
+
         """
         for symbol in symbols:
             try:
@@ -81,8 +81,7 @@ class PolygonPoller(BasePoller):
         self.rate_limiter.acquire(context="Polygon")
 
     def _fetch_data(self, symbol: str) -> dict[str, Any]:
-        """
-        Fetch stock data for the given symbol from the Polygon.io API.
+        """Fetch stock data for the given symbol from the Polygon.io API.
 
         Args:
         ----
@@ -111,6 +110,17 @@ class PolygonPoller(BasePoller):
           symbol: str:
 
         Returns:
+
+        Args:
+          symbol: str:
+
+        Returns:
+
+        Args:
+          symbol: str:
+
+        Returns:
+
         """
 
         def request_func():
@@ -127,8 +137,7 @@ class PolygonPoller(BasePoller):
         return data
 
     def _process_data(self, symbol: str, data: dict[str, Any]) -> dict[str, Any]:
-        """
-        Process the raw API response into the standard payload format.
+        """Process the raw API response into the standard payload format.
 
         Args:
         ----
@@ -166,6 +175,21 @@ class PolygonPoller(BasePoller):
           Any]:
 
         Returns:
+
+        Args:
+          symbol: str:
+          data: dict[str:
+          Any]:
+
+        Returns:
+
+        Args:
+          symbol: str:
+          data: dict[str:
+          Any]:
+
+        Returns:
+
         """
         result = data["results"][0]
 
@@ -184,8 +208,7 @@ class PolygonPoller(BasePoller):
         }
 
     def _handle_success(self, symbol: str) -> None:
-        """
-        Track success metrics for polling.
+        """Track success metrics for polling.
 
         Args:
           symbol(str): The stock symbol.
@@ -193,15 +216,17 @@ class PolygonPoller(BasePoller):
           symbol: str:
           symbol: str:
           symbol: str:
+          symbol: str:
+          symbol: str:
 
         Returns:
+
         """
         track_polling_metrics("success", "Polygon", symbol)
         track_request_metrics(symbol, 30, 5)
 
     def _handle_failure(self, symbol: str, error: str) -> None:
-        """
-        Track failure metrics and log error.
+        """Track failure metrics and log error.
 
         Args:
           symbol(str): The stock symbol.
@@ -214,8 +239,13 @@ class PolygonPoller(BasePoller):
           error: str:
           symbol: str:
           error: str:
+          symbol: str:
+          error: str:
+          symbol: str:
+          error: str:
 
         Returns:
+
         """
         track_polling_metrics("failure", "Polygon", symbol)
         track_request_metrics(symbol, 30, 5, success=False)
