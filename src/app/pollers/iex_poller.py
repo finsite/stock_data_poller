@@ -55,34 +55,46 @@ class IEXPoller(BasePoller):
         error is tracked and logged.
 
         Args:
+        ----
           symbols: list[str]:
 
         Returns:
+        -------
 
         Args:
+        ----
           symbols: list[str]:
 
         Returns:
+        -------
 
         Args:
+        ----
           symbols: list[str]:
 
         Returns:
+        -------
 
         Args:
+        ----
           symbols: list[str]:
 
         Returns:
+        -------
 
         Args:
+        ----
           symbols: list[str]:
 
         Returns:
+        -------
 
         Args:
+        ----
           symbols: list[str]:
 
         Returns:
+        -------
 
         """
         for symbol in symbols:
@@ -121,28 +133,40 @@ class IEXPoller(BasePoller):
             None
 
         Args:
+        ----
 
         Returns:
+        -------
 
         Args:
+        ----
 
         Returns:
+        -------
 
         Args:
+        ----
 
         Returns:
+        -------
 
         Args:
+        ----
 
         Returns:
+        -------
 
         Args:
+        ----
 
         Returns:
+        -------
 
         Args:
+        ----
 
         Returns:
+        -------
 
         """
         self.rate_limiter.acquire(context="IEX")
@@ -151,6 +175,7 @@ class IEXPoller(BasePoller):
         """Fetches stock data for the given symbol from the IEX Cloud API.
 
         Args:
+        ----
           symbol: str:
           symbol: str:
           symbol: str:
@@ -159,6 +184,7 @@ class IEXPoller(BasePoller):
           symbol: str:
 
         Returns:
+        -------
 
         """
 
@@ -186,40 +212,52 @@ class IEXPoller(BasePoller):
                 stock data (dict[str, float|int]).
 
         Args:
+        ----
           data: dict[str:
           Any]:
 
         Returns:
+        -------
 
         Args:
+        ----
           data: dict[str:
           Any]:
 
         Returns:
+        -------
 
         Args:
+        ----
           data: dict[str:
           Any]:
 
         Returns:
+        -------
 
         Args:
+        ----
           data: dict[str:
           Any]:
 
         Returns:
+        -------
 
         Args:
+        ----
           data: dict[str:
           Any]:
 
         Returns:
+        -------
 
         Args:
+        ----
           data: dict[str:
           Any]:
 
         Returns:
+        -------
 
         """
         # Extract and format the processed data
@@ -252,34 +290,46 @@ class IEXPoller(BasePoller):
             None
 
         Args:
+        ----
           symbol: str:
 
         Returns:
+        -------
 
         Args:
+        ----
           symbol: str:
 
         Returns:
+        -------
 
         Args:
+        ----
           symbol: str:
 
         Returns:
+        -------
 
         Args:
+        ----
           symbol: str:
 
         Returns:
+        -------
 
         Args:
+        ----
           symbol: str:
 
         Returns:
+        -------
 
         Args:
+        ----
           symbol: str:
 
         Returns:
+        -------
 
         """
         # Validate status to ensure it is either 'success' or 'failure'
@@ -294,6 +344,7 @@ class IEXPoller(BasePoller):
         the error and tracks the failure metrics for monitoring purposes.
 
         Args:
+        ----
           symbol(str):
           error(str):
           symbol: str:
@@ -310,6 +361,7 @@ class IEXPoller(BasePoller):
           error: str:
 
         Returns:
+        -------
 
         """
         # Log the error message for debugging purposes

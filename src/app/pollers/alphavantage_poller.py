@@ -59,34 +59,46 @@ class AlphaVantagePoller(BasePoller):
             None: This function does not return a value.
 
         Args:
+        ----
           symbols: list[str]:
 
         Returns:
+        -------
 
         Args:
+        ----
           symbols: list[str]:
 
         Returns:
+        -------
 
         Args:
+        ----
           symbols: list[str]:
 
         Returns:
+        -------
 
         Args:
+        ----
           symbols: list[str]:
 
         Returns:
+        -------
 
         Args:
+        ----
           symbols: list[str]:
 
         Returns:
+        -------
 
         Args:
+        ----
           symbols: list[str]:
 
         Returns:
+        -------
 
         """
         for symbol in symbols:
@@ -127,28 +139,40 @@ class AlphaVantagePoller(BasePoller):
             None
 
         Args:
+        ----
 
         Returns:
+        -------
 
         Args:
+        ----
 
         Returns:
+        -------
 
         Args:
+        ----
 
         Returns:
+        -------
 
         Args:
+        ----
 
         Returns:
+        -------
 
         Args:
+        ----
 
         Returns:
+        -------
 
         Args:
+        ----
 
         Returns:
+        -------
 
         """
         self.rate_limiter.acquire(context="AlphaVantage")
@@ -169,34 +193,46 @@ class AlphaVantagePoller(BasePoller):
             ValueError: If no data is returned.
 
         Args:
+        ----
           symbol: str:
 
         Returns:
+        -------
 
         Args:
+        ----
           symbol: str:
 
         Returns:
+        -------
 
         Args:
+        ----
           symbol: str:
 
         Returns:
+        -------
 
         Args:
+        ----
           symbol: str:
 
         Returns:
+        -------
 
         Args:
+        ----
           symbol: str:
 
         Returns:
+        -------
 
         Args:
+        ----
           symbol: str:
 
         Returns:
+        -------
 
         """
 
@@ -227,46 +263,58 @@ class AlphaVantagePoller(BasePoller):
             dict[str, Any]: Transformed payload.
 
         Args:
+        ----
           symbol: str:
           data: dict[str:
           Any]:
 
         Returns:
+        -------
 
         Args:
+        ----
           symbol: str:
           data: dict[str:
           Any]:
 
         Returns:
+        -------
 
         Args:
+        ----
           symbol: str:
           data: dict[str:
           Any]:
 
         Returns:
+        -------
 
         Args:
+        ----
           symbol: str:
           data: dict[str:
           Any]:
 
         Returns:
+        -------
 
         Args:
+        ----
           symbol: str:
           data: dict[str:
           Any]:
 
         Returns:
+        -------
 
         Args:
+        ----
           symbol: str:
           data: dict[str:
           Any]:
 
         Returns:
+        -------
 
         """
         time_series = data.get("Time Series (5min)")
@@ -294,6 +342,7 @@ class AlphaVantagePoller(BasePoller):
         """Tracks success metrics for polling and requests.
 
         Args:
+        ----
           symbol(str):
           symbol: str:
           symbol: str:
@@ -303,6 +352,7 @@ class AlphaVantagePoller(BasePoller):
           symbol: str:
 
         Returns:
+        -------
 
         """
         # Track polling metrics indicating a successful polling operation
@@ -318,6 +368,7 @@ class AlphaVantagePoller(BasePoller):
         symbol. It logs the error and tracks the failure metrics.
 
         Args:
+        ----
           symbol: str:
           error: str:
           symbol: str:
@@ -332,6 +383,7 @@ class AlphaVantagePoller(BasePoller):
           error: str:
 
         Returns:
+        -------
 
         """
         # Log the error for debugging purposes

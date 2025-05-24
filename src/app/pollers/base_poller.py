@@ -95,6 +95,7 @@ class BasePoller:
         """Sends the processed payload to the configured queue (SQS or RabbitMQ).
 
         Args:
+        ----
           payload: dict[str:
           Any]:
           payload: dict[str:
@@ -104,6 +105,7 @@ class BasePoller:
           payload: dict[str:
 
         Returns:
+        -------
 
         """
         try:

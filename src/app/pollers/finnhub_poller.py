@@ -68,34 +68,46 @@ class FinnhubPoller(BasePoller):
             None: This function does not return a value.
 
         Args:
+        ----
           symbols: list[str]:
 
         Returns:
+        -------
 
         Args:
+        ----
           symbols: list[str]:
 
         Returns:
+        -------
 
         Args:
+        ----
           symbols: list[str]:
 
         Returns:
+        -------
 
         Args:
+        ----
           symbols: list[str]:
 
         Returns:
+        -------
 
         Args:
+        ----
           symbols: list[str]:
 
         Returns:
+        -------
 
         Args:
+        ----
           symbols: list[str]:
 
         Returns:
+        -------
 
         """
         for symbol in symbols:
@@ -134,28 +146,40 @@ class FinnhubPoller(BasePoller):
             None
 
         Args:
+        ----
 
         Returns:
+        -------
 
         Args:
+        ----
 
         Returns:
+        -------
 
         Args:
+        ----
 
         Returns:
+        -------
 
         Args:
+        ----
 
         Returns:
+        -------
 
         Args:
+        ----
 
         Returns:
+        -------
 
         Args:
+        ----
 
         Returns:
+        -------
 
         """
         self.rate_limiter.acquire(context="Finnhub")
@@ -164,6 +188,7 @@ class FinnhubPoller(BasePoller):
         """Fetches stock data for the given symbol from Finnhub using the quote endpoint.
 
         Args:
+        ----
           symbol: str:
           symbol: str:
           symbol: str:
@@ -172,6 +197,7 @@ class FinnhubPoller(BasePoller):
           symbol: str:
 
         Returns:
+        -------
           The fetched data.:
 
         """
@@ -199,46 +225,58 @@ class FinnhubPoller(BasePoller):
             dict[str, Any]: The processed payload.
 
         Args:
+        ----
           symbol: str:
           data: dict[str:
           Any]:
 
         Returns:
+        -------
 
         Args:
+        ----
           symbol: str:
           data: dict[str:
           Any]:
 
         Returns:
+        -------
 
         Args:
+        ----
           symbol: str:
           data: dict[str:
           Any]:
 
         Returns:
+        -------
 
         Args:
+        ----
           symbol: str:
           data: dict[str:
           Any]:
 
         Returns:
+        -------
 
         Args:
+        ----
           symbol: str:
           data: dict[str:
           Any]:
 
         Returns:
+        -------
 
         Args:
+        ----
           symbol: str:
           data: dict[str:
           Any]:
 
         Returns:
+        -------
 
         """
         return {
@@ -270,34 +308,46 @@ class FinnhubPoller(BasePoller):
             None
 
         Args:
+        ----
           symbol: str:
 
         Returns:
+        -------
 
         Args:
+        ----
           symbol: str:
 
         Returns:
+        -------
 
         Args:
+        ----
           symbol: str:
 
         Returns:
+        -------
 
         Args:
+        ----
           symbol: str:
 
         Returns:
+        -------
 
         Args:
+        ----
           symbol: str:
 
         Returns:
+        -------
 
         Args:
+        ----
           symbol: str:
 
         Returns:
+        -------
 
         """
         # Track polling metrics indicating a successful polling operation
@@ -319,40 +369,52 @@ class FinnhubPoller(BasePoller):
             None
 
         Args:
+        ----
           symbol: str:
           error: str:
 
         Returns:
+        -------
 
         Args:
+        ----
           symbol: str:
           error: str:
 
         Returns:
+        -------
 
         Args:
+        ----
           symbol: str:
           error: str:
 
         Returns:
+        -------
 
         Args:
+        ----
           symbol: str:
           error: str:
 
         Returns:
+        -------
 
         Args:
+        ----
           symbol: str:
           error: str:
 
         Returns:
+        -------
 
         Args:
+        ----
           symbol: str:
           error: str:
 
         Returns:
+        -------
 
         """
         # Log the error message for debugging purposes

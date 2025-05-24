@@ -44,6 +44,7 @@ class PolygonPoller(BasePoller):
         """Poll data for the given list of stock symbols.
 
         Args:
+        ----
           symbols(list[str]): List of stock symbols.
           symbols: list[str]:
           symbols: list[str]:
@@ -53,6 +54,7 @@ class PolygonPoller(BasePoller):
           symbols: list[str]:
 
         Returns:
+        -------
 
         """
         for symbol in symbols:
@@ -92,34 +94,46 @@ class PolygonPoller(BasePoller):
             dict[str, Any]: The raw response data.
 
         Args:
+        ----
           symbol: str:
 
         Returns:
+        -------
 
         Args:
+        ----
           symbol: str:
 
         Returns:
+        -------
 
         Args:
+        ----
           symbol: str:
 
         Returns:
+        -------
 
         Args:
+        ----
           symbol: str:
 
         Returns:
+        -------
 
         Args:
+        ----
           symbol: str:
 
         Returns:
+        -------
 
         Args:
+        ----
           symbol: str:
 
         Returns:
+        -------
 
         """
 
@@ -149,46 +163,58 @@ class PolygonPoller(BasePoller):
             dict[str, Any]: Formatted payload.
 
         Args:
+        ----
           symbol: str:
           data: dict[str:
           Any]:
 
         Returns:
+        -------
 
         Args:
+        ----
           symbol: str:
           data: dict[str:
           Any]:
 
         Returns:
+        -------
 
         Args:
+        ----
           symbol: str:
           data: dict[str:
           Any]:
 
         Returns:
+        -------
 
         Args:
+        ----
           symbol: str:
           data: dict[str:
           Any]:
 
         Returns:
+        -------
 
         Args:
+        ----
           symbol: str:
           data: dict[str:
           Any]:
 
         Returns:
+        -------
 
         Args:
+        ----
           symbol: str:
           data: dict[str:
           Any]:
 
         Returns:
+        -------
 
         """
         result = data["results"][0]
@@ -211,6 +237,7 @@ class PolygonPoller(BasePoller):
         """Track success metrics for polling.
 
         Args:
+        ----
           symbol(str): The stock symbol.
           symbol: str:
           symbol: str:
@@ -220,6 +247,7 @@ class PolygonPoller(BasePoller):
           symbol: str:
 
         Returns:
+        -------
 
         """
         track_polling_metrics("success", "Polygon", symbol)
@@ -229,6 +257,7 @@ class PolygonPoller(BasePoller):
         """Track failure metrics and log error.
 
         Args:
+        ----
           symbol(str): The stock symbol.
           error(str): The error message.
           symbol: str:
@@ -245,6 +274,7 @@ class PolygonPoller(BasePoller):
           error: str:
 
         Returns:
+        -------
 
         """
         track_polling_metrics("failure", "Polygon", symbol)

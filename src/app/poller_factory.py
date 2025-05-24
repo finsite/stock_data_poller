@@ -3,15 +3,14 @@
 import os
 
 from app.pollers.alphavantage_poller import AlphaVantagePoller
+from app.pollers.FinnazonPoller import FinnazonPoller
 from app.pollers.finnhub_poller import FinnhubPoller
 from app.pollers.iex_poller import IEXPoller
+from app.pollers.IntrinioPoller import IntrinioPoller
 from app.pollers.polygon_poller import PolygonPoller
 from app.pollers.quandl_poller import QuandlPoller
-from app.pollers.yfinance_poller import YFinancePoller
-from app.pollers.FinnazonPoller import FinnazonPoller
-from app.pollers.IntrinioPoller import IntrinioPoller
 from app.pollers.YahooRapidAPIPoller import YahooRapidAPIPoller
-
+from app.pollers.yfinance_poller import YFinancePoller
 from app.utils.setup_logger import setup_logger
 from app.utils.validate_environment_variables import validate_environment_variables
 
@@ -42,8 +41,7 @@ class PollerFactory:
         if self.poller_type not in self.valid_pollers:
             logger.error("❌ Invalid POLLER_TYPE: %s", self.poller_type)
             raise ValueError(
-                "POLLER_TYPE must be one of: "
-                + ", ".join(f"'{k}'" for k in self.valid_pollers)
+                "POLLER_TYPE must be one of: " + ", ".join(f"'{k}'" for k in self.valid_pollers)
             )
 
         required_key, _ = self.valid_pollers[self.poller_type]

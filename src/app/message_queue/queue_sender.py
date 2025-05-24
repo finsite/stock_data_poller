@@ -281,8 +281,10 @@ class QueueSender:
     dispatch, connection setup, and cleanup.
 
     Args:
+    ----
 
     Returns:
+    -------
 
     """
 
@@ -360,6 +362,7 @@ class QueueSender:
         """Send a message to the configured queue.
 
         Args:
+        ----
           data: dict:
           data: dict:
           data: dict:
@@ -368,6 +371,7 @@ class QueueSender:
           data: dict:
 
         Returns:
+        -------
 
         """
         try:
@@ -390,6 +394,7 @@ class QueueSender:
         """Send a message to RabbitMQ (with retry).
 
         Args:
+        ----
           data: dict:
           data: dict:
           data: dict:
@@ -398,6 +403,7 @@ class QueueSender:
           data: dict:
 
         Returns:
+        -------
 
         """
         message_body = json.dumps(data)
@@ -423,6 +429,7 @@ class QueueSender:
         """Send a message to AWS SQS (with retry).
 
         Args:
+        ----
           data: dict:
           data: dict:
           data: dict:
@@ -431,6 +438,7 @@ class QueueSender:
           data: dict:
 
         Returns:
+        -------
 
         """
         message_body = json.dumps(data)

@@ -80,7 +80,8 @@ class IntrinioPoller(BasePoller):
           symbol: str:
           price: dict[str:
 
-        Returns:
+        Returns
+        -------
 
         """
         return {
@@ -106,7 +107,8 @@ class IntrinioPoller(BasePoller):
           symbol: str:
           symbol: str:
 
-        Returns:
+        Returns
+        -------
 
         """
         track_polling_metrics("success", "Intrinio", symbol)
@@ -127,7 +129,8 @@ class IntrinioPoller(BasePoller):
           symbol: str:
           error: str:
 
-        Returns:
+        Returns
+        -------
 
         """
         track_polling_metrics("failure", "Intrinio", symbol)

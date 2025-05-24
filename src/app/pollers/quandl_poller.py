@@ -48,6 +48,7 @@ class QuandlPoller(BasePoller):
         """Polls data for the specified symbols from Quandl API.
 
         Args:
+        ----
           symbols(list[str]): List of stock symbols to poll.
           symbols: list[str]:
           symbols: list[str]:
@@ -57,6 +58,7 @@ class QuandlPoller(BasePoller):
           symbols: list[str]:
 
         Returns:
+        -------
 
         """
         for symbol in symbols:
@@ -87,8 +89,10 @@ class QuandlPoller(BasePoller):
         the function will block until the limit is replenished.
 
         Args:
+        ----
 
         Returns:
+        -------
 
         """
         self.rate_limiter.acquire(context="Quandl")
@@ -105,34 +109,46 @@ class QuandlPoller(BasePoller):
             dict[str, Any]: Fetched data in the format returned by the Quandl API.
 
         Args:
+        ----
           symbol: str:
 
         Returns:
+        -------
 
         Args:
+        ----
           symbol: str:
 
         Returns:
+        -------
 
         Args:
+        ----
           symbol: str:
 
         Returns:
+        -------
 
         Args:
+        ----
           symbol: str:
 
         Returns:
+        -------
 
         Args:
+        ----
           symbol: str:
 
         Returns:
+        -------
 
         Args:
+        ----
           symbol: str:
 
         Returns:
+        -------
 
         """
 
@@ -158,46 +174,58 @@ class QuandlPoller(BasePoller):
             dict[str, Any]: Processed data in the payload format.
 
         Args:
+        ----
           symbol: str:
           data: dict[str:
           Any]:
 
         Returns:
+        -------
 
         Args:
+        ----
           symbol: str:
           data: dict[str:
           Any]:
 
         Returns:
+        -------
 
         Args:
+        ----
           symbol: str:
           data: dict[str:
           Any]:
 
         Returns:
+        -------
 
         Args:
+        ----
           symbol: str:
           data: dict[str:
           Any]:
 
         Returns:
+        -------
 
         Args:
+        ----
           symbol: str:
           data: dict[str:
           Any]:
 
         Returns:
+        -------
 
         Args:
+        ----
           symbol: str:
           data: dict[str:
           Any]:
 
         Returns:
+        -------
 
         """
         dataset = data["dataset"]
@@ -223,6 +251,7 @@ class QuandlPoller(BasePoller):
         """Tracks success metrics for polling and requests.
 
         Args:
+        ----
           symbol: str:
           symbol: str:
           symbol: str:
@@ -231,6 +260,7 @@ class QuandlPoller(BasePoller):
           symbol: str:
 
         Returns:
+        -------
 
         """
         track_polling_metrics("success", "Quandl", symbol)
@@ -240,6 +270,7 @@ class QuandlPoller(BasePoller):
         """Tracks failure metrics for polling and logs the error.
 
         Args:
+        ----
           symbol: str:
           error: str:
           symbol: str:
@@ -254,6 +285,7 @@ class QuandlPoller(BasePoller):
           error: str:
 
         Returns:
+        -------
 
         """
         track_polling_metrics("failure", "Quandl", symbol)

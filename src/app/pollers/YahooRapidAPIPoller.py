@@ -95,46 +95,58 @@ class YahooRapidAPIPoller(BasePoller):
                 - data (dict[str, float]): The additional data fields.
 
         Args:
+        ----
           symbol: str:
           price_info: dict[str:
           Any]:
 
         Returns:
+        -------
 
         Args:
+        ----
           symbol: str:
           price_info: dict[str:
           Any]:
 
         Returns:
+        -------
 
         Args:
+        ----
           symbol: str:
           price_info: dict[str:
           Any]:
 
         Returns:
+        -------
 
         Args:
+        ----
           symbol: str:
           price_info: dict[str:
           Any]:
 
         Returns:
+        -------
 
         Args:
+        ----
           symbol: str:
           price_info: dict[str:
           Any]:
 
         Returns:
+        -------
 
         Args:
+        ----
           symbol: str:
           price_info: dict[str:
           Any]:
 
         Returns:
+        -------
 
         """
         return {
@@ -169,7 +181,8 @@ class YahooRapidAPIPoller(BasePoller):
           symbol: str:
           symbol: str:
 
-        Returns:
+        Returns
+        -------
 
         """
         track_polling_metrics("success", "YahooRapidAPI", symbol)
@@ -190,7 +203,8 @@ class YahooRapidAPIPoller(BasePoller):
           symbol: str:
           error: str:
 
-        Returns:
+        Returns
+        -------
 
         """
         track_polling_metrics("failure", "YahooRapidAPI", symbol)

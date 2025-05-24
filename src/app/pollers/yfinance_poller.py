@@ -39,6 +39,7 @@ class YFinancePoller(BasePoller):
         """Polls data for the specified symbols using yfinance.
 
         Args:
+        ----
           symbols(list[str]): The stock symbols to fetch data for.
           symbols: list[str]:
           symbols: list[str]:
@@ -48,6 +49,7 @@ class YFinancePoller(BasePoller):
           symbols: list[str]:
 
         Returns:
+        -------
 
         """
         for symbol in symbols:
@@ -87,34 +89,46 @@ class YFinancePoller(BasePoller):
             Any: A DataFrame or None if no data is found.
 
         Args:
+        ----
           symbol: str:
 
         Returns:
+        -------
 
         Args:
+        ----
           symbol: str:
 
         Returns:
+        -------
 
         Args:
+        ----
           symbol: str:
 
         Returns:
+        -------
 
         Args:
+        ----
           symbol: str:
 
         Returns:
+        -------
 
         Args:
+        ----
           symbol: str:
 
         Returns:
+        -------
 
         Args:
+        ----
           symbol: str:
 
         Returns:
+        -------
 
         """
         ticker = yf.Ticker(symbol)
@@ -135,40 +149,52 @@ class YFinancePoller(BasePoller):
             dict[str, Any]: A structured payload dictionary.
 
         Args:
+        ----
           symbol: str:
           data: Any:
 
         Returns:
+        -------
 
         Args:
+        ----
           symbol: str:
           data: Any:
 
         Returns:
+        -------
 
         Args:
+        ----
           symbol: str:
           data: Any:
 
         Returns:
+        -------
 
         Args:
+        ----
           symbol: str:
           data: Any:
 
         Returns:
+        -------
 
         Args:
+        ----
           symbol: str:
           data: Any:
 
         Returns:
+        -------
 
         Args:
+        ----
           symbol: str:
           data: Any:
 
         Returns:
+        -------
 
         """
         latest_data = data.iloc[-1]
@@ -192,6 +218,7 @@ class YFinancePoller(BasePoller):
         """Tracks success metrics for polling and requests.
 
         Args:
+        ----
           symbol(str): The stock symbol.
           symbol: str:
           symbol: str:
@@ -201,6 +228,7 @@ class YFinancePoller(BasePoller):
           symbol: str:
 
         Returns:
+        -------
 
         """
         track_polling_metrics("success", "YFinance", symbol)
@@ -210,6 +238,7 @@ class YFinancePoller(BasePoller):
         """Tracks failure metrics and logs the error.
 
         Args:
+        ----
           symbol(str): The stock symbol.
           error(str): The error message.
           symbol: str:
@@ -226,6 +255,7 @@ class YFinancePoller(BasePoller):
           error: str:
 
         Returns:
+        -------
 
         """
         track_polling_metrics("failure", "YFinance", symbol)
