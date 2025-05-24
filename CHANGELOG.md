@@ -5,6 +5,13 @@
 - Making sure Dockerfile is correct (Mark Quinn)
 - bump: patch version + changelog [skip ci] (github-actions[bot])
 
+## v0.2.7 (2025-05-24)
+
+### Fix
+
+- **poller**: integrate updates
+- **poller**: integrate updates
+
 ## v0.2.6 (2025-05-08)
 
 ### Fix
