@@ -120,3 +120,6 @@ version = "0.2.5"
 tag_format = "v$version"
 update_changelog_on_bump = true
 changelog_file = "CHANGELOG.md"
+version_files = [
+  "src/app/__init__.py"
+]
