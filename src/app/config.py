@@ -220,28 +220,74 @@ def get_rabbitmq_password() -> str:
 
 
 def get_sqs_queue_url() -> str:
+    """Retrieve the SQS queue URL from the configuration.
+
+    Returns
+    -------
+    str
+        The URL of the SQS queue. An empty string is returned if not configured.
+
+    """
     return get_config_value("SQS_QUEUE_URL", "")
 
 
 def get_sqs_region() -> str:
+    """Retrieve the SQS region configuration value.
+
+    Returns
+    -------
+    str
+        The region where the SQS queue is located. Defaults to "us-east-1" if the
+        configuration value is not set.
+
+    """
     return get_config_value("SQS_REGION", "us-east-1")
-
-
-def get_batch_size() -> int:
-    return int(get_config_value("BATCH_SIZE", "10"))
 
 
 def get_rapidapi_host() -> str:
+    """Retrieve the RapidAPI host configuration value.
+
+    Returns
+    -------
+    str
+        The hostname of the RapidAPI service. Defaults to
+        "apidojo-yahoo-finance-v1.p.rapidapi.com" if the configuration value is
+        not set.
+
+    """
     return get_config_value("RAPIDAPI_HOST", "apidojo-yahoo-finance-v1.p.rapidapi.com")
 
 
-def get_sqs_region() -> str:
-    return get_config_value("SQS_REGION", "us-east-1")
+def get_polling_interval() -> int:
+    """Retrieve the polling interval configuration value.
+
+    Returns
+    -------
+    int
+        The polling interval in seconds. Defaults to 60 seconds if the
+        environment variable POLLING_INTERVAL is not set.
+
+    """
+    return int(get_config_value("POLLING_INTERVAL", "60"))
+
+
+def get_rate_limit() -> int:
+    """Returns the rate limit for the API in requests per second.
+
+    If the environment variable RATE_LIMIT is set, its value is used.
+    Otherwise, 0 is returned, meaning no rate limit is enforced.
+    """
+    return int(get_config_value("RATE_LIMIT", "0"))
 
 
 def get_batch_size() -> int:
+    """Retrieve the batch size configuration value.
+
+    Returns
+    -------
+    int
+        The batch size for polling or sending messages. Defaults to 10 if the
+        environment variable BATCH_SIZE is not set.
+
+    """
     return int(get_config_value("BATCH_SIZE", "10"))
-
-
-def get_polling_interval() -> int:
-    return int(get_config_value("POLLING_INTERVAL", "60"))

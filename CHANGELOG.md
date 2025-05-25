@@ -9,7 +9,8 @@
 
 ### Feat
 
-- **versioning**: enforce version consistency across pyproject.toml, __init__.py, and changelog
+- **versioning**: enforce version consistency across pyproject.toml,
+  **init**.py, and changelog
 
 ## v0.2.7 (2025-05-24)
 
