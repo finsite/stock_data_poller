@@ -5,6 +5,12 @@
 - Making sure Dockerfile is correct (Mark Quinn)
 - bump: patch version + changelog [skip ci] (github-actions[bot])
 
+## v0.3.2 (2025-05-25)
+
+### Fix
+
+- **poller**: update processor.py to be pyright compliant
+
 ## v0.3.1 (2025-05-25)
 
 ### Fix
