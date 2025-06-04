@@ -80,37 +80,26 @@ class IntrinioPoller(BasePoller):
           symbol: str:
           price: dict[str:
 
-        Parameters
-        ----------
-        symbol :
-            str:
-        price :
-            dict[str:
-        Any :
-            param symbol: str:
-        price :
-            dict[str:
-        Any :
-            param symbol: str:
-        price :
-            dict[str:
-        Any :
+        :param symbol: str:
+        :param price: dict[str:
+        :param Any: param symbol: str:
+        :param price: dict[str:
+        :param Any: param symbol: str:
+        :param price: dict[str:
+        :param Any: 
+        :param symbol: 
+        :type symbol: str :
+        :param price: 
+        :type price: dict[str :
+        :param Any]: 
+        :param symbol: 
+        :type symbol: str :
+        :param price: 
+        :type price: dict[str :
+        :param symbol: str: 
+        :param price: dict[str: 
 
-        symbol : str :
-
-        price : dict[str :
-
-        Any] :
-
-        symbol: str :
-
-        price: dict[str :
-
-
-        Returns
-        -------
-
-
+        
         """
         return {
             "symbol": symbol,
@@ -135,23 +124,16 @@ class IntrinioPoller(BasePoller):
           symbol: str:
           symbol: str:
 
-        Parameters
-        ----------
-        symbol :
-            str:
-        symbol :
-            str:
-        symbol :
-            str:
-        symbol : str :
+        :param symbol: str:
+        :param symbol: str:
+        :param symbol: str:
+        :param symbol: 
+        :type symbol: str :
+        :param symbol: 
+        :type symbol: str :
+        :param symbol: str: 
 
-        symbol: str :
-
-
-        Returns
-        -------
-
-
+        
         """
         track_polling_metrics("success", "Intrinio", symbol)
         track_request_metrics(symbol, 30, 5)
@@ -171,33 +153,24 @@ class IntrinioPoller(BasePoller):
           symbol: str:
           error: str:
 
-        Parameters
-        ----------
-        symbol :
-            str:
-        error :
-            str:
-        symbol :
-            str:
-        error :
-            str:
-        symbol :
-            str:
-        error :
-            str:
-        symbol : str :
+        :param symbol: str:
+        :param error: str:
+        :param symbol: str:
+        :param error: str:
+        :param symbol: str:
+        :param error: str:
+        :param symbol: 
+        :type symbol: str :
+        :param error: 
+        :type error: str :
+        :param symbol: 
+        :type symbol: str :
+        :param error: 
+        :type error: str :
+        :param symbol: str: 
+        :param error: str: 
 
-        error : str :
-
-        symbol: str :
-
-        error: str :
-
-
-        Returns
-        -------
-
-
+        
         """
         track_polling_metrics("failure", "Intrinio", symbol)
         track_request_metrics(symbol, 30, 5, success=False)

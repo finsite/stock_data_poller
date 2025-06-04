@@ -83,37 +83,26 @@ class FinnazonPoller(BasePoller):
           symbol: str:
           quote: dict[str:
 
-        Parameters
-        ----------
-        symbol :
-            str:
-        quote :
-            dict[str:
-        Any :
-            param symbol: str:
-        quote :
-            dict[str:
-        Any :
-            param symbol: str:
-        quote :
-            dict[str:
-        Any :
+        :param symbol: str:
+        :param quote: dict[str:
+        :param Any: param symbol: str:
+        :param quote: dict[str:
+        :param Any: param symbol: str:
+        :param quote: dict[str:
+        :param Any: 
+        :param symbol: 
+        :type symbol: str :
+        :param quote: 
+        :type quote: dict[str :
+        :param Any]: 
+        :param symbol: 
+        :type symbol: str :
+        :param quote: 
+        :type quote: dict[str :
+        :param symbol: str: 
+        :param quote: dict[str: 
 
-        symbol : str :
-
-        quote : dict[str :
-
-        Any] :
-
-        symbol: str :
-
-        quote: dict[str :
-
-
-        Returns
-        -------
-
-
+        
         """
         return {
             "symbol": symbol,
@@ -138,23 +127,16 @@ class FinnazonPoller(BasePoller):
           symbol: str:
           symbol: str:
 
-        Parameters
-        ----------
-        symbol :
-            str:
-        symbol :
-            str:
-        symbol :
-            str:
-        symbol : str :
+        :param symbol: str:
+        :param symbol: str:
+        :param symbol: str:
+        :param symbol: 
+        :type symbol: str :
+        :param symbol: 
+        :type symbol: str :
+        :param symbol: str: 
 
-        symbol: str :
-
-
-        Returns
-        -------
-
-
+        
         """
         track_polling_metrics("success", "Finnazon", symbol)
         track_request_metrics(symbol, 30, 5)
@@ -174,33 +156,24 @@ class FinnazonPoller(BasePoller):
           symbol: str:
           error: str:
 
-        Parameters
-        ----------
-        symbol :
-            str:
-        error :
-            str:
-        symbol :
-            str:
-        error :
-            str:
-        symbol :
-            str:
-        error :
-            str:
-        symbol : str :
+        :param symbol: str:
+        :param error: str:
+        :param symbol: str:
+        :param error: str:
+        :param symbol: str:
+        :param error: str:
+        :param symbol: 
+        :type symbol: str :
+        :param error: 
+        :type error: str :
+        :param symbol: 
+        :type symbol: str :
+        :param error: 
+        :type error: str :
+        :param symbol: str: 
+        :param error: str: 
 
-        error : str :
-
-        symbol: str :
-
-        error: str :
-
-
-        Returns
-        -------
-
-
+        
         """
         track_polling_metrics("failure", "Finnazon", symbol)
         track_request_metrics(symbol, 30, 5, success=False)

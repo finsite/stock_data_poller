@@ -93,7 +93,7 @@ class BasePoller:
 
     def send_to_queue(self, payload: dict[str, Any]) -> None:
         """Sends the processed payload to the configured queue (SQS or RabbitMQ).
-
+        
         Args:
         ----
           payload: dict[str:
@@ -104,27 +104,18 @@ class BasePoller:
           payload: dict[str:
           payload: dict[str:
 
-        Parameters
-        ----------
-        payload :
-            dict[str:
-        Any :
-            param payload: dict[str:
-        Any :
-            param payload: dict[str:
-        Any :
+        :param payload: dict[str:
+        :param Any: param payload: dict[str:
+        :param Any: param payload: dict[str:
+        :param Any: 
+        :param payload: 
+        :type payload: dict[str :
+        :param Any]: 
+        :param payload: 
+        :type payload: dict[str :
+        :param payload: dict[str: 
 
-        payload : dict[str :
-
-        Any] :
-
-        payload: dict[str :
-
-
-        Returns
-        -------
-
-
+        
         """
         try:
             self.rate_limiter.acquire(context="QueueSender")
