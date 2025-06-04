@@ -83,11 +83,13 @@ class FinnazonPoller(BasePoller):
           symbol: str:
           quote: dict[str:
 
+        :param symbol: str:
+        :param quote: dict[str:
+        :param Any: 
         :param symbol: str: 
         :param quote: dict[str: 
         :param Any]: 
 
-        
         """
         return {
             "symbol": symbol,
@@ -112,9 +114,9 @@ class FinnazonPoller(BasePoller):
           symbol: str:
           symbol: str:
 
+        :param symbol: str:
         :param symbol: str: 
 
-        
         """
         track_polling_metrics("success", "Finnazon", symbol)
         track_request_metrics(symbol, 30, 5)
@@ -134,10 +136,11 @@ class FinnazonPoller(BasePoller):
           symbol: str:
           error: str:
 
+        :param symbol: str:
+        :param error: str:
         :param symbol: str: 
         :param error: str: 
 
-        
         """
         track_polling_metrics("failure", "Finnazon", symbol)
         track_request_metrics(symbol, 30, 5, success=False)

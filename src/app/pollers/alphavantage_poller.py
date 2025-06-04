@@ -100,9 +100,9 @@ class AlphaVantagePoller(BasePoller):
         Returns:
         -------
 
+        :param symbols: list[str]:
         :param symbols: list[str]: 
 
-        
         """
         for symbol in symbols:
             try:
@@ -239,9 +239,9 @@ class AlphaVantagePoller(BasePoller):
         Returns:
         -------
 
+        :param symbol: str:
         :param symbol: str: 
 
-        
         """
 
         def request_func():
@@ -324,11 +324,13 @@ class AlphaVantagePoller(BasePoller):
         Returns:
         -------
 
+        :param symbol: str:
+        :param data: dict[str:
+        :param Any: 
         :param symbol: str: 
         :param data: dict[str: 
         :param Any]: 
 
-        
         """
         time_series = data.get("Time Series (5min)")
         if not time_series:
@@ -367,9 +369,9 @@ class AlphaVantagePoller(BasePoller):
         Returns:
         -------
 
+        :param symbol: str:
         :param symbol: str: 
 
-        
         """
         # Track polling metrics indicating a successful polling operation
         track_polling_metrics("success", "AlphaVantage", symbol)
@@ -401,10 +403,11 @@ class AlphaVantagePoller(BasePoller):
         Returns:
         -------
 
+        :param symbol: str:
+        :param error: str:
         :param symbol: str: 
         :param error: str: 
 
-        
         """
         # Log the error for debugging purposes
         logger.error(f"AlphaVantage poll failed for {symbol}: {error}")

@@ -375,9 +375,9 @@ class QueueSender:
         Returns:
         -------
 
+        :param data: dict:
         :param data: dict: 
 
-        
         """
         try:
             if self.queue_type == "rabbitmq":
@@ -410,9 +410,9 @@ class QueueSender:
         Returns:
         -------
 
+        :param data: dict:
         :param data: dict: 
 
-        
         """
         message_body = json.dumps(data)
         self.channel.basic_publish(
@@ -448,9 +448,9 @@ class QueueSender:
         Returns:
         -------
 
+        :param data: dict:
         :param data: dict: 
 
-        
         """
         message_body = json.dumps(data)
         self.sqs.send_message(QueueUrl=self.sqs_queue_url, MessageBody=message_body)

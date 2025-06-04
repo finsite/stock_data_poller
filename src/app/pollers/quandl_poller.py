@@ -60,9 +60,9 @@ class QuandlPoller(BasePoller):
         Returns:
         -------
 
+        :param symbols: list[str]:
         :param symbols: list[str]: 
 
-        
         """
         for symbol in symbols:
             try:
@@ -155,9 +155,9 @@ class QuandlPoller(BasePoller):
         Returns:
         -------
 
+        :param symbol: str:
         :param symbol: str: 
 
-        
         """
 
         def request_func():
@@ -235,11 +235,13 @@ class QuandlPoller(BasePoller):
         Returns:
         -------
 
+        :param symbol: str:
+        :param data: dict[str:
+        :param Any: 
         :param symbol: str: 
         :param data: dict[str: 
         :param Any]: 
 
-        
         """
         dataset = data["dataset"]
         latest_row = dataset["data"][0]
@@ -275,9 +277,9 @@ class QuandlPoller(BasePoller):
         Returns:
         -------
 
+        :param symbol: str:
         :param symbol: str: 
 
-        
         """
         track_polling_metrics("success", "Quandl", symbol)
         track_request_metrics(symbol, 30, 5)
@@ -303,10 +305,11 @@ class QuandlPoller(BasePoller):
         Returns:
         -------
 
+        :param symbol: str:
+        :param error: str:
         :param symbol: str: 
         :param error: str: 
 
-        
         """
         track_polling_metrics("failure", "Quandl", symbol)
         track_request_metrics(symbol, 30, 5, success=False)

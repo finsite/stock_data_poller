@@ -109,9 +109,9 @@ class FinnhubPoller(BasePoller):
         Returns:
         -------
 
+        :param symbols: list[str]:
         :param symbols: list[str]: 
 
-        
         """
         for symbol in symbols:
             try:
@@ -205,9 +205,9 @@ class FinnhubPoller(BasePoller):
         -------
           The fetched data.:
 
+        :param symbol: str:
         :param symbol: str: 
 
-        
         """
 
         def request_func():
@@ -286,11 +286,13 @@ class FinnhubPoller(BasePoller):
         Returns:
         -------
 
+        :param symbol: str:
+        :param data: dict[str:
+        :param Any: 
         :param symbol: str: 
         :param data: dict[str: 
         :param Any]: 
 
-        
         """
         return {
             "symbol": symbol,  # str
@@ -362,9 +364,9 @@ class FinnhubPoller(BasePoller):
         Returns:
         -------
 
+        :param symbol: str:
         :param symbol: str: 
 
-        
         """
         # Track polling metrics indicating a successful polling operation
         track_polling_metrics("success", "Finnhub", symbol)
@@ -432,10 +434,11 @@ class FinnhubPoller(BasePoller):
         Returns:
         -------
 
+        :param symbol: str:
+        :param error: str:
         :param symbol: str: 
         :param error: str: 
 
-        
         """
         # Log the error message for debugging purposes
         logger.error(f"Finnhub polling error for {symbol}: {error}")

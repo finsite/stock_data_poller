@@ -107,10 +107,11 @@ class BasePoller:
         Returns:
         -------
 
+        :param payload: dict[str:
+        :param Any: 
         :param payload: dict[str: 
         :param Any]: 
 
-        
         """
         try:
             self.rate_limiter.acquire(context="QueueSender")

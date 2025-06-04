@@ -96,9 +96,9 @@ class IEXPoller(BasePoller):
         Returns:
         -------
 
+        :param symbols: list[str]:
         :param symbols: list[str]: 
 
-        
         """
         for symbol in symbols:
             try:
@@ -191,9 +191,9 @@ class IEXPoller(BasePoller):
         Returns:
         -------
 
+        :param symbol: str:
         :param symbol: str: 
 
-        
         """
 
         def request_func():
@@ -267,10 +267,11 @@ class IEXPoller(BasePoller):
         Returns:
         -------
 
+        :param data: dict[str:
+        :param Any: 
         :param data: dict[str: 
         :param Any]: 
 
-        
         """
         # Extract and format the processed data
         return {
@@ -343,9 +344,9 @@ class IEXPoller(BasePoller):
         Returns:
         -------
 
+        :param symbol: str:
         :param symbol: str: 
 
-        
         """
         # Validate status to ensure it is either 'success' or 'failure'
         track_polling_metrics("success", "IEX", symbol)
@@ -378,10 +379,11 @@ class IEXPoller(BasePoller):
         Returns:
         -------
 
+        :param symbol: str:
+        :param error: str:
         :param symbol: str: 
         :param error: str: 
 
-        
         """
         # Log the error message for debugging purposes
         logger.error(f"IEX polling error for {symbol}: {error}")

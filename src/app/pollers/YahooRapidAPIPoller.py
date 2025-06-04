@@ -148,11 +148,13 @@ class YahooRapidAPIPoller(BasePoller):
         Returns:
         -------
 
+        :param symbol: str:
+        :param price_info: dict[str:
+        :param Any: 
         :param symbol: str: 
         :param price_info: dict[str: 
         :param Any]: 
 
-        
         """
         return {
             "symbol": symbol,
@@ -186,9 +188,9 @@ class YahooRapidAPIPoller(BasePoller):
           symbol: str:
           symbol: str:
 
+        :param symbol: str:
         :param symbol: str: 
 
-        
         """
         track_polling_metrics("success", "YahooRapidAPI", symbol)
         track_request_metrics(symbol, 30, 5)
@@ -208,10 +210,11 @@ class YahooRapidAPIPoller(BasePoller):
           symbol: str:
           error: str:
 
+        :param symbol: str:
+        :param error: str:
         :param symbol: str: 
         :param error: str: 
 
-        
         """
         track_polling_metrics("failure", "YahooRapidAPI", symbol)
         track_request_metrics(symbol, 30, 5, success=False)
