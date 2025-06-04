@@ -79,7 +79,7 @@ class YahooRapidAPIPoller(BasePoller):
     def _process_data(self, symbol: str, price_info: dict[str, Any]) -> dict[str, Any]:
         """Processes the raw data from the Yahoo Finance API into a standardized payload
         format.
-        
+
         Args:
         ----
             symbol (str): The stock symbol.
@@ -101,10 +101,10 @@ class YahooRapidAPIPoller(BasePoller):
         :param price_info: dict[str:
         :param Any: param symbol: str:
         :param price_info: dict[str:
-        :param Any: 
-        :param symbol: str: 
-        :param price_info: dict[str: 
-        :param Any]: 
+        :param Any:
+        :param symbol: str:
+        :param price_info: dict[str:
+        :param Any]:
 
         """
         return {
@@ -147,7 +147,7 @@ class YahooRapidAPIPoller(BasePoller):
         :param symbol: str:
         :param symbol: str:
         :param symbol: str:
-        :param symbol: str: 
+        :param symbol: str:
 
         """
         track_polling_metrics("success", "YahooRapidAPI", symbol)
@@ -184,8 +184,8 @@ class YahooRapidAPIPoller(BasePoller):
         :param error: str:
         :param symbol: str:
         :param error: str:
-        :param symbol: str: 
-        :param error: str: 
+        :param symbol: str:
+        :param error: str:
 
         """
         track_polling_metrics("failure", "YahooRapidAPI", symbol)

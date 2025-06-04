@@ -33,7 +33,7 @@ def get_config_value(key: str, default: str | None = None) -> str:
     :param default: str | None:  (Default value = None)
     :param key: str:
     :param default: str | None:  (Default value = None)
-    :param key: str: 
+    :param key: str:
     :param default: str | None:  (Default value = None)
 
     """
@@ -305,7 +305,7 @@ def get_polling_interval() -> int:
 
 def get_rate_limit() -> int:
     """Returns the rate limit for the API in requests per second.
-    
+
     If the environment variable RATE_LIMIT is set, its value is used.
     Otherwise, 0 is returned, meaning no rate limit is enforced.
 

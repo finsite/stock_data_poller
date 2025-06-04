@@ -93,7 +93,7 @@ class BasePoller:
 
     def send_to_queue(self, payload: dict[str, Any]) -> None:
         """Sends the processed payload to the configured queue (SQS or RabbitMQ).
-        
+
         Args:
         ----
           payload: dict[str:
@@ -112,9 +112,9 @@ class BasePoller:
         :param payload: dict[str:
         :param payload: dict[str:
         :param Any: param payload: dict[str:
-        :param Any: 
-        :param payload: dict[str: 
-        :param Any]: 
+        :param Any:
+        :param payload: dict[str:
+        :param Any]:
 
         """
         try:

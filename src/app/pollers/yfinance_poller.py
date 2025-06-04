@@ -37,7 +37,7 @@ class YFinancePoller(BasePoller):
 
     def poll(self, symbols: list[str]) -> None:
         """Polls data for the specified symbols using yfinance.
-        
+
         Args:
         ----
           symbols(list[str]): The stock symbols to fetch data for.
@@ -56,7 +56,7 @@ class YFinancePoller(BasePoller):
         :param symbols: list[str]:
         :param symbols: list[str]:
         :param symbols: list[str]:
-        :param symbols: list[str]: 
+        :param symbols: list[str]:
 
         """
         for symbol in symbols:
@@ -86,7 +86,7 @@ class YFinancePoller(BasePoller):
 
     def _fetch_data(self, symbol: str) -> Any:
         """Fetches recent intraday stock data for the given symbol using yfinance.
-        
+
         Args:
         ----
             symbol (str): The stock symbol to fetch.
@@ -99,7 +99,7 @@ class YFinancePoller(BasePoller):
         :param symbol: str:
         :param symbol: str:
         :param symbol: str:
-        :param symbol: str: 
+        :param symbol: str:
 
         """
         ticker = yf.Ticker(symbol)
@@ -109,7 +109,7 @@ class YFinancePoller(BasePoller):
 
     def _process_data(self, symbol: str, data: Any) -> dict[str, Any]:
         """Processes the latest row of yfinance data into the standard payload format.
-        
+
         Args:
         ----
             symbol (str): The stock symbol.
@@ -131,8 +131,8 @@ class YFinancePoller(BasePoller):
         :param data: Any:
         :param symbol: str:
         :param data: Any:
-        :param symbol: str: 
-        :param data: Any: 
+        :param symbol: str:
+        :param data: Any:
 
         """
         latest_data = data.iloc[-1]
@@ -154,7 +154,7 @@ class YFinancePoller(BasePoller):
 
     def _handle_success(self, symbol: str) -> None:
         """Tracks success metrics for polling and requests.
-        
+
         Args:
         ----
           symbol(str): The stock symbol.
@@ -173,7 +173,7 @@ class YFinancePoller(BasePoller):
         :param symbol: str:
         :param symbol: str:
         :param symbol: str:
-        :param symbol: str: 
+        :param symbol: str:
 
         """
         track_polling_metrics("success", "YFinance", symbol)
@@ -181,7 +181,7 @@ class YFinancePoller(BasePoller):
 
     def _handle_failure(self, symbol: str, error: str) -> None:
         """Tracks failure metrics and logs the error.
-        
+
         Args:
         ----
           symbol(str): The stock symbol.
@@ -215,8 +215,8 @@ class YFinancePoller(BasePoller):
         :param error: str:
         :param symbol: str:
         :param error: str:
-        :param symbol: str: 
-        :param error: str: 
+        :param symbol: str:
+        :param error: str:
 
         """
         track_polling_metrics("failure", "YFinance", symbol)
