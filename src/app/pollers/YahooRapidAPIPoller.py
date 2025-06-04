@@ -150,6 +150,8 @@ class YahooRapidAPIPoller(BasePoller):
 
         :param symbol: str:
         :param price_info: dict[str:
+        :param Any: param symbol: str:
+        :param price_info: dict[str:
         :param Any: 
         :param symbol: str: 
         :param price_info: dict[str: 
@@ -189,6 +191,7 @@ class YahooRapidAPIPoller(BasePoller):
           symbol: str:
 
         :param symbol: str:
+        :param symbol: str:
         :param symbol: str: 
 
         """
@@ -210,6 +213,8 @@ class YahooRapidAPIPoller(BasePoller):
           symbol: str:
           error: str:
 
+        :param symbol: str:
+        :param error: str:
         :param symbol: str:
         :param error: str:
         :param symbol: str: 

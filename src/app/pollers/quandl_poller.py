@@ -61,6 +61,7 @@ class QuandlPoller(BasePoller):
         -------
 
         :param symbols: list[str]:
+        :param symbols: list[str]:
         :param symbols: list[str]: 
 
         """
@@ -156,6 +157,7 @@ class QuandlPoller(BasePoller):
         -------
 
         :param symbol: str:
+        :param symbol: str:
         :param symbol: str: 
 
         """
@@ -237,6 +239,8 @@ class QuandlPoller(BasePoller):
 
         :param symbol: str:
         :param data: dict[str:
+        :param Any: param symbol: str:
+        :param data: dict[str:
         :param Any: 
         :param symbol: str: 
         :param data: dict[str: 
@@ -278,6 +282,7 @@ class QuandlPoller(BasePoller):
         -------
 
         :param symbol: str:
+        :param symbol: str:
         :param symbol: str: 
 
         """
@@ -305,6 +310,8 @@ class QuandlPoller(BasePoller):
         Returns:
         -------
 
+        :param symbol: str:
+        :param error: str:
         :param symbol: str:
         :param error: str:
         :param symbol: str: 

@@ -52,6 +52,7 @@ class YFinancePoller(BasePoller):
         -------
 
         :param symbols: list[str]:
+        :param symbols: list[str]:
         :param symbols: list[str]: 
 
         """
@@ -134,6 +135,7 @@ class YFinancePoller(BasePoller):
         -------
 
         :param symbol: str:
+        :param symbol: str:
         :param symbol: str: 
 
         """
@@ -204,6 +206,8 @@ class YFinancePoller(BasePoller):
 
         :param symbol: str:
         :param data: Any:
+        :param symbol: str:
+        :param data: Any:
         :param symbol: str: 
         :param data: Any: 
 
@@ -242,6 +246,7 @@ class YFinancePoller(BasePoller):
         -------
 
         :param symbol: str:
+        :param symbol: str:
         :param symbol: str: 
 
         """
@@ -271,6 +276,8 @@ class YFinancePoller(BasePoller):
         Returns:
         -------
 
+        :param symbol: str:
+        :param error: str:
         :param symbol: str:
         :param error: str:
         :param symbol: str: 

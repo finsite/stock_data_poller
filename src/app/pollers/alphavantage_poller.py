@@ -101,6 +101,7 @@ class AlphaVantagePoller(BasePoller):
         -------
 
         :param symbols: list[str]:
+        :param symbols: list[str]:
         :param symbols: list[str]: 
 
         """
@@ -240,6 +241,7 @@ class AlphaVantagePoller(BasePoller):
         -------
 
         :param symbol: str:
+        :param symbol: str:
         :param symbol: str: 
 
         """
@@ -326,6 +328,8 @@ class AlphaVantagePoller(BasePoller):
 
         :param symbol: str:
         :param data: dict[str:
+        :param Any: param symbol: str:
+        :param data: dict[str:
         :param Any: 
         :param symbol: str: 
         :param data: dict[str: 
@@ -370,6 +374,7 @@ class AlphaVantagePoller(BasePoller):
         -------
 
         :param symbol: str:
+        :param symbol: str:
         :param symbol: str: 
 
         """
@@ -403,6 +408,8 @@ class AlphaVantagePoller(BasePoller):
         Returns:
         -------
 
+        :param symbol: str:
+        :param error: str:
         :param symbol: str:
         :param error: str:
         :param symbol: str: 

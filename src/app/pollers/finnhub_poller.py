@@ -110,6 +110,7 @@ class FinnhubPoller(BasePoller):
         -------
 
         :param symbols: list[str]:
+        :param symbols: list[str]:
         :param symbols: list[str]: 
 
         """
@@ -206,6 +207,7 @@ class FinnhubPoller(BasePoller):
           The fetched data.:
 
         :param symbol: str:
+        :param symbol: str:
         :param symbol: str: 
 
         """
@@ -288,6 +290,8 @@ class FinnhubPoller(BasePoller):
 
         :param symbol: str:
         :param data: dict[str:
+        :param Any: param symbol: str:
+        :param data: dict[str:
         :param Any: 
         :param symbol: str: 
         :param data: dict[str: 
@@ -365,6 +369,7 @@ class FinnhubPoller(BasePoller):
         -------
 
         :param symbol: str:
+        :param symbol: str:
         :param symbol: str: 
 
         """
@@ -434,6 +439,8 @@ class FinnhubPoller(BasePoller):
         Returns:
         -------
 
+        :param symbol: str:
+        :param error: str:
         :param symbol: str:
         :param error: str:
         :param symbol: str: 

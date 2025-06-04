@@ -376,6 +376,7 @@ class QueueSender:
         -------
 
         :param data: dict:
+        :param data: dict:
         :param data: dict: 
 
         """
@@ -410,6 +411,7 @@ class QueueSender:
         Returns:
         -------
 
+        :param data: dict:
         :param data: dict:
         :param data: dict: 
 
@@ -448,6 +450,7 @@ class QueueSender:
         Returns:
         -------
 
+        :param data: dict:
         :param data: dict:
         :param data: dict: 
 

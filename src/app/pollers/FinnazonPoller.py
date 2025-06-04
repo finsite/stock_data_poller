@@ -85,6 +85,8 @@ class FinnazonPoller(BasePoller):
 
         :param symbol: str:
         :param quote: dict[str:
+        :param Any: param symbol: str:
+        :param quote: dict[str:
         :param Any: 
         :param symbol: str: 
         :param quote: dict[str: 
@@ -115,6 +117,7 @@ class FinnazonPoller(BasePoller):
           symbol: str:
 
         :param symbol: str:
+        :param symbol: str:
         :param symbol: str: 
 
         """
@@ -136,6 +139,8 @@ class FinnazonPoller(BasePoller):
           symbol: str:
           error: str:
 
+        :param symbol: str:
+        :param error: str:
         :param symbol: str:
         :param error: str:
         :param symbol: str: 

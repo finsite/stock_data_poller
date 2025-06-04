@@ -97,6 +97,7 @@ class IEXPoller(BasePoller):
         -------
 
         :param symbols: list[str]:
+        :param symbols: list[str]:
         :param symbols: list[str]: 
 
         """
@@ -192,6 +193,7 @@ class IEXPoller(BasePoller):
         -------
 
         :param symbol: str:
+        :param symbol: str:
         :param symbol: str: 
 
         """
@@ -268,6 +270,7 @@ class IEXPoller(BasePoller):
         -------
 
         :param data: dict[str:
+        :param Any: param data: dict[str:
         :param Any: 
         :param data: dict[str: 
         :param Any]: 
@@ -345,6 +348,7 @@ class IEXPoller(BasePoller):
         -------
 
         :param symbol: str:
+        :param symbol: str:
         :param symbol: str: 
 
         """
@@ -379,6 +383,8 @@ class IEXPoller(BasePoller):
         Returns:
         -------
 
+        :param symbol: str:
+        :param error: str:
         :param symbol: str:
         :param error: str:
         :param symbol: str: 
