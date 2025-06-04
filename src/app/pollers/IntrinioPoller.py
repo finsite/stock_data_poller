@@ -80,14 +80,31 @@ class IntrinioPoller(BasePoller):
           symbol: str:
           price: dict[str:
 
-        :param symbol: str:
-        :param price: dict[str:
-        :param Any: param symbol: str:
-        :param price: dict[str:
-        :param Any: 
-        :param symbol: str: 
-        :param price: dict[str: 
-        :param Any]: 
+        Parameters
+        ----------
+        symbol :
+            str:
+        price :
+            dict[str:
+        Any :
+            param symbol: str:
+        price :
+            dict[str:
+        Any :
+            param symbol: str:
+        price :
+            dict[str:
+        Any :
+
+        symbol: str :
+
+        price: dict[str :
+
+        Any] :
+
+
+        Returns
+        -------
 
         """
         return {
@@ -113,9 +130,19 @@ class IntrinioPoller(BasePoller):
           symbol: str:
           symbol: str:
 
-        :param symbol: str:
-        :param symbol: str:
-        :param symbol: str: 
+        Parameters
+        ----------
+        symbol :
+            str:
+        symbol :
+            str:
+        symbol :
+            str:
+        symbol: str :
+
+
+        Returns
+        -------
 
         """
         track_polling_metrics("success", "Intrinio", symbol)
@@ -136,12 +163,27 @@ class IntrinioPoller(BasePoller):
           symbol: str:
           error: str:
 
-        :param symbol: str:
-        :param error: str:
-        :param symbol: str:
-        :param error: str:
-        :param symbol: str: 
-        :param error: str: 
+        Parameters
+        ----------
+        symbol :
+            str:
+        error :
+            str:
+        symbol :
+            str:
+        error :
+            str:
+        symbol :
+            str:
+        error :
+            str:
+        symbol: str :
+
+        error: str :
+
+
+        Returns
+        -------
 
         """
         track_polling_metrics("failure", "Intrinio", symbol)

@@ -40,65 +40,75 @@ class IEXPoller(BasePoller):
 
     def poll(self, symbols: list[str]) -> None:
         """Polls data for the specified symbols from IEX Cloud API.
-        
+
         Args:
         ----
             symbols: List[str]
                 List of stock symbols to poll.
-        
+
         Returns:
         -------
             None
-        
+
         This method polls the IEX Cloud API for the given symbols and sends the
         fetched data to the message queue. If any error occurs during polling, the
         error is tracked and logged.
-        
+
         Args:
         ----
           symbols: list[str]:
-        
-        Returns:
-        -------
-        
-        Args:
-        ----
-          symbols: list[str]:
-        
-        Returns:
-        -------
-        
-        Args:
-        ----
-          symbols: list[str]:
-        
-        Returns:
-        -------
-        
-        Args:
-        ----
-          symbols: list[str]:
-        
-        Returns:
-        -------
-        
-        Args:
-        ----
-          symbols: list[str]:
-        
-        Returns:
-        -------
-        
-        Args:
-        ----
-          symbols: list[str]:
-        
+
         Returns:
         -------
 
-        :param symbols: list[str]:
-        :param symbols: list[str]:
-        :param symbols: list[str]: 
+        Args:
+        ----
+          symbols: list[str]:
+
+        Returns:
+        -------
+
+        Args:
+        ----
+          symbols: list[str]:
+
+        Returns:
+        -------
+
+        Args:
+        ----
+          symbols: list[str]:
+
+        Returns:
+        -------
+
+        Args:
+        ----
+          symbols: list[str]:
+
+        Returns:
+        -------
+
+        Args:
+        ----
+          symbols: list[str]:
+
+        Returns:
+        -------
+
+        Parameters
+        ----------
+        symbols :
+            list[str]:
+        symbols :
+            list[str]:
+        symbols :
+            list[str]:
+        symbols: list[str] :
+
+
+        Returns
+        -------
 
         """
         for symbol in symbols:
@@ -124,62 +134,67 @@ class IEXPoller(BasePoller):
 
     def _enforce_rate_limit(self) -> None:
         """Enforces the IEX-specific rate limit.
-        
+
         The IEX Cloud API has a rate limit of 5 requests per second and 100,000 requests
         per month. The rate limit is enforced here to prevent hitting the limit.
-        
+
         Args:
         ----
             None
-        
+
         Returns:
         -------
             None
-        
+
         Args:
         ----
-        
-        Returns:
-        -------
-        
-        Args:
-        ----
-        
-        Returns:
-        -------
-        
-        Args:
-        ----
-        
-        Returns:
-        -------
-        
-        Args:
-        ----
-        
-        Returns:
-        -------
-        
-        Args:
-        ----
-        
-        Returns:
-        -------
-        
-        Args:
-        ----
-        
+
         Returns:
         -------
 
+        Args:
+        ----
 
-        
+        Returns:
+        -------
+
+        Args:
+        ----
+
+        Returns:
+        -------
+
+        Args:
+        ----
+
+        Returns:
+        -------
+
+        Args:
+        ----
+
+        Returns:
+        -------
+
+        Args:
+        ----
+
+        Returns:
+        -------
+
+        Parameters
+        ----------
+
+        Returns
+        -------
+
+
         """
         self.rate_limiter.acquire(context="IEX")
 
     def _fetch_data(self, symbol: str) -> dict[str, Any]:
         """Fetches stock data for the given symbol from the IEX Cloud API.
-        
+
         Args:
         ----
           symbol: str:
@@ -188,13 +203,23 @@ class IEXPoller(BasePoller):
           symbol: str:
           symbol: str:
           symbol: str:
-        
+
         Returns:
         -------
 
-        :param symbol: str:
-        :param symbol: str:
-        :param symbol: str: 
+        Parameters
+        ----------
+        symbol :
+            str:
+        symbol :
+            str:
+        symbol :
+            str:
+        symbol: str :
+
+
+        Returns
+        -------
 
         """
 
@@ -210,70 +235,82 @@ class IEXPoller(BasePoller):
 
     def _process_data(self, data: dict[str, Any]) -> dict[str, Any]:
         """Processes the raw data from IEX Cloud API into the payload format.
-        
+
         Args:
         ----
             data (dict[str, Any]): Raw data from IEX API.
-        
+
         Returns:
         -------
             dict[str, Any]: Processed data in the payload format, including stock
                 symbol (str), timestamp (int), latest price (float), and additional
                 stock data (dict[str, float|int]).
-        
+
         Args:
         ----
           data: dict[str:
           Any]:
-        
-        Returns:
-        -------
-        
-        Args:
-        ----
-          data: dict[str:
-          Any]:
-        
-        Returns:
-        -------
-        
-        Args:
-        ----
-          data: dict[str:
-          Any]:
-        
-        Returns:
-        -------
-        
-        Args:
-        ----
-          data: dict[str:
-          Any]:
-        
-        Returns:
-        -------
-        
-        Args:
-        ----
-          data: dict[str:
-          Any]:
-        
-        Returns:
-        -------
-        
-        Args:
-        ----
-          data: dict[str:
-          Any]:
-        
+
         Returns:
         -------
 
-        :param data: dict[str:
-        :param Any: param data: dict[str:
-        :param Any: 
-        :param data: dict[str: 
-        :param Any]: 
+        Args:
+        ----
+          data: dict[str:
+          Any]:
+
+        Returns:
+        -------
+
+        Args:
+        ----
+          data: dict[str:
+          Any]:
+
+        Returns:
+        -------
+
+        Args:
+        ----
+          data: dict[str:
+          Any]:
+
+        Returns:
+        -------
+
+        Args:
+        ----
+          data: dict[str:
+          Any]:
+
+        Returns:
+        -------
+
+        Args:
+        ----
+          data: dict[str:
+          Any]:
+
+        Returns:
+        -------
+
+        Parameters
+        ----------
+        data :
+            dict[str:
+        Any :
+            param data: dict[str:
+        Any :
+            param data: dict[str:
+        Any :
+
+        data: dict[str :
+
+        Any] :
+
+
+        Returns
+        -------
 
         """
         # Extract and format the processed data
@@ -293,63 +330,73 @@ class IEXPoller(BasePoller):
 
     def _handle_success(self, symbol: str) -> None:
         """Tracks success metrics for polling and requests.
-        
+
         Metrics tracked include the source of the data (IEX) and the symbol
         for which polling was performed.
-        
+
         Args:
         ----
             symbol (str): The stock symbol that was successfully polled.
-        
+
         Returns:
         -------
             None
-        
+
         Args:
         ----
           symbol: str:
-        
-        Returns:
-        -------
-        
-        Args:
-        ----
-          symbol: str:
-        
-        Returns:
-        -------
-        
-        Args:
-        ----
-          symbol: str:
-        
-        Returns:
-        -------
-        
-        Args:
-        ----
-          symbol: str:
-        
-        Returns:
-        -------
-        
-        Args:
-        ----
-          symbol: str:
-        
-        Returns:
-        -------
-        
-        Args:
-        ----
-          symbol: str:
-        
+
         Returns:
         -------
 
-        :param symbol: str:
-        :param symbol: str:
-        :param symbol: str: 
+        Args:
+        ----
+          symbol: str:
+
+        Returns:
+        -------
+
+        Args:
+        ----
+          symbol: str:
+
+        Returns:
+        -------
+
+        Args:
+        ----
+          symbol: str:
+
+        Returns:
+        -------
+
+        Args:
+        ----
+          symbol: str:
+
+        Returns:
+        -------
+
+        Args:
+        ----
+          symbol: str:
+
+        Returns:
+        -------
+
+        Parameters
+        ----------
+        symbol :
+            str:
+        symbol :
+            str:
+        symbol :
+            str:
+        symbol: str :
+
+
+        Returns
+        -------
 
         """
         # Validate status to ensure it is either 'success' or 'failure'
@@ -359,10 +406,10 @@ class IEXPoller(BasePoller):
 
     def _handle_failure(self, symbol: str, error: str) -> None:
         """Tracks failure metrics for polling and logs the error.
-        
+
         This method is called when polling for a stock symbol fails. It logs
         the error and tracks the failure metrics for monitoring purposes.
-        
+
         Args:
         ----
           symbol(str):
@@ -379,16 +426,31 @@ class IEXPoller(BasePoller):
           error: str:
           symbol: str:
           error: str:
-        
+
         Returns:
         -------
 
-        :param symbol: str:
-        :param error: str:
-        :param symbol: str:
-        :param error: str:
-        :param symbol: str: 
-        :param error: str: 
+        Parameters
+        ----------
+        symbol :
+            str:
+        error :
+            str:
+        symbol :
+            str:
+        error :
+            str:
+        symbol :
+            str:
+        error :
+            str:
+        symbol: str :
+
+        error: str :
+
+
+        Returns
+        -------
 
         """
         # Log the error message for debugging purposes

@@ -276,18 +276,23 @@ logger = setup_logger(__name__)
 
 class QueueSender:
     """A class for sending messages to a RabbitMQ or SQS queue.
-    
+
     Supports configuration for either queue type. Handles message serialization,
     dispatch, connection setup, and cleanup.
-    
+
     Args:
     ----
-    
+
     Returns:
     -------
 
+    Parameters
+    ----------
 
-    
+    Returns
+    -------
+
+
     """
 
     def __init__(self) -> None:
@@ -362,7 +367,7 @@ class QueueSender:
 
     def send_message(self, data: dict) -> None:
         """Send a message to the configured queue.
-        
+
         Args:
         ----
           data: dict:
@@ -371,13 +376,23 @@ class QueueSender:
           data: dict:
           data: dict:
           data: dict:
-        
+
         Returns:
         -------
 
-        :param data: dict:
-        :param data: dict:
-        :param data: dict: 
+        Parameters
+        ----------
+        data :
+            dict:
+        data :
+            dict:
+        data :
+            dict:
+        data: dict :
+
+
+        Returns
+        -------
 
         """
         try:
@@ -398,7 +413,7 @@ class QueueSender:
     )
     def _send_to_rabbitmq(self, data: dict) -> None:
         """Send a message to RabbitMQ (with retry).
-        
+
         Args:
         ----
           data: dict:
@@ -407,13 +422,23 @@ class QueueSender:
           data: dict:
           data: dict:
           data: dict:
-        
+
         Returns:
         -------
 
-        :param data: dict:
-        :param data: dict:
-        :param data: dict: 
+        Parameters
+        ----------
+        data :
+            dict:
+        data :
+            dict:
+        data :
+            dict:
+        data: dict :
+
+
+        Returns
+        -------
 
         """
         message_body = json.dumps(data)
@@ -437,7 +462,7 @@ class QueueSender:
     )
     def _send_to_sqs(self, data: dict) -> None:
         """Send a message to AWS SQS (with retry).
-        
+
         Args:
         ----
           data: dict:
@@ -446,13 +471,23 @@ class QueueSender:
           data: dict:
           data: dict:
           data: dict:
-        
+
         Returns:
         -------
 
-        :param data: dict:
-        :param data: dict:
-        :param data: dict: 
+        Parameters
+        ----------
+        data :
+            dict:
+        data :
+            dict:
+        data :
+            dict:
+        data: dict :
+
+
+        Returns
+        -------
 
         """
         message_body = json.dumps(data)

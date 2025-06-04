@@ -37,7 +37,7 @@ class YFinancePoller(BasePoller):
 
     def poll(self, symbols: list[str]) -> None:
         """Polls data for the specified symbols using yfinance.
-        
+
         Args:
         ----
           symbols(list[str]): The stock symbols to fetch data for.
@@ -47,13 +47,23 @@ class YFinancePoller(BasePoller):
           symbols: list[str]:
           symbols: list[str]:
           symbols: list[str]:
-        
+
         Returns:
         -------
 
-        :param symbols: list[str]:
-        :param symbols: list[str]:
-        :param symbols: list[str]: 
+        Parameters
+        ----------
+        symbols :
+            list[str]:
+        symbols :
+            list[str]:
+        symbols :
+            list[str]:
+        symbols: list[str] :
+
+
+        Returns
+        -------
 
         """
         for symbol in symbols:
@@ -83,60 +93,70 @@ class YFinancePoller(BasePoller):
 
     def _fetch_data(self, symbol: str) -> Any:
         """Fetches recent intraday stock data for the given symbol using yfinance.
-        
+
         Args:
         ----
             symbol (str): The stock symbol to fetch.
-        
+
         Returns:
         -------
             Any: A DataFrame or None if no data is found.
-        
+
         Args:
         ----
           symbol: str:
-        
-        Returns:
-        -------
-        
-        Args:
-        ----
-          symbol: str:
-        
-        Returns:
-        -------
-        
-        Args:
-        ----
-          symbol: str:
-        
-        Returns:
-        -------
-        
-        Args:
-        ----
-          symbol: str:
-        
-        Returns:
-        -------
-        
-        Args:
-        ----
-          symbol: str:
-        
-        Returns:
-        -------
-        
-        Args:
-        ----
-          symbol: str:
-        
+
         Returns:
         -------
 
-        :param symbol: str:
-        :param symbol: str:
-        :param symbol: str: 
+        Args:
+        ----
+          symbol: str:
+
+        Returns:
+        -------
+
+        Args:
+        ----
+          symbol: str:
+
+        Returns:
+        -------
+
+        Args:
+        ----
+          symbol: str:
+
+        Returns:
+        -------
+
+        Args:
+        ----
+          symbol: str:
+
+        Returns:
+        -------
+
+        Args:
+        ----
+          symbol: str:
+
+        Returns:
+        -------
+
+        Parameters
+        ----------
+        symbol :
+            str:
+        symbol :
+            str:
+        symbol :
+            str:
+        symbol: str :
+
+
+        Returns
+        -------
 
         """
         ticker = yf.Ticker(symbol)
@@ -146,70 +166,85 @@ class YFinancePoller(BasePoller):
 
     def _process_data(self, symbol: str, data: Any) -> dict[str, Any]:
         """Processes the latest row of yfinance data into the standard payload format.
-        
+
         Args:
         ----
             symbol (str): The stock symbol.
             data (Any): Raw data from yfinance.
-        
+
         Returns:
         -------
             dict[str, Any]: A structured payload dictionary.
-        
+
         Args:
         ----
           symbol: str:
           data: Any:
-        
-        Returns:
-        -------
-        
-        Args:
-        ----
-          symbol: str:
-          data: Any:
-        
-        Returns:
-        -------
-        
-        Args:
-        ----
-          symbol: str:
-          data: Any:
-        
-        Returns:
-        -------
-        
-        Args:
-        ----
-          symbol: str:
-          data: Any:
-        
-        Returns:
-        -------
-        
-        Args:
-        ----
-          symbol: str:
-          data: Any:
-        
-        Returns:
-        -------
-        
-        Args:
-        ----
-          symbol: str:
-          data: Any:
-        
+
         Returns:
         -------
 
-        :param symbol: str:
-        :param data: Any:
-        :param symbol: str:
-        :param data: Any:
-        :param symbol: str: 
-        :param data: Any: 
+        Args:
+        ----
+          symbol: str:
+          data: Any:
+
+        Returns:
+        -------
+
+        Args:
+        ----
+          symbol: str:
+          data: Any:
+
+        Returns:
+        -------
+
+        Args:
+        ----
+          symbol: str:
+          data: Any:
+
+        Returns:
+        -------
+
+        Args:
+        ----
+          symbol: str:
+          data: Any:
+
+        Returns:
+        -------
+
+        Args:
+        ----
+          symbol: str:
+          data: Any:
+
+        Returns:
+        -------
+
+        Parameters
+        ----------
+        symbol :
+            str:
+        data :
+            Any:
+        symbol :
+            str:
+        data :
+            Any:
+        symbol :
+            str:
+        data :
+            Any:
+        symbol: str :
+
+        data: Any :
+
+
+        Returns
+        -------
 
         """
         latest_data = data.iloc[-1]
@@ -231,7 +266,7 @@ class YFinancePoller(BasePoller):
 
     def _handle_success(self, symbol: str) -> None:
         """Tracks success metrics for polling and requests.
-        
+
         Args:
         ----
           symbol(str): The stock symbol.
@@ -241,13 +276,23 @@ class YFinancePoller(BasePoller):
           symbol: str:
           symbol: str:
           symbol: str:
-        
+
         Returns:
         -------
 
-        :param symbol: str:
-        :param symbol: str:
-        :param symbol: str: 
+        Parameters
+        ----------
+        symbol :
+            str:
+        symbol :
+            str:
+        symbol :
+            str:
+        symbol: str :
+
+
+        Returns
+        -------
 
         """
         track_polling_metrics("success", "YFinance", symbol)
@@ -255,7 +300,7 @@ class YFinancePoller(BasePoller):
 
     def _handle_failure(self, symbol: str, error: str) -> None:
         """Tracks failure metrics and logs the error.
-        
+
         Args:
         ----
           symbol(str): The stock symbol.
@@ -272,16 +317,31 @@ class YFinancePoller(BasePoller):
           error: str:
           symbol: str:
           error: str:
-        
+
         Returns:
         -------
 
-        :param symbol: str:
-        :param error: str:
-        :param symbol: str:
-        :param error: str:
-        :param symbol: str: 
-        :param error: str: 
+        Parameters
+        ----------
+        symbol :
+            str:
+        error :
+            str:
+        symbol :
+            str:
+        error :
+            str:
+        symbol :
+            str:
+        error :
+            str:
+        symbol: str :
+
+        error: str :
+
+
+        Returns
+        -------
 
         """
         track_polling_metrics("failure", "YFinance", symbol)

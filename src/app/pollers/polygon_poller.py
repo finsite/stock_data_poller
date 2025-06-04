@@ -42,7 +42,7 @@ class PolygonPoller(BasePoller):
 
     def poll(self, symbols: list[str]) -> None:
         """Poll data for the given list of stock symbols.
-        
+
         Args:
         ----
           symbols(list[str]): List of stock symbols.
@@ -52,13 +52,23 @@ class PolygonPoller(BasePoller):
           symbols: list[str]:
           symbols: list[str]:
           symbols: list[str]:
-        
+
         Returns:
         -------
 
-        :param symbols: list[str]:
-        :param symbols: list[str]:
-        :param symbols: list[str]: 
+        Parameters
+        ----------
+        symbols :
+            list[str]:
+        symbols :
+            list[str]:
+        symbols :
+            list[str]:
+        symbols: list[str] :
+
+
+        Returns
+        -------
 
         """
         for symbol in symbols:
@@ -88,60 +98,70 @@ class PolygonPoller(BasePoller):
 
     def _fetch_data(self, symbol: str) -> dict[str, Any]:
         """Fetch stock data for the given symbol from the Polygon.io API.
-        
+
         Args:
         ----
             symbol (str): The stock symbol to fetch data for.
-        
+
         Returns:
         -------
             dict[str, Any]: The raw response data.
-        
+
         Args:
         ----
           symbol: str:
-        
-        Returns:
-        -------
-        
-        Args:
-        ----
-          symbol: str:
-        
-        Returns:
-        -------
-        
-        Args:
-        ----
-          symbol: str:
-        
-        Returns:
-        -------
-        
-        Args:
-        ----
-          symbol: str:
-        
-        Returns:
-        -------
-        
-        Args:
-        ----
-          symbol: str:
-        
-        Returns:
-        -------
-        
-        Args:
-        ----
-          symbol: str:
-        
+
         Returns:
         -------
 
-        :param symbol: str:
-        :param symbol: str:
-        :param symbol: str: 
+        Args:
+        ----
+          symbol: str:
+
+        Returns:
+        -------
+
+        Args:
+        ----
+          symbol: str:
+
+        Returns:
+        -------
+
+        Args:
+        ----
+          symbol: str:
+
+        Returns:
+        -------
+
+        Args:
+        ----
+          symbol: str:
+
+        Returns:
+        -------
+
+        Args:
+        ----
+          symbol: str:
+
+        Returns:
+        -------
+
+        Parameters
+        ----------
+        symbol :
+            str:
+        symbol :
+            str:
+        symbol :
+            str:
+        symbol: str :
+
+
+        Returns
+        -------
 
         """
 
@@ -160,78 +180,95 @@ class PolygonPoller(BasePoller):
 
     def _process_data(self, symbol: str, data: dict[str, Any]) -> dict[str, Any]:
         """Process the raw API response into the standard payload format.
-        
+
         Args:
         ----
             symbol (str): Stock symbol.
             data (dict[str, Any]): Raw data from Polygon.io API.
-        
+
         Returns:
         -------
             dict[str, Any]: Formatted payload.
-        
+
         Args:
         ----
           symbol: str:
           data: dict[str:
           Any]:
-        
-        Returns:
-        -------
-        
-        Args:
-        ----
-          symbol: str:
-          data: dict[str:
-          Any]:
-        
-        Returns:
-        -------
-        
-        Args:
-        ----
-          symbol: str:
-          data: dict[str:
-          Any]:
-        
-        Returns:
-        -------
-        
-        Args:
-        ----
-          symbol: str:
-          data: dict[str:
-          Any]:
-        
-        Returns:
-        -------
-        
-        Args:
-        ----
-          symbol: str:
-          data: dict[str:
-          Any]:
-        
-        Returns:
-        -------
-        
-        Args:
-        ----
-          symbol: str:
-          data: dict[str:
-          Any]:
-        
+
         Returns:
         -------
 
-        :param symbol: str:
-        :param data: dict[str:
-        :param Any: param symbol: str:
-        :param data: dict[str:
-        :param Any: 
-        :param symbol: str: 
-        :param data: dict[str: 
-        :param Any]: 
+        Args:
+        ----
+          symbol: str:
+          data: dict[str:
+          Any]:
+
+        Returns:
+        -------
+
+        Args:
+        ----
+          symbol: str:
+          data: dict[str:
+          Any]:
+
+        Returns:
+        -------
+
+        Args:
+        ----
+          symbol: str:
+          data: dict[str:
+          Any]:
+
+        Returns:
+        -------
+
+        Args:
+        ----
+          symbol: str:
+          data: dict[str:
+          Any]:
+
+        Returns:
+        -------
+
+        Args:
+        ----
+          symbol: str:
+          data: dict[str:
+          Any]:
+
+        Returns:
+        -------
+
+        Parameters
+        ----------
+        symbol :
+            str:
+        data :
+            dict[str:
+        Any :
+            param symbol: str:
+        data :
+            dict[str:
+        Any :
+            param symbol: str:
+        data :
+            dict[str:
+        Any :
+
+        symbol: str :
+
+        data: dict[str :
+
+        Any] :
+
+
+        Returns
+        -------
 
         """
         result = data["results"][0]
@@ -252,7 +289,7 @@ class PolygonPoller(BasePoller):
 
     def _handle_success(self, symbol: str) -> None:
         """Track success metrics for polling.
-        
+
         Args:
         ----
           symbol(str): The stock symbol.
@@ -262,13 +299,23 @@ class PolygonPoller(BasePoller):
           symbol: str:
           symbol: str:
           symbol: str:
-        
+
         Returns:
         -------
 
-        :param symbol: str:
-        :param symbol: str:
-        :param symbol: str: 
+        Parameters
+        ----------
+        symbol :
+            str:
+        symbol :
+            str:
+        symbol :
+            str:
+        symbol: str :
+
+
+        Returns
+        -------
 
         """
         track_polling_metrics("success", "Polygon", symbol)
@@ -276,7 +323,7 @@ class PolygonPoller(BasePoller):
 
     def _handle_failure(self, symbol: str, error: str) -> None:
         """Track failure metrics and log error.
-        
+
         Args:
         ----
           symbol(str): The stock symbol.
@@ -293,16 +340,31 @@ class PolygonPoller(BasePoller):
           error: str:
           symbol: str:
           error: str:
-        
+
         Returns:
         -------
 
-        :param symbol: str:
-        :param error: str:
-        :param symbol: str:
-        :param error: str:
-        :param symbol: str: 
-        :param error: str: 
+        Parameters
+        ----------
+        symbol :
+            str:
+        error :
+            str:
+        symbol :
+            str:
+        error :
+            str:
+        symbol :
+            str:
+        error :
+            str:
+        symbol: str :
+
+        error: str :
+
+
+        Returns
+        -------
 
         """
         track_polling_metrics("failure", "Polygon", symbol)

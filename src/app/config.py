@@ -15,12 +15,27 @@ _vault = VaultClient()
 def get_config_value(key: str, default: str | None = None) -> str:
     """Retrieve a configuration value from Vault, environment variable, or default.
 
-    :param key: str:
-    :param default: str | None:  (Default value = None)
-    :param key: str:
-    :param default: str | None:  (Default value = None)
-    :param key: str: 
-    :param default: str | None:  (Default value = None)
+    Parameters
+    ----------
+    key :
+        str:
+    default :
+        str | None:  (Default value = None)
+    key :
+        str:
+    default :
+        str | None:  (Default value = None)
+    key :
+        str:
+    default :
+        str | None:  (Default value = None)
+    key: str :
+
+    default: str | None :
+         (Default value = None)
+
+    Returns
+    -------
 
     """
     val = _vault.get(key, os.getenv(key))
@@ -291,10 +306,15 @@ def get_polling_interval() -> int:
 
 def get_rate_limit() -> int:
     """Returns the rate limit for the API in requests per second.
-    
+
     If the environment variable RATE_LIMIT is set, its value is used.
     Otherwise, 0 is returned, meaning no rate limit is enforced.
 
+    Parameters
+    ----------
+
+    Returns
+    -------
 
     """
     return int(get_config_value("RATE_LIMIT", "0"))

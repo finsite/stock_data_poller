@@ -49,60 +49,70 @@ class AlphaVantagePoller(BasePoller):
 
     def poll(self, symbols: list[str]) -> None:
         """Polls data for the specified symbols from AlphaVantage API.
-        
+
         Args:
         ----
             symbols (list[str]): The list of stock symbols to poll.
-        
+
         Returns:
         -------
             None: This function does not return a value.
-        
+
         Args:
         ----
           symbols: list[str]:
-        
-        Returns:
-        -------
-        
-        Args:
-        ----
-          symbols: list[str]:
-        
-        Returns:
-        -------
-        
-        Args:
-        ----
-          symbols: list[str]:
-        
-        Returns:
-        -------
-        
-        Args:
-        ----
-          symbols: list[str]:
-        
-        Returns:
-        -------
-        
-        Args:
-        ----
-          symbols: list[str]:
-        
-        Returns:
-        -------
-        
-        Args:
-        ----
-          symbols: list[str]:
-        
+
         Returns:
         -------
 
-        :param symbols: list[str]:
-        :param symbols: list[str]:
-        :param symbols: list[str]: 
+        Args:
+        ----
+          symbols: list[str]:
+
+        Returns:
+        -------
+
+        Args:
+        ----
+          symbols: list[str]:
+
+        Returns:
+        -------
+
+        Args:
+        ----
+          symbols: list[str]:
+
+        Returns:
+        -------
+
+        Args:
+        ----
+          symbols: list[str]:
+
+        Returns:
+        -------
+
+        Args:
+        ----
+          symbols: list[str]:
+
+        Returns:
+        -------
+
+        Parameters
+        ----------
+        symbols :
+            list[str]:
+        symbols :
+            list[str]:
+        symbols :
+            list[str]:
+        symbols: list[str] :
+
+
+        Returns
+        -------
 
         """
         for symbol in symbols:
@@ -130,119 +140,134 @@ class AlphaVantagePoller(BasePoller):
 
     def _enforce_rate_limit(self) -> None:
         """Enforces the rate limit using the RateLimiter class.
-        
+
         Acquires permission to proceed with a request. Blocks if the rate limit is
         exceeded.
-        
+
         Args:
         ----
             None
-        
+
         Returns:
         -------
             None
-        
+
         Args:
         ----
-        
-        Returns:
-        -------
-        
-        Args:
-        ----
-        
-        Returns:
-        -------
-        
-        Args:
-        ----
-        
-        Returns:
-        -------
-        
-        Args:
-        ----
-        
-        Returns:
-        -------
-        
-        Args:
-        ----
-        
-        Returns:
-        -------
-        
-        Args:
-        ----
-        
+
         Returns:
         -------
 
+        Args:
+        ----
 
-        
+        Returns:
+        -------
+
+        Args:
+        ----
+
+        Returns:
+        -------
+
+        Args:
+        ----
+
+        Returns:
+        -------
+
+        Args:
+        ----
+
+        Returns:
+        -------
+
+        Args:
+        ----
+
+        Returns:
+        -------
+
+        Parameters
+        ----------
+
+        Returns
+        -------
+
+
         """
         self.rate_limiter.acquire(context="AlphaVantage")
 
     def _fetch_data(self, symbol: str) -> dict[str, Any]:
         """Fetches stock data for the given symbol from the Alpha Vantage API.
-        
+
         Args:
         ----
             symbol (str): Stock symbol to fetch data for.
-        
+
         Returns:
         -------
             dict[str, Any]: Parsed response from Alpha Vantage.
-        
+
         Raises:
         ------
             ValueError: If no data is returned.
-        
+
         Args:
         ----
           symbol: str:
-        
-        Returns:
-        -------
-        
-        Args:
-        ----
-          symbol: str:
-        
-        Returns:
-        -------
-        
-        Args:
-        ----
-          symbol: str:
-        
-        Returns:
-        -------
-        
-        Args:
-        ----
-          symbol: str:
-        
-        Returns:
-        -------
-        
-        Args:
-        ----
-          symbol: str:
-        
-        Returns:
-        -------
-        
-        Args:
-        ----
-          symbol: str:
-        
+
         Returns:
         -------
 
-        :param symbol: str:
-        :param symbol: str:
-        :param symbol: str: 
+        Args:
+        ----
+          symbol: str:
+
+        Returns:
+        -------
+
+        Args:
+        ----
+          symbol: str:
+
+        Returns:
+        -------
+
+        Args:
+        ----
+          symbol: str:
+
+        Returns:
+        -------
+
+        Args:
+        ----
+          symbol: str:
+
+        Returns:
+        -------
+
+        Args:
+        ----
+          symbol: str:
+
+        Returns:
+        -------
+
+        Parameters
+        ----------
+        symbol :
+            str:
+        symbol :
+            str:
+        symbol :
+            str:
+        symbol: str :
+
+
+        Returns
+        -------
 
         """
 
@@ -262,78 +287,95 @@ class AlphaVantagePoller(BasePoller):
 
     def _process_data(self, symbol: str, data: dict[str, Any]) -> dict[str, Any]:
         """Processes the latest time series data into a standardized payload.
-        
+
         Args:
         ----
             symbol (str): Stock symbol.
             data (dict[str, Any]): Raw data from AlphaVantage.
-        
+
         Returns:
         -------
             dict[str, Any]: Transformed payload.
-        
+
         Args:
         ----
           symbol: str:
           data: dict[str:
           Any]:
-        
-        Returns:
-        -------
-        
-        Args:
-        ----
-          symbol: str:
-          data: dict[str:
-          Any]:
-        
-        Returns:
-        -------
-        
-        Args:
-        ----
-          symbol: str:
-          data: dict[str:
-          Any]:
-        
-        Returns:
-        -------
-        
-        Args:
-        ----
-          symbol: str:
-          data: dict[str:
-          Any]:
-        
-        Returns:
-        -------
-        
-        Args:
-        ----
-          symbol: str:
-          data: dict[str:
-          Any]:
-        
-        Returns:
-        -------
-        
-        Args:
-        ----
-          symbol: str:
-          data: dict[str:
-          Any]:
-        
+
         Returns:
         -------
 
-        :param symbol: str:
-        :param data: dict[str:
-        :param Any: param symbol: str:
-        :param data: dict[str:
-        :param Any: 
-        :param symbol: str: 
-        :param data: dict[str: 
-        :param Any]: 
+        Args:
+        ----
+          symbol: str:
+          data: dict[str:
+          Any]:
+
+        Returns:
+        -------
+
+        Args:
+        ----
+          symbol: str:
+          data: dict[str:
+          Any]:
+
+        Returns:
+        -------
+
+        Args:
+        ----
+          symbol: str:
+          data: dict[str:
+          Any]:
+
+        Returns:
+        -------
+
+        Args:
+        ----
+          symbol: str:
+          data: dict[str:
+          Any]:
+
+        Returns:
+        -------
+
+        Args:
+        ----
+          symbol: str:
+          data: dict[str:
+          Any]:
+
+        Returns:
+        -------
+
+        Parameters
+        ----------
+        symbol :
+            str:
+        data :
+            dict[str:
+        Any :
+            param symbol: str:
+        data :
+            dict[str:
+        Any :
+            param symbol: str:
+        data :
+            dict[str:
+        Any :
+
+        symbol: str :
+
+        data: dict[str :
+
+        Any] :
+
+
+        Returns
+        -------
 
         """
         time_series = data.get("Time Series (5min)")
@@ -359,7 +401,7 @@ class AlphaVantagePoller(BasePoller):
 
     def _handle_success(self, symbol: str) -> None:
         """Tracks success metrics for polling and requests.
-        
+
         Args:
         ----
           symbol(str):
@@ -369,13 +411,23 @@ class AlphaVantagePoller(BasePoller):
           symbol: str:
           symbol: str:
           symbol: str:
-        
+
         Returns:
         -------
 
-        :param symbol: str:
-        :param symbol: str:
-        :param symbol: str: 
+        Parameters
+        ----------
+        symbol :
+            str:
+        symbol :
+            str:
+        symbol :
+            str:
+        symbol: str :
+
+
+        Returns
+        -------
 
         """
         # Track polling metrics indicating a successful polling operation
@@ -386,10 +438,10 @@ class AlphaVantagePoller(BasePoller):
 
     def _handle_failure(self, symbol: str, error: str) -> None:
         """Tracks failure metrics and logs the error.
-        
+
         This method is called when the poller fails to fetch data for a given
         symbol. It logs the error and tracks the failure metrics.
-        
+
         Args:
         ----
           symbol: str:
@@ -404,16 +456,31 @@ class AlphaVantagePoller(BasePoller):
           error: str:
           symbol: str:
           error: str:
-        
+
         Returns:
         -------
 
-        :param symbol: str:
-        :param error: str:
-        :param symbol: str:
-        :param error: str:
-        :param symbol: str: 
-        :param error: str: 
+        Parameters
+        ----------
+        symbol :
+            str:
+        error :
+            str:
+        symbol :
+            str:
+        error :
+            str:
+        symbol :
+            str:
+        error :
+            str:
+        symbol: str :
+
+        error: str :
+
+
+        Returns
+        -------
 
         """
         # Log the error for debugging purposes

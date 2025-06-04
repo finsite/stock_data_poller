@@ -79,12 +79,12 @@ class YahooRapidAPIPoller(BasePoller):
     def _process_data(self, symbol: str, price_info: dict[str, Any]) -> dict[str, Any]:
         """Processes the raw data from the Yahoo Finance API into a standardized payload
         format.
-        
+
         Args:
         ----
             symbol (str): The stock symbol.
             price_info (dict[str, Any]): The raw data from the Yahoo Finance API.
-        
+
         Returns:
         -------
             dict[str, Any]: The processed payload with the following keys:
@@ -93,69 +93,86 @@ class YahooRapidAPIPoller(BasePoller):
                 - price (float): The latest price of the stock.
                 - source (str): The source of the data, "YahooRapidAPI".
                 - data (dict[str, float]): The additional data fields.
-        
+
         Args:
         ----
           symbol: str:
           price_info: dict[str:
           Any]:
-        
-        Returns:
-        -------
-        
-        Args:
-        ----
-          symbol: str:
-          price_info: dict[str:
-          Any]:
-        
-        Returns:
-        -------
-        
-        Args:
-        ----
-          symbol: str:
-          price_info: dict[str:
-          Any]:
-        
-        Returns:
-        -------
-        
-        Args:
-        ----
-          symbol: str:
-          price_info: dict[str:
-          Any]:
-        
-        Returns:
-        -------
-        
-        Args:
-        ----
-          symbol: str:
-          price_info: dict[str:
-          Any]:
-        
-        Returns:
-        -------
-        
-        Args:
-        ----
-          symbol: str:
-          price_info: dict[str:
-          Any]:
-        
+
         Returns:
         -------
 
-        :param symbol: str:
-        :param price_info: dict[str:
-        :param Any: param symbol: str:
-        :param price_info: dict[str:
-        :param Any: 
-        :param symbol: str: 
-        :param price_info: dict[str: 
-        :param Any]: 
+        Args:
+        ----
+          symbol: str:
+          price_info: dict[str:
+          Any]:
+
+        Returns:
+        -------
+
+        Args:
+        ----
+          symbol: str:
+          price_info: dict[str:
+          Any]:
+
+        Returns:
+        -------
+
+        Args:
+        ----
+          symbol: str:
+          price_info: dict[str:
+          Any]:
+
+        Returns:
+        -------
+
+        Args:
+        ----
+          symbol: str:
+          price_info: dict[str:
+          Any]:
+
+        Returns:
+        -------
+
+        Args:
+        ----
+          symbol: str:
+          price_info: dict[str:
+          Any]:
+
+        Returns:
+        -------
+
+        Parameters
+        ----------
+        symbol :
+            str:
+        price_info :
+            dict[str:
+        Any :
+            param symbol: str:
+        price_info :
+            dict[str:
+        Any :
+            param symbol: str:
+        price_info :
+            dict[str:
+        Any :
+
+        symbol: str :
+
+        price_info: dict[str :
+
+        Any] :
+
+
+        Returns
+        -------
 
         """
         return {
@@ -190,9 +207,19 @@ class YahooRapidAPIPoller(BasePoller):
           symbol: str:
           symbol: str:
 
-        :param symbol: str:
-        :param symbol: str:
-        :param symbol: str: 
+        Parameters
+        ----------
+        symbol :
+            str:
+        symbol :
+            str:
+        symbol :
+            str:
+        symbol: str :
+
+
+        Returns
+        -------
 
         """
         track_polling_metrics("success", "YahooRapidAPI", symbol)
@@ -213,12 +240,27 @@ class YahooRapidAPIPoller(BasePoller):
           symbol: str:
           error: str:
 
-        :param symbol: str:
-        :param error: str:
-        :param symbol: str:
-        :param error: str:
-        :param symbol: str: 
-        :param error: str: 
+        Parameters
+        ----------
+        symbol :
+            str:
+        error :
+            str:
+        symbol :
+            str:
+        error :
+            str:
+        symbol :
+            str:
+        error :
+            str:
+        symbol: str :
+
+        error: str :
+
+
+        Returns
+        -------
 
         """
         track_polling_metrics("failure", "YahooRapidAPI", symbol)
