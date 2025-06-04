@@ -94,6 +94,8 @@ class IntrinioPoller(BasePoller):
         :param price: dict[str:
         :param symbol: str:
         :param price: dict[str:
+        :param Any: param symbol: str:
+        :param price: dict[str:
         :param Any: 
         :param symbol: str: 
         :param price: dict[str: 
@@ -130,6 +132,7 @@ class IntrinioPoller(BasePoller):
         :param symbol: type symbol: str :
         :param symbol: str:
         :param symbol: str:
+        :param symbol: str:
         :param symbol: str: 
 
         """
@@ -161,6 +164,8 @@ class IntrinioPoller(BasePoller):
         :param error: type error: str :
         :param symbol: type symbol: str :
         :param error: type error: str :
+        :param symbol: str:
+        :param error: str:
         :param symbol: str:
         :param error: str:
         :param symbol: str:

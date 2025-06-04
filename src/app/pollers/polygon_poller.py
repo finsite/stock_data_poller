@@ -60,6 +60,7 @@ class PolygonPoller(BasePoller):
         :param symbols: type symbols: list[str] :
         :param symbols: list[str]:
         :param symbols: list[str]:
+        :param symbols: list[str]:
         :param symbols: list[str]: 
 
         """
@@ -102,6 +103,7 @@ class PolygonPoller(BasePoller):
         :param symbol: type symbol: str :
         :param symbol: str:
         :param symbol: str:
+        :param symbol: str:
         :param symbol: str: 
 
         """
@@ -140,6 +142,8 @@ class PolygonPoller(BasePoller):
         :param symbol: str:
         :param data: dict[str:
         :param symbol: str:
+        :param data: dict[str:
+        :param Any: param symbol: str:
         :param data: dict[str:
         :param Any: 
         :param symbol: str: 
@@ -183,6 +187,7 @@ class PolygonPoller(BasePoller):
         :param symbol: type symbol: str :
         :param symbol: str:
         :param symbol: str:
+        :param symbol: str:
         :param symbol: str: 
 
         """
@@ -219,6 +224,8 @@ class PolygonPoller(BasePoller):
         :param error: type error: str :
         :param symbol: type symbol: str :
         :param error: type error: str :
+        :param symbol: str:
+        :param error: str:
         :param symbol: str:
         :param error: str:
         :param symbol: str:
