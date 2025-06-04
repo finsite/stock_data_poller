@@ -1,10 +1,11 @@
-"""Configuration module for the stock poller.
+"""Configuration module for polling services.
 
-Provides typed getter functions to retrieve configuration values from HashiCorp Vault,
-environment variables, or defaults — in that order.
+Provides typed getter functions to retrieve configuration values from
+Vault, environment variables, or defaults — in that order.
 """
 
 import os
+from typing import Optional
 
 from app.utils.vault_client import VaultClient
 
@@ -12,30 +13,18 @@ from app.utils.vault_client import VaultClient
 _vault = VaultClient()
 
 
-def get_config_value(key: str, default: str | None = None) -> str:
+def get_config_value(key: str, default: Optional[str] = None) -> str:
     """Retrieve a configuration value from Vault, environment variable, or default.
 
-    :param key: str:
-    :param default: str | None:  (Default value = None)
-    :param key: str:
-    :param default: str | None:  (Default value = None)
-    :param key: str:
-    :param default: str | None:  (Default value = None)
-    :param key: type key: str :
-    :param default: Default value = None)
-    :type default: str | None :
-    :param key: type key: str :
-    :param default: Default value = None)
-    :type default: str | None :
-    :param key: str:
-    :param default: str | None:  (Default value = None)
-    :param key: str:
-    :param default: str | None:  (Default value = None)
-    :param key: str:
-    :param default: str | None:  (Default value = None)
-    :param key: str:
-    :param default: str | None:  (Default value = None)
+    Args:
+        key (str): The configuration key to retrieve.
+        default (Optional[str]): Fallback value if the key is missing.
 
+    Returns:
+        str: The resolved configuration value.
+
+    Raises:
+        ValueError: If the key is missing and no default is provided.
     """
     val = _vault.get(key, os.getenv(key))
     if val is None:
@@ -45,228 +34,69 @@ def get_config_value(key: str, default: str | None = None) -> str:
     return str(val)
 
 
-# --------------------------------------------------------------------------
-# 🔧 General Configuration
-# --------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
+# 🌍 General Environment
+# ------------------------------------------------------------------------------
 
+def get_environment() -> str:
+    """Return the current runtime environment (e.g., 'dev', 'prod')."""
+    return get_config_value("ENVIRONMENT", "dev")
 
-def get_log_level() -> str:
-    """ """
-    return get_config_value("LOG_LEVEL", "info")
 
+def get_poller_name() -> str:
+    """Return the name of this poller, used for Vault namespace scoping."""
+    return get_config_value("POLLER_NAME", "replace_me_poller_name")
 
-def get_log_dir() -> str:
-    """ """
-    return get_config_value("LOG_DIR", "/app/logs")
 
+# ------------------------------------------------------------------------------
+# 🔁 Polling and Runtime Behavior
+# ------------------------------------------------------------------------------
 
-def get_data_source() -> str:
-    """ """
-    return get_config_value("DATA_SOURCE", "yahoo_rapidapi")
+def get_polling_interval() -> int:
+    """Polling interval in seconds between data fetch cycles."""
+    return int(get_config_value("POLLING_INTERVAL", "60"))
 
 
-def get_symbols() -> list[str]:
-    """ """
-    return get_config_value("SYMBOLS", "AAPL,GOOG,MSFT").split(",")
+def get_batch_size() -> int:
+    """Number of items or messages to process in each batch."""
+    return int(get_config_value("BATCH_SIZE", "10"))
 
 
-def get_poll_interval() -> int:
-    """ """
-    return int(get_config_value("POLL_INTERVAL", "60"))
+def get_rate_limit() -> int:
+    """Maximum number of requests per second (0 = unlimited)."""
+    return int(get_config_value("RATE_LIMIT", "0"))
 
 
-def get_poll_timeout() -> int:
-    """ """
-    return int(get_config_value("POLL_TIMEOUT", "30"))
+def get_output_mode() -> str:
+    """Output mode: 'queue' to publish, 'log' for debug output."""
+    return get_config_value("OUTPUT_MODE", "queue")
 
 
-def get_request_timeout() -> int:
-    """ """
-    return int(get_config_value("REQUEST_TIMEOUT", "30"))
-
-
-# --------------------------------------------------------------------------
-# 🔁 Retry & Backfill
-# --------------------------------------------------------------------------
-
-
-def get_max_retries() -> int:
-    """ """
-    return int(get_config_value("MAX_RETRIES", "3"))
-
-
-def get_retry_delay() -> int:
-    """ """
-    return int(get_config_value("RETRY_DELAY", "5"))
-
-
-def is_retry_enabled() -> bool:
-    """ """
-    return get_config_value("ENABLE_RETRY", "true") == "true"
-
-
-def is_backfill_enabled() -> bool:
-    """ """
-    return get_config_value("ENABLE_BACKFILL", "false") == "true"
-
-
-# --------------------------------------------------------------------------
-# 🧪 Logging Flags
-# --------------------------------------------------------------------------
-
-
-def is_logging_enabled() -> bool:
-    """ """
-    return get_config_value("ENABLE_LOGGING", "true") == "true"
-
-
-def is_cloud_logging_enabled() -> bool:
-    """ """
-    return get_config_value("CLOUD_LOGGING_ENABLED", "false") == "true"
-
-
-# --------------------------------------------------------------------------
-# 📊 Poller Configuration
-# --------------------------------------------------------------------------
-
-
-def get_poller_type() -> str:
-    """ """
-    return get_config_value("POLLER_TYPE", "yfinance")
-
-
-def get_poller_fill_rate_limit() -> int:
-    """ """
-    return int(get_config_value("POLLER_FILL_RATE_LIMIT", get_config_value("RATE_LIMIT", "0")))
-
-
-def get_yfinance_fill_rate_limit() -> int:
-    """ """
-    return int(get_config_value("YFINANCE_FILL_RATE_LIMIT", str(get_poller_fill_rate_limit())))
-
-
-def get_iex_fill_rate_limit() -> int:
-    """ """
-    return int(get_config_value("IEX_FILL_RATE_LIMIT", str(get_poller_fill_rate_limit())))
-
-
-def get_finnhub_fill_rate_limit() -> int:
-    """ """
-    return int(get_config_value("FINNHUB_FILL_RATE_LIMIT", str(get_poller_fill_rate_limit())))
-
-
-def get_polygon_fill_rate_limit() -> int:
-    """ """
-    return int(get_config_value("POLYGON_FILL_RATE_LIMIT", str(get_poller_fill_rate_limit())))
-
-
-def get_alpha_vantage_fill_rate_limit() -> int:
-    """ """
-    return int(get_config_value("ALPHA_VANTAGE_FILL_RATE_LIMIT", str(get_poller_fill_rate_limit())))
-
-
-def get_quandl_fill_rate_limit() -> int:
-    """ """
-    return int(get_config_value("QUANDL_FILL_RATE_LIMIT", str(get_poller_fill_rate_limit())))
-
-
-def get_intrinio_fill_rate_limit() -> int:
-    """ """
-    return int(get_config_value("INTRINIO_FILL_RATE_LIMIT", str(get_poller_fill_rate_limit())))
-
-
-def get_rapidapi_fill_rate_limit() -> int:
-    """ """
-    return int(get_config_value("RAPIDAPI_FILL_RATE_LIMIT", str(get_poller_fill_rate_limit())))
-
-
-def get_finnazon_fill_rate_limit() -> int:
-    """ """
-    return int(get_config_value("FINNAZON_FILL_RATE_LIMIT", str(get_poller_fill_rate_limit())))
-
-
-# --------------------------------------------------------------------------
-# 🔐 API Keys
-# --------------------------------------------------------------------------
-
-
-def get_yfinance_key() -> str:
-    """ """
-    return get_config_value("YFINANCE_API_KEY", "")
-
-
-def get_iex_api_key() -> str:
-    """ """
-    return get_config_value("IEX_API_KEY", "")
-
-
-def get_finnhub_api_key() -> str:
-    """ """
-    return get_config_value("FINNHUB_API_KEY", "")
-
-
-def get_polygon_api_key() -> str:
-    """ """
-    return get_config_value("POLYGON_API_KEY", "")
-
-
-def get_alpha_vantage_api_key() -> str:
-    """ """
-    return get_config_value("ALPHA_VANTAGE_API_KEY", "")
-
-
-def get_quandl_api_key() -> str:
-    """ """
-    return get_config_value("QUANDL_API_KEY", "")
-
-
-def get_intrinio_key() -> str:
-    """ """
-    return get_config_value("INTRINIO_API_KEY", "")
-
-
-def get_rapidapi_key() -> str:
-    """ """
-    return get_config_value("RAPIDAPI_KEY", "")
-
-
-def get_finnazon_key() -> str:
-    """ """
-    return get_config_value("FINNAZON_API_KEY", "")
-
-
-# --------------------------------------------------------------------------
-# 📬 Queue Configuration
-# --------------------------------------------------------------------------
-
+# ------------------------------------------------------------------------------
+# 📬 Queue Type
+# ------------------------------------------------------------------------------
 
 def get_queue_type() -> str:
-    """ """
+    """Queue system in use: 'rabbitmq' or 'sqs'."""
     return get_config_value("QUEUE_TYPE", "rabbitmq")
 
 
+# ------------------------------------------------------------------------------
+# 🐇 RabbitMQ Configuration
+# ------------------------------------------------------------------------------
+
 def get_rabbitmq_host() -> str:
-    """ """
+    """Hostname of the RabbitMQ broker."""
     return get_config_value("RABBITMQ_HOST", "localhost")
 
 
 def get_rabbitmq_port() -> int:
-    """ """
+    """Port number for RabbitMQ connection."""
     return int(get_config_value("RABBITMQ_PORT", "5672"))
 
 
-def get_rabbitmq_exchange() -> str:
-    """ """
-    return get_config_value("RABBITMQ_EXCHANGE", "stock_data_exchange")
-
-
-def get_rabbitmq_routing_key() -> str:
-    """ """
-    return get_config_value("RABBITMQ_ROUTING_KEY", "stock_data")
-
-
 def get_rabbitmq_vhost() -> str:
-    """ """
+    """Virtual host used for RabbitMQ connection."""
     vhost = get_config_value("RABBITMQ_VHOST")
     if not vhost:
         raise ValueError("❌ Missing required config: RABBITMQ_VHOST must be set.")
@@ -274,46 +104,44 @@ def get_rabbitmq_vhost() -> str:
 
 
 def get_rabbitmq_user() -> str:
-    """ """
+    """Username for RabbitMQ authentication."""
     return get_config_value("RABBITMQ_USER", "")
 
 
 def get_rabbitmq_password() -> str:
-    """ """
+    """Password for RabbitMQ authentication."""
     return get_config_value("RABBITMQ_PASS", "")
 
 
+def get_rabbitmq_exchange() -> str:
+    """Exchange name to publish to or consume from."""
+    return get_config_value("RABBITMQ_EXCHANGE", "stock_data_exchange")
+
+
+def get_rabbitmq_routing_key() -> str:
+    """Routing key used for message delivery in RabbitMQ."""
+    return get_config_value("RABBITMQ_ROUTING_KEY", "stock_data")
+
+
+def get_rabbitmq_queue() -> str:
+    """Name of the RabbitMQ queue to consume from."""
+    return get_config_value("RABBITMQ_QUEUE", "replace_me_queue_name")
+
+
+def get_dlq_name() -> str:
+    """Name of the dead-letter queue."""
+    return get_config_value("DLQ_NAME", "replace_me_dlq_name")
+
+
+# ------------------------------------------------------------------------------
+# 📦 Amazon SQS Configuration
+# ------------------------------------------------------------------------------
+
 def get_sqs_queue_url() -> str:
-    """Retrieve the SQS queue URL from the configuration."""
+    """Full URL of the SQS queue."""
     return get_config_value("SQS_QUEUE_URL", "")
 
 
 def get_sqs_region() -> str:
-    """Retrieve the SQS region configuration value."""
+    """AWS region of the SQS queue."""
     return get_config_value("SQS_REGION", "us-east-1")
-
-
-def get_rapidapi_host() -> str:
-    """Retrieve the RapidAPI host configuration value."""
-    return get_config_value("RAPIDAPI_HOST", "apidojo-yahoo-finance-v1.p.rapidapi.com")
-
-
-def get_polling_interval() -> int:
-    """Retrieve the polling interval configuration value."""
-    return int(get_config_value("POLLING_INTERVAL", "60"))
-
-
-def get_rate_limit() -> int:
-    """Returns the rate limit for the API in requests per second.
-
-    If the environment variable RATE_LIMIT is set, its value is used.
-    Otherwise, 0 is returned, meaning no rate limit is enforced.
-
-
-    """
-    return int(get_config_value("RATE_LIMIT", "0"))
-
-
-def get_batch_size() -> int:
-    """Retrieve the batch size configuration value."""
-    return int(get_config_value("BATCH_SIZE", "10"))
