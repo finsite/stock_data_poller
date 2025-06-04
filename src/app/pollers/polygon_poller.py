@@ -56,13 +56,11 @@ class PolygonPoller(BasePoller):
         :param symbols: list[str]:
         :param symbols: list[str]:
         :param symbols: list[str]:
-        :param symbols: 
-        :type symbols: list[str] :
-        :param symbols: 
-        :type symbols: list[str] :
+        :param symbols: type symbols: list[str] :
+        :param symbols: type symbols: list[str] :
+        :param symbols: list[str]:
         :param symbols: list[str]: 
 
-        
         """
         for symbol in symbols:
             try:
@@ -99,13 +97,11 @@ class PolygonPoller(BasePoller):
         :param symbol: str:
         :param symbol: str:
         :param symbol: str:
-        :param symbol: 
-        :type symbol: str :
-        :param symbol: 
-        :type symbol: str :
+        :param symbol: type symbol: str :
+        :param symbol: type symbol: str :
+        :param symbol: str:
         :param symbol: str: 
 
-        
         """
 
         def request_func():
@@ -135,20 +131,16 @@ class PolygonPoller(BasePoller):
         :param data: dict[str:
         :param Any: param symbol: str:
         :param data: dict[str:
-        :param Any: 
-        :param symbol: 
-        :type symbol: str :
-        :param data: 
-        :type data: dict[str :
-        :param Any]: 
-        :param symbol: 
-        :type symbol: str :
-        :param data: 
-        :type data: dict[str :
+        :param Any: param symbol:
+        :param data: type data: dict[str :
+        :param Any: param symbol:
+        :param data: type data: dict[str :
+        :param symbol: str:
+        :param data: dict[str:
         :param symbol: str: 
         :param data: dict[str: 
+        :param Any]: 
 
-        
         """
         result = data["results"][0]
 
@@ -182,13 +174,11 @@ class PolygonPoller(BasePoller):
         :param symbol: str:
         :param symbol: str:
         :param symbol: str:
-        :param symbol: 
-        :type symbol: str :
-        :param symbol: 
-        :type symbol: str :
+        :param symbol: type symbol: str :
+        :param symbol: type symbol: str :
+        :param symbol: str:
         :param symbol: str: 
 
-        
         """
         track_polling_metrics("success", "Polygon", symbol)
         track_request_metrics(symbol, 30, 5)
@@ -219,18 +209,15 @@ class PolygonPoller(BasePoller):
         :param error: str:
         :param symbol: str:
         :param error: str:
-        :param symbol: 
-        :type symbol: str :
-        :param error: 
-        :type error: str :
-        :param symbol: 
-        :type symbol: str :
-        :param error: 
-        :type error: str :
+        :param symbol: type symbol: str :
+        :param error: type error: str :
+        :param symbol: type symbol: str :
+        :param error: type error: str :
+        :param symbol: str:
+        :param error: str:
         :param symbol: str: 
         :param error: str: 
 
-        
         """
         track_polling_metrics("failure", "Polygon", symbol)
         track_request_metrics(symbol, 30, 5, success=False)

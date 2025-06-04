@@ -276,15 +276,15 @@ logger = setup_logger(__name__)
 
 class QueueSender:
     """A class for sending messages to a RabbitMQ or SQS queue.
-    
+
     Supports configuration for either queue type. Handles message serialization,
     dispatch, connection setup, and cleanup.
-    
+
     Args:
     ----
 
 
-    
+
     """
 
     def __init__(self) -> None:
@@ -359,7 +359,7 @@ class QueueSender:
 
     def send_message(self, data: dict) -> None:
         """Send a message to the configured queue.
-        
+
         Args:
         ----
           data: dict:
@@ -372,13 +372,13 @@ class QueueSender:
         :param data: dict:
         :param data: dict:
         :param data: dict:
-        :param data: 
+        :param data:
         :type data: dict :
-        :param data: 
+        :param data:
         :type data: dict :
-        :param data: dict: 
+        :param data: dict:
 
-        
+
         """
         try:
             if self.queue_type == "rabbitmq":
@@ -398,7 +398,7 @@ class QueueSender:
     )
     def _send_to_rabbitmq(self, data: dict) -> None:
         """Send a message to RabbitMQ (with retry).
-        
+
         Args:
         ----
           data: dict:
@@ -411,13 +411,13 @@ class QueueSender:
         :param data: dict:
         :param data: dict:
         :param data: dict:
-        :param data: 
+        :param data:
         :type data: dict :
-        :param data: 
+        :param data:
         :type data: dict :
-        :param data: dict: 
+        :param data: dict:
 
-        
+
         """
         message_body = json.dumps(data)
         self.channel.basic_publish(
@@ -440,7 +440,7 @@ class QueueSender:
     )
     def _send_to_sqs(self, data: dict) -> None:
         """Send a message to AWS SQS (with retry).
-        
+
         Args:
         ----
           data: dict:
@@ -453,13 +453,13 @@ class QueueSender:
         :param data: dict:
         :param data: dict:
         :param data: dict:
-        :param data: 
+        :param data:
         :type data: dict :
-        :param data: 
+        :param data:
         :type data: dict :
-        :param data: dict: 
+        :param data: dict:
 
-        
+
         """
         message_body = json.dumps(data)
         self.sqs.send_message(QueueUrl=self.sqs_queue_url, MessageBody=message_body)

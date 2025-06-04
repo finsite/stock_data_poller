@@ -23,7 +23,6 @@ class PollerFactory:
     Validates the required API key for the chosen poller, if applicable.
 
 
-    
     """
 
     def __init__(self) -> None:

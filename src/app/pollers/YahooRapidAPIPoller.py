@@ -91,20 +91,16 @@ class YahooRapidAPIPoller(BasePoller):
         :param price_info: dict[str:
         :param Any: param symbol: str:
         :param price_info: dict[str:
-        :param Any: 
-        :param symbol: 
-        :type symbol: str :
-        :param price_info: 
-        :type price_info: dict[str :
-        :param Any]: 
-        :param symbol: 
-        :type symbol: str :
-        :param price_info: 
-        :type price_info: dict[str :
+        :param Any: param symbol:
+        :param price_info: type price_info: dict[str :
+        :param Any: param symbol:
+        :param price_info: type price_info: dict[str :
+        :param symbol: str:
+        :param price_info: dict[str:
         :param symbol: str: 
         :param price_info: dict[str: 
+        :param Any]: 
 
-        
         """
         return {
             "symbol": symbol,
@@ -141,13 +137,11 @@ class YahooRapidAPIPoller(BasePoller):
         :param symbol: str:
         :param symbol: str:
         :param symbol: str:
-        :param symbol: 
-        :type symbol: str :
-        :param symbol: 
-        :type symbol: str :
+        :param symbol: type symbol: str :
+        :param symbol: type symbol: str :
+        :param symbol: str:
         :param symbol: str: 
 
-        
         """
         track_polling_metrics("success", "YahooRapidAPI", symbol)
         track_request_metrics(symbol, 30, 5)
@@ -173,18 +167,15 @@ class YahooRapidAPIPoller(BasePoller):
         :param error: str:
         :param symbol: str:
         :param error: str:
-        :param symbol: 
-        :type symbol: str :
-        :param error: 
-        :type error: str :
-        :param symbol: 
-        :type symbol: str :
-        :param error: 
-        :type error: str :
+        :param symbol: type symbol: str :
+        :param error: type error: str :
+        :param symbol: type symbol: str :
+        :param error: type error: str :
+        :param symbol: str:
+        :param error: str:
         :param symbol: str: 
         :param error: str: 
 
-        
         """
         track_polling_metrics("failure", "YahooRapidAPI", symbol)
         track_request_metrics(symbol, 30, 5, success=False)

@@ -40,7 +40,7 @@ class IEXPoller(BasePoller):
 
     def poll(self, symbols: list[str]) -> None:
         """Polls data for the specified symbols from IEX Cloud API.
-        
+
         Args:
         ----
             symbols: List[str]
@@ -49,13 +49,13 @@ class IEXPoller(BasePoller):
         :param symbols: list[str]:
         :param symbols: list[str]:
         :param symbols: list[str]:
-        :param symbols: 
+        :param symbols:
         :type symbols: list[str] :
-        :param symbols: 
+        :param symbols:
         :type symbols: list[str] :
-        :param symbols: list[str]: 
+        :param symbols: list[str]:
 
-        
+
         """
         for symbol in symbols:
             try:
@@ -80,22 +80,22 @@ class IEXPoller(BasePoller):
 
     def _enforce_rate_limit(self) -> None:
         """Enforces the IEX-specific rate limit.
-        
+
         The IEX Cloud API has a rate limit of 5 requests per second and 100,000 requests
         per month. The rate limit is enforced here to prevent hitting the limit.
-        
+
         Args:
         ----
             None
 
 
-        
+
         """
         self.rate_limiter.acquire(context="IEX")
 
     def _fetch_data(self, symbol: str) -> dict[str, Any]:
         """Fetches stock data for the given symbol from the IEX Cloud API.
-        
+
         Args:
         ----
           symbol: str:
@@ -108,13 +108,13 @@ class IEXPoller(BasePoller):
         :param symbol: str:
         :param symbol: str:
         :param symbol: str:
-        :param symbol: 
+        :param symbol:
         :type symbol: str :
-        :param symbol: 
+        :param symbol:
         :type symbol: str :
-        :param symbol: str: 
+        :param symbol: str:
 
-        
+
         """
 
         def request_func():
@@ -129,7 +129,7 @@ class IEXPoller(BasePoller):
 
     def _process_data(self, data: dict[str, Any]) -> dict[str, Any]:
         """Processes the raw data from IEX Cloud API into the payload format.
-        
+
         Args:
         ----
             data (dict[str, Any]): Raw data from IEX API.
@@ -137,15 +137,15 @@ class IEXPoller(BasePoller):
         :param data: dict[str:
         :param Any: param data: dict[str:
         :param Any: param data: dict[str:
-        :param Any: 
-        :param data: 
+        :param Any:
+        :param data:
         :type data: dict[str :
-        :param Any]: 
-        :param data: 
+        :param Any]:
+        :param data:
         :type data: dict[str :
-        :param data: dict[str: 
+        :param data: dict[str:
 
-        
+
         """
         # Extract and format the processed data
         return {
@@ -164,10 +164,10 @@ class IEXPoller(BasePoller):
 
     def _handle_success(self, symbol: str) -> None:
         """Tracks success metrics for polling and requests.
-        
+
         Metrics tracked include the source of the data (IEX) and the symbol
         for which polling was performed.
-        
+
         Args:
         ----
             symbol (str): The stock symbol that was successfully polled.
@@ -175,13 +175,13 @@ class IEXPoller(BasePoller):
         :param symbol: str:
         :param symbol: str:
         :param symbol: str:
-        :param symbol: 
+        :param symbol:
         :type symbol: str :
-        :param symbol: 
+        :param symbol:
         :type symbol: str :
-        :param symbol: str: 
+        :param symbol: str:
 
-        
+
         """
         # Validate status to ensure it is either 'success' or 'failure'
         track_polling_metrics("success", "IEX", symbol)
@@ -190,10 +190,10 @@ class IEXPoller(BasePoller):
 
     def _handle_failure(self, symbol: str, error: str) -> None:
         """Tracks failure metrics for polling and logs the error.
-        
+
         This method is called when polling for a stock symbol fails. It logs
         the error and tracks the failure metrics for monitoring purposes.
-        
+
         Args:
         ----
           symbol(str):
@@ -217,18 +217,18 @@ class IEXPoller(BasePoller):
         :param error: str:
         :param symbol: str:
         :param error: str:
-        :param symbol: 
+        :param symbol:
         :type symbol: str :
-        :param error: 
+        :param error:
         :type error: str :
-        :param symbol: 
+        :param symbol:
         :type symbol: str :
-        :param error: 
+        :param error:
         :type error: str :
-        :param symbol: str: 
-        :param error: str: 
+        :param symbol: str:
+        :param error: str:
 
-        
+
         """
         # Log the error message for debugging purposes
         logger.error(f"IEX polling error for {symbol}: {error}")

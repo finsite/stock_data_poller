@@ -21,18 +21,17 @@ def get_config_value(key: str, default: str | None = None) -> str:
     :param default: str | None:  (Default value = None)
     :param key: str:
     :param default: str | None:  (Default value = None)
-    :param key: 
-    :type key: str :
-    :param default: (Default value = None)
+    :param key: type key: str :
+    :param default: Default value = None)
     :type default: str | None :
-    :param key: 
-    :type key: str :
-    :param default: (Default value = None)
+    :param key: type key: str :
+    :param default: Default value = None)
     :type default: str | None :
+    :param key: str:
+    :param default: str | None:  (Default value = None)
     :param key: str: 
     :param default: str | None:  (Default value = None)
 
-    
     """
     val = _vault.get(key, os.getenv(key))
     if val is None:
@@ -307,7 +306,6 @@ def get_rate_limit() -> int:
     Otherwise, 0 is returned, meaning no rate limit is enforced.
 
 
-    
     """
     return int(get_config_value("RATE_LIMIT", "0"))
 

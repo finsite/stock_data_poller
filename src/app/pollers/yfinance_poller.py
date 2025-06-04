@@ -51,13 +51,11 @@ class YFinancePoller(BasePoller):
         :param symbols: list[str]:
         :param symbols: list[str]:
         :param symbols: list[str]:
-        :param symbols: 
-        :type symbols: list[str] :
-        :param symbols: 
-        :type symbols: list[str] :
+        :param symbols: type symbols: list[str] :
+        :param symbols: type symbols: list[str] :
+        :param symbols: list[str]:
         :param symbols: list[str]: 
 
-        
         """
         for symbol in symbols:
             try:
@@ -94,13 +92,11 @@ class YFinancePoller(BasePoller):
         :param symbol: str:
         :param symbol: str:
         :param symbol: str:
-        :param symbol: 
-        :type symbol: str :
-        :param symbol: 
-        :type symbol: str :
+        :param symbol: type symbol: str :
+        :param symbol: type symbol: str :
+        :param symbol: str:
         :param symbol: str: 
 
-        
         """
         ticker = yf.Ticker(symbol)
         data = ticker.history(period="1d", interval="5m")
@@ -121,18 +117,15 @@ class YFinancePoller(BasePoller):
         :param data: Any:
         :param symbol: str:
         :param data: Any:
-        :param symbol: 
-        :type symbol: str :
-        :param data: 
-        :type data: Any :
-        :param symbol: 
-        :type symbol: str :
-        :param data: 
-        :type data: Any :
+        :param symbol: type symbol: str :
+        :param data: type data: Any :
+        :param symbol: type symbol: str :
+        :param data: type data: Any :
+        :param symbol: str:
+        :param data: Any:
         :param symbol: str: 
         :param data: Any: 
 
-        
         """
         latest_data = data.iloc[-1]
         timestamp = latest_data.name.isoformat()
@@ -167,13 +160,11 @@ class YFinancePoller(BasePoller):
         :param symbol: str:
         :param symbol: str:
         :param symbol: str:
-        :param symbol: 
-        :type symbol: str :
-        :param symbol: 
-        :type symbol: str :
+        :param symbol: type symbol: str :
+        :param symbol: type symbol: str :
+        :param symbol: str:
         :param symbol: str: 
 
-        
         """
         track_polling_metrics("success", "YFinance", symbol)
         track_request_metrics(symbol, 30, 5)
@@ -204,18 +195,15 @@ class YFinancePoller(BasePoller):
         :param error: str:
         :param symbol: str:
         :param error: str:
-        :param symbol: 
-        :type symbol: str :
-        :param error: 
-        :type error: str :
-        :param symbol: 
-        :type symbol: str :
-        :param error: 
-        :type error: str :
+        :param symbol: type symbol: str :
+        :param error: type error: str :
+        :param symbol: type symbol: str :
+        :param error: type error: str :
+        :param symbol: str:
+        :param error: str:
         :param symbol: str: 
         :param error: str: 
 
-        
         """
         track_polling_metrics("failure", "YFinance", symbol)
         track_request_metrics(symbol, 30, 5, success=False)

@@ -86,20 +86,16 @@ class IntrinioPoller(BasePoller):
         :param price: dict[str:
         :param Any: param symbol: str:
         :param price: dict[str:
-        :param Any: 
-        :param symbol: 
-        :type symbol: str :
-        :param price: 
-        :type price: dict[str :
-        :param Any]: 
-        :param symbol: 
-        :type symbol: str :
-        :param price: 
-        :type price: dict[str :
+        :param Any: param symbol:
+        :param price: type price: dict[str :
+        :param Any: param symbol:
+        :param price: type price: dict[str :
+        :param symbol: str:
+        :param price: dict[str:
         :param symbol: str: 
         :param price: dict[str: 
+        :param Any]: 
 
-        
         """
         return {
             "symbol": symbol,
@@ -127,13 +123,11 @@ class IntrinioPoller(BasePoller):
         :param symbol: str:
         :param symbol: str:
         :param symbol: str:
-        :param symbol: 
-        :type symbol: str :
-        :param symbol: 
-        :type symbol: str :
+        :param symbol: type symbol: str :
+        :param symbol: type symbol: str :
+        :param symbol: str:
         :param symbol: str: 
 
-        
         """
         track_polling_metrics("success", "Intrinio", symbol)
         track_request_metrics(symbol, 30, 5)
@@ -159,18 +153,15 @@ class IntrinioPoller(BasePoller):
         :param error: str:
         :param symbol: str:
         :param error: str:
-        :param symbol: 
-        :type symbol: str :
-        :param error: 
-        :type error: str :
-        :param symbol: 
-        :type symbol: str :
-        :param error: 
-        :type error: str :
+        :param symbol: type symbol: str :
+        :param error: type error: str :
+        :param symbol: type symbol: str :
+        :param error: type error: str :
+        :param symbol: str:
+        :param error: str:
         :param symbol: str: 
         :param error: str: 
 
-        
         """
         track_polling_metrics("failure", "Intrinio", symbol)
         track_request_metrics(symbol, 30, 5, success=False)

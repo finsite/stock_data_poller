@@ -89,20 +89,16 @@ class FinnazonPoller(BasePoller):
         :param quote: dict[str:
         :param Any: param symbol: str:
         :param quote: dict[str:
-        :param Any: 
-        :param symbol: 
-        :type symbol: str :
-        :param quote: 
-        :type quote: dict[str :
-        :param Any]: 
-        :param symbol: 
-        :type symbol: str :
-        :param quote: 
-        :type quote: dict[str :
+        :param Any: param symbol:
+        :param quote: type quote: dict[str :
+        :param Any: param symbol:
+        :param quote: type quote: dict[str :
+        :param symbol: str:
+        :param quote: dict[str:
         :param symbol: str: 
         :param quote: dict[str: 
+        :param Any]: 
 
-        
         """
         return {
             "symbol": symbol,
@@ -130,13 +126,11 @@ class FinnazonPoller(BasePoller):
         :param symbol: str:
         :param symbol: str:
         :param symbol: str:
-        :param symbol: 
-        :type symbol: str :
-        :param symbol: 
-        :type symbol: str :
+        :param symbol: type symbol: str :
+        :param symbol: type symbol: str :
+        :param symbol: str:
         :param symbol: str: 
 
-        
         """
         track_polling_metrics("success", "Finnazon", symbol)
         track_request_metrics(symbol, 30, 5)
@@ -162,18 +156,15 @@ class FinnazonPoller(BasePoller):
         :param error: str:
         :param symbol: str:
         :param error: str:
-        :param symbol: 
-        :type symbol: str :
-        :param error: 
-        :type error: str :
-        :param symbol: 
-        :type symbol: str :
-        :param error: 
-        :type error: str :
+        :param symbol: type symbol: str :
+        :param error: type error: str :
+        :param symbol: type symbol: str :
+        :param error: type error: str :
+        :param symbol: str:
+        :param error: str:
         :param symbol: str: 
         :param error: str: 
 
-        
         """
         track_polling_metrics("failure", "Finnazon", symbol)
         track_request_metrics(symbol, 30, 5, success=False)

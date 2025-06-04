@@ -58,7 +58,7 @@ class FinnhubPoller(BasePoller):
 
     def poll(self, symbols: list[str]) -> None:
         """Polls data for the specified symbols from Finnhub.
-        
+
         Args:
         ----
             symbols (list[str]): The list of symbols to poll.
@@ -66,13 +66,13 @@ class FinnhubPoller(BasePoller):
         :param symbols: list[str]:
         :param symbols: list[str]:
         :param symbols: list[str]:
-        :param symbols: 
+        :param symbols:
         :type symbols: list[str] :
-        :param symbols: 
+        :param symbols:
         :type symbols: list[str] :
-        :param symbols: list[str]: 
+        :param symbols: list[str]:
 
-        
+
         """
         for symbol in symbols:
             try:
@@ -97,22 +97,22 @@ class FinnhubPoller(BasePoller):
 
     def _enforce_rate_limit(self) -> None:
         """Enforces the rate limit using the RateLimiter class.
-        
+
         This function acquires permission to proceed with a request. If the rate limit
         is exceeded, the function will block until the limit is replenished.
-        
+
         Args:
         ----
             None
 
 
-        
+
         """
         self.rate_limiter.acquire(context="Finnhub")
 
     def _fetch_data(self, symbol: str) -> dict[str, Any]:
         """Fetches stock data for the given symbol from Finnhub using the quote endpoint.
-        
+
         Args:
         ----
           symbol: str:
@@ -125,13 +125,13 @@ class FinnhubPoller(BasePoller):
         :param symbol: str:
         :param symbol: str:
         :param symbol: str:
-        :param symbol: 
+        :param symbol:
         :type symbol: str :
-        :param symbol: 
+        :param symbol:
         :type symbol: str :
-        :param symbol: str: 
+        :param symbol: str:
 
-        
+
         """
 
         def request_func():
@@ -146,7 +146,7 @@ class FinnhubPoller(BasePoller):
 
     def _process_data(self, symbol: str, data: dict[str, Any]) -> dict[str, Any]:
         """Processes the raw data into the payload format.
-        
+
         Args:
         ----
             symbol (str): The symbol to process data for.
@@ -158,20 +158,20 @@ class FinnhubPoller(BasePoller):
         :param data: dict[str:
         :param Any: param symbol: str:
         :param data: dict[str:
-        :param Any: 
-        :param symbol: 
+        :param Any:
+        :param symbol:
         :type symbol: str :
-        :param data: 
+        :param data:
         :type data: dict[str :
-        :param Any]: 
-        :param symbol: 
+        :param Any]:
+        :param symbol:
         :type symbol: str :
-        :param data: 
+        :param data:
         :type data: dict[str :
-        :param symbol: str: 
-        :param data: dict[str: 
+        :param symbol: str:
+        :param data: dict[str:
 
-        
+
         """
         return {
             "symbol": symbol,  # str
@@ -189,24 +189,24 @@ class FinnhubPoller(BasePoller):
 
     def _handle_success(self, symbol: str) -> None:
         """Tracks success metrics for polling and requests.
-        
+
         Args:
         ----
             symbol (str): The stock symbol that was successfully polled.
-        
+
         Metrics tracked include the source of the data (Finnhub) and the symbol
         for which polling was performed.
 
         :param symbol: str:
         :param symbol: str:
         :param symbol: str:
-        :param symbol: 
+        :param symbol:
         :type symbol: str :
-        :param symbol: 
+        :param symbol:
         :type symbol: str :
-        :param symbol: str: 
+        :param symbol: str:
 
-        
+
         """
         # Track polling metrics indicating a successful polling operation
         track_polling_metrics("success", "Finnhub", symbol)
@@ -216,7 +216,7 @@ class FinnhubPoller(BasePoller):
 
     def _handle_failure(self, symbol: str, error: str) -> None:
         """Tracks failure metrics for polling and logs the error.
-        
+
         Args:
         ----
             symbol (str): The stock symbol for which polling failed.
@@ -228,18 +228,18 @@ class FinnhubPoller(BasePoller):
         :param error: str:
         :param symbol: str:
         :param error: str:
-        :param symbol: 
+        :param symbol:
         :type symbol: str :
-        :param error: 
+        :param error:
         :type error: str :
-        :param symbol: 
+        :param symbol:
         :type symbol: str :
-        :param error: 
+        :param error:
         :type error: str :
-        :param symbol: str: 
-        :param error: str: 
+        :param symbol: str:
+        :param error: str:
 
-        
+
         """
         # Log the error message for debugging purposes
         logger.error(f"Finnhub polling error for {symbol}: {error}")
