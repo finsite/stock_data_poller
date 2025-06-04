@@ -96,15 +96,20 @@ class IntrinioPoller(BasePoller):
             dict[str:
         Any :
 
+        symbol : str :
+
+        price : dict[str :
+
+        Any] :
+
         symbol: str :
 
         price: dict[str :
 
-        Any] :
-
 
         Returns
         -------
+
 
         """
         return {
@@ -138,11 +143,14 @@ class IntrinioPoller(BasePoller):
             str:
         symbol :
             str:
+        symbol : str :
+
         symbol: str :
 
 
         Returns
         -------
+
 
         """
         track_polling_metrics("success", "Intrinio", symbol)
@@ -177,6 +185,10 @@ class IntrinioPoller(BasePoller):
             str:
         error :
             str:
+        symbol : str :
+
+        error : str :
+
         symbol: str :
 
         error: str :
@@ -184,6 +196,7 @@ class IntrinioPoller(BasePoller):
 
         Returns
         -------
+
 
         """
         track_polling_metrics("failure", "Intrinio", symbol)

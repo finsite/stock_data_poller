@@ -53,9 +53,6 @@ class PolygonPoller(BasePoller):
           symbols: list[str]:
           symbols: list[str]:
 
-        Returns:
-        -------
-
         Parameters
         ----------
         symbols :
@@ -64,11 +61,14 @@ class PolygonPoller(BasePoller):
             list[str]:
         symbols :
             list[str]:
+        symbols : list[str] :
+
         symbols: list[str] :
 
 
         Returns
         -------
+
 
         """
         for symbol in symbols:
@@ -103,52 +103,6 @@ class PolygonPoller(BasePoller):
         ----
             symbol (str): The stock symbol to fetch data for.
 
-        Returns:
-        -------
-            dict[str, Any]: The raw response data.
-
-        Args:
-        ----
-          symbol: str:
-
-        Returns:
-        -------
-
-        Args:
-        ----
-          symbol: str:
-
-        Returns:
-        -------
-
-        Args:
-        ----
-          symbol: str:
-
-        Returns:
-        -------
-
-        Args:
-        ----
-          symbol: str:
-
-        Returns:
-        -------
-
-        Args:
-        ----
-          symbol: str:
-
-        Returns:
-        -------
-
-        Args:
-        ----
-          symbol: str:
-
-        Returns:
-        -------
-
         Parameters
         ----------
         symbol :
@@ -157,11 +111,18 @@ class PolygonPoller(BasePoller):
             str:
         symbol :
             str:
+        symbol : str :
+
         symbol: str :
 
 
         Returns
         -------
+        Args :
+
+        ----
+            symbol: str:
+
 
         """
 
@@ -186,64 +147,6 @@ class PolygonPoller(BasePoller):
             symbol (str): Stock symbol.
             data (dict[str, Any]): Raw data from Polygon.io API.
 
-        Returns:
-        -------
-            dict[str, Any]: Formatted payload.
-
-        Args:
-        ----
-          symbol: str:
-          data: dict[str:
-          Any]:
-
-        Returns:
-        -------
-
-        Args:
-        ----
-          symbol: str:
-          data: dict[str:
-          Any]:
-
-        Returns:
-        -------
-
-        Args:
-        ----
-          symbol: str:
-          data: dict[str:
-          Any]:
-
-        Returns:
-        -------
-
-        Args:
-        ----
-          symbol: str:
-          data: dict[str:
-          Any]:
-
-        Returns:
-        -------
-
-        Args:
-        ----
-          symbol: str:
-          data: dict[str:
-          Any]:
-
-        Returns:
-        -------
-
-        Args:
-        ----
-          symbol: str:
-          data: dict[str:
-          Any]:
-
-        Returns:
-        -------
-
         Parameters
         ----------
         symbol :
@@ -260,15 +163,26 @@ class PolygonPoller(BasePoller):
             dict[str:
         Any :
 
+        symbol : str :
+
+        data : dict[str :
+
+        Any] :
+
         symbol: str :
 
         data: dict[str :
 
-        Any] :
-
 
         Returns
         -------
+        Args :
+
+        ----
+            symbol: str:
+            data: dict[str:
+            Any]:
+
 
         """
         result = data["results"][0]
@@ -300,9 +214,6 @@ class PolygonPoller(BasePoller):
           symbol: str:
           symbol: str:
 
-        Returns:
-        -------
-
         Parameters
         ----------
         symbol :
@@ -311,11 +222,14 @@ class PolygonPoller(BasePoller):
             str:
         symbol :
             str:
+        symbol : str :
+
         symbol: str :
 
 
         Returns
         -------
+
 
         """
         track_polling_metrics("success", "Polygon", symbol)
@@ -341,9 +255,6 @@ class PolygonPoller(BasePoller):
           symbol: str:
           error: str:
 
-        Returns:
-        -------
-
         Parameters
         ----------
         symbol :
@@ -358,6 +269,10 @@ class PolygonPoller(BasePoller):
             str:
         error :
             str:
+        symbol : str :
+
+        error : str :
+
         symbol: str :
 
         error: str :
@@ -365,6 +280,7 @@ class PolygonPoller(BasePoller):
 
         Returns
         -------
+
 
         """
         track_polling_metrics("failure", "Polygon", symbol)

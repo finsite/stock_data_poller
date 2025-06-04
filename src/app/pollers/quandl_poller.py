@@ -57,9 +57,6 @@ class QuandlPoller(BasePoller):
           symbols: list[str]:
           symbols: list[str]:
 
-        Returns:
-        -------
-
         Parameters
         ----------
         symbols :
@@ -68,11 +65,14 @@ class QuandlPoller(BasePoller):
             list[str]:
         symbols :
             list[str]:
+        symbols : list[str] :
+
         symbols: list[str] :
 
 
         Returns
         -------
+
 
         """
         for symbol in symbols:
@@ -105,9 +105,6 @@ class QuandlPoller(BasePoller):
         Args:
         ----
 
-        Returns:
-        -------
-
         Parameters
         ----------
 
@@ -125,52 +122,6 @@ class QuandlPoller(BasePoller):
         ----
             symbol (str): Stock symbol to fetch data for.
 
-        Returns:
-        -------
-            dict[str, Any]: Fetched data in the format returned by the Quandl API.
-
-        Args:
-        ----
-          symbol: str:
-
-        Returns:
-        -------
-
-        Args:
-        ----
-          symbol: str:
-
-        Returns:
-        -------
-
-        Args:
-        ----
-          symbol: str:
-
-        Returns:
-        -------
-
-        Args:
-        ----
-          symbol: str:
-
-        Returns:
-        -------
-
-        Args:
-        ----
-          symbol: str:
-
-        Returns:
-        -------
-
-        Args:
-        ----
-          symbol: str:
-
-        Returns:
-        -------
-
         Parameters
         ----------
         symbol :
@@ -179,11 +130,18 @@ class QuandlPoller(BasePoller):
             str:
         symbol :
             str:
+        symbol : str :
+
         symbol: str :
 
 
         Returns
         -------
+        Args :
+
+        ----
+            symbol: str:
+
 
         """
 
@@ -204,64 +162,6 @@ class QuandlPoller(BasePoller):
             symbol (str): Stock symbol.
             data (dict[str, Any]): Raw data from Quandl API.
 
-        Returns:
-        -------
-            dict[str, Any]: Processed data in the payload format.
-
-        Args:
-        ----
-          symbol: str:
-          data: dict[str:
-          Any]:
-
-        Returns:
-        -------
-
-        Args:
-        ----
-          symbol: str:
-          data: dict[str:
-          Any]:
-
-        Returns:
-        -------
-
-        Args:
-        ----
-          symbol: str:
-          data: dict[str:
-          Any]:
-
-        Returns:
-        -------
-
-        Args:
-        ----
-          symbol: str:
-          data: dict[str:
-          Any]:
-
-        Returns:
-        -------
-
-        Args:
-        ----
-          symbol: str:
-          data: dict[str:
-          Any]:
-
-        Returns:
-        -------
-
-        Args:
-        ----
-          symbol: str:
-          data: dict[str:
-          Any]:
-
-        Returns:
-        -------
-
         Parameters
         ----------
         symbol :
@@ -278,15 +178,26 @@ class QuandlPoller(BasePoller):
             dict[str:
         Any :
 
+        symbol : str :
+
+        data : dict[str :
+
+        Any] :
+
         symbol: str :
 
         data: dict[str :
 
-        Any] :
-
 
         Returns
         -------
+        Args :
+
+        ----
+            symbol: str:
+            data: dict[str:
+            Any]:
+
 
         """
         dataset = data["dataset"]
@@ -320,9 +231,6 @@ class QuandlPoller(BasePoller):
           symbol: str:
           symbol: str:
 
-        Returns:
-        -------
-
         Parameters
         ----------
         symbol :
@@ -331,11 +239,14 @@ class QuandlPoller(BasePoller):
             str:
         symbol :
             str:
+        symbol : str :
+
         symbol: str :
 
 
         Returns
         -------
+
 
         """
         track_polling_metrics("success", "Quandl", symbol)
@@ -359,9 +270,6 @@ class QuandlPoller(BasePoller):
           symbol: str:
           error: str:
 
-        Returns:
-        -------
-
         Parameters
         ----------
         symbol :
@@ -376,6 +284,10 @@ class QuandlPoller(BasePoller):
             str:
         error :
             str:
+        symbol : str :
+
+        error : str :
+
         symbol: str :
 
         error: str :
@@ -383,6 +295,7 @@ class QuandlPoller(BasePoller):
 
         Returns
         -------
+
 
         """
         track_polling_metrics("failure", "Quandl", symbol)

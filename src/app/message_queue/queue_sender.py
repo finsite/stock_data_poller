@@ -283,9 +283,6 @@ class QueueSender:
     Args:
     ----
 
-    Returns:
-    -------
-
     Parameters
     ----------
 
@@ -377,9 +374,6 @@ class QueueSender:
           data: dict:
           data: dict:
 
-        Returns:
-        -------
-
         Parameters
         ----------
         data :
@@ -388,11 +382,14 @@ class QueueSender:
             dict:
         data :
             dict:
+        data : dict :
+
         data: dict :
 
 
         Returns
         -------
+
 
         """
         try:
@@ -423,9 +420,6 @@ class QueueSender:
           data: dict:
           data: dict:
 
-        Returns:
-        -------
-
         Parameters
         ----------
         data :
@@ -434,11 +428,14 @@ class QueueSender:
             dict:
         data :
             dict:
+        data : dict :
+
         data: dict :
 
 
         Returns
         -------
+
 
         """
         message_body = json.dumps(data)
@@ -472,9 +469,6 @@ class QueueSender:
           data: dict:
           data: dict:
 
-        Returns:
-        -------
-
         Parameters
         ----------
         data :
@@ -483,11 +477,14 @@ class QueueSender:
             dict:
         data :
             dict:
+        data : dict :
+
         data: dict :
 
 
         Returns
         -------
+
 
         """
         message_body = json.dumps(data)

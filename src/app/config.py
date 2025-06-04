@@ -29,6 +29,10 @@ def get_config_value(key: str, default: str | None = None) -> str:
         str:
     default :
         str | None:  (Default value = None)
+    key : str :
+
+    default : str | None :
+        (Default value = None)
     key: str :
 
     default: str | None :
@@ -36,6 +40,7 @@ def get_config_value(key: str, default: str | None = None) -> str:
 
     Returns
     -------
+
 
     """
     val = _vault.get(key, os.getenv(key))
@@ -315,6 +320,7 @@ def get_rate_limit() -> int:
 
     Returns
     -------
+
 
     """
     return int(get_config_value("RATE_LIMIT", "0"))

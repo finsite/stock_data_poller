@@ -48,9 +48,6 @@ class YFinancePoller(BasePoller):
           symbols: list[str]:
           symbols: list[str]:
 
-        Returns:
-        -------
-
         Parameters
         ----------
         symbols :
@@ -59,11 +56,14 @@ class YFinancePoller(BasePoller):
             list[str]:
         symbols :
             list[str]:
+        symbols : list[str] :
+
         symbols: list[str] :
 
 
         Returns
         -------
+
 
         """
         for symbol in symbols:
@@ -98,52 +98,6 @@ class YFinancePoller(BasePoller):
         ----
             symbol (str): The stock symbol to fetch.
 
-        Returns:
-        -------
-            Any: A DataFrame or None if no data is found.
-
-        Args:
-        ----
-          symbol: str:
-
-        Returns:
-        -------
-
-        Args:
-        ----
-          symbol: str:
-
-        Returns:
-        -------
-
-        Args:
-        ----
-          symbol: str:
-
-        Returns:
-        -------
-
-        Args:
-        ----
-          symbol: str:
-
-        Returns:
-        -------
-
-        Args:
-        ----
-          symbol: str:
-
-        Returns:
-        -------
-
-        Args:
-        ----
-          symbol: str:
-
-        Returns:
-        -------
-
         Parameters
         ----------
         symbol :
@@ -152,11 +106,18 @@ class YFinancePoller(BasePoller):
             str:
         symbol :
             str:
+        symbol : str :
+
         symbol: str :
 
 
         Returns
         -------
+        Args :
+
+        ----
+            symbol: str:
+
 
         """
         ticker = yf.Ticker(symbol)
@@ -172,58 +133,6 @@ class YFinancePoller(BasePoller):
             symbol (str): The stock symbol.
             data (Any): Raw data from yfinance.
 
-        Returns:
-        -------
-            dict[str, Any]: A structured payload dictionary.
-
-        Args:
-        ----
-          symbol: str:
-          data: Any:
-
-        Returns:
-        -------
-
-        Args:
-        ----
-          symbol: str:
-          data: Any:
-
-        Returns:
-        -------
-
-        Args:
-        ----
-          symbol: str:
-          data: Any:
-
-        Returns:
-        -------
-
-        Args:
-        ----
-          symbol: str:
-          data: Any:
-
-        Returns:
-        -------
-
-        Args:
-        ----
-          symbol: str:
-          data: Any:
-
-        Returns:
-        -------
-
-        Args:
-        ----
-          symbol: str:
-          data: Any:
-
-        Returns:
-        -------
-
         Parameters
         ----------
         symbol :
@@ -238,6 +147,10 @@ class YFinancePoller(BasePoller):
             str:
         data :
             Any:
+        symbol : str :
+
+        data : Any :
+
         symbol: str :
 
         data: Any :
@@ -245,6 +158,12 @@ class YFinancePoller(BasePoller):
 
         Returns
         -------
+        Args :
+
+        ----
+            symbol: str:
+            data: Any:
+
 
         """
         latest_data = data.iloc[-1]
@@ -277,9 +196,6 @@ class YFinancePoller(BasePoller):
           symbol: str:
           symbol: str:
 
-        Returns:
-        -------
-
         Parameters
         ----------
         symbol :
@@ -288,11 +204,14 @@ class YFinancePoller(BasePoller):
             str:
         symbol :
             str:
+        symbol : str :
+
         symbol: str :
 
 
         Returns
         -------
+
 
         """
         track_polling_metrics("success", "YFinance", symbol)
@@ -318,9 +237,6 @@ class YFinancePoller(BasePoller):
           symbol: str:
           error: str:
 
-        Returns:
-        -------
-
         Parameters
         ----------
         symbol :
@@ -335,6 +251,10 @@ class YFinancePoller(BasePoller):
             str:
         error :
             str:
+        symbol : str :
+
+        error : str :
+
         symbol: str :
 
         error: str :
@@ -342,6 +262,7 @@ class YFinancePoller(BasePoller):
 
         Returns
         -------
+
 
         """
         track_polling_metrics("failure", "YFinance", symbol)

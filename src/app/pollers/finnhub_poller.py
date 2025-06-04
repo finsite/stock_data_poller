@@ -63,52 +63,6 @@ class FinnhubPoller(BasePoller):
         ----
             symbols (list[str]): The list of symbols to poll.
 
-        Returns:
-        -------
-            None: This function does not return a value.
-
-        Args:
-        ----
-          symbols: list[str]:
-
-        Returns:
-        -------
-
-        Args:
-        ----
-          symbols: list[str]:
-
-        Returns:
-        -------
-
-        Args:
-        ----
-          symbols: list[str]:
-
-        Returns:
-        -------
-
-        Args:
-        ----
-          symbols: list[str]:
-
-        Returns:
-        -------
-
-        Args:
-        ----
-          symbols: list[str]:
-
-        Returns:
-        -------
-
-        Args:
-        ----
-          symbols: list[str]:
-
-        Returns:
-        -------
-
         Parameters
         ----------
         symbols :
@@ -117,11 +71,18 @@ class FinnhubPoller(BasePoller):
             list[str]:
         symbols :
             list[str]:
+        symbols : list[str] :
+
         symbols: list[str] :
 
 
         Returns
         -------
+        Args :
+
+        ----
+            symbols: list[str]:
+
 
         """
         for symbol in symbols:
@@ -155,51 +116,15 @@ class FinnhubPoller(BasePoller):
         ----
             None
 
-        Returns:
-        -------
-            None
-
-        Args:
-        ----
-
-        Returns:
-        -------
-
-        Args:
-        ----
-
-        Returns:
-        -------
-
-        Args:
-        ----
-
-        Returns:
-        -------
-
-        Args:
-        ----
-
-        Returns:
-        -------
-
-        Args:
-        ----
-
-        Returns:
-        -------
-
-        Args:
-        ----
-
-        Returns:
-        -------
-
         Parameters
         ----------
 
         Returns
         -------
+        Args :
+
+        ----
+
 
 
         """
@@ -217,10 +142,6 @@ class FinnhubPoller(BasePoller):
           symbol: str:
           symbol: str:
 
-        Returns:
-        -------
-          The fetched data.:
-
         Parameters
         ----------
         symbol :
@@ -229,11 +150,14 @@ class FinnhubPoller(BasePoller):
             str:
         symbol :
             str:
+        symbol : str :
+
         symbol: str :
 
 
         Returns
         -------
+
 
         """
 
@@ -255,64 +179,6 @@ class FinnhubPoller(BasePoller):
             symbol (str): The symbol to process data for.
             data (dict[str, Any]): The raw data to process.
 
-        Returns:
-        -------
-            dict[str, Any]: The processed payload.
-
-        Args:
-        ----
-          symbol: str:
-          data: dict[str:
-          Any]:
-
-        Returns:
-        -------
-
-        Args:
-        ----
-          symbol: str:
-          data: dict[str:
-          Any]:
-
-        Returns:
-        -------
-
-        Args:
-        ----
-          symbol: str:
-          data: dict[str:
-          Any]:
-
-        Returns:
-        -------
-
-        Args:
-        ----
-          symbol: str:
-          data: dict[str:
-          Any]:
-
-        Returns:
-        -------
-
-        Args:
-        ----
-          symbol: str:
-          data: dict[str:
-          Any]:
-
-        Returns:
-        -------
-
-        Args:
-        ----
-          symbol: str:
-          data: dict[str:
-          Any]:
-
-        Returns:
-        -------
-
         Parameters
         ----------
         symbol :
@@ -329,15 +195,26 @@ class FinnhubPoller(BasePoller):
             dict[str:
         Any :
 
+        symbol : str :
+
+        data : dict[str :
+
+        Any] :
+
         symbol: str :
 
         data: dict[str :
 
-        Any] :
-
 
         Returns
         -------
+        Args :
+
+        ----
+            symbol: str:
+            data: dict[str:
+            Any]:
+
 
         """
         return {
@@ -364,52 +241,6 @@ class FinnhubPoller(BasePoller):
         Metrics tracked include the source of the data (Finnhub) and the symbol
         for which polling was performed.
 
-        Returns:
-        -------
-            None
-
-        Args:
-        ----
-          symbol: str:
-
-        Returns:
-        -------
-
-        Args:
-        ----
-          symbol: str:
-
-        Returns:
-        -------
-
-        Args:
-        ----
-          symbol: str:
-
-        Returns:
-        -------
-
-        Args:
-        ----
-          symbol: str:
-
-        Returns:
-        -------
-
-        Args:
-        ----
-          symbol: str:
-
-        Returns:
-        -------
-
-        Args:
-        ----
-          symbol: str:
-
-        Returns:
-        -------
-
         Parameters
         ----------
         symbol :
@@ -418,11 +249,18 @@ class FinnhubPoller(BasePoller):
             str:
         symbol :
             str:
+        symbol : str :
+
         symbol: str :
 
 
         Returns
         -------
+        Args :
+
+        ----
+            symbol: str:
+
 
         """
         # Track polling metrics indicating a successful polling operation
@@ -439,58 +277,6 @@ class FinnhubPoller(BasePoller):
             symbol (str): The stock symbol for which polling failed.
             error (str): The error message describing the failure.
 
-        Returns:
-        -------
-            None
-
-        Args:
-        ----
-          symbol: str:
-          error: str:
-
-        Returns:
-        -------
-
-        Args:
-        ----
-          symbol: str:
-          error: str:
-
-        Returns:
-        -------
-
-        Args:
-        ----
-          symbol: str:
-          error: str:
-
-        Returns:
-        -------
-
-        Args:
-        ----
-          symbol: str:
-          error: str:
-
-        Returns:
-        -------
-
-        Args:
-        ----
-          symbol: str:
-          error: str:
-
-        Returns:
-        -------
-
-        Args:
-        ----
-          symbol: str:
-          error: str:
-
-        Returns:
-        -------
-
         Parameters
         ----------
         symbol :
@@ -505,6 +291,10 @@ class FinnhubPoller(BasePoller):
             str:
         error :
             str:
+        symbol : str :
+
+        error : str :
+
         symbol: str :
 
         error: str :
@@ -512,6 +302,12 @@ class FinnhubPoller(BasePoller):
 
         Returns
         -------
+        Args :
+
+        ----
+            symbol: str:
+            error: str:
+
 
         """
         # Log the error message for debugging purposes

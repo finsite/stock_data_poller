@@ -104,9 +104,6 @@ class BasePoller:
           payload: dict[str:
           payload: dict[str:
 
-        Returns:
-        -------
-
         Parameters
         ----------
         payload :
@@ -117,13 +114,16 @@ class BasePoller:
             param payload: dict[str:
         Any :
 
-        payload: dict[str :
+        payload : dict[str :
 
         Any] :
+
+        payload: dict[str :
 
 
         Returns
         -------
+
 
         """
         try:

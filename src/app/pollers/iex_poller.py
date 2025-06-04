@@ -46,56 +46,6 @@ class IEXPoller(BasePoller):
             symbols: List[str]
                 List of stock symbols to poll.
 
-        Returns:
-        -------
-            None
-
-        This method polls the IEX Cloud API for the given symbols and sends the
-        fetched data to the message queue. If any error occurs during polling, the
-        error is tracked and logged.
-
-        Args:
-        ----
-          symbols: list[str]:
-
-        Returns:
-        -------
-
-        Args:
-        ----
-          symbols: list[str]:
-
-        Returns:
-        -------
-
-        Args:
-        ----
-          symbols: list[str]:
-
-        Returns:
-        -------
-
-        Args:
-        ----
-          symbols: list[str]:
-
-        Returns:
-        -------
-
-        Args:
-        ----
-          symbols: list[str]:
-
-        Returns:
-        -------
-
-        Args:
-        ----
-          symbols: list[str]:
-
-        Returns:
-        -------
-
         Parameters
         ----------
         symbols :
@@ -104,11 +54,24 @@ class IEXPoller(BasePoller):
             list[str]:
         symbols :
             list[str]:
+        symbols : list[str] :
+
         symbols: list[str] :
 
 
         Returns
         -------
+        This method polls the IEX Cloud API for the given symbols and sends the
+
+        fetched data to the message queue. If any error occurs during polling, the
+
+        error is tracked and logged.
+
+        Args :
+
+        ----
+            symbols: list[str]:
+
 
         """
         for symbol in symbols:
@@ -142,51 +105,15 @@ class IEXPoller(BasePoller):
         ----
             None
 
-        Returns:
-        -------
-            None
-
-        Args:
-        ----
-
-        Returns:
-        -------
-
-        Args:
-        ----
-
-        Returns:
-        -------
-
-        Args:
-        ----
-
-        Returns:
-        -------
-
-        Args:
-        ----
-
-        Returns:
-        -------
-
-        Args:
-        ----
-
-        Returns:
-        -------
-
-        Args:
-        ----
-
-        Returns:
-        -------
-
         Parameters
         ----------
 
         Returns
         -------
+        Args :
+
+        ----
+
 
 
         """
@@ -204,9 +131,6 @@ class IEXPoller(BasePoller):
           symbol: str:
           symbol: str:
 
-        Returns:
-        -------
-
         Parameters
         ----------
         symbol :
@@ -215,11 +139,14 @@ class IEXPoller(BasePoller):
             str:
         symbol :
             str:
+        symbol : str :
+
         symbol: str :
 
 
         Returns
         -------
+
 
         """
 
@@ -240,60 +167,6 @@ class IEXPoller(BasePoller):
         ----
             data (dict[str, Any]): Raw data from IEX API.
 
-        Returns:
-        -------
-            dict[str, Any]: Processed data in the payload format, including stock
-                symbol (str), timestamp (int), latest price (float), and additional
-                stock data (dict[str, float|int]).
-
-        Args:
-        ----
-          data: dict[str:
-          Any]:
-
-        Returns:
-        -------
-
-        Args:
-        ----
-          data: dict[str:
-          Any]:
-
-        Returns:
-        -------
-
-        Args:
-        ----
-          data: dict[str:
-          Any]:
-
-        Returns:
-        -------
-
-        Args:
-        ----
-          data: dict[str:
-          Any]:
-
-        Returns:
-        -------
-
-        Args:
-        ----
-          data: dict[str:
-          Any]:
-
-        Returns:
-        -------
-
-        Args:
-        ----
-          data: dict[str:
-          Any]:
-
-        Returns:
-        -------
-
         Parameters
         ----------
         data :
@@ -304,13 +177,21 @@ class IEXPoller(BasePoller):
             param data: dict[str:
         Any :
 
-        data: dict[str :
+        data : dict[str :
 
         Any] :
+
+        data: dict[str :
 
 
         Returns
         -------
+        Args :
+
+        ----
+            data: dict[str:
+            Any]:
+
 
         """
         # Extract and format the processed data
@@ -338,52 +219,6 @@ class IEXPoller(BasePoller):
         ----
             symbol (str): The stock symbol that was successfully polled.
 
-        Returns:
-        -------
-            None
-
-        Args:
-        ----
-          symbol: str:
-
-        Returns:
-        -------
-
-        Args:
-        ----
-          symbol: str:
-
-        Returns:
-        -------
-
-        Args:
-        ----
-          symbol: str:
-
-        Returns:
-        -------
-
-        Args:
-        ----
-          symbol: str:
-
-        Returns:
-        -------
-
-        Args:
-        ----
-          symbol: str:
-
-        Returns:
-        -------
-
-        Args:
-        ----
-          symbol: str:
-
-        Returns:
-        -------
-
         Parameters
         ----------
         symbol :
@@ -392,11 +227,18 @@ class IEXPoller(BasePoller):
             str:
         symbol :
             str:
+        symbol : str :
+
         symbol: str :
 
 
         Returns
         -------
+        Args :
+
+        ----
+            symbol: str:
+
 
         """
         # Validate status to ensure it is either 'success' or 'failure'
@@ -427,9 +269,6 @@ class IEXPoller(BasePoller):
           symbol: str:
           error: str:
 
-        Returns:
-        -------
-
         Parameters
         ----------
         symbol :
@@ -444,6 +283,10 @@ class IEXPoller(BasePoller):
             str:
         error :
             str:
+        symbol : str :
+
+        error : str :
+
         symbol: str :
 
         error: str :
@@ -451,6 +294,7 @@ class IEXPoller(BasePoller):
 
         Returns
         -------
+
 
         """
         # Log the error message for debugging purposes

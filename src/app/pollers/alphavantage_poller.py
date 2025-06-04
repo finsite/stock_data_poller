@@ -54,52 +54,6 @@ class AlphaVantagePoller(BasePoller):
         ----
             symbols (list[str]): The list of stock symbols to poll.
 
-        Returns:
-        -------
-            None: This function does not return a value.
-
-        Args:
-        ----
-          symbols: list[str]:
-
-        Returns:
-        -------
-
-        Args:
-        ----
-          symbols: list[str]:
-
-        Returns:
-        -------
-
-        Args:
-        ----
-          symbols: list[str]:
-
-        Returns:
-        -------
-
-        Args:
-        ----
-          symbols: list[str]:
-
-        Returns:
-        -------
-
-        Args:
-        ----
-          symbols: list[str]:
-
-        Returns:
-        -------
-
-        Args:
-        ----
-          symbols: list[str]:
-
-        Returns:
-        -------
-
         Parameters
         ----------
         symbols :
@@ -108,11 +62,18 @@ class AlphaVantagePoller(BasePoller):
             list[str]:
         symbols :
             list[str]:
+        symbols : list[str] :
+
         symbols: list[str] :
 
 
         Returns
         -------
+        Args :
+
+        ----
+            symbols: list[str]:
+
 
         """
         for symbol in symbols:
@@ -148,51 +109,15 @@ class AlphaVantagePoller(BasePoller):
         ----
             None
 
-        Returns:
-        -------
-            None
-
-        Args:
-        ----
-
-        Returns:
-        -------
-
-        Args:
-        ----
-
-        Returns:
-        -------
-
-        Args:
-        ----
-
-        Returns:
-        -------
-
-        Args:
-        ----
-
-        Returns:
-        -------
-
-        Args:
-        ----
-
-        Returns:
-        -------
-
-        Args:
-        ----
-
-        Returns:
-        -------
-
         Parameters
         ----------
 
         Returns
         -------
+        Args :
+
+        ----
+
 
 
         """
@@ -205,56 +130,6 @@ class AlphaVantagePoller(BasePoller):
         ----
             symbol (str): Stock symbol to fetch data for.
 
-        Returns:
-        -------
-            dict[str, Any]: Parsed response from Alpha Vantage.
-
-        Raises:
-        ------
-            ValueError: If no data is returned.
-
-        Args:
-        ----
-          symbol: str:
-
-        Returns:
-        -------
-
-        Args:
-        ----
-          symbol: str:
-
-        Returns:
-        -------
-
-        Args:
-        ----
-          symbol: str:
-
-        Returns:
-        -------
-
-        Args:
-        ----
-          symbol: str:
-
-        Returns:
-        -------
-
-        Args:
-        ----
-          symbol: str:
-
-        Returns:
-        -------
-
-        Args:
-        ----
-          symbol: str:
-
-        Returns:
-        -------
-
         Parameters
         ----------
         symbol :
@@ -263,11 +138,21 @@ class AlphaVantagePoller(BasePoller):
             str:
         symbol :
             str:
+        symbol : str :
+
         symbol: str :
 
 
         Returns
         -------
+
+        Raises
+        ------
+        Args
+
+        ----
+            symbol: str:
+
 
         """
 
@@ -293,64 +178,6 @@ class AlphaVantagePoller(BasePoller):
             symbol (str): Stock symbol.
             data (dict[str, Any]): Raw data from AlphaVantage.
 
-        Returns:
-        -------
-            dict[str, Any]: Transformed payload.
-
-        Args:
-        ----
-          symbol: str:
-          data: dict[str:
-          Any]:
-
-        Returns:
-        -------
-
-        Args:
-        ----
-          symbol: str:
-          data: dict[str:
-          Any]:
-
-        Returns:
-        -------
-
-        Args:
-        ----
-          symbol: str:
-          data: dict[str:
-          Any]:
-
-        Returns:
-        -------
-
-        Args:
-        ----
-          symbol: str:
-          data: dict[str:
-          Any]:
-
-        Returns:
-        -------
-
-        Args:
-        ----
-          symbol: str:
-          data: dict[str:
-          Any]:
-
-        Returns:
-        -------
-
-        Args:
-        ----
-          symbol: str:
-          data: dict[str:
-          Any]:
-
-        Returns:
-        -------
-
         Parameters
         ----------
         symbol :
@@ -367,15 +194,26 @@ class AlphaVantagePoller(BasePoller):
             dict[str:
         Any :
 
+        symbol : str :
+
+        data : dict[str :
+
+        Any] :
+
         symbol: str :
 
         data: dict[str :
 
-        Any] :
-
 
         Returns
         -------
+        Args :
+
+        ----
+            symbol: str:
+            data: dict[str:
+            Any]:
+
 
         """
         time_series = data.get("Time Series (5min)")
@@ -412,9 +250,6 @@ class AlphaVantagePoller(BasePoller):
           symbol: str:
           symbol: str:
 
-        Returns:
-        -------
-
         Parameters
         ----------
         symbol :
@@ -423,11 +258,14 @@ class AlphaVantagePoller(BasePoller):
             str:
         symbol :
             str:
+        symbol : str :
+
         symbol: str :
 
 
         Returns
         -------
+
 
         """
         # Track polling metrics indicating a successful polling operation
@@ -457,9 +295,6 @@ class AlphaVantagePoller(BasePoller):
           symbol: str:
           error: str:
 
-        Returns:
-        -------
-
         Parameters
         ----------
         symbol :
@@ -474,6 +309,10 @@ class AlphaVantagePoller(BasePoller):
             str:
         error :
             str:
+        symbol : str :
+
+        error : str :
+
         symbol: str :
 
         error: str :
@@ -481,6 +320,7 @@ class AlphaVantagePoller(BasePoller):
 
         Returns
         -------
+
 
         """
         # Log the error for debugging purposes
