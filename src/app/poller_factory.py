@@ -19,8 +19,10 @@ logger = setup_logger(__name__)
 
 class PollerFactory:
     """Creates the appropriate poller instance based on the POLLER_TYPE environment variable.
-
+    
     Validates the required API key for the chosen poller, if applicable.
+
+
     """
 
     def __init__(self) -> None:

@@ -58,57 +58,60 @@ class FinnhubPoller(BasePoller):
 
     def poll(self, symbols: list[str]) -> None:
         """Polls data for the specified symbols from Finnhub.
-
+        
         Args:
         ----
             symbols (list[str]): The list of symbols to poll.
-
+        
         Returns:
         -------
             None: This function does not return a value.
-
+        
         Args:
         ----
           symbols: list[str]:
-
+        
         Returns:
         -------
-
+        
         Args:
         ----
           symbols: list[str]:
-
+        
         Returns:
         -------
-
+        
         Args:
         ----
           symbols: list[str]:
-
+        
         Returns:
         -------
-
+        
         Args:
         ----
           symbols: list[str]:
-
+        
         Returns:
         -------
-
+        
         Args:
         ----
           symbols: list[str]:
-
+        
         Returns:
         -------
-
+        
         Args:
         ----
           symbols: list[str]:
-
+        
         Returns:
         -------
 
+        :param symbols: list[str]: 
+
+        
         """
         for symbol in symbols:
             try:
@@ -133,60 +136,62 @@ class FinnhubPoller(BasePoller):
 
     def _enforce_rate_limit(self) -> None:
         """Enforces the rate limit using the RateLimiter class.
-
+        
         This function acquires permission to proceed with a request. If the rate limit
         is exceeded, the function will block until the limit is replenished.
-
+        
         Args:
         ----
             None
-
+        
         Returns:
         -------
             None
-
+        
         Args:
         ----
-
+        
+        Returns:
+        -------
+        
+        Args:
+        ----
+        
+        Returns:
+        -------
+        
+        Args:
+        ----
+        
+        Returns:
+        -------
+        
+        Args:
+        ----
+        
+        Returns:
+        -------
+        
+        Args:
+        ----
+        
+        Returns:
+        -------
+        
+        Args:
+        ----
+        
         Returns:
         -------
 
-        Args:
-        ----
 
-        Returns:
-        -------
-
-        Args:
-        ----
-
-        Returns:
-        -------
-
-        Args:
-        ----
-
-        Returns:
-        -------
-
-        Args:
-        ----
-
-        Returns:
-        -------
-
-        Args:
-        ----
-
-        Returns:
-        -------
-
+        
         """
         self.rate_limiter.acquire(context="Finnhub")
 
     def _fetch_data(self, symbol: str) -> dict[str, Any]:
         """Fetches stock data for the given symbol from Finnhub using the quote endpoint.
-
+        
         Args:
         ----
           symbol: str:
@@ -195,15 +200,18 @@ class FinnhubPoller(BasePoller):
           symbol: str:
           symbol: str:
           symbol: str:
-
+        
         Returns:
         -------
           The fetched data.:
 
+        :param symbol: str: 
+
+        
         """
 
         def request_func():
-            """"""
+            """ """
             url = f"https://finnhub.io/api/v1/quote?symbol={symbol}&token={self.api_key}"
             return request_with_timeout(url, timeout=30)
 
@@ -214,70 +222,75 @@ class FinnhubPoller(BasePoller):
 
     def _process_data(self, symbol: str, data: dict[str, Any]) -> dict[str, Any]:
         """Processes the raw data into the payload format.
-
+        
         Args:
         ----
             symbol (str): The symbol to process data for.
             data (dict[str, Any]): The raw data to process.
-
+        
         Returns:
         -------
             dict[str, Any]: The processed payload.
-
+        
         Args:
         ----
           symbol: str:
           data: dict[str:
           Any]:
-
+        
         Returns:
         -------
-
+        
         Args:
         ----
           symbol: str:
           data: dict[str:
           Any]:
-
+        
         Returns:
         -------
-
+        
         Args:
         ----
           symbol: str:
           data: dict[str:
           Any]:
-
+        
         Returns:
         -------
-
+        
         Args:
         ----
           symbol: str:
           data: dict[str:
           Any]:
-
+        
         Returns:
         -------
-
+        
         Args:
         ----
           symbol: str:
           data: dict[str:
           Any]:
-
+        
         Returns:
         -------
-
+        
         Args:
         ----
           symbol: str:
           data: dict[str:
           Any]:
-
+        
         Returns:
         -------
 
+        :param symbol: str: 
+        :param data: dict[str: 
+        :param Any]: 
+
+        
         """
         return {
             "symbol": symbol,  # str
@@ -295,60 +308,63 @@ class FinnhubPoller(BasePoller):
 
     def _handle_success(self, symbol: str) -> None:
         """Tracks success metrics for polling and requests.
-
+        
         Args:
         ----
             symbol (str): The stock symbol that was successfully polled.
-
+        
         Metrics tracked include the source of the data (Finnhub) and the symbol
         for which polling was performed.
-
+        
         Returns:
         -------
             None
-
+        
         Args:
         ----
           symbol: str:
-
+        
         Returns:
         -------
-
+        
         Args:
         ----
           symbol: str:
-
+        
         Returns:
         -------
-
+        
         Args:
         ----
           symbol: str:
-
+        
         Returns:
         -------
-
+        
         Args:
         ----
           symbol: str:
-
+        
         Returns:
         -------
-
+        
         Args:
         ----
           symbol: str:
-
+        
         Returns:
         -------
-
+        
         Args:
         ----
           symbol: str:
-
+        
         Returns:
         -------
 
+        :param symbol: str: 
+
+        
         """
         # Track polling metrics indicating a successful polling operation
         track_polling_metrics("success", "Finnhub", symbol)
@@ -358,64 +374,68 @@ class FinnhubPoller(BasePoller):
 
     def _handle_failure(self, symbol: str, error: str) -> None:
         """Tracks failure metrics for polling and logs the error.
-
+        
         Args:
         ----
             symbol (str): The stock symbol for which polling failed.
             error (str): The error message describing the failure.
-
+        
         Returns:
         -------
             None
-
+        
         Args:
         ----
           symbol: str:
           error: str:
-
+        
         Returns:
         -------
-
+        
         Args:
         ----
           symbol: str:
           error: str:
-
+        
         Returns:
         -------
-
+        
         Args:
         ----
           symbol: str:
           error: str:
-
+        
         Returns:
         -------
-
+        
         Args:
         ----
           symbol: str:
           error: str:
-
+        
         Returns:
         -------
-
+        
         Args:
         ----
           symbol: str:
           error: str:
-
+        
         Returns:
         -------
-
+        
         Args:
         ----
           symbol: str:
           error: str:
-
+        
         Returns:
         -------
 
+        :param symbol: str: 
+        :param error: str: 
+
+        
         """
         # Log the error message for debugging purposes
         logger.error(f"Finnhub polling error for {symbol}: {error}")
