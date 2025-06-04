@@ -54,6 +54,7 @@ class YFinancePoller(BasePoller):
         :param symbols: type symbols: list[str] :
         :param symbols: type symbols: list[str] :
         :param symbols: list[str]:
+        :param symbols: list[str]:
         :param symbols: list[str]: 
 
         """
@@ -95,6 +96,7 @@ class YFinancePoller(BasePoller):
         :param symbol: type symbol: str :
         :param symbol: type symbol: str :
         :param symbol: str:
+        :param symbol: str:
         :param symbol: str: 
 
         """
@@ -121,6 +123,8 @@ class YFinancePoller(BasePoller):
         :param data: type data: Any :
         :param symbol: type symbol: str :
         :param data: type data: Any :
+        :param symbol: str:
+        :param data: Any:
         :param symbol: str:
         :param data: Any:
         :param symbol: str: 
@@ -163,6 +167,7 @@ class YFinancePoller(BasePoller):
         :param symbol: type symbol: str :
         :param symbol: type symbol: str :
         :param symbol: str:
+        :param symbol: str:
         :param symbol: str: 
 
         """
@@ -199,6 +204,8 @@ class YFinancePoller(BasePoller):
         :param error: type error: str :
         :param symbol: type symbol: str :
         :param error: type error: str :
+        :param symbol: str:
+        :param error: str:
         :param symbol: str:
         :param error: str:
         :param symbol: str: 
