@@ -7,7 +7,7 @@ requests per minute.
 
 from typing import Any
 
-from app.config import get_polygon_api_key, get_polygon_fill_rate_limit
+from app.config_shared import get_polygon_api_key, get_polygon_fill_rate_limit
 from app.pollers.base_poller import BasePoller
 from app.utils.rate_limit import RateLimiter
 from app.utils.request_with_timeout import request_with_timeout

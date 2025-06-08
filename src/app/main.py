@@ -9,12 +9,13 @@ from typing import Any
 
 from app.config import (
     get_log_level,
-    get_poll_interval,
+    get_polling_interval,  # ✅ Correct name
     get_poller_type,
     get_rate_limit,
     get_retry_delay,
     get_symbols,
 )
+
 from app.message_queue.queue_sender import QueueSender
 from app.poller_factory import PollerFactory
 from app.utils import validate_environment_variables
@@ -37,13 +38,15 @@ def main() -> None:
 
     # Load config
     log_level = get_log_level()
-    poll_interval = get_poll_interval()
+    poll_interval = get_polling_interval()
     poller_type = get_poller_type()
     rate_limit = get_rate_limit()
     retry_delay = get_retry_delay()
 
     # Setup logger
-    logger = setup_logger(__name__, level=LOG_LEVEL_MAP.get(log_level.lower(), logging.INFO))
+    logger = setup_logger(
+        __name__, level=LOG_LEVEL_MAP.get(log_level.lower(), logging.INFO)
+    )
 
     # Initialize
     rate_limiter = RateLimiter(max_requests=rate_limit, time_window=1)

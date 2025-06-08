@@ -15,7 +15,7 @@ The module uses the following libraries:
 import time
 from typing import Any
 
-from app.config import get_finnhub_api_key, get_finnhub_fill_rate_limit
+from app.config_shared import get_finnhub_api_key, get_finnhub_fill_rate_limit
 from app.pollers.base_poller import BasePoller
 from app.utils.rate_limit import RateLimiter
 from app.utils.request_with_timeout import request_with_timeout
@@ -136,7 +136,9 @@ class FinnhubPoller(BasePoller):
 
         def request_func():
             """ """
-            url = f"https://finnhub.io/api/v1/quote?symbol={symbol}&token={self.api_key}"
+            url = (
+                f"https://finnhub.io/api/v1/quote?symbol={symbol}&token={self.api_key}"
+            )
             return request_with_timeout(url, timeout=30)
 
         data = retry_request(request_func)
@@ -175,7 +177,9 @@ class FinnhubPoller(BasePoller):
         """
         return {
             "symbol": symbol,  # str
-            "timestamp": int(time.time()),  # Time of polling (not actual market update time)
+            "timestamp": int(
+                time.time()
+            ),  # Time of polling (not actual market update time)
             "price": float(data["c"]),  # float
             "source": "Finnhub",  # str
             "data": {  # dict[str, float]

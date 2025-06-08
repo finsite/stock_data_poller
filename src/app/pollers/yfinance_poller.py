@@ -4,7 +4,7 @@ from typing import Any
 
 import yfinance as yf
 
-from app.config import get_yfinance_fill_rate_limit
+from app.config_shared import get_yfinance_fill_rate_limit
 from app.pollers.base_poller import BasePoller
 from app.utils.rate_limit import RateLimiter
 from app.utils.setup_logger import setup_logger

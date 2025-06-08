@@ -10,7 +10,7 @@ value.
 from datetime import datetime
 from typing import Any
 
-from app.config import get_alpha_vantage_api_key, get_alpha_vantage_fill_rate_limit
+from app.config_shared import get_alpha_vantage_api_key, get_alpha_vantage_fill_rate_limit
 from app.pollers.base_poller import BasePoller
 from app.utils.rate_limit import RateLimiter
 from app.utils.request_with_timeout import request_with_timeout

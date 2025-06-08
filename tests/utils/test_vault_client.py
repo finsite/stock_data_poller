@@ -19,7 +19,9 @@ from app.utils.vault_client import VaultClient
 @patch("hvac.Client")
 def test_vault_client_get(mock_hvac_client):
     mock_instance = mock_hvac_client.return_value
-    mock_instance.auth.approle.login.return_value = {"auth": {"client_token": "dummy-token"}}
+    mock_instance.auth.approle.login.return_value = {
+        "auth": {"client_token": "dummy-token"}
+    }
     mock_instance.secrets.kv.v2.read_secret_version.return_value = {
         "data": {"data": {"EXAMPLE_KEY": "example_value"}}
     }

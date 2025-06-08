@@ -2,7 +2,7 @@ from typing import Any
 
 import requests
 
-from app.config import get_rapidapi_host, get_rapidapi_key, get_yfinance_fill_rate_limit
+from app.config_shared import get_rapidapi_host, get_rapidapi_key, get_yfinance_fill_rate_limit
 from app.pollers.base_poller import BasePoller
 from app.utils.rate_limit import RateLimiter
 from app.utils.setup_logger import setup_logger
@@ -36,7 +36,9 @@ class YahooRapidAPIPoller(BasePoller):
         validate_environment_variables(["QUEUE_TYPE", "RAPIDAPI_KEY", "RAPIDAPI_HOST"])
 
         # Initialize rate limiter
-        self.rate_limiter = RateLimiter(max_requests=get_yfinance_fill_rate_limit(), time_window=60)
+        self.rate_limiter = RateLimiter(
+            max_requests=get_yfinance_fill_rate_limit(), time_window=60
+        )
 
         # Set up the base URL and headers for the Yahoo Finance API call
         self.base_url = f"https://{get_rapidapi_host()}/stock/v2/get-summary"

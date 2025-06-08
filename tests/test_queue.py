@@ -22,7 +22,8 @@ def test_sqs_queue_sender(mock_boto3):
     with (
         patch("app.message_queue.queue_sender.get_queue_type", return_value="sqs"),
         patch(
-            "app.message_queue.queue_sender.get_sqs_queue_url", return_value="http://fake-sqs-url"
+            "app.message_queue.queue_sender.get_sqs_queue_url",
+            return_value="http://fake-sqs-url",
         ),
     ):
 
@@ -41,15 +42,22 @@ def test_rabbitmq_queue_sender(mock_pika):
     with (
         patch("app.message_queue.queue_sender.get_queue_type", return_value="rabbitmq"),
         patch("app.message_queue.queue_sender.get_rabbitmq_user", return_value="guest"),
-        patch("app.message_queue.queue_sender.get_rabbitmq_password", return_value="guest"),
-        patch("app.message_queue.queue_sender.get_rabbitmq_host", return_value="localhost"),
+        patch(
+            "app.message_queue.queue_sender.get_rabbitmq_password", return_value="guest"
+        ),
+        patch(
+            "app.message_queue.queue_sender.get_rabbitmq_host", return_value="localhost"
+        ),
         patch("app.message_queue.queue_sender.get_rabbitmq_port", return_value=5672),
         patch("app.message_queue.queue_sender.get_rabbitmq_vhost", return_value="/"),
         patch(
             "app.message_queue.queue_sender.get_rabbitmq_exchange",
             return_value="stock_data_exchange",
         ),
-        patch("app.message_queue.queue_sender.get_rabbitmq_routing_key", return_value="stock_data"),
+        patch(
+            "app.message_queue.queue_sender.get_rabbitmq_routing_key",
+            return_value="stock_data",
+        ),
     ):
 
         sender = QueueSender()
@@ -72,7 +80,8 @@ def test_sqs_queue_sender_failure(mock_boto3):
     with (
         patch("app.message_queue.queue_sender.get_queue_type", return_value="sqs"),
         patch(
-            "app.message_queue.queue_sender.get_sqs_queue_url", return_value="http://fake-sqs-url"
+            "app.message_queue.queue_sender.get_sqs_queue_url",
+            return_value="http://fake-sqs-url",
         ),
     ):
 
@@ -91,15 +100,22 @@ def test_rabbitmq_queue_sender_failure(mock_pika):
     with (
         patch("app.message_queue.queue_sender.get_queue_type", return_value="rabbitmq"),
         patch("app.message_queue.queue_sender.get_rabbitmq_user", return_value="guest"),
-        patch("app.message_queue.queue_sender.get_rabbitmq_password", return_value="guest"),
-        patch("app.message_queue.queue_sender.get_rabbitmq_host", return_value="localhost"),
+        patch(
+            "app.message_queue.queue_sender.get_rabbitmq_password", return_value="guest"
+        ),
+        patch(
+            "app.message_queue.queue_sender.get_rabbitmq_host", return_value="localhost"
+        ),
         patch("app.message_queue.queue_sender.get_rabbitmq_port", return_value=5672),
         patch("app.message_queue.queue_sender.get_rabbitmq_vhost", return_value="/"),
         patch(
             "app.message_queue.queue_sender.get_rabbitmq_exchange",
             return_value="stock_data_exchange",
         ),
-        patch("app.message_queue.queue_sender.get_rabbitmq_routing_key", return_value="stock_data"),
+        patch(
+            "app.message_queue.queue_sender.get_rabbitmq_routing_key",
+            return_value="stock_data",
+        ),
     ):
 
         sender = QueueSender()

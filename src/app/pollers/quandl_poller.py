@@ -8,7 +8,7 @@ enforces a rate limit using the RateLimiter class.
 
 from typing import Any
 
-from app.config import get_quandl_api_key, get_quandl_fill_rate_limit
+from app.config_shared import get_quandl_api_key, get_quandl_fill_rate_limit
 from app.pollers.base_poller import BasePoller
 from app.utils.rate_limit import RateLimiter
 from app.utils.request_with_timeout import request_with_timeout
@@ -124,9 +124,7 @@ class QuandlPoller(BasePoller):
 
         def request_func():
             """ """
-            url = (
-                f"https://data.nasdaq.com/api/v3/datasets/WIKI/{symbol}.json?api_key={self.api_key}"
-            )
+            url = f"https://data.nasdaq.com/api/v3/datasets/WIKI/{symbol}.json?api_key={self.api_key}"
             return request_with_timeout(url)
 
         return retry_request(request_func) or {}
