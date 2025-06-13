@@ -1,3 +1,9 @@
+## v0.3.8 (2025-06-13)
+
+### Refactor
+
+- standardize config, vault client, and test structure across all repos
+
 ## v0.3.7 (2025-06-07)
 
 ### Fix
