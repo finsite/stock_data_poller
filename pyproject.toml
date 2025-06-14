@@ -67,13 +67,6 @@ exclude = '''
   | dist
 )/'''
 
-[tool.docformatter]
-in-place = true
-recursive = true
-wrap-summaries = 88
-wrap-descriptions = 88
-pre-summary-newline = true
-
 [tool.ruff]
 line-length = 100
 target-version = "py311"
