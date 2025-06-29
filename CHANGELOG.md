@@ -1,3 +1,9 @@
+## v0.4.0 (2025-06-29)
+
+### Feat
+
+- update requirements file to validate all necessary files are there
+
 ## v0.3.9 (2025-06-14)
 
 ### Refactor
