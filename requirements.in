@@ -1,18 +1,50 @@
-# Core project dependencies (example)
-requests>=2.28.0,<3.0
-python-dotenv>=1.0.0
-loguru>=0.7.0
+# === Core dependencies ===
+requests>=2.32.4,<3.0  # HTTP client with pip-audit fixed version
+python-dotenv>=1.0.0    # Load environment variables from .env (if needed)
+loguru>=0.7.0           # Elegant structured logging
 
-# Messaging and cloud (if needed)
-boto3>=1.28.0,<2.0
-pika>=1.3.0  # If using RabbitMQ integration
+# === Messaging and Cloud integrations ===
+pika>=1.3.0             # RabbitMQ messaging client
+boto3>=1.28.0,<2.0      # AWS SDK (for SQS or config/secret fetching)
 
-# Data manipulation (if needed)
-pandas>=2.2.0,<3.0
-numpy>=1.25.0,<2.0
+# === Data manipulation ===
+pandas>=2.2.3,<2.3
+numpy>=1.25,<2.0
 scipy>=1.9.0,<2.0
-matplotlib>=3.6.0,<4.0
+matplotlib>=3.6.0,<4.0  # Optional: data visualization for debug/dev
 
-#vault integration
-hvac>=1.2.1,<2.0.0
-prometheus_client>=0.17.1
+# === Configuration / Vault / Secrets ===
+hvac>=1.2.1,<2.0.0      # HashiCorp Vault client
+python-decouple>=3.8   # Optional fallback for env + .ini based config
+
+# === Retry, timeout, and resilience ===
+tenacity>=8.2.2,<9.0.0  # Retry logic
+httpx>=0.27.0,<1.0.0    # Optional: modern HTTP client with native timeout/retries
+urllib3>=2.5.0          # For pip-audit + secure HTTP usage
+
+# === Monitoring & metrics ===
+prometheus_client>=0.17.1  # Expose internal metrics for scraping
+
+# === Validation and schema ===
+pydantic>=2.7,<3.0         # Runtime type validation and parsing
+
+# === Structured logging / enrichment ===
+structlog>=24.1.0          # JSON log formatting / log enrichment
+
+# === Typing and linting (runtime) ===
+types-requests             # Optional: type stubs for requests
+types-python-dateutil      # Optional: type stubs if using dateutil
+
+# === Security and parsing enhancements ===
+pyyaml>=6.0.1              # If YAML used anywhere (e.g., config, k8s parsing)
+cryptography>=42.0.0       # TLS or secure token handling
+
+# === Optional: time/date handling ===
+python-dateutil>=2.8.2     # Robust datetime parsing if needed
+
+# === Optional testing/validation enhancements ===
+jsonschema>=4.22.0         # Optional JSON schema validation for output/input
+
+# === Commented optional — enable as needed ===
+# fastapi>=0.110.0         # If exposing REST endpoint later
+# uvicorn>=0.29.0          # If REST API is introduced
