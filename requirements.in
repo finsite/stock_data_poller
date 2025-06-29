@@ -48,3 +48,7 @@ jsonschema>=4.22.0         # Optional JSON schema validation for output/input
 # === Commented optional — enable as needed ===
 # fastapi>=0.110.0         # If exposing REST endpoint later
 # uvicorn>=0.29.0          # If REST API is introduced
+
+# Security: Fix pip-audit vulnerabilities
+requests>=2.32.4
+urllib3>=2.5.0
