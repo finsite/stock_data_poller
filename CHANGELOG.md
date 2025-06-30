@@ -1,3 +1,9 @@
+## v0.7.0 (2025-06-30)
+
+### Feat
+
+- update requirements file to remove urllib and requests vulnerabilities
+
 ## v0.6.0 (2025-06-30)
 
 ### Feat
