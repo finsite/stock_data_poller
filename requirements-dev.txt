@@ -10,6 +10,10 @@ anyio==4.9.0
     # via httpx
 argcomplete==3.6.2
     # via commitizen
+attrs==25.3.0
+    # via
+    #   jsonschema
+    #   referencing
 authlib==1.6.0
     # via safety
 babel==2.17.0
@@ -63,7 +67,9 @@ contourpy==1.3.2
 coverage[toml]==7.9.0
     # via pytest-cov
 cryptography==45.0.4
-    # via authlib
+    # via
+    #   -r D:\git\stock_data_poller\requirements.in
+    #   authlib
 cycler==0.12.1
     # via matplotlib
 decli==0.6.3
@@ -87,7 +93,9 @@ h11==0.16.0
 httpcore==1.0.9
     # via httpx
 httpx==0.28.1
-    # via safety
+    # via
+    #   -r D:\git\stock_data_poller\requirements.in
+    #   safety
 hvac==1.2.1
     # via -r D:\git\stock_data_poller\requirements.in
 idna==3.10
@@ -111,6 +119,10 @@ jmespath==1.0.1
     #   botocore
 joblib==1.5.1
     # via nltk
+jsonschema==4.24.0
+    # via -r D:\git\stock_data_poller\requirements.in
+jsonschema-specifications==2025.4.1
+    # via jsonschema
 kiwisolver==1.4.8
     # via matplotlib
 loguru==0.7.3
@@ -177,7 +189,7 @@ packaging==25.0
     #   safety-schemas
 paginate==0.5.7
     # via mkdocs-material
-pandas==2.3.0
+pandas==2.2.3
     # via -r D:\git\stock_data_poller\requirements.in
 pathspec==0.12.1
     # via
@@ -208,6 +220,7 @@ pycparser==2.22
     # via cffi
 pydantic==2.9.2
     # via
+    #   -r D:\git\stock_data_poller\requirements.in
     #   safety
     #   safety-schemas
 pydantic-core==2.23.4
@@ -233,16 +246,20 @@ pytest-cov==4.1.0
     # via -r requirements-dev.in
 python-dateutil==2.9.0.post0
     # via
+    #   -r D:\git\stock_data_poller\requirements.in
     #   botocore
     #   ghp-import
     #   matplotlib
     #   pandas
+python-decouple==3.8
+    # via -r D:\git\stock_data_poller\requirements.in
 python-dotenv==1.1.0
     # via -r D:\git\stock_data_poller\requirements.in
 pytz==2025.2
     # via pandas
 pyyaml==6.0.2
     # via
+    #   -r D:\git\stock_data_poller\requirements.in
     #   bandit
     #   commitizen
     #   mkdocs
@@ -253,6 +270,10 @@ pyyaml-env-tag==1.1
     # via mkdocs
 questionary==2.1.0
     # via commitizen
+referencing==0.36.2
+    # via
+    #   jsonschema
+    #   jsonschema-specifications
 regex==2024.11.6
     # via nltk
 requests==2.32.4
@@ -267,6 +288,10 @@ rich==14.0.0
     # via
     #   bandit
     #   typer
+rpds-py==0.25.1
+    # via
+    #   jsonschema
+    #   referencing
 ruamel-yaml==0.18.14
     # via
     #   safety
@@ -291,8 +316,12 @@ sniffio==1.3.1
     # via anyio
 stevedore==5.4.1
     # via bandit
-tenacity==9.1.2
-    # via safety
+structlog==25.4.0
+    # via -r D:\git\stock_data_poller\requirements.in
+tenacity==8.5.0
+    # via
+    #   -r D:\git\stock_data_poller\requirements.in
+    #   safety
 termcolor==2.3.0
     # via
     #   -r requirements-dev.in
@@ -305,21 +334,28 @@ tqdm==4.67.1
     # via nltk
 typer==0.16.0
     # via safety
+types-python-dateutil==2.9.0.20250516
+    # via -r D:\git\stock_data_poller\requirements.in
+types-requests==2.32.4.20250611
+    # via -r D:\git\stock_data_poller\requirements.in
 typing-extensions==4.14.0
     # via
     #   anyio
     #   mypy
     #   pydantic
     #   pydantic-core
+    #   referencing
     #   safety
     #   safety-schemas
     #   typer
 tzdata==2025.2
     # via pandas
-urllib3==2.4.0
+urllib3==2.5.0
     # via
+    #   -r D:\git\stock_data_poller\requirements.in
     #   botocore
     #   requests
+    #   types-requests
 watchdog==6.0.0
     # via mkdocs
 wcwidth==0.2.13
