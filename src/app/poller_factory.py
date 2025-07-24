@@ -43,8 +43,7 @@ class PollerFactory:
         if self.poller_type not in self.valid_pollers:
             logger.error("❌ Invalid POLLER_TYPE: %s", self.poller_type)
             raise ValueError(
-                "POLLER_TYPE must be one of: "
-                + ", ".join(f"'{k}'" for k in self.valid_pollers)
+                "POLLER_TYPE must be one of: " + ", ".join(f"'{k}'" for k in self.valid_pollers)
             )
 
         required_key, _ = self.valid_pollers[self.poller_type]

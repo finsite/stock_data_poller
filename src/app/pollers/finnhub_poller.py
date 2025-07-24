@@ -136,9 +136,7 @@ class FinnhubPoller(BasePoller):
 
         def request_func():
             """ """
-            url = (
-                f"https://finnhub.io/api/v1/quote?symbol={symbol}&token={self.api_key}"
-            )
+            url = f"https://finnhub.io/api/v1/quote?symbol={symbol}&token={self.api_key}"
             return request_with_timeout(url, timeout=30)
 
         data = retry_request(request_func)
@@ -177,9 +175,7 @@ class FinnhubPoller(BasePoller):
         """
         return {
             "symbol": symbol,  # str
-            "timestamp": int(
-                time.time()
-            ),  # Time of polling (not actual market update time)
+            "timestamp": int(time.time()),  # Time of polling (not actual market update time)
             "price": float(data["c"]),  # float
             "source": "Finnhub",  # str
             "data": {  # dict[str, float]

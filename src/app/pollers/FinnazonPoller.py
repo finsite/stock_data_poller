@@ -23,9 +23,7 @@ class FinnazonPoller(BasePoller):
 
         validate_environment_variables(["QUEUE_TYPE", "FINNAZON_API_KEY"])
 
-        self.rate_limiter = RateLimiter(
-            max_requests=get_finnazon_fill_rate_limit(), time_window=60
-        )
+        self.rate_limiter = RateLimiter(max_requests=get_finnazon_fill_rate_limit(), time_window=60)
 
         self.base_url = "https://api.finazon.com/api/v1/quotes/historical"
         self.headers = {

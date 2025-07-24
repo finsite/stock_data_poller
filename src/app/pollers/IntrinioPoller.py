@@ -23,9 +23,7 @@ class IntrinioPoller(BasePoller):
 
         validate_environment_variables(["QUEUE_TYPE", "INTRINIO_API_KEY"])
 
-        self.rate_limiter = RateLimiter(
-            max_requests=get_intrinio_fill_rate_limit(), time_window=60
-        )
+        self.rate_limiter = RateLimiter(max_requests=get_intrinio_fill_rate_limit(), time_window=60)
 
         self.base_url = "https://api.intrinio.com/securities/{symbol}/prices"
         self.auth = (

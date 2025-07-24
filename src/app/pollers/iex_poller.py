@@ -36,9 +36,7 @@ class IEXPoller(BasePoller):
         if not self.api_key:
             raise ValueError("❌ Missing IEX_API_KEY.")
 
-        self.rate_limiter = RateLimiter(
-            max_requests=get_iex_fill_rate_limit(), time_window=60
-        )
+        self.rate_limiter = RateLimiter(max_requests=get_iex_fill_rate_limit(), time_window=60)
 
     def poll(self, symbols: list[str]) -> None:
         """Polls data for the specified symbols from IEX Cloud API.
@@ -157,9 +155,7 @@ class IEXPoller(BasePoller):
             "source": "IEX",  # Data source (str)
             "data": {
                 "open": float(data.get("open", 0.0)),  # Opening price (float)
-                "high": float(
-                    data.get("high", 0.0)
-                ),  # Highest price of the day (float)
+                "high": float(data.get("high", 0.0)),  # Highest price of the day (float)
                 "low": float(data.get("low", 0.0)),  # Lowest price of the day (float)
                 "close": float(data.get("latestPrice", 0.0)),  # Closing price (float)
                 "volume": int(data.get("volume", 0)),  # Trading volume (int)
